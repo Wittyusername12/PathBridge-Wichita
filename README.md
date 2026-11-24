@@ -26,7 +26,7 @@ Language models write fluent analysis, and they also invent, round and misquote 
 | `architect-harness/` | The Architect track: an intake flow, a personal plan, a documents checklist, a youth navigator and a housing readiness tracker. The ranking engine runs in the browser (`naipc_engine.js`) |
 | `Muse-harness/` | The Muse track: audiences, channel plan, calendar, creative pieces and a bilingual flyer |
 | `landing-harness/landing_harness.py` | The hub page; no model call |
-| `naipc_registry.py`, `naipc_requirements.py`, `naipc_engine.py` | Shared modules: the registry, tokens and integrity check; the contract and coverage check; the ranking engine. One byte-identical copy sits in each harness folder |
+| `naipc_registry.py`, `naipc_requirements.py`, `naipc_engine.py` | Shared modules: the registry, tokens and integrity check; the contract and coverage check; the ranking engine. The first two sit byte-identical in all four harness folders, the engine in the Oracle's and the Architect's |
 | `worker/chat-proxy.mjs` | The Cloudflare Worker that proxies the pages' chat |
 | `tools/fixture_server.py` | Replays recorded API data on 127.0.0.1, so a run needs no network access to the challenge API |
 | `tools/fixtures/` | The recorded challenge data for Wichita, Kansas City and Chicago, before (`pre/`) and after (`post/`) each curveball |
