@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "_note": "Fixture typed from the KC page (kansas_city_competition_info.png) and data brief (KC_Challenge_Data_Brief.png); transcribed in tracker §7.5 / G.3. Questions-format: no named users, no deliverables list.",
+  "challenge": {
+    "id": "kc-2026-03-28",
+    "event": "naipc-regional-kc-2026",
+    "day": 1,
+    "date": "2026-03-28",
+    "city": "Kansas City",
+    "venue": "KC Digital Drive, 710 Central St",
+    "title": "Kansas City Has a Food Access Problem. You're Going to Fix It.",
+    "tagline": "$500,000 city contract. $150,000 in operating costs. 60 days to prove it works. Build your solution.",
+    "mission": "Kansas City has a food access problem. Two grocery stores closed last year in neighborhoods that were already struggling. The city's main food bank lost 3 million pounds of food from federal cuts. 1 in 7 Kansas Citians are food insecure — a 10-year high. The city just put $500,000 on the table for a company that can fix this. They want a solution that coordinates food distribution, reaches the families who need help, and proves it can sustain itself. You are that company. You have $500,000 in contract revenue, $150,000 in operating costs, and 60 days to show the city this works. Build your solution."
+  },
+  "constraints": {
+    "contract_usd": {
+      "value": 500000,
+      "quote": "$500,000 city contract."
+    },
+    "opex_usd": {
+      "value": 150000,
+      "quote": "$150,000 in operating costs."
+    },
+    "reserved_marketing_usd": null,
+    "pilot_days": {
+      "value": 60,
+      "quote": "60 days to prove it works."
+    },
+    "beneficiary_unit": {
+      "value": "families",
+      "quote": "reaches the families who need help",
+      "_note": "the same brief counts food-insecure people (\"1 in 7 Kansas Citians are food insecure\"); per-family and per-person figures must never be mixed (Rule 2)"
+    },
+    "required_assets": null
+  },
+  "named_users": [],
+  "tracks": {
+    "oracle": {
+      "kind": "questions",
+      "title": "The Oracle — BUILD THE BUSINESS",
+      "mission": "Build the business plan and financial model for this company. How does the $500K get spent? What's the 60-day plan? How do you convince the city to renew?",
+      "items": [
+        {
+          "id": "oracle-q1",
+          "text": "Does the math work? Revenue, costs, margins?"
+        },
+        {
+          "id": "oracle-q2",
+          "text": "Is the strategy data-driven?"
+        },
+        {
+          "id": "oracle-q3",
+          "text": "Does it show city ROI on their $500K?"
+        },
+        {
+          "id": "oracle-q4",
+          "text": "How well did you use AI for analysis?"
+        },
+        {
+          "id": "oracle-m1",
+          "text": "How does the $500K get spent?",
+          "source": "mission"
+        },
+        {
+          "id": "oracle-m2",
+          "text": "What's the 60-day plan?",
+          "source": "mission"
+        },
+        {
+          "id": "oracle-m3",
+          "text": "How do you convince the city to renew?",
+          "source": "mission"
+        }
+      ]
+    },
+    "architect": {
+      "kind": "questions",
+      "title": "The Architect — BUILD THE PRODUCT",
+      "mission": "Build a working tool that helps solve KC's food access problem. A dashboard, a logistics app, an alert system, a pantry finder — whatever you think solves the problem best.",
+      "items": [
+        {
+          "id": "architect-q1",
+          "text": "Does it actually work? Can you demo it?"
+        },
+        {
+          "id": "architect-q2",
+          "text": "Is it solving a real problem?"
+        },
+        {
+          "id": "architect-q3",
+          "text": "Would real people actually use this?"
+        },
+        {
+          "id": "architect-q4",
+          "text": "How well did you use AI to build it?"
+        }
+      ]
+    },
+    "muse": {
+      "kind": "questions",
+      "title": "The Muse — BUILD THE BRAND & GET USERS",
+      "mission": "Build the go-to-market strategy that gets families and partners using the service. Who's the audience? How do you reach them? What materials do you produce?",
+      "items": [
+        {
+          "id": "muse-q1",
+          "text": "Do you understand who you're reaching?"
+        },
+        {
+          "id": "muse-q2",
+          "text": "Are channel choices realistic for the audience?"
+        },
+        {
+          "id": "muse-q3",
+          "text": "Did you actually produce materials?"
+        },
+        {
+          "id": "muse-q4",
+          "text": "How well did you use AI for creative work?"
+        },
+        {
+          "id": "muse-m1",
+          "text": "Who's the audience?",
+          "source": "mission"
+        },
+        {
+          "id": "muse-m2",
+          "text": "How do you reach them?",
+          "source": "mission"
+        },
+        {
+          "id": "muse-m3",
+          "text": "What materials do you produce?",
+          "source": "mission"
+        }
+      ]
+    }
+  },
+  "winning_looks_like": [],
+  "scoring": {
+    "dimensions": [
+      "Problem Understanding",
+      "Solution Quality",
+      "Presentation & Polish",
+      "Adaptability",
+      "AI Mastery"
+    ],
+    "descriptors": {
+      "Problem Understanding": "Did they actually understand the problem? Do they know who the users/customers are and what they need? Or did they build something generic?",
+      "Solution Quality": "Is the solution good? Is the business plan sound? Is the product useful? Is the marketing strategy smart? Would this actually work?",
+      "Presentation & Polish": "Is it well-built and clearly presented? Can you interact with the dashboard? Does the plan read well? Are materials production-ready?",
+      "Adaptability": "How did they respond to the curveball? Did they rethink their approach or just bolt something on? (Score after Block 2)",
+      "AI Mastery": "How effectively did they use AI? Did they direct it or just accept first outputs? Evidence of iteration, challenging AI, using it creatively?"
+    },
+    "scale": "circle one 1-5 per dimension per judge; TOTAL / 25 × 4 = / 100",
+    "scale_legend": {
+      "1": "Didn't address",
+      "2": "Significant gaps",
+      "3": "Adequate",
+      "4": "Strong work",
+      "5": "Exceptional"
+    },
+    "notes": "Adaptability is scored after Block 2; each judge adds 'What stood out? (one sentence)'; the panel is three industry experts and one non-human (AI) judge",
+    "source": "Kansas_City_scorecard.png (KC Regional 2026 judge scorecard, March 28, 2026), read 2026-09-29; the same five dimensions appear on every 2026 brief"
+  },
+  "api": {
+    "base_url": "https://aipromptchamp.com",
+    "prefix": "/api/challenge",
+    "note": "All endpoints return JSON. CORS enabled.",
+    "endpoints": [
+      {
+        "name": "311-calls",
+        "description": "Housing/utility distress by ZIP (13 ZIPs)",
+        "filters": [
+          "?zip="
+        ],
+        "records_expected": 13,
+        "curveball_updates": false
+      },
+      {
+        "name": "pantries",
+        "description": "12 pantry locations, hours, language, ID req, cold storage, routes",
+        "filters": [
+          "?zip=",
+          "?language="
+        ],
+        "records_expected": 12,
+        "curveball_updates": false
+      },
+      {
+        "name": "food-atlas",
+        "description": "USDA food desert status by census tract",
+        "filters": [
+          "?zip="
+        ],
+        "records_expected": 12,
+        "curveball_updates": false
+      },
+      {
+        "name": "store-closures",
+        "description": "4 grocery store closures (2024–2025)",
+        "filters": [],
+        "records_expected": 4,
+        "curveball_updates": false
+      },
+      {
+        "name": "transit",
+        "description": "8 bus stops near food resources",
+        "filters": [
+          "?near=lat,lng",
+          "?near=lat,lng&radius="
+        ],
+        "records_expected": 8,
+        "curveball_updates": false
+      },
+      {
+        "name": "demographics",
+        "description": "Census: poverty, Hispanic%, no vehicle (12 ZIPs)",
+        "filters": [
+          "?zip="
+        ],
+        "records_expected": 12,
+        "curveball_updates": false
+      },
+      {
+        "name": "supply-alerts",
+        "description": "Federal supply status — updates at curveball",
+        "filters": [],
+        "records_expected": null,
+        "curveball_updates": true
+      },
+      {
+        "name": "harvest",
+        "description": "After the Harvest KC priority ZIPs (8 areas)",
+        "filters": [],
+        "records_expected": 8,
+        "curveball_updates": false
+      }
+    ]
+  },
+  "schedule": {
+    "source": "the KC page",
+    "registration": "09:00",
+    "go_live": "10:00",
+    "block1": "10:00-12:00",
+    "curveball": "13:00",
+    "block2": "13:00-14:30",
+    "submissions_due": "14:30",
+    "judging": "15:00-15:45"
+  },
+  "submission": {
+    "form_url": "https://aipromptchamp.com/regional/kansascity-2026/challenge",
+    "deadline": "14:30",
+    "event_code": null
+  },
+  "team": {
+    "program_name": null,
+    "brand_html": null
+  },
+  "curveball": null,
+  "provenance": {
+    "brief_files": [
+      "kansas_city_competition_info.png",
+      "KC_Challenge_Data_Brief.png"
+    ],
+    "transcription": "tracker §7.5 (2026-09-27; page re-opened 2026-09-28)",
+    "modeled_fields": []
+  }
+}

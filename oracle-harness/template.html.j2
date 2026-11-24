@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark light">
+{% set C = cov if (cov is defined and cov) else {} %}{% set CA = C.get('attrs', {}) %}
+<meta name="naipc-build" content="{{ naipc_build | py }}">
+{% if C.get('enabled') %}<meta name="naipc-challenge" content="{{ C.challenge | py }}">
+<meta name="naipc-run" content="{{ C.run_id | py }}">{% endif %}
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<title>{{ page_title | default("Strategic & Operational Blueprint") | built }}</title>
+<meta property="og:title" content="{{ page_title | default('Strategic & Operational Blueprint') | py }}">
+<meta name="description" content="{{ preview | py }}">
+<meta property="og:description" content="{{ preview | py }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="{{ preview | py }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+{# ================================================================= #}
+{# CSS DESIGN SYSTEM — 100% STATIC, no Jinja2 variables              #}
+{# Identical to the competition-tested template_competition_v3.html   #}
+{# ================================================================= #}
+:root{
+  color-scheme:dark;
+  --bg0:#060810;--bg1:#0B1222;
+  --card:rgba(255,255,255,.05);--card2:rgba(255,255,255,.08);
+  --stroke:rgba(255,255,255,.09);
+  --text:rgba(255,255,255,.9);--muted:rgba(255,255,255,.6);--dim:rgba(255,255,255,.38);
+  --accent:#7C3AED;--accent-g:rgba(124,58,237,.35);
+  --cyan:#22D3EE;--cyan-g:rgba(34,211,238,.25);
+  --good:#34D399;--warn:#FBBF24;--bad:#FB7185;
+  --r:16px;--r-sm:10px;--gap:14px;
+  --font:'Plus Jakarta Sans','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,Roboto,'Helvetica Neue',Arial,sans-serif;
+  --h1:clamp(1.9rem,3.4vw,2.9rem);--h2:clamp(1.2rem,1.9vw,1.55rem);
+  --h3:clamp(1rem,1.4vw,1.2rem);--body:.94rem;--sm:.82rem;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0}
+body{font-family:var(--font);color:var(--text);line-height:1.55;background:linear-gradient(180deg,var(--bg0),var(--bg1));min-height:100vh}
+.bg-glow{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.bg-glow::before,.bg-glow::after{content:'';position:absolute;border-radius:50%;filter:blur(170px);opacity:.18;animation:glow-float 25s ease-in-out infinite}
+.bg-glow::before{width:700px;height:500px;top:-120px;left:-80px;background:var(--accent)}
+.bg-glow::after{width:600px;height:400px;bottom:-100px;right:-60px;background:var(--cyan);animation-delay:-12s;animation-direction:reverse}
+@keyframes glow-float{0%,100%{transform:translate(0,0)}33%{transform:translate(40px,-30px)}66%{transform:translate(-30px,40px)}}
+@media(prefers-reduced-motion:reduce){.bg-glow::before,.bg-glow::after{animation:none!important}.kpi,.card,.tbl tbody tr{transition:none!important}}
+.topbar{position:sticky;top:0;z-index:90;backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);background:rgba(6,8,16,.72);border-bottom:1px solid var(--stroke)}
+.topbar-inner{max-width:1140px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:800;font-size:1.05rem;letter-spacing:-.02em}
+.brand em{font-style:normal;color:var(--cyan)}
+.nav{display:flex;gap:4px;flex-wrap:wrap}
+.nav a{color:var(--muted);text-decoration:none;font-size:var(--sm);padding:5px 10px;border-radius:999px;transition:color .2s,background .2s}
+.nav a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.wrap{max-width:1140px;margin:0 auto;padding:28px 20px 60px}
+.section{margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,.06)}
+.section-label{font-size:var(--sm);font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--cyan);margin-bottom:6px}
+.section-title{font-size:var(--h2);font-weight:700;letter-spacing:-.015em;margin-bottom:16px;line-height:1.35}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--gap)}
+.s12{grid-column:span 12}.s8{grid-column:span 8}.s7{grid-column:span 7}.s6{grid-column:span 6}.s5{grid-column:span 5}.s4{grid-column:span 4}.s3{grid-column:span 3}
+@media(max-width:860px){.s8,.s7,.s6,.s5,.s4,.s3{grid-column:span 12}}
+.card{border-radius:var(--r);background:var(--card);border:1px solid var(--stroke);box-shadow:0 8px 32px rgba(0,0,0,.3);backdrop-filter:blur(14px) saturate(150%);-webkit-backdrop-filter:blur(14px) saturate(150%);padding:20px;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.14);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.card.strong{background:var(--card2)}
+.card h3{font-size:var(--h3);font-weight:700;margin-bottom:8px}
+.card p{color:var(--muted);line-height:1.5;font-size:var(--body)}
+strong{color:#fff;font-weight:800}
+.card .src{font-size:.75rem;color:var(--dim);margin-top:10px;font-style:italic}
+.hero{padding:32px 0 10px}
+.hero h1{font-size:var(--h1);font-weight:800;letter-spacing:-.03em;line-height:1.15;background:linear-gradient(135deg,var(--text) 30%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero .lead{max-width:68ch;color:var(--muted);font-size:1.02rem;margin-top:10px;line-height:1.55}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;font-size:var(--sm);font-weight:600;background:rgba(124,58,237,.15);border:1px solid rgba(124,58,237,.3);color:rgba(200,180,255,.9);margin-bottom:12px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--gap);margin-top:20px}
+.kpi{border-radius:var(--r-sm);background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:18px 24px;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.kpi:hover{transform:translateY(-2px);border-color:rgba(124,58,237,.35);box-shadow:0 4px 20px rgba(124,58,237,.15)}
+.kpi-label{font-size:var(--sm);color:var(--muted);font-weight:500}
+.kpi-value{font-size:1.5rem;font-weight:800;margin-top:4px;letter-spacing:0;font-variant-numeric:tabular-nums}
+.kpi-delta{font-size:var(--sm);margin-top:3px}
+.kpi-delta.good{color:var(--good)}.kpi-delta.warn{color:var(--warn)}.kpi-delta.bad{color:var(--bad)}
+.prov{border-bottom:1px dotted rgba(167,139,250,.55);cursor:help}.prov.prov-m{border-bottom-style:dashed;border-bottom-color:rgba(251,191,36,.6)}.prov.prov-x{border-bottom-color:rgba(34,211,238,.6)}sup.unv{color:#fbbf24;font-size:.7em;margin-left:1px}.prov-key{border-bottom:1px dashed rgba(251,191,36,.6)}.integrity-line{margin-top:14px;font-size:var(--sm);color:var(--muted)}.integrity-line a{color:var(--cyan)}.integrity-legend{color:var(--dim)}.sroi-below{border-color:rgba(251,191,36,.35)!important;background:rgba(251,191,36,.06)!important}.reg-tbl td{font-size:.78rem;vertical-align:top}
+.section-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;font-size:.7rem;font-weight:700;background:rgba(124,58,237,.18);border:1px solid rgba(124,58,237,.25);color:var(--accent);margin-right:8px;vertical-align:middle}
+.stat{font-size:1.7rem;font-weight:800;color:var(--cyan);letter-spacing:-.02em}
+.stat.bad{color:var(--bad)}.stat.warn{color:var(--warn)}.stat.good{color:var(--good)}
+.stat-label{font-size:var(--sm);color:var(--muted);margin-top:2px}
+.highlight{color:var(--text);font-weight:700}
+.bluf{font-size:1.05rem;font-weight:600;line-height:1.55;color:var(--text);border-left:3px solid var(--accent);padding-left:16px;margin-bottom:14px}
+.tablist{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);margin-bottom:16px}
+.tablist button{padding:8px 16px;border-radius:999px;background:transparent;border:0;cursor:pointer;font-family:var(--font);font-size:var(--sm);font-weight:600;color:var(--muted);transition:all .2s}
+.tablist button[aria-selected="true"]{background:var(--accent);color:#fff}
+[role="tabpanel"][hidden]{display:none}
+details{border:1px solid var(--stroke);border-radius:var(--r-sm);margin-bottom:8px;background:var(--card)}
+details summary{padding:14px 18px;cursor:pointer;font-weight:600;font-size:var(--body);list-style:none;display:flex;justify-content:space-between;align-items:center}
+details summary::after{content:"+";color:var(--muted);font-size:1.2rem;font-weight:400}
+details[open] summary::after{content:"\2212"}
+details .inner{padding:0 18px 16px;color:var(--muted);line-height:1.6}
+.tbl{width:100%;border-collapse:collapse;font-size:var(--sm)}
+.tbl th{text-align:left;padding:10px 12px;font-weight:600;border-bottom:1px solid rgba(255,255,255,.12);color:var(--muted)}
+.tbl td{padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.05)}
+.tbl tr:last-child td{border-bottom:0}
+.tbl tbody tr{transition:background .15s ease}
+.tbl tbody tr:hover{background:rgba(255,255,255,.04)}
+.tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl .total{font-weight:700;color:var(--text);border-top:2px solid var(--stroke)}
+.meter{height:8px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden}
+.meter::before{content:"";display:block;height:100%;border-radius:999px;width:calc(var(--pct,0) * 1%);background:linear-gradient(90deg,var(--accent),var(--cyan))}
+.diagram-wrap{display:flex;justify-content:center;align-items:flex-start;padding:20px 12px;overflow:visible;min-height:400px}
+.diagram-wrap svg{max-width:100%;height:auto}
+.diagram-wrap .node rect,.diagram-wrap .node polygon,.diagram-wrap .node circle,.diagram-wrap .node .label-container{transition:filter .25s ease,transform .2s ease}
+.diagram-wrap .node:hover rect,.diagram-wrap .node:hover polygon,.diagram-wrap .node:hover circle,.diagram-wrap .node:hover .label-container{filter:brightness(1.4) drop-shadow(0 0 12px rgba(124,58,237,.5));cursor:pointer}
+.mermaidTooltip{position:absolute!important;background:rgba(15,10,40,.92)!important;backdrop-filter:blur(12px)!important;border:1px solid rgba(124,58,237,.35)!important;border-radius:8px!important;padding:10px 14px!important;font-family:var(--font)!important;font-size:.85rem!important;color:rgba(255,255,255,.88)!important;max-width:320px!important;line-height:1.45!important;box-shadow:0 8px 32px rgba(0,0,0,.5)!important;z-index:1000!important;pointer-events:none!important}
+.note-box{margin-top:14px;padding:14px 16px;border-radius:var(--r-sm);background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);font-size:var(--sm);color:var(--muted);line-height:1.5}
+.footer{margin-top:56px;padding:24px 0;border-top:1px solid var(--stroke);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:var(--sm);color:var(--dim)}
+.closing{margin-top:48px;padding:28px 32px;border-radius:var(--r);background:linear-gradient(135deg,rgba(124,58,237,.08),rgba(34,211,238,.08));border:1px solid rgba(124,58,237,.2);text-align:center}
+.closing p{font-size:1.15rem;font-weight:700;line-height:1.5;color:var(--text);max-width:52ch;margin:0 auto}
+.chat-fab{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:100;box-shadow:0 4px 20px rgba(124,58,237,.4);transition:transform .2s,box-shadow .2s}
+.chat-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(124,58,237,.5)}
+.chat-fab svg{width:24px;height:24px;fill:#fff}
+.chat-panel{position:fixed;bottom:88px;right:24px;width:380px;max-height:70vh;border-radius:var(--r);background:var(--card);border:1px solid var(--stroke);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:flex;flex-direction:column;z-index:101;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity .25s,transform .25s}
+.chat-panel.open{opacity:1;pointer-events:auto;transform:translateY(0)}
+.chat-header{padding:12px 16px;border-bottom:1px solid var(--stroke);display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.9rem}
+.chat-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:4px 8px}
+.chat-messages{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:10px;min-height:200px;max-height:50vh}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:.85rem;line-height:1.5;white-space:pre-wrap}
+.chat-msg.user{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+.chat-msg.ai{align-self:flex-start;background:rgba(255,255,255,.10);color:var(--text);border-bottom-left-radius:4px}
+.chat-msg.error{align-self:center;color:var(--warn);font-style:italic;font-size:.8rem;background:none}
+.chat-input-row{padding:10px 12px;border-top:1px solid var(--stroke);display:flex;gap:8px}
+.chat-input{flex:1;background:rgba(255,255,255,.06);border:1px solid var(--stroke);border-radius:8px;padding:8px 12px;color:var(--text);font-family:var(--font);font-size:.85rem;outline:none;resize:none}
+.chat-input::placeholder{color:var(--dim)}
+.chat-send{background:var(--accent);border:none;border-radius:8px;padding:8px 14px;color:#fff;cursor:pointer;font-weight:600;font-size:.8rem;white-space:nowrap}
+.chat-send:disabled{opacity:.4;cursor:not-allowed}
+.ask-ai-btn{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;font-weight:600;color:#fff;background:rgba(124,58,237,.45);border:1px solid rgba(124,58,237,.6);padding:4px 12px;border-radius:999px;cursor:pointer;margin-top:10px;transition:all .2s;letter-spacing:.02em}
+.ask-ai-btn:hover{background:rgba(124,58,237,.7);border-color:rgba(124,58,237,.9);transform:translateY(-1px);box-shadow:0 2px 8px rgba(124,58,237,.3)}
+.chat-typing-dots{display:flex;gap:4px;padding:4px 0}
+.chat-typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:dotBounce .8s ease-in-out infinite}
+.chat-typing-dots span:nth-child(2){animation-delay:.15s}
+.chat-typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes dotBounce{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-6px);opacity:1}}
+.chat-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chat-chip{background:rgba(124,58,237,.22);border:1px solid rgba(124,58,237,.45);border-radius:999px;padding:5px 12px;font-size:.75rem;color:#d4bfff;cursor:pointer;transition:background .2s;font-family:var(--font)}
+.chat-chip:hover{background:rgba(124,58,237,.35);color:#fff}
+.no-chatbot .chat-fab,.no-chatbot .chat-panel,.no-chatbot .ask-ai-btn{display:none!important}
+.qr-wrap{width:160px;height:160px;border-radius:10px;overflow:hidden;flex-shrink:0;background:#fff;padding:6px;margin:0 auto}
+.qr-wrap svg{width:100%;height:100%;display:block}
+.curveball-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);font-size:var(--sm);margin-top:14px}
+.curveball-badge .cb-icon{font-size:1.1rem}
+.curveball-badge .cb-label{font-weight:700;color:var(--warn)}
+.curveball-badge .cb-desc{color:var(--muted)}
+[data-reveal]{opacity:0;transform:translateY(12px);transition:opacity .6s ease,transform .6s ease}
+[data-reveal].is-visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){[data-reveal]{transition:none!important;transform:none!important;opacity:1!important}}
+
+/* ── Evidence Trail: clickable citation badges ── */
+.src-link{display:inline;padding:1px 7px;border-radius:999px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);color:var(--cyan);font-size:.75rem;text-decoration:none;cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s;white-space:nowrap;font-family:var(--font)}
+.src-link:hover,.src-link:focus{background:rgba(34,211,238,.2);border-color:rgba(34,211,238,.4);box-shadow:0 0 8px rgba(34,211,238,.15);outline:none}
+[id^="src-"]{scroll-margin-top:60px}
+
+/* ── What-If Simulator ── */
+.sim-panel{margin-top:24px;padding:24px;border-radius:var(--r);background:var(--card);border:1px solid var(--stroke);box-shadow:0 8px 32px rgba(0,0,0,.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.sim-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.sim-header h3{font-size:1.1rem;font-weight:700;margin:0;color:var(--text)}
+.sim-try{width:10px;height:10px;background:#4ade80;border-radius:50%;flex-shrink:0}
+@keyframes simPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.8);opacity:0}}
+.sim-try{animation:simPulse 2s ease-in-out infinite}
+.sim-reset{margin-left:auto;background:rgba(255,255,255,.06);border:1px solid var(--stroke);color:var(--muted);padding:6px 14px;border-radius:999px;font-size:.75rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:var(--font);opacity:0;pointer-events:none}
+.sim-reset.show{opacity:1;pointer-events:auto}
+.sim-reset:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media(max-width:740px){.sim-grid{grid-template-columns:1fr}}
+.sim-slider-group{margin-bottom:20px}
+.sim-slider-group label{display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:6px}
+.sim-slider-val{float:right;color:var(--cyan);font-weight:700;font-variant-numeric:tabular-nums}
+.sim-slider{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;outline:none;cursor:pointer;background:rgba(255,255,255,.08);background-image:linear-gradient(135deg,var(--cyan),#6c63ff);background-size:50% 100%;background-repeat:no-repeat;border:1px solid rgba(255,255,255,.08);transition:box-shadow .2s}
+.sim-slider:hover{box-shadow:0 0 12px rgba(34,211,238,.2)}
+.sim-slider:focus-visible{box-shadow:0 0 0 3px rgba(108,99,255,.4)}
+.sim-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#c0c0e0);border:2px solid rgba(108,99,255,.6);box-shadow:0 0 8px rgba(34,211,238,.5);cursor:pointer;margin-top:-7px;transition:box-shadow .2s,transform .15s}
+.sim-slider::-webkit-slider-thumb:hover{transform:scale(1.12);box-shadow:0 0 14px rgba(34,211,238,.6)}
+.sim-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#c0c0e0);border:2px solid rgba(108,99,255,.6);box-shadow:0 0 8px rgba(34,211,238,.5);cursor:pointer}
+.sim-slider::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:transparent}
+.sim-slider::-moz-range-track{height:8px;border-radius:4px;background:rgba(255,255,255,.08)}
+.sim-slider::-moz-range-progress{height:8px;border-radius:4px 0 0 4px;background:linear-gradient(135deg,var(--cyan),#6c63ff)}
+.sim-ticks{display:flex;justify-content:space-between;font-size:.65rem;color:var(--dim);margin-top:4px;padding:0 2px}
+.sim-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.sim-metric{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 12px;text-align:center;transition:border-color .3s,box-shadow .3s}
+.sim-metric.modified{border-color:rgba(255,170,0,.35);box-shadow:0 0 10px rgba(255,170,0,.08)}
+.sim-metric-label{font-size:.7rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.sim-metric-value{font-size:1.4rem;font-weight:800;font-variant-numeric:tabular-nums;transition:color .3s;font-family:'JetBrains Mono','SF Mono',var(--font)}
+.sim-metric-delta{font-size:.65rem;margin-top:4px;min-height:1em;transition:color .3s}
+.sim-chart-wrap{border-radius:12px;background:rgba(0,0,0,.2);padding:12px;position:relative;height:220px}
+.sim-chart-wrap canvas{width:100%!important;height:100%!important}
+.sim-method{margin-top:14px;font-size:var(--sm);color:var(--dim)}
+.sim-method summary{cursor:pointer;font-weight:600;color:var(--muted)}
+.sim-method p{margin-top:8px;line-height:1.5;font-family:'JetBrains Mono','SF Mono',monospace;font-size:.75rem}
+.sim-print{display:none}
+@media(prefers-reduced-motion:reduce){.sim-try{animation:none!important}}
+
+@media print{
+  :root{--bg0:#fff;--bg1:#fff;--card:#fff;--card2:#fff;--stroke:#e5e7eb;--text:#111827;--muted:#374151;--dim:#6b7280;--accent:#7C3AED;--cyan:#0e7490;--good:#059669;--warn:#d97706;--bad:#e11d48}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff!important}
+  strong{color:inherit;font-weight:700}
+  .topbar,.bg-glow,.no-print,.chat-fab,.chat-panel,.ask-ai-btn,.curveball-badge,.qr-wrap,.sim-slider-group,.sim-chart-wrap,.sim-reset,.sim-try,.sim-method{display:none!important}
+  .sim-print{display:block!important;color:#111;font-size:.85rem;margin-top:8px}
+  .sim-panel{backdrop-filter:none!important;background:#fff!important;border:1px solid #e5e7eb!important;box-shadow:none!important}
+  .src-link{all:unset;color:inherit!important;font-size:inherit!important;background:none!important;border:none!important;padding:0!important;cursor:default!important}
+  .card{background:#fff!important;border:1px solid #e5e7eb!important;box-shadow:none!important;backdrop-filter:none!important}
+  .card,.section,svg,table,details{break-inside:avoid;page-break-inside:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:.85em;color:var(--muted)}
+  @page{margin:.75in}
+}
+</style>
+</head>
+
+<body>
+<div class="bg-glow" aria-hidden="true"></div>
+
+{# ================================================================= #}
+{# STICKY NAV                                                         #}
+{# ================================================================= #}
+<nav class="topbar no-print">
+  <div class="topbar-inner">
+    <div class="brand">{{ brand_html | default("Blueprint") | built }}</div>
+    <div class="nav">
+      {% if C.get('panel') %}<a href="#brief">Brief</a>{% endif %}
+      <a href="#summary">Summary</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#operations">Operations</a>
+      <a href="#financials">Financials</a>
+      <a href="#plan">Plan</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+{# ================================================================= #}
+{# HERO — Title, subtitle, 3-5 KPI metric cards                       #}
+{# ================================================================= #}
+<header class="hero" id="top" data-strict="hero">
+  <div class="badge"><span class="badge-text">{{ badge_text | default("Prepared for review", true) | built }}</span></div>{# IC-2 (D7): one inline run — a registry span inside is no flex item, so no gap follows its figure #}
+  <h1>{{ hero_title | default("Strategic &amp; Operational Blueprint") | built }}</h1>
+  <p class="lead">{{ hero_lead | default("A comprehensive analysis and implementation plan.") | built }}</p>
+  {% if curveball_text %}
+  <div class="curveball-badge" data-reveal>
+    <span class="cb-icon">&#x26A1;</span>
+    <span class="cb-label">Curveball Update</span>
+    <a class="cb-desc" href="#curveball" data-prov-block="the organizers' announcement" data-verbatim="the organizers' announcement">{{ curveball_first | org }}</a>
+  </div>
+  {% endif %}
+
+  <div class="metrics" id="sec-kpis" data-sec="kpis" data-sec-items="{{ kpis | default([]) | length | py }}"{{ CA.get('kpis', '') | built }}>
+    {% for kpi in kpis | default([]) %}
+    <div class="kpi" data-reveal>
+      <div class="kpi-label">{{ kpi.label | py }}</div>
+      <div class="kpi-value">
+        {% if kpi.static_value %}
+          {{ kpi.static_value | built }}
+        {% else %}
+          <span class="counter" data-target="{{ kpi.counter_target | py }}" data-format="{{ kpi.counter_format | default('raw') | built }}" data-delay="{{ (loop.index0 * 150) | py }}"{% if kpi.prov %} data-prov="{{ kpi.prov | py }}" data-shown="{{ kpi.shown | py }}"{% endif %}{% if kpi.b1_shown %} data-b1-shown="{{ kpi.b1_shown | py }}"{% endif %}>0</span>{{ kpi.suffix | default('') | built }}
+        {% endif %}
+      </div>
+      <div class="kpi-delta {{ kpi.delta_class | default('good') | built }}">{% if kpi.delta_html %}{{ kpi.delta_html | built }}{% else %}{{ kpi.delta | py }}{% endif %}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if toggle %}
+  <div class="block-toggle" role="group" aria-label="The hero's figures: Block 1 or Block 2" data-cov-skip>
+    <button type="button" data-block="1" aria-pressed="false">Block 1</button><button type="button" data-block="2" aria-pressed="true">Block 2 (now)</button>
+  </div>
+  <script>
+  (function(){var g=document.querySelector(".block-toggle");if(!g)return;
+  g.addEventListener("click",function(ev){var b=ev.target.closest?ev.target.closest("button[data-block]"):null;if(!b)return;var one=b.getAttribute("data-block")==="1";
+  g.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",String(x===b))});
+  document.querySelectorAll(".kpi .counter[data-b1-shown]").forEach(function(c){c.dataset.view=one?"b1":"";c.dataset.done="1";   /* B3 (Phase 4): the choice stops the count-up and stands */
+    c.textContent=one?c.getAttribute("data-b1-shown"):(c.getAttribute("data-shown")||c.textContent);c.classList.toggle("is-b1",one)});
+    /* B3 (Phase 4, review d F4): the line under a card is Block 2's — hidden while the card shows Block 1's figure */
+    document.querySelectorAll(".kpi").forEach(function(k){var d=k.querySelector(".kpi-delta");if(d&&k.querySelector(".counter[data-b1-shown]"))d.style.visibility=one?"hidden":""})});})();
+  </script>
+  {% endif %}
+  {% if integrity %}
+  <div class="integrity-line" id="sec-integrity" data-sec="integrity" data-num-exempt="the integrity line's own counts">
+    <a href="#integrity-details">{{ integrity.line | py }}</a>{% if integrity.violations %} {{ integrity.violations | length | py }} flagged in the details.{% endif %}
+    <span class="integrity-legend">{% if unv_shown | default(true) %}· <sup class="unv">&#8224;</sup> an outside figure not yet checked against its primary source {% endif %}· <span class="prov-key prov-m">dashed</span> an assumption</span>
+  </div>
+  {% endif %}
+</header>
+
+{% if cb %}
+<style>/* BUILD B3 (D9): the hero's Block 1 / Block 2 toggle */.block-toggle{display:inline-flex;margin-top:12px;border:1px solid rgba(127,127,127,.35);border-radius:999px;overflow:hidden}.block-toggle button{background:transparent;color:var(--muted);border:0;padding:6px 14px;font-size:var(--sm);cursor:pointer}.block-toggle button[aria-pressed="true"]{background:rgba(124,58,237,.35);color:inherit}.counter.is-b1{color:#fbbf24}</style>
+<style>/* WHAT CHANGED AT THE CURVEBALL (P0.7, D3): outside every data-sec, skipped by the coverage parser */.cb-sec h3{font-size:var(--h3);font-weight:700;margin:20px 0 8px}.cb-sec ul{margin:6px 0 0 18px;color:var(--muted);font-size:var(--sm);line-height:1.55}.cb-sec p{line-height:1.55}.cb-sec .src{font-size:.75rem;color:var(--dim);font-style:italic;margin-top:8px}.cb-sec .tbl td:nth-child(2),.cb-sec .tbl td:nth-child(3){white-space:nowrap}@media (max-width:600px){.cb-sec .tbl td{white-space:normal!important}}.cb-sec{overflow-wrap:anywhere}</style>
+<section id="curveball" class="section cb-sec" data-cov-skip aria-labelledby="cb-title">
+  <div class="section-label">What changed at the curveball</div>
+  <h2 class="section-title" id="cb-title">What changed at the curveball{% if cb.announced_at %} ({{ cb.announced_at | py }}){% endif %}</h2>
+  <p class="bluf" data-verbatim="the organizers' announcement">{{ cb.announcement | org }}</p>
+  <p class="{% if cb.failed %}note-box{% else %}src{% endif %}">{{ cb.mode | py }}</p>
+  {% if cb.edits_line %}<p class="src" data-cb-edits>{{ cb.edits_line | py }}</p>{% endif %}
+  {% if cb.not_reviewed %}<div class="note-box" id="cb-not-reviewed" data-num-exempt="the first words of items shown in their own sections, where their figures are counted"><p>Not reviewed at the curveball — these keep Block 1's words:</p>
+  <ul>{% for x in cb.not_reviewed %}<li>{{ x | py }}</li>{% endfor %}</ul></div>{% endif %}
+  <h3>What changed in the data</h3>
+  {% if cb.endpoints %}<ul>{% for e in cb.endpoints %}<li>{{ e | py }}</li>{% endfor %}</ul>
+  {% elif cb.unchanged is none and cb.snapshot %}<p>No Block 1 snapshot was found, so the data could not be compared: the announcement is the only change known.</p>
+  {% elif cb.unchanged is none %}<p>No change list of this run was found, so the data could not be compared: the announcement is the only change known.</p>
+  {% else %}<p>No endpoint changed at the curveball: the data is as in Block 1.</p>{% endif %}
+  {% if cb.alerts %}<ul>{% for a in cb.alerts %}<li>Alert {{ a | py }}</li>{% endfor %}</ul>{% endif %}
+  {% if cb.unchanged %}<p class="src">Unchanged at the curveball (their data is Block 1's): {{ cb.unchanged | join(', ') | words | py }}.</p>{% endif %}
+  {% if cb.unchanged is not none %}<p class="src">Computed by Python from the API data: every endpoint compared record by record with Block 1's snapshot.</p>{% endif %}
+  <h3>Figures that moved</h3>
+  {% if cb.moved %}
+  <table class="tbl"><thead><tr><th>Figure</th><th>Block 1</th><th>Block 2</th><th>Why</th></tr></thead><tbody>
+  {% for m in cb.moved %}<tr><td>{{ m.label | words | py }}</td><td>{{ m.block1 | py }}</td><td>{{ m.block2 | py }}</td><td>{{ m.because | words | py }}</td></tr>
+  {% endfor %}</tbody></table>
+  <p class="src">Every figure is Python's financial model run on the analysis's inputs; "why" names the change that moved it. The optimistic and conservative scenarios are recomputed from the same inputs.</p>
+  {% elif cb.compared %}<p>No figure of the financial model differs from Block 1's.</p>
+  {% else %}<p>There are no Block 1 figures to compare with: every figure on this page is this run's.</p>{% endif %}
+  {% if cb.moved_note %}<p class="note-box">{{ cb.moved_note | py }}</p>{% endif %}
+  {% set IN = incident | default({}) %}
+  {% if IN.show %}
+  <h3>Every registry figure that moved, Block 1 &rarr; Block 2</h3>
+  {% if IN.rows %}<table class="tbl" data-incident-figures><thead><tr><th>Figure</th><th>Block 1</th><th>Block 2</th><th>What moved it</th><th>The data's own aggregate</th></tr></thead><tbody>
+  {% for r in IN.rows %}<tr data-reg="{{ r.id | built }}"><td>{{ r.label | words_html | built }}</td><td>{{ r.b1 | built }}</td><td>{{ r.b2 | built }}</td><td>{{ r.why | words_html | built }}</td><td>{% for s in r.stale %}<div data-stale="{{ s.against_id | built }}">{{ s.label | words_html | built }}: {{ s.against | built }}{% if s.quote %} (&ldquo;{{ s.quote | built }}&rdquo;){% endif %} ({{ s.against_asof | built }}) — sources disagree with the records ({{ s.entry_asof | built }}): {{ s.speaks | words_html | built }}</div>{% else %}&mdash;{% endfor %}</td></tr>
+  {% endfor %}</tbody></table>
+  <p class="src">From the two registries: Block 1's, saved with its page, and this run's. A figure's change refs are the changed records it is computed from.</p>
+  {% elif IN.has_b1 %}<p>No registry figure differs from Block 1's.</p>
+  {% else %}<p class="note-box" data-no-b1>Block 1's registry is not available{% if IN.b1_note %} ({{ IN.b1_note | built }}){% endif %}: the figures cannot be compared here.</p>{% endif %}
+  {% if IN.stale %}<p class="src">Where the data's own aggregate and the records it summarises disagree:</p><ul>{% for s in IN.stale %}<li data-stale="{{ s.against_id | built }}">{{ s.label | words_html | built }}: {{ s.against | built }}{% if s.quote %} (&ldquo;{{ s.quote | built }}&rdquo;){% endif %} ({{ s.against_asof | built }}) — the records give {{ s.entry | built }} ({{ s.entry_asof | built }}); sources disagree: {{ s.speaks | words_html | built }}.</li>{% endfor %}</ul>{% endif %}
+  <h3>The first hours — a proposed playbook</h3>
+  <p class="src">MODELED: the order of hours is a proposal. Each step is built by Python from the closures, the prioritization model's reroute rows and the change list's alerts, and names its records.</p>
+  <div data-playbook>
+  <p><strong>Now (the first hour)</strong></p>{% if IN.now %}<ul>{% for s in IN.now %}<li data-step="now">{{ s.text | words_html | built }} <span class="src" data-zone="provenance" data-zone-name="source-note">— from {{ s.ids | built }}</span></li>{% endfor %}</ul>{% else %}<p class="src">The prioritization model names no closure{% if IN.has_engine %} among the options it ranks{% else %} — this challenge has no engine sidecar, so no closure is read from its records here{% endif %}; the changes above list every record the update changed.</p>{% endif %}
+  <p><strong>Next (the hours after)</strong></p>{% if IN.next %}<ul>{% for s in IN.next %}<li data-step="next">{{ s.text | words_html | built }} <span class="src" data-zone="provenance" data-zone-name="source-note">— from {{ s.ids | built }}</span></li>{% endfor %}</ul>{% else %}<p class="src">No person's top options changed in the prioritization model{% if not (prio and prio.show) %} (no prioritization model this run){% endif %}.</p>{% endif %}
+  <p><strong>Within <span data-num-exempt="the playbook's proposed hours (MODELED)">24</span> hours</strong></p>{% if IN.day %}<ul>{% for s in IN.day %}<li data-step="day">{{ s.text | words_html | built }} <span class="src" data-zone="provenance" data-zone-name="source-note">— from {{ s.ids | built }}</span></li>{% endfor %}</ul>{% else %}<p class="src">No other alert in the change list.</p>{% endif %}
+  </div>
+  <h3>Actions log <span style="color:var(--warn)">— ILLUSTRATIVE</span></h3>
+  <p class="src" data-illustrative>ILLUSTRATIVE: what the system would have done, stamped from the announcement's time — not a record of actions taken.</p>
+  <ul data-actions-log>{% for l in IN.log %}<li><code data-num-exempt="an illustrative time">{{ l.t | built }}</code> {{ l.text | built }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if cb.derived %}
+  <h3>Figures derived from the records</h3>
+  {% for d in cb.derived %}<p><strong>{{ d.label | model }}: {{ d.value | py }}</strong> — {{ d.how | words | py }}; records: {{ d.records | words | py }}.</p>
+  {% if d.compare %}<p class="src">{{ d.compare | words | py }} — shown beside this figure, never replaced by it.</p>{% endif %}
+  {% if d.compare_note %}<p class="src">{{ d.compare_note | py }}.</p>{% endif %}
+  {% endfor %}<p class="src">Records selected by the analysis; summed by Python.</p>
+  {% endif %}
+  {% if cb.response or cb.what_changed %}
+  <h3>How the program responds <span class="src">(the analysis's words)</span></h3>
+  {% if cb.response %}<p>{{ cb.response | built }}</p>{% endif %}
+  {% if cb.what_changed %}<ul>{% for w in cb.what_changed %}<li><strong>{{ w.ref | py }}</strong>: {{ w.impact | built }}</li>{% endfor %}</ul>{% endif %}
+  {% endif %}
+  {% if cb.amended or cb.assumptions or cb.replaced %}
+  <h3>What the update changed in Block 1's analysis</h3>
+  <ul>{% for a in cb.amended %}<li>{{ a.name | py }} — because {{ a.because | py }}</li>{% endfor %}{% for c in cb.assumptions %}<li>{{ c.name | py }}: {{ c.old_h | default(c.old | model) | built }} → {{ c.new_h | default(c.new | model) | built }} — because {{ c.because | py }}{% if c.why %}: {{ c.why | model }}{% endif %}</li>{% endfor %}{% for r in cb.replaced %}<li>{{ r | py }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if cb.not_applied %}
+  <h3>Not applied</h3>
+  <div class="note-box" id="cb-not-applied"><p>{{ cb.not_applied_sentence | py }}</p>
+  <ul>{% for x in cb.not_applied %}<li>{{ x | py }}</li>{% endfor %}</ul></div>
+  {% endif %}
+  {% if cb.stale %}
+  <h3>Still as written for Block 1</h3>
+  <ul>{% for line in cb.stale %}<li>{{ line | py }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if cb.tests or cb.tests_other %}
+  <h3>What the curveball tests</h3>
+  {% if not cb.tests %}<p>This curveball lists no tests; answers in this run's analysis:</p>
+  {% endif %}{% for x in cb.tests %}<p><strong>{{ x.test | org }}</strong><br>{% if x.answer %}{{ x.answer | built }}{% else %}No answer in this run's analysis names this test.{% endif %}</p>
+  {% endfor %}{% if cb.tests_other %}{% if cb.tests %}<p>Answers in this run's analysis that name no test above:</p>
+  {% endif %}{% for x in cb.tests_other %}<p><strong>{{ x.test_h | default(x.test | model) | built }}</strong><br>{{ x.answer | built }}</p>
+  {% endfor %}{% endif %}{% endif %}
+</section>
+{% endif %}
+
+{% if C.get('panel') %}
+<style>/* BRIEF PANEL (P0.3): one row per block on a phone-width screen */@media (max-width:600px){ #brief table,#brief thead,#brief tbody,#brief tr,#brief td{display:block;width:auto!important;min-width:0!important}#brief thead{display:none}#brief tr{padding:10px 0;border-bottom:1px solid rgba(127,127,127,.25)}#brief td{padding:3px 0!important;border:0!important}}</style>
+<section id="brief" class="section" data-brief-panel aria-label="How this answers the brief">
+  <div class="section-label">How this answers the brief</div>
+  <h2 class="section-title" style="font-size:1.15rem" data-verbatim="the brief's own words">{{ C.panel.track_title | org }}</h2>
+  <p style="color:var(--muted);font-size:var(--sm);margin-bottom:12px" data-prov-block="the brief's own words" data-verbatim="the brief's own words">{{ C.panel.mission | org }}</p>
+  <div class="card s12" style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl">
+      <thead><tr><th>The brief asks</th><th>Our answer</th><th>Where on this page</th></tr></thead>
+      <tbody>
+        {% for r in C.panel.rows %}
+        <tr data-brief-row="{{ r.id | py }}" data-brief-answer="{{ r.answer_src | py }}">
+          <td data-brief-cell="q" data-prov-block="the brief's own words" data-verbatim="the brief's own words" style="vertical-align:top;font-weight:600;min-width:9rem">{{ r.text | org }}</td>
+          <td data-brief-cell="a" style="vertical-align:top">{{ r.answer_html | default(r.answer | model) | built }}</td>
+          <td data-brief-cell="l" data-num-exempt="the page's section numbers" style="vertical-align:top;min-width:8rem">{% for l in r.links %}<a href="#{{ l.anchor | py }}" data-brief-link="{{ l.name | py }}" style="color:var(--cyan)">{{ l.label | py }}</a>{% if not loop.last %}<br>{% endif %}{% endfor %}{% if not r.links %}—{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% set RB = rubric | default({}) %}
+{% if RB.show %}
+<section id="sec-rubric" class="section" data-sec="rubric"{{ CA.get('rubric', '') | built }} aria-label="The judges' rubric, mapped to this page">
+  <div class="section-label" data-cov-skip>The judges' rubric, mapped to this page</div>
+  <div class="card s12" style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl" data-rubric>
+      <thead><tr><th>Dimension</th><th>The brief's words</th><th>Where this page answers it</th></tr></thead>
+      <tbody>{% for r in RB.rows %}<tr data-rubric-dim="{{ r.dimension | py }}"><td style="vertical-align:top;font-weight:600" data-verbatim="the brief's own words">{{ r.dimension | org }}</td><td style="vertical-align:top" data-prov-block="the brief's own words" data-verbatim="the brief's own words">{{ r.descriptor | org }}</td><td style="vertical-align:top;min-width:8rem" data-num-exempt="the page's section numbers">{% if not r.mapped %}<span class="src">not mapped</span>{% else %}{% for l in r.links %}<a href="#{{ l.anchor | py }}" data-rubric-link="{{ l.name | py }}" style="color:var(--cyan)">{{ l.label | py }}</a>{% if not loop.last %}<br>{% endif %}{% endfor %}{% if not r.links %}<span class="src">no section on this page this run</span>{% endif %}{% endif %}</td></tr>{% endfor %}</tbody>
+    </table>
+    {% if RB.scale %}<p class="src" style="margin-top:8px">The scale, in the brief's words: <span data-prov-block="the brief's own words" data-verbatim="the brief's own words">{{ RB.scale | org }}</span></p>{% endif %}
+  </div>
+</section>
+{% endif %}
+<script>
+/* === BRIEF PANEL (P0.3): a panel link opens a closed <details> or accordion phase around its target, then scrolls to it === */
+(function(){
+  /* B3 (Phase 4, review d F10): the rubric map's and the judge questions' links open the <details> they land in, as the brief's do */
+  document.addEventListener("click",function(ev){
+    var a=ev.target.closest?ev.target.closest("a[data-brief-link],a[data-rubric-link],a[data-judge-link]"):null;if(!a)return;
+    var t=document.getElementById((a.getAttribute("href")||"").slice(1));if(!t)return;
+    ev.preventDefault();ev.stopImmediatePropagation();
+    for(var n=t;n&&n!==document.body;n=n.parentElement){if(n.tagName==="DETAILS"&&!n.open)n.open=true;}
+    setTimeout(function(){t.scrollIntoView({behavior:"smooth",block:"start"});},50);
+  });
+})();
+</script>
+{% endif %}
+
+{# ================================================================= #}
+{# 01 EXECUTIVE SUMMARY — BLUF + Crisis/Solution grid + Cost of Inaction #}
+{# ================================================================= #}
+<section id="summary" class="section" data-sec="summary"{{ CA.get('summary', '') | built }}>
+  <div class="section-label" data-cov-skip><span class="section-num" data-num-exempt="a section number">01</span>Executive Summary</div>
+  <h2 class="section-title">{{ summary_title | default("PENDING — Executive Summary") | built }}</h2>
+
+  <div class="card strong s12" data-reveal>
+    <p class="bluf">{{ bluf_text | default("PENDING — Recommendation text") | built }}{% if CBM.fields.bluf_text %} <span class="cb-mark" data-cb-status="{{ CBM.fields.bluf_text.status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ CBM.fields.bluf_text.words | py }}</span>{% endif %}</p>
+    <p style="margin-top:10px;font-size:var(--sm);color:var(--cyan);font-weight:600;letter-spacing:.02em">{% if decision_text is defined %}{{ decision_text | built }}{% if CBM.fields.decision_text %} <span class="cb-mark" data-cb-status="{{ CBM.fields.decision_text.status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ CBM.fields.decision_text.words | py }}</span>{% endif %}{% else %}<span data-cov-skip>DECISION REQUESTED: Details pending analysis.</span>{% endif %}</p>
+  </div>
+
+  <div class="grid" style="margin-top:var(--gap)">
+    <div class="card s6" data-reveal>
+      <h3>{{ crisis_title | default("The Problem") | built }}</h3>
+      <p>{{ crisis_body | default("PENDING — Problem description from data analysis.") | built }}</p>
+      <p style="margin-top:10px;font-style:italic;color:var(--muted)">{{ crisis_human | default("") | built }}</p>
+      {% if crisis_sources %}<p class="src">{{ crisis_sources | built }}</p>{% endif %}
+    </div>
+    <div class="card s6" data-reveal>
+      <h3>{{ solution_title | default("Our Approach") | built }}</h3>
+      <p>{{ solution_body | default("PENDING — Solution description.") | built }}</p>
+      {% if solution_population %}<p style="margin-top:10px">{{ solution_population | built }}</p>{% endif %}
+    </div>
+  </div>
+
+  {% if comparison_rows | default([]) %}
+  <div class="card s12" data-reveal style="margin-top:var(--gap)">
+    <h3>Current State vs. {{ program_name | default("Proposed Solution") | built }}</h3>
+    <table class="tbl">
+      <thead><tr><th>Dimension</th><th>Today</th><th>With {{ program_name | default("Program") | built }}</th></tr></thead>
+      <tbody>
+        {% for row in comparison_rows %}
+        <tr><td style="font-weight:600">{{ row.dimension | built }}{% if row.cb_mark %} <span class="cb-mark" data-cb-status="{{ row.cb_mark.status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ row.cb_mark.words | py }}</span>{% endif %}</td><td style="color:var(--bad)">&#x2717; {{ row.today | built }}</td><td style="color:var(--good)">&#x2713; {{ row.proposed | built }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  <div class="note-box" id="sec-cost-of-inaction" data-sec="cost-of-inaction"{{ CA.get('cost-of-inaction', '') | built }} data-reveal style="margin-top:var(--gap);border-color:rgba(251,113,133,.2);background:rgba(251,113,133,.05)">
+    <strong data-cov-skip>Cost of inaction:</strong> {{ cost_of_inaction | default("PENDING — Cost of inaction analysis.") | built }}
+  </div>
+</section>
+
+{# ================================================================= #}
+{# 02 EVIDENCE — 3-5 data-driven finding cards                        #}
+{# ================================================================= #}
+<section id="evidence" class="section" data-sec="evidence"{{ CA.get('evidence', '') | built }}>
+  <div class="section-label" data-cov-skip><span class="section-num" data-num-exempt="a section number">02</span>Data Analysis</div>
+  <h2 class="section-title">{{ evidence_title | default("PENDING — Key Findings") | built }}</h2>
+  <div class="grid" data-strict="evidence">
+    {% for card in evidence_cards | default([]) %}
+    <div class="card s6" data-reveal>
+      <h3>{{ card.title | built }}{% if card.cb_mark %} <span class="cb-mark" data-cb-status="{{ card.cb_mark.status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ card.cb_mark.words | py }}</span>{% endif %}</h3>
+      <div class="stat {{ card.stat_class | default('') | py }}">{{ card.stat_value | built }}</div>
+      <div class="stat-label">{{ card.stat_label | built }}</div>
+      <p style="margin-top:12px">{{ card.body | built }}</p>
+      <p class="src">{{ card.source | built }}</p>
+      {% if chatbot_enabled %}<span class="ask-ai-btn" data-cov-skip data-ask="{{ card.title | py }}">✦ Ask AI</span>{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% if not (evidence_cards | default([])) and evidence_dropped | default(0) %}<p class="src" data-cov-skip data-evidence-dropped>The integrity check left out every finding card here: a card's figure must name one registry figure (each card and why: the appendix's integrity details).</p>{% endif %}
+  {# ── BUILD B3 (D5, P2.6): the bottleneck dashboard — Python, from the records and the engine's own cases ── #}
+  {% set BN = bottlenecks | default({}) %}
+  {% if BN.show %}
+  <div class="card s12" id="sec-bottlenecks" data-sec="bottlenecks"{{ CA.get('bottlenecks', '') | built }} data-reveal style="margin-top:var(--gap)">
+    <h3>{% if (headlines | default({})).get("bottlenecks") %}{{ headlines["bottlenecks"] | built }} <span class="src" data-cov-skip>— the bottleneck dashboard: where capacity is listed, used and free</span>{% else %}The bottleneck dashboard: where capacity is listed, used and free{% endif %}</h3>
+    <p style="color:var(--muted);font-size:var(--sm);margin-bottom:10px">Python reads every record of each option set with a capacity: listed, in use and free now; whether it is closed; the gates that limit who a free unit can serve; and which of the brief's people can use it now (the prioritization model's own cases). No model call computes any of it.</p>
+    {% for s in BN.sets %}
+    <h4 style="margin-top:12px">{{ s.label | built }} <span class="src">({{ s.endpoint | words_html | built }}: {{ s.fields | words_html | built }})</span></h4>
+    <p style="font-size:var(--sm)" data-prov-block="the bottleneck dashboard (Python, from the records)">Listed {{ s.totals.listed | built }}{% if s.totals.in_use %} · in use {{ s.totals.in_use | built }}{% endif %} · free now {{ s.totals.free | built }}{% if s.closed_free %} ({{ s.closed_free | py }} of them at a site closed now — not offered){% endif %}{% if s.no_cap %} · {{ s.no_cap | py }} with no cap{% endif %}{% for n in s.named %} · {{ n.span | built }} {{ n.label | built }}{% endfor %}</p>
+    <div style="height:220px;margin:8px 0"><canvas id="bn-chart-{{ s.id | py }}" aria-label="{{ s.label | built }}: in use and free by record"></canvas></div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl" data-prov-block="the bottleneck dashboard (Python, from the records)" data-bn-set="{{ s.id | py }}">
+      <thead><tr><th>Name</th><th class="num">Listed</th>{% if not s.one_field %}<th class="num">In use</th>{% endif %}<th class="num">Free now</th><th>Limits on who it serves</th><th>The brief's people who can use it now</th></tr></thead>
+      <tbody>{% for r in s.rows %}<tr data-bn-id="{{ r.id | built }}"><td>{{ r.name | built }}{% if r.closed %} <strong style="color:var(--bad)">— closed: {{ r.closed | built }}</strong>{% endif %}{% if r.no_cap %} <span class="src">({{ r.no_cap | built }})</span>{% endif %}</td><td class="num">{{ r.listed | built }}</td>{% if not s.one_field %}<td class="num">{{ r.in_use | built }}{% if r.over %} <span style="color:var(--bad)">(over by {{ r.over | built }})</span>{% endif %}</td>{% endif %}<td class="num">{{ r.free | built }}</td><td>{{ r.limits | words_html | built }}</td><td>{{ r.reach | words_html | built }}</td></tr>{% endfor %}</tbody>
+    </table>
+    </div>
+    {% endfor %}
+    {% if BN.jams %}
+    <h4 style="margin-top:12px">Jam points</h4>
+    <ul data-prov-block="the bottleneck dashboard (Python, from the records)" style="font-size:var(--sm);margin-left:18px">{% for j in BN.jams %}<li data-jam="{{ j.id | built }}">{{ j.name | built }} — {{ j.kind | built }}: {{ j.why | words_html | built }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% if BN.problems %}<p class="src">{{ BN.problems | join('; ') | words_html | built }}</p>{% endif %}
+    <script type="application/json" id="bn-data">{{ BN.chart | tojson | built }}</script>
+    <script>
+    (function(){var el=document.getElementById("bn-data");if(!el)return;var D;try{D=JSON.parse(el.textContent)}catch(e){return}var n=0;
+    function draw(){if(typeof Chart==="undefined"){if(++n<60)setTimeout(draw,250);return}
+    D.forEach(function(s){var c=document.getElementById("bn-chart-"+s.id);if(!c)return;
+    new Chart(c,{type:"bar",data:{labels:s.labels,datasets:s.one_field?[{label:"Capacity",data:s.free,backgroundColor:"rgba(52,211,153,.55)"}]:[{label:"In use",data:s.in_use,backgroundColor:"rgba(124,58,237,.55)",stack:"c"},{label:"Free now",data:s.free,backgroundColor:"rgba(52,211,153,.65)",stack:"c"}]},
+    options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,ticks:{color:"#94a3b8"}},y:{stacked:true,ticks:{color:"#94a3b8"}}},plugins:{legend:{labels:{color:"#cbd5e1"}}}}})})}
+    draw()})();
+    </script>
+  </div>
+  {% endif %}
+
+  {# ── BUILD B3 (D6, P2.5): youth handoffs — the age protocol (Python) and the failure modes (the deliverables call) ── #}
+  {% set YO = youth | default({}) %}
+  {% if YO.show %}
+  <div class="card s12" id="sec-youth-handoffs" data-sec="youth-handoffs"{{ CA.get('youth-handoffs', '') | built }} data-reveal style="margin-top:var(--gap)">
+    <h3>{% if (headlines | default({})).get("youth-handoffs") %}{{ headlines["youth-handoffs"] | built }} <span class="src" data-cov-skip>— youth handoffs: the age cliffs and where the handoff fails</span>{% else %}Youth handoffs: the age cliffs and where the handoff fails{% endif %}</h3>
+    <p style="color:var(--muted);font-size:var(--sm);margin-bottom:10px">The age protocol: at each age where a record's age range begins or has just ended (the first age it no longer serves), how many records each set serves at that age and their free capacity now — from the records' own age ranges, in Python.</p>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl" data-prov-block="the age protocol (Python, from the records)">
+      <thead><tr><th>Age</th>{% for s in YO.sets %}<th class="num">{{ s.label | built }}: records (free)</th><th>Serving from this age · no longer serving at this age</th>{% endfor %}</tr></thead>
+      <tbody>{% for a in YO.ages %}<tr data-age="{{ a.age | py }}"><td>{{ a.age | py }}</td>{% for c in a.cells %}<td class="num">{{ c.records | py }} ({{ c.free | py }}{% if c.no_cap %} + {{ c.no_cap | py }} with no cap{% endif %}{% if c.closed %}; {{ c.closed | py }} closed now, {{ c.closed_free | py }} of the free places — not offered{% endif %})</td><td style="font-size:.78rem">{% if c.begin %}from this age: {{ c.begin | words_html | built }}{% endif %}{% if c.begin and c.end %} · {% endif %}{% if c.end %}no longer at this age: {{ c.end | words_html | built }}{% endif %}</td>{% endfor %}</tr>{% endfor %}</tbody>
+    </table>
+    </div>
+    {% if YO.modes %}
+    <h4 style="margin-top:12px">Failure modes and remedies</h4>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl">
+      <thead><tr><th>Where</th><th>What fails</th><th>Evidence</th><th>Remedy</th><th>Fund line</th><th>Indicator</th></tr></thead>
+      <tbody>{% for m in YO.modes %}<tr><td>{{ m.where | built }}{% if CBM.ids[m.id] %} <span class="cb-mark" data-cb-status="{{ CBM.ids[m.id].status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ CBM.ids[m.id].words | py }}</span>{% endif %}</td><td>{{ m.what | built }}</td><td>{{ m.evidence | built }}</td><td>{{ m.remedy | built }}</td><td>{{ m.line | built }}</td><td>{{ m.indicator | built }}</td></tr>{% endfor %}</tbody>
+    </table>
+    </div>
+    {% elif not YO.words %}<p class="src" data-no-words>The failure modes are the analysis's words; they were not written this run. The age protocol above is Python's.</p>{% endif %}
+    {% if YO.problems %}<p class="src">{{ YO.problems | join('; ') | words_html | built }}</p>{% endif %}
+  </div>
+  {% endif %}
+</section>
+
+{# ================================================================= #}
+{# 03 OPERATIONS — Workflow diagram (pre-rendered SVG or CDN fallback) #}
+{# ================================================================= #}
+<section id="operations" class="section" data-sec="operations"{{ CA.get('operations', '') | built }}>
+  <div class="section-label" data-cov-skip><span class="section-num" data-num-exempt="a section number">03</span>Delivery Model</div>
+  <h2 class="section-title">{{ operations_title | default("PENDING — Operational Model") | built }}</h2>
+  <div class="card s12" data-reveal>
+    <p style="margin-bottom:16px;color:var(--muted)">{{ operations_description | default("PENDING — Workflow description.") | built }}</p>
+    <div class="diagram-wrap"{% if diagram_traced %} data-prov-block="the workflow diagram: every figure from a token"{% endif %}>
+      {% if diagram_steps %}
+        {# BUILD IC-8 (D4): the diagram fails its rules and no Block 1 diagram passes them — the steps, listed below #}
+        <p style="color:var(--dim);text-align:center" data-cov-skip>The workflow is listed as steps.</p>
+      {% elif diagram_svg %}
+        {# Pre-rendered SVG from mmdc — no CDN dependency #}
+        <div style="display:contents"{% if not diagram_traced %} data-num-exempt="the diagram's drawing (its typed figures are counted with the model's prose and listed in the integrity details)"{% endif %}>{{ diagram_svg | built }}</div>
+      {% elif diagram_mermaid %}
+        {# Fallback: render via CDN at runtime #}
+        <pre class="mermaid"{% if not diagram_traced %} data-num-exempt="the diagram's drawing code (its typed figures are listed in the integrity details)"{% endif %}>
+{{ diagram_mermaid | built }}
+        </pre>
+      {% else %}
+        <p style="color:var(--dim);text-align:center" data-cov-skip>Workflow diagram pending.</p>
+      {% endif %}
+    </div>
+    {% if diagram_mermaid and not diagram_svg %}<p class="src" data-cov-skip data-diagram-browser style="margin-top:8px">This diagram is drawn by your browser{% if diagram_why %}: {{ diagram_why | py }}{% endif %}.</p>{% endif %}
+    {% if diagram_list %}<details class="diagram-list" data-cov-skip data-num-exempt="the diagram as a list (it repeats the diagram's labels)" style="margin-top:10px"{% if diagram_steps %} open{% endif %}><summary>The diagram as a list</summary>
+      <p>Steps:</p><ul>{% for n in diagram_list.nodes %}<li>{{ n.label | py }}{% if n.tip %} — {{ n.tip | py }}{% endif %}</li>{% endfor %}</ul>
+      {% if diagram_list.edges %}<p>Links:</p><ul>{% for e in diagram_list.edges %}<li>{{ e.a | py }} &rarr; {{ e.b | py }}{% if e.label %} ({{ e.label | py }}){% endif %}</li>{% endfor %}</ul>{% endif %}
+    </details>{% endif %}
+  </div>
+  {# ── BUILD B1 (D4, P1 + P2.2): the prioritization model — Python ranks from the published table (naipc_engine.py) ── #}
+  {% set PR = prio | default({}) %}
+  {% if PR.show %}
+  <div class="card s12" id="sec-prioritization" data-sec="prioritization"{{ PR.attrs | default('') | built }} data-prov-block="the prioritization model (Python, from the data)" data-reveal style="margin-top:var(--gap)">
+    <h3>Prioritization model</h3>
+    <p style="color:var(--muted);font-size:var(--sm);margin-bottom:10px">Python ranks every option below from this published table and the API's records; no model call ranks anything. Gates decide whom an option can serve, points decide the order. Evaluated at {{ PR.as_of | py }} ({{ PR.as_of_source | py }}).</p>
+    {% for t in PR.sets %}
+    <h4 style="margin-top:14px">{{ t.label | py }} <span class="src" data-cov-skip>({{ t.endpoint | words | py }}, {{ t.records | py }} records)</span></h4>
+    <p style="font-size:var(--sm);color:var(--muted)"><strong>Gates</strong> (an option must pass every one): {% for g in t.gates %}{{ g.label | label }} — {{ g.text | words | label }}{% if not loop.last %}; {% endif %}{% endfor %}.</p>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl" data-zone="provenance" data-zone-name="method-table" data-engine-set="{{ t.id | py }}">
+      <thead><tr><th>Factor</th><th class="num">Max points</th><th>Source field</th><th>Formula</th><th>Cap</th><th>Why it counts</th></tr></thead>
+      <tbody>
+        {% for f in t.factors %}<tr data-factor="{{ f.id | py }}" data-form="{{ f.form | py }}" data-max="{{ f.max | py }}"{% if f.ref is not none %} data-ref="{{ f.ref | py }}"{% endif %}><td>{{ f.label | label }}</td><td class="num">{{ f.max | py }}</td><td>{{ f.source | label }}</td><td>{{ f.formula | label }}</td><td>{{ f.cap | py }}</td><td style="font-size:.78rem;color:var(--dim)">{{ f.why | py }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:.78rem;color:var(--dim);margin-top:6px">Ties: {{ t.tie_breakers | join(', then ') | py }}.{% if t.annotations %} Read from the records' own words: {% for a in t.annotations %}{{ a.id | words | py }} {{ a.field | words | py }} = {{ a.value | py }} (&ldquo;<span data-verbatim="a record's own words">{{ a.quote | org }}</span>&rdquo;){% if not loop.last %}; {% endif %}{% endfor %}.{% endif %}{% if t.excluded %} Left out of this set: {% for x in t.excluded %}{{ x.name | org }} — {{ x.why | py }} (the record: &ldquo;<span data-verbatim="a record's own words">{{ x.quote | org }}</span>&rdquo;){% if not loop.last %}; {% endif %}{% endfor %}.{% endif %}</p>
+    {% endfor %}
+    {% if PR.closures %}<p style="font-size:var(--sm);margin-top:10px"><strong>Closed in this run's data:</strong> {% for c in PR.closures %}{{ c.name | org }} ({{ c.sets | join(', ') | py }}) — by {{ c.why | words | py }}{% if c.segment %}: &ldquo;<span data-verbatim="a record's own words">{{ c.segment | org }}</span>&rdquo;{% endif %}{% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
+    {% if PR.people %}
+    <h4 style="margin-top:16px">Worked cases</h4>
+    {% for p in PR.people %}
+    <details class="engine-case" data-person="{{ p.id | py }}"{% if loop.first %} open{% endif %} style="margin-top:8px">
+      <summary><strong>{{ p.who | org }}</strong>{% if p.illustrative %} <span class="src">(illustrative — not from the brief)</span>{% endif %}</summary>
+      {% if p.quote %}<p style="font-style:italic;color:var(--muted);margin:6px 0">&ldquo;<span data-verbatim="the brief's own words">{{ p.quote | org }}</span>&rdquo;</p>{% endif %}
+      <p style="font-size:.78rem;color:var(--dim)">What the ranking reads: {% for a in p.attrs %}{{ a.name | py }} = {{ a.value | py }} ({{ a.source | py }}){% if not loop.last %}; {% endif %}{% endfor %}.</p>
+      {% for c in p.cases %}
+      <div class="engine-set" data-set="{{ c.set | py }}" style="margin-top:8px">
+        <p><strong>{{ c.label | py }}</strong> — {{ c.counts.eligible | py }} eligible of {{ c.counts.records | py }}{% if c.counts.referral is not none %}, {{ c.counts.referral | py }} of them by referral only{% endif %}.</p>
+        {% if c.top %}<ol class="engine-top">
+          {% for x in c.top %}<li data-option="{{ x.id | py }}" data-score="{{ x.score | py }}"><strong>{{ x.name | org }}</strong> — {{ x.score | py }} points:
+            {% for k in x.components %}<span class="engine-pt" data-factor="{{ k.id | py }}" data-points="{{ k.points | py }}" data-value="{{ k.value | py }}">{{ k.label | py }} {{ k.points | py }} ({% if k.reads %}{{ k.reads | words | py }}: {% endif %}{{ k.value | py }}{% if k.note %}; {{ k.note | py }}{% endif %})</span>{% if not loop.last %} + {% endif %}{% endfor %}
+            {% if x.check %}<span class="engine-check" style="display:block;font-size:.78rem;color:var(--muted)">Check before a referral: <span data-verbatim="a record's own words">{{ x.check | org }}</span></span>{% endif %}
+            <details style="margin-top:4px"><summary style="font-size:.78rem">Reasoning trace</summary><ul style="font-size:.78rem;color:var(--muted)">{% for line in x.trace %}<li>{{ line | words | py }}</li>{% endfor %}</ul></details></li>
+          {% endfor %}</ol>{% if c.more %}<p style="font-size:.78rem;color:var(--dim)">{{ c.more | py }} more eligible, ranked lower.</p>{% endif %}
+        {% else %}<p style="color:var(--muted)">No option in this set fits now — see why below.</p>{% endif %}
+        {% if c.confirm %}<p style="font-size:var(--sm)"><strong>To confirm before a referral:</strong> {% for x in c.confirm %}{{ x.name | org }} — <span data-verbatim="a record's own words">{{ x.detail | org }}</span>{% if x.check %} (check before a referral: <span data-verbatim="a record's own words">{{ x.check | org }}</span>){% endif %}{% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
+        {% if c.excluded %}<details><summary style="font-size:.78rem">Excluded ({{ c.excluded | length | py }})</summary><ul style="font-size:.78rem;color:var(--muted)">{% for x in c.excluded %}<li>{{ x.name | org }} — {% if x.closure %}{{ x.detail_h | built }}{% else %}{{ x.gate | words | py }}: {{ x.detail | words | py }}{% endif %}</li>{% endfor %}</ul></details>{% endif %}
+      </div>
+      {% endfor %}
+    </details>
+    {% endfor %}
+    {% if PR.reroute %}
+    <h4 style="margin-top:16px">Rerouted at the curveball</h4>
+    <ul data-engine-reroute style="font-size:var(--sm)">{% for r in PR.reroute %}<li><strong>{{ r.name | org }}</strong>, {{ r.set_label | py }}: {% if r.missing %}{{ r.left[0].why_h | built }} — Block 1's top {{ PR.top_n | built }} were {% for x in r.left %}{{ x.name | org }}{% if not loop.last %}, {% endif %}{% endfor %}.</li>{% else %}{% for x in r.left %}{{ x.name | org }} left the top {{ PR.top_n | built }} — {{ x.why_h | built }}{% if not loop.last %}; {% endif %}{% endfor %}{% if r.replaced_by %}. Now in the top {{ PR.top_n | built }}: {% for x in r.replaced_by %}{{ x.name | org }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}.</li>{% endif %}{% endfor %}</ul>
+    {% elif PR.is_block2 and PR.reroute_status == 'ok' %}<p style="font-size:var(--sm)">At the curveball, no option left anyone's top {{ PR.top_n | py }}.</p>{% endif %}
+    <h4 style="margin-top:16px">Fairness check</h4>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl" data-engine-fairness>
+      <thead><tr><th>Person</th><th>Option set</th><th class="num">Records</th><th class="num">Eligible</th><th class="num">By referral only</th><th class="num">Full</th><th class="num">Closed or not open now</th><th class="num">Not for this person</th><th class="num">To confirm</th></tr></thead>
+      <tbody>{% for r in PR.fairness %}<tr data-fair-set="{{ r.set | py }}" data-fair-person="{{ r.preset | py }}"><td>{{ r.name | py }}</td><td>{{ r.set_label | py }}</td><td class="num">{{ r.records | py }}</td><td class="num">{{ r.eligible | py }}</td><td class="num">{{ (r.referral if r.referral is not none else '—') | built }}</td><td class="num">{{ r.full | py }}</td><td class="num">{{ r.closed | py }}</td><td class="num">{{ r.other | py }}</td><td class="num">{{ r.confirm | py }}</td></tr>{% endfor %}</tbody>
+    </table>
+    </div>
+    <p style="font-size:.78rem;color:var(--dim);margin-top:6px">Each record is counted once, by the first gate it fails: eligible + full + closed or not open now + not for this person + to confirm = the records. By referral only is a part of eligible.</p>
+    {% if PR.worst %}<p style="font-size:var(--sm);margin-top:6px">Fewest eligible options among the people a set serves: {% for w in PR.worst %}{{ w.set | py }} — {{ w.names | join(', ') | py }} ({{ w.eligible | py }} eligible){% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
+    {% else %}<p style="font-size:var(--sm);margin-top:10px">No person is named for this table, so it has no worked cases.</p>
+    {% endif %}
+    <div class="note-box" style="margin-top:10px"><strong data-cov-skip>Safeguards.</strong> The weights are on this page, and nothing outside the table changes a score. The engine ranks; people decide: in the pilot a navigator or case manager confirms every match with the person before a referral. Every ranking and its trace are saved with the run: the records, the values read and the points. An attribute the brief does not state is marked assumed, and an unknown one never counts as a pass.{% if PR.people %} The fairness check above counts every record once for each person and option set.{% endif %}</div>
+  </div>
+  {% endif %}
+</section>
+
+{# ================================================================= #}
+{# 04 FINANCIALS — Tabbed scenarios with Chart.js + P&L tables         #}
+{# ================================================================= #}
+<section id="financials" class="section" data-sec="financials"{{ CA.get('financials', '') | built }}>
+  <div class="section-label" data-cov-skip><span class="section-num" data-num-exempt="a section number">04</span>Financial Model</div>
+  <h2 class="section-title">{{ financial_title | default("PENDING — Financial Analysis") | built }}</h2>
+
+  <div data-tabs>
+    <div class="tablist" role="tablist" aria-label="Financial scenarios" data-cov-skip>
+      <button role="tab" aria-selected="true" aria-controls="fin-base" id="tab-base">{{ scenarios.base.tab_label | default("Base Case") | built }}</button>
+      <button role="tab" aria-selected="false" aria-controls="fin-bull" id="tab-bull">{{ scenarios.bull.tab_label | default("Optimistic") | built }}</button>
+      <button role="tab" aria-selected="false" aria-controls="fin-bear" id="tab-bear">{{ scenarios.bear.tab_label | default("Conservative") | built }}</button>
+    </div>
+
+    {# --- BASE CASE --- #}
+    <div id="fin-base" role="tabpanel" aria-labelledby="tab-base">
+      <div class="grid">
+        <div class="card s7">
+          <h3 data-num-exempt="a label: the contract's years">{{ scenarios.base.chart_title | default("3-Year Revenue and Cost Trajectory") | built }}</h3>
+          <p style="color:var(--muted);margin-bottom:12px;font-size:var(--sm)">{{ scenarios.base.description | default("") | built }}</p>
+          <div style="height:400px"><canvas id="chart-base"></canvas></div>
+        </div>
+        <div class="card s5">
+          <h3 data-prov-block="the financial model (Python)">{{ scenarios.base.table_title | default("Base Case P&L") | built }}</h3>
+          <table class="tbl" data-prov-block="the financial model (Python)">
+            <thead><tr><th>Line Item</th><th class="num">Year 1</th><th class="num">Year 2</th><th class="num">Year 3</th></tr></thead>
+            <tbody>
+              {% for row in scenarios.base.pl_rows | default([]) %}
+              <tr{% if row.css_class %} class="{{ row.css_class | built }}"{% endif %}>
+                <td>{{ row.label | built }}</td>
+                {% for val in row.cells %}
+                <td class="num"{% if row.colors and row.colors[loop.index0] %} style="color:var(--{{ row.colors[loop.index0] | py }})"{% endif %}>{{ val | built }}</td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% if scenarios.base.footnote %}<p style="margin-top:8px;font-size:.75rem;color:var(--dim)" data-prov-block="the financial model (Python)">{{ scenarios.base.footnote | built }}</p>{% endif %}
+        </div>
+      </div>
+    </div>
+
+    {# --- OPTIMISTIC --- #}
+    <div id="fin-bull" role="tabpanel" aria-labelledby="tab-bull" hidden>
+      <div class="grid">
+        <div class="card s7">
+          <h3>{{ scenarios.bull.chart_title | default("Optimistic Scenario") | built }}</h3>
+          <p style="color:var(--muted);margin-bottom:8px">{{ scenarios.bull.description | default("") | built }}</p>
+          <div style="height:400px"><canvas id="chart-bull"></canvas></div>
+        </div>
+        <div class="card s5">
+          <h3 data-prov-block="the financial model (Python)">{{ scenarios.bull.table_title | default("Optimistic P&L") | built }}</h3>
+          <table class="tbl" data-prov-block="the financial model (Python)">
+            <thead><tr><th>Line Item</th><th class="num">Year 1</th><th class="num">Year 2</th><th class="num">Year 3</th></tr></thead>
+            <tbody>
+              {% for row in scenarios.bull.pl_rows | default([]) %}
+              <tr{% if row.css_class %} class="{{ row.css_class | built }}"{% endif %}>
+                <td>{{ row.label | built }}</td>
+                {% for val in row.cells %}
+                <td class="num"{% if row.colors and row.colors[loop.index0] %} style="color:var(--{{ row.colors[loop.index0] | py }})"{% endif %}>{{ val | built }}</td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {# --- CONSERVATIVE --- #}
+    <div id="fin-bear" role="tabpanel" aria-labelledby="tab-bear" hidden>
+      <div class="grid">
+        <div class="card s7">
+          <h3>{{ scenarios.bear.chart_title | default("Conservative Scenario") | built }}</h3>
+          <p style="color:var(--muted);margin-bottom:8px">{{ scenarios.bear.description | default("") | built }}</p>
+          <div style="height:400px"><canvas id="chart-bear"></canvas></div>
+        </div>
+        <div class="card s5">
+          <h3 data-prov-block="the financial model (Python)">{{ scenarios.bear.table_title | default("Conservative P&L") | built }}</h3>
+          <table class="tbl" data-prov-block="the financial model (Python)">
+            <thead><tr><th>Line Item</th><th class="num">Year 1</th><th class="num">Year 2</th><th class="num">Year 3</th></tr></thead>
+            <tbody>
+              {% for row in scenarios.bear.pl_rows | default([]) %}
+              <tr{% if row.css_class %} class="{{ row.css_class | built }}"{% endif %}>
+                <td>{{ row.label | built }}</td>
+                {% for val in row.cells %}
+                <td class="num"{% if row.colors and row.colors[loop.index0] %} style="color:var(--{{ row.colors[loop.index0] | py }})"{% endif %}>{{ val | built }}</td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# ── BUILD B1 (D4, P2.3): the use of funds — the financial model's Year 1 lines; the model names who runs each line and when ── #}
+  {% set UF = funds | default({}) %}
+  {% if UF.show %}
+  <div class="card s12" id="sec-use-of-funds" data-sec="use-of-funds"{{ CA.get('use-of-funds', '') | built }} data-prov-block="the use of funds (Python's financial model)" data-reveal style="margin-top:var(--gap)">
+    <h3>Use of funds</h3>
+    <p style="color:var(--muted);font-size:var(--sm);margin-bottom:10px">{{ UF.period | py }}</p>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl" data-funds-total="{{ UF.total_n | py }}" data-funds-contract="{{ UF.contract_n | py }}">
+      <thead><tr><th>Line</th><th class="num">Amount</th><th>Owner</th><th>Release cadence</th><th>Leading indicator</th></tr></thead>
+      <tbody>
+        {% for l in UF.lines %}<tr data-line="{{ l.key | py }}" data-amount="{{ l.amount_n | py }}"><td>{{ l.label | py }}</td><td class="num">{{ l.amount | py }}</td><td>{{ l.owner_h | default(l.owner | e) | built }}</td><td>{{ l.cadence_h | default(l.cadence | e) | built }}</td><td>{{ l.indicator_h | default(l.indicator | e) | built }}</td></tr>
+        {% if l.key == 'personnel' %}{% for r in UF.roles %}<tr data-role-amount="{{ r.amount_n | py }}"><td style="padding-left:22px;color:var(--muted)">{{ r.role_h | built }}{% if r.count != 1 %} × {{ r.count | py }}{% endif %}</td><td class="num" style="color:var(--muted)">{{ r.amount | py }}</td><td colspan="3"></td></tr>{% endfor %}{% endif %}
+        {% endfor %}
+        <tr class="total"{% if UF.over %} data-funds-over="{{ (UF.total_n - UF.contract_n) | built }}"{% endif %}><td>Total</td><td class="num">{{ UF.total | py }}</td><td colspan="3">{% if UF.over %}{{ UF.over_text | py }}{% else %}= {{ UF.budget_phrase | py }}{% endif %}</td></tr>
+      </tbody>
+    </table>
+    </div>
+    {% if UF.scale_note %}<p style="font-size:.78rem;color:var(--dim);margin-top:6px">{{ UF.scale_note | py }}</p>{% endif %}
+    {% if UF.alloc %}
+    <h4 style="margin-top:14px">The {{ UF.alloc.reserve | py }} marketing reserve</h4>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl" data-alloc-sum="{{ UF.alloc.sum_n | py }}" data-alloc-reserve="{{ UF.alloc.reserve_n | py }}">
+      <thead><tr><th>Item</th><th class="num">Amount</th><th>Who it reaches</th><th>Leading indicator</th></tr></thead>
+      <tbody>
+        {% for a in UF.alloc.rows %}<tr data-alloc-amount="{{ a.amount_n | built }}"><td>{{ a.item_h | default(a.item | model) | built }}</td><td class="num">{{ a.amount | py }}</td><td>{{ a.audience_h | default(a.audience | model) | built }}</td><td>{{ a.indicator_h | default(a.indicator | model) | built }}</td></tr>{% endfor %}
+        {% if UF.alloc.diff_n %}<tr class="total" data-alloc-diff="{{ UF.alloc.diff_n | py }}"><td>{{ UF.alloc.diff_label | py }}</td><td class="num">{{ UF.alloc.diff | py }}</td><td colspan="2"></td></tr>{% endif %}
+        <tr class="total"><td>The brief's reserve</td><td class="num">{{ UF.alloc.reserve | py }}</td><td colspan="2">{{ UF.alloc.status | py }}</td></tr>
+      </tbody>
+    </table>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if (sroi_rows | default([]) and sroi_display) or materiality | default([]) %}
+  {% set SA = sroi_adj | default({}) %}
+  <div class="card s12{% if sroi_below %} sroi-below{% endif %}" id="sec-sroi" data-sec="sroi"{{ CA.get('sroi', '') | built }} data-reveal style="margin-top:var(--gap)">
+    <h3>Social Return on Investment — Derivation</h3>
+    {% if sroi_rows | default([]) and sroi_display %}<p style="color:var(--muted);font-size:var(--sm);margin-bottom:10px" data-cov-skip>The analysis is {{ sroi_method | default("a social return on investment") | py }}. Each outcome is valued with a financial proxy and counted from each year's people served (its rate × that year's people), over the years it lasts — fading by the drop-off of {{ SA.drop_off_rate | built }} a year from its second year — then adjusted for deadweight ({{ SA.deadweight | built }}), attribution ({{ SA.attribution | built }}) and displacement ({{ SA.displacement | built }}) and discounted at {{ SA.discount_rate | built }} a year{% if sroi_rate_source %} ({{ sroi_rate_source | py }}){% endif %}. The cost is the P&amp;L's three years, discounted the same way. Outcomes are counted over {{ sroi_horizon | built }} years.</p>
+    {% if sroi_below %}<p class="note-box" style="margin-bottom:10px" data-cov-skip data-num-exempt="the ratio's break-even point"><strong>Below 1:</strong> on the outcomes modeled, the program returns less counted social value than it costs. This is the ratio Python computes from the analysis's own outcomes; the sensitivity analysis shows what moves it.</p>{% endif %}
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl">
+      <thead><tr><th>Outcome</th><th>Value of one outcome</th><th class="num">Rate a year</th><th class="num">Lasts (years)</th><th class="num">Outcomes (Year 1 · Year 2 · Year 3)</th><th class="num">Year 1 value</th><th>Source</th></tr></thead>
+      <tbody>
+        {% for row in sroi_rows %}
+        <tr><td>{{ row.category | built }}</td><td>{{ row.proxy | built }}</td><td class="num">{{ row.rate | built }}</td><td class="num">{{ row.duration | built }}</td><td class="num" data-prov-block="the SROI model (Python, on the analysis's outcomes)">{{ row.outcomes | py }}</td><td class="num" data-prov-block="the SROI model (Python, on the analysis's outcomes)">{{ row.annual | py }}</td><td style="font-size:.75rem;color:var(--dim)"{% if row.basis_of %} data-basis-of="{{ row.basis_of | py }}"{% endif %}>{{ row.source | built }}</td></tr>
+        {% endfor %}
+        <tr class="total"><td colspan="5" data-cov-skip>Present value of the counted social value</td><td class="num" style="color:var(--good)">{{ sroi_pv_total | default("—") | built }}</td><td></td></tr>
+        <tr class="total"><td colspan="5" data-cov-skip>Present value of the three years' cost</td><td class="num">{{ sroi_pv_cost | default("—") | built }}</td><td></td></tr>
+        <tr class="total"><td colspan="5" data-cov-skip><strong>SROI ratio{% if sroi_partial %} — partial{% endif %}</strong></td><td class="num" style="color:var(--{% if sroi_below %}warn{% else %}good{% endif %});font-size:1.1rem"><strong>{{ sroi_display | default("—") | built }}</strong></td><td></td></tr>{% if sroi_partial %}<tr class="total" data-sroi-partial><td colspan="7" data-cov-skip>{{ sroi_partial_line | built }}</td></tr>{% endif %}
+        {% for s in sroi_sens | default([]) %}<tr class="total" data-sroi-sens><td colspan="5" data-cov-skip>At a {{ s.rate | built }} discount rate{% if loop.first %} ({{ sroi_sens_source | py }}){% endif %}</td><td class="num">{{ s.ratio | built }}</td><td></td></tr>{% endfor %}
+      </tbody>
+    </table>
+    </div>{% endif %}
+    {% if sroi_notes %}<ul data-num-exempt="Python's notes on the analysis's outcomes" style="font-size:.78rem;color:var(--dim);margin:8px 0 0 18px">{% for n in sroi_notes %}<li>{{ n | py }}</li>{% endfor %}</ul>{% endif %}{% if materiality | default([]) %}<h4 style="margin:14px 0 6px" data-cov-skip>Outcomes by materiality</h4><p style="color:var(--muted);font-size:var(--sm);margin-bottom:8px" data-cov-skip>{{ materiality_intro | py }}</p><div style="overflow-x:auto;-webkit-overflow-scrolling:touch" data-materiality><table class="tbl"><thead><tr><th>Outcome</th><th>Status</th><th>Why</th></tr></thead><tbody>{% for m in materiality %}<tr data-status="{{ m.status_key | py }}"><td>{{ m.outcome | built }}</td><td>{{ m.status | py }}</td><td>{{ m.why | built }}</td></tr>{% endfor %}</tbody></table></div>{% endif %}
+  </div>
+  {% endif %}
+
+  {# ── What-If Simulator ── #}
+  {% if simulator_model %}
+  {% set SL = sim_labels | default({}) %}
+  <div class="sim-panel" data-reveal id="simPanel" data-sec="simulator" data-sec-items="3"{{ CA.get('simulator', '') | built }}>
+    <div class="sim-header">
+      <h3>📊 What-If Scenario Simulator</h3>
+      <span class="sim-try" title="Interactive — drag the sliders"></span>
+      <button class="sim-reset" id="simReset" aria-label="Reset to base case">↺ Reset to Base Case</button>
+    </div>
+    <div class="sim-grid">
+      <!-- Left: slider controls -->
+      <div class="sim-controls">
+        <div class="sim-slider-group">
+          <label for="simBen">{{ SL.served | default('Beneficiaries Served (Year 1)') | py }} <span class="sim-slider-val" id="simBenVal"></span></label>
+          <input type="range" id="simBen" class="sim-slider"
+                 aria-label="{{ SL.served | default('Beneficiaries Served (Year 1)') | py }}">
+          <div class="sim-ticks" id="simBenTicks"></div>
+        </div>
+        <div class="sim-slider-group">
+          <label for="simCV">{{ SL.budget | default('Budget') | py }} <span class="sim-slider-val" id="simCVVal"></span></label>
+          <input type="range" id="simCV" class="sim-slider"
+                 aria-label="{{ SL.budget | default('Budget') | py }} (Year 1)">
+          <div class="sim-ticks" id="simCVTicks"></div>
+        </div>
+      </div>
+      <!-- Right: output metrics + chart -->
+      <div class="sim-outputs">
+        <div class="sim-metrics" aria-live="polite">
+          <div class="sim-metric" id="simCpbCard">
+            <div class="sim-metric-label">{{ SL.cost | default('Cost per Beneficiary') | py }}</div>
+            <div class="sim-metric-value" id="simCpbVal">—</div>
+            <div class="sim-metric-delta" id="simCpbDelta"></div>
+          </div>
+          <div class="sim-metric" id="simSurCard">
+            <div class="sim-metric-label">Annual Surplus</div>
+            <div class="sim-metric-value" id="simSurVal">—</div>
+            <div class="sim-metric-delta" id="simSurDelta"></div>
+          </div>
+          <div class="sim-metric" id="simSroiCard"{% if not simulator_model.has_sroi %} hidden{% endif %}>
+            <div class="sim-metric-label">Est. SROI{% if sroi_partial %} (partial){% endif %}</div>
+            <div class="sim-metric-value" id="simSroiVal">—</div>
+            <div class="sim-metric-delta" id="simSroiDelta"></div>
+          </div>
+        </div>
+        <div class="sim-chart-wrap">
+          <canvas id="simChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <details class="sim-method" data-prov-block="the simulator's formulas (Python)">
+      <summary>⚙️ Methodology & Formulas</summary>
+      {% set ir = indirect_rate_pct | default(15) %}
+      <p>Total Costs = (Personnel + Technology + Ops + Outreach) × {{ "%.2f" | format(1 + ir / 100) | built }}<br>
+      {{ SL.cost | default('Cost per Beneficiary') | py }} = Total Costs ÷ {{ SL.Units | default('Beneficiaries') | py }}<br>
+      Surplus = {{ SL.budget | default('Budget') | py }} − Total Costs<br>
+      SROI = ({{ SL.Units | default('Beneficiaries') | py }} × Social Value Proxy) ÷ Total Costs<br>
+      <em>Indirect rate: {{ ir | py }}% of modified total direct costs{% if ir == 15 %} (the de minimis rate, 2 CFR 200.414(f)){% endif %}. Fixed costs constant; variable costs scale linearly. The SROI here scales the page's computed ratio with people served and cost; it is never capped.</em></p>
+    </details>
+    <!-- Print fallback: hidden on screen, shown in @media print -->
+    <div class="sim-print" id="simPrint">
+      <strong>What-If Simulator (current position):</strong>
+      {{ SL.Units | default('Beneficiaries') | py }}: <span id="simPrintBen">—</span> ·
+      {{ SL.budget | default('Budget') | py }}: <span id="simPrintCV">—</span> ·
+      {{ SL.cost | default('Cost per Beneficiary') | py }}: <span id="simPrintCPB">—</span> ·
+      Surplus: <span id="simPrintSur">—</span> ·
+      SROI: <span id="simPrintSROI">—</span>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="note-box" id="sec-sensitivity" data-sec="sensitivity"{{ CA.get('sensitivity', '') | built }} data-reveal>
+    <strong data-cov-skip>Sensitivity Analysis:</strong> {{ sensitivity_text | default("PENDING — Sensitivity analysis.") | built }}
+  </div>
+  {% set SG = sensitivity_grid | default({}) %}
+  {% if SG.show %}
+  <style>/* BUILD B3 (D12): the sensitivity grid */#sec-sensitivity-grid .grid-base{outline:2px solid var(--cyan);outline-offset:-2px;font-weight:700}#sec-sensitivity-grid td,#sec-sensitivity-grid th{white-space:nowrap}#sec-sensitivity-grid .tbl-wrap{overflow-x:auto}</style>
+  <div class="card s12" id="sec-sensitivity-grid" data-sec="sensitivity-grid"{{ CA.get('sensitivity-grid', '') | built }} data-reveal style="margin-top:var(--gap)">
+    <h3>{% if (headlines | default({})).get("sensitivity-grid") %}{{ headlines["sensitivity-grid"] | built }} <span class="src" data-cov-skip>— the sensitivity grid: what moves the headline figures</span>{% else %}The sensitivity grid: what moves the headline figures{% endif %}</h3>
+    <p class="src" data-cov-skip data-num-exempt="the grid's own explanation (a fifth, a step of one)">Each assumption moved a fifth down and a fifth up, and the financial model run again on each; sorted by the largest move of any headline figure (high less low, over the base case). A share stays between none and all; a whole-number input (an outcome's years, a count the analysis gives whole) stays whole, and when a fifth would not move it, it moves by one (the row says &plusmn;1); a staff count is a number of full-time posts and may be fractional.</p>
+    <div class="tbl-wrap"><table class="tbl" data-grid-rows data-prov-block="the sensitivity grid (Python's financial model on each varied input)">
+      <thead><tr><th>Assumption</th><th>Base</th><th>Low / high</th>{% for f in SG.figs %}<th data-fig-head="{{ f.id | built }}">{{ f.label | built }}<br><span class="src">base {{ f.base | built }}</span></th>{% endfor %}<th>Swing</th></tr></thead>
+      <tbody>{% for r in SG.rows %}<tr data-input="{{ r.id | py }}" data-where="{{ r.where | py }}" data-v-low="{{ r.v_low | py }}" data-v-high="{{ r.v_high | py }}" data-swing="{{ r.swing | py }}"><td>{{ r.label | built }}</td><td>{{ r.base | built }}</td><td>{{ r.low_shown | built }} / {{ r.high_shown | built }}</td>{% for c in r.cells %}<td data-fig="{{ c.fig | built }}" data-low="{{ c.low | py }}" data-high="{{ c.high | py }}">{{ c.low_shown | built }} – {{ c.high_shown | built }}</td>{% endfor %}<td>{{ r.swing_pct | built }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% if SG.more %}<p class="src">And <span data-num-exempt="a count of this list">{{ SG.more | py }}</span> more assumptions that move a figure less, each in the registry.</p>{% endif %}
+    {% if SG.still %}<p class="src">Move no headline figure: {{ SG.still | join(', ') | built }}.</p>{% endif %}
+    {% if SG.grid %}{% set G = SG.grid %}
+    <h4 style="margin-top:14px">{{ G.fig_label | built }}: {{ G.x.label | built }} across, {{ G.y.label | built }} down</h4>
+    <div class="tbl-wrap"><table class="tbl" data-grid-5x5 data-x="{{ G.x.id | py }}" data-y="{{ G.y.id | py }}" data-fig="{{ G.fig | built }}" data-prov-block="the sensitivity grid (Python's financial model on each varied input)">
+      <thead><tr><th></th>{% for s in G.x_steps %}<th>{{ s | built }}</th>{% endfor %}</tr></thead>
+      <tbody>{% for row in G.rows %}<tr><th>{{ row.label | built }}</th>{% for c in row.cells %}<td{% if c.base %} class="grid-base"{% endif %} data-v="{{ c.v | py }}" data-vx="{{ c.vx | py }}" data-vy="{{ c.vy | py }}">{{ c.shown | built }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+    </table></div>
+    <p class="src">Each cell is the financial model run with both assumptions set; the outlined cell is the base case.</p>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+
+{# ================================================================= #}
+{# 05 IMPLEMENTATION — Phased plan + Risk register + Renewal trigger   #}
+{# ================================================================= #}
+<section id="plan" class="section" data-sec="plan"{{ CA.get('plan', '') | built }}>
+  <div class="section-label" data-cov-skip><span class="section-num" data-num-exempt="a section number">05</span>Delivery Plan</div>
+  <h2 class="section-title">{{ plan_title | default("PENDING — Implementation Plan") | built }}</h2>
+  {% if pilot_stated is defined and not pilot_stated %}<p class="src" style="margin-bottom:10px" data-cov-skip data-no-pilot>The brief states no pilot length: every timeline in this plan is the plan's own proposal.</p>{% endif %}
+
+  <div data-accordion>
+    {% for phase in phases | default([]) %}
+    <details{% if loop.first %} open{% endif %}>
+      <summary>{{ phase.summary | built }}{% if phase.cb_mark %} <span class="cb-mark" data-cb-status="{{ phase.cb_mark.status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ phase.cb_mark.words | py }}</span>{% endif %}</summary>
+      <div class="inner">
+        {{ phase.content | built }}
+        <div style="margin-top:10px">
+          <div style="font-size:var(--sm);color:var(--dim);margin-bottom:4px">{{ phase.timeline_label | built }} <span style="opacity:.7">{{ phase.timeline_suffix | default("of implementation plan") | built }}</span></div>
+          <div class="meter" style="--pct:{{ phase.meter_pct | py }}"></div>
+        </div>
+      </div>
+    </details>
+    {% endfor %}
+  </div>
+
+  {# ── BUILD B3 (D4, P2.4): the pilot KPI framework — the deliverables call's indicators; the pilot's spend in Python ── #}
+  {% set KF = kpi_framework | default({}) %}
+  {% if KF.show %}
+  <div class="card s12" id="sec-kpi-framework" data-sec="kpi-framework"{{ CA.get('kpi-framework', '') | built }} data-reveal style="margin-top:var(--gap)">
+    <h3>{% if (headlines | default({})).get("kpi-framework") %}{{ headlines["kpi-framework"] | built }} <span class="src" data-cov-skip>— the pilot KPI framework</span>{% else %}The pilot KPI framework{% endif %}</h3>
+    {% if KF.no_pilot %}<p class="src" data-no-pilot-kpi>The brief states no pilot length: each target is by a day of Year 1.</p>{% endif %}
+    {% if KF.rows %}
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+    <table class="tbl" data-kpi-table>
+      <thead><tr><th>Indicator</th><th>Leading or lagging</th><th>Baseline</th><th class="num">Target</th><th class="num">By day</th><th>Cadence</th><th>Owner (fund line)</th><th>Source</th></tr></thead>
+      <tbody>{% for r in KF.rows %}<tr data-kpi-type="{{ r.type | built }}"><td>{{ r.indicator | built }}{% if CBM.ids[r.id] %} <span class="cb-mark" data-cb-status="{{ CBM.ids[r.id].status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ CBM.ids[r.id].words | py }}</span>{% endif %}{% if r.basis %}<div class="src">{{ r.basis | built }}</div>{% endif %}</td><td>{{ r.type | built }}</td><td>{{ r.baseline | built }}</td><td class="num">{{ r.target | built }}</td><td class="num">{{ r.day | built }}</td><td>{{ r.cadence | built }}</td><td>{{ r.owner | built }} <span class="src">({{ r.line | built }})</span></td><td>{{ r.source | words_html | built }}</td></tr>{% endfor %}</tbody>
+    </table>
+    </div>
+    {% endif %}
+    {% if KF.unread %}<p class="src" data-kpi-unread>No early warning or trigger reads: {{ KF.unread | join('; ') | built }}.</p>{% endif %}
+    {% if KF.missing %}<p class="note-box" style="margin-top:8px">Fewer than two {{ KF.missing | join(' and ') | built }} indicators passed the checks; the framework asks for at least two of each.</p>{% endif %}
+    {% if not KF.words %}<p class="src" data-no-words>The indicators are the analysis's words; they were not written this run{% if KF.status %} ({{ KF.status | py }}){% endif %}.{% if KF.spend %} The pilot's spend below is Python's.{% endif %}</p>{% endif %}
+    {% if KF.spend %}
+    <h4 style="margin-top:12px">The pilot's spend — {{ KF.pilot | built }} days of each Year-1 line, at even spending</h4>
+    <table class="tbl" data-prov-block="the pilot's spend (Python: each line × pilot days ÷ 365)">
+      <thead><tr><th>Line</th><th class="num">The pilot's share</th><th>Release cadence</th></tr></thead>
+      <tbody>{% for s in KF.spend %}<tr><td>{{ s.label | built }}</td><td class="num">{{ s.amount | built }}</td><td>{{ s.cadence | built }}</td></tr>{% endfor %}
+      <tr class="total"><td>Total</td><td class="num">{{ KF.spend_total | built }}</td><td>each line's release cadence says when its money goes out</td></tr></tbody>
+    </table>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if risks | default([]) %}
+  <details id="sec-risks" data-sec="risks"{{ CA.get('risks', '') | built }} style="margin-top:var(--gap)">
+    <summary>Key Risks and Mitigations</summary>
+    <div class="inner">
+      <table class="tbl">
+        <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th><th>Early warning</th></tr></thead>
+        <tbody>
+          {% for r in risks %}
+          <tr><td>{{ r.risk | built }}{% if r.cb_mark %} <span class="cb-mark" data-cb-status="{{ r.cb_mark.status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ r.cb_mark.words | py }}</span>{% endif %}</td><td>{{ r.likelihood | built }}</td><td>{{ r.impact | built }}</td><td>{{ r.mitigation | built }}</td><td data-early-warning>{{ (early_warnings | default([]))[loop.index0] | default("—") | built }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </details>
+  {% endif %}
+
+  {% if renewal_text %}
+  <div class="note-box" id="sec-renewal" data-sec="renewal"{{ CA.get('renewal', '') | built }} data-reveal style="margin-top:var(--gap)">
+    <strong data-cov-skip>{{ renewal_label | default("Renewal Trigger") | built }}:</strong> {{ renewal_text | built }}
+  </div>
+  {% endif %}
+
+  {# ── BUILD B3 (D7, P2.7): renewal gates — X of Y indicators at target by Day N; each indicator's evidence tier set by Python ── #}
+  {% set RGt = renewal_gates | default({}) %}
+  {% if RGt.show %}
+  <div class="card s12" id="sec-renewal-gates" data-sec="renewal-gates"{{ CA.get('renewal-gates', '') | built }} data-reveal style="margin-top:var(--gap)">
+    <h3>{% if (headlines | default({})).get("renewal-gates") %}{{ headlines["renewal-gates"] | built }} <span class="src" data-cov-skip>— the renewal gates</span>{% else %}The renewal gates{% endif %}</h3>
+    {% if RGt.gate %}<p class="bluf">Renew if at least {{ RGt.gate.x | built }} of the <span data-prov-block="the KPI framework's count (Python)">{{ RGt.gate.y | py }}</span> indicators are at target by day {{ RGt.gate.day | built }}.</p>
+    {% elif RGt.rows %}<p class="src">The analysis set no valid gate (how many indicators, by which day); the indicators and their tiers are below.</p>{% endif %}
+    {% if RGt.rows %}
+    <table class="tbl" data-gates-table>
+      <thead><tr><th>Indicator</th><th>Leading or lagging</th><th class="num">Target</th><th class="num">By day</th><th>Evidence tier</th><th>Source</th></tr></thead>
+      <tbody>{% for r in RGt.rows %}<tr data-tier="{{ r.tier | built }}"><td>{{ r.indicator | built }}</td><td>{{ r.type | built }}</td><td class="num">{{ r.target | built }}</td><td class="num">{{ r.day | built }}</td><td><strong>{{ r.tier | built }}</strong></td><td>{{ r.source | words_html | built }}</td></tr>{% endfor %}</tbody>
+    </table>
+    <p class="src">Evidence tiers, set by Python from each indicator's source: A — re-read from data the city already publishes (an endpoint of this run); B — counted in the program's own records; C — estimated (its baseline is an assumption).</p>
+    {% elif not RGt.words %}<p class="src" data-no-words>The renewal gates come from the KPI framework, the analysis's words; they were not written this run.</p>{% endif %}
+  </div>
+  {% endif %}
+</section>
+
+{# ================================================================= #}
+{# 06 APPENDIX — Sources, Methodology, AI Process, Assumptions        #}
+{# ================================================================= #}
+{% set HN = honesty | default({}) %}
+{% if HN.show %}
+<section id="sec-honesty" class="section" data-sec="honesty"{{ CA.get('honesty', '') | built }}>
+  <div class="section-label" data-cov-skip><span class="section-num" data-num-exempt="a section number">06</span>What could prove us wrong</div>
+  <h2 class="section-title">{% if (headlines | default({})).get("honesty") %}{{ headlines["honesty"] | built }} <span class="src" data-cov-skip>— the strongest evidence, the weakest assumptions, and what would sink the plan</span>{% else %}The strongest evidence, the weakest assumptions, and what would sink the plan{% endif %}</h2>
+  <div class="grid">
+    <div class="card s6" data-reveal data-honesty="strong">
+      <h3>Strongest evidence</h3>
+      <p class="src" data-cov-skip>The figures read from the data or computed from it by Python that the evidence and the summary cite.</p>
+      {% if HN.strong %}<ul style="font-size:var(--sm);margin-left:18px">{% for s in HN.strong %}<li>{{ s.span | built }} {{ s.label | built }} <span class="src" data-zone="provenance" data-zone-name="source-note" data-num-exempt="a figure's formula or source, as the registry holds it">({{ s.kind | lower | built }}: {{ s.source | built }})</span></li>{% endfor %}</ul>
+      {% else %}<p>The evidence and the summary cite no figure from the data this run.</p>{% endif %}
+    </div>
+    <div class="card s6" data-reveal data-honesty="weak">
+      <h3>Weakest assumptions</h3>
+      <p class="src" data-cov-skip>{% if HN.ranked %}Each assumption moved by a fifth either way, ranked by how far it moves the headline figures (the sensitivity grid).{% else %}The assumptions the figures rest on, each with its basis; not ranked this run.{% endif %}</p>
+      <ul style="font-size:var(--sm);margin-left:18px">{% for w in HN.weak %}<li>{{ w.span | built }} {{ w.label | built }}{% if w.swing %} — {{ w.swing | built }}{% endif %} <span class="src" data-zone="provenance" data-zone-name="source-note" data-num-exempt="an assumption's basis, as the registry holds it">({{ w.basis | built }})</span></li>{% endfor %}
+      {% if HN.more %}<li class="src">and <span data-num-exempt="a count of this list">{{ HN.more | py }}</span> more, each in the registry in the appendix</li>{% endif %}</ul>
+    </div>
+  </div>
+  {% if HN.thesis %}
+  <div class="card s12" data-reveal data-honesty="thesis" style="margin-top:var(--gap)">
+    <h3>The thesis, what would prove it wrong, and its tripwire</h3>
+    <p class="bluf">{{ HN.thesis.claim | built }}{% if CBM.ids["thesis.1"] %} <span class="cb-mark" data-cb-status="{{ CBM.ids["thesis.1"].status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ CBM.ids["thesis.1"].words | py }}</span>{% endif %}</p>
+    <p><strong>What would prove it wrong:</strong> {{ HN.thesis.kill | built }}</p>
+    <p data-tripwire><strong>Tripwire:</strong> if &ldquo;{{ HN.thesis.indicator | built }}&rdquo; is {{ ("above" if HN.thesis.direction == "above" else "below") | built }} {{ HN.thesis.threshold | built }} by day {{ HN.thesis.day | built }}: {{ HN.thesis.response | built }}</p>
+  </div>
+  {% elif not HN.words %}<p class="src" data-no-words>The thesis and its tripwire are the analysis's words; they were not written this run.</p>{% endif %}
+  {% if HN.dims %}
+  <div class="card s12" data-reveal data-honesty="judges" style="margin-top:var(--gap)">
+    <h3>The judges' hardest questions, answered</h3>
+    {% for q in HN.qa %}<div style="margin-top:10px" data-judge-q="{{ q.dimension | built }}"><strong>{{ q.dimension | built }}</strong>{% if CBM.ids[q.id] %} <span class="cb-mark" data-cb-status="{{ CBM.ids[q.id].status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ CBM.ids[q.id].words | py }}</span>{% endif %} <span class="src">&mdash; the brief: &ldquo;<span data-prov-block="the brief's own words">{{ q.descriptor | built }}</span>&rdquo;</span>
+      {% if q.question %}<p><em>{{ q.question | built }}</em></p><p>{{ q.answer | built }}{% if q.anchor %} <a href="#{{ q.anchor | built }}" data-judge-link="{{ q.section | built }}" style="color:var(--cyan)">{{ q.section_title | built }} &rarr;</a>{% elif q.absent %} <span class="src">({{ q.section_title | built }} is not on this page this run.)</span>{% endif %}</p>
+      {% else %}<p class="src">Not answered this run.</p>{% endif %}</div>{% endfor %}
+  </div>
+  {% endif %}
+  {% if HN.triggers %}
+  <div class="card s12" data-reveal data-honesty="triggers" style="margin-top:var(--gap)">
+    <h3>Scenario triggers</h3>
+    <ul style="font-size:var(--sm);margin-left:18px">{% for t in HN.triggers %}<li><strong>{{ t.scenario | built }}</strong>{% if CBM.ids[t.id] %} <span class="cb-mark" data-cb-status="{{ CBM.ids[t.id].status | py }}" style="font-size:.72rem;font-style:italic;color:var(--dim);margin-left:6px">{{ CBM.ids[t.id].words | py }}</span>{% endif %} — when {{ t.indicator | built }} is {{ t.threshold | built }}: {{ t.response | built }}</li>{% endfor %}</ul>
+  </div>
+  {% endif %}
+  <div class="card s12" data-reveal data-honesty="external" style="margin-top:var(--gap)">
+    <h3>External anchors</h3>
+    <ul style="font-size:var(--sm);margin-left:18px">{% for x in HN.ext %}<li data-ext="{{ x.verified | lower | built }}">{{ x.span | built }} <span data-num-exempt="the benchmark's own definition">{{ x.label | built }}</span> — <span data-num-exempt="an outside source's name">{{ x.source | built }}</span>{% if x.verified %}: checked against <a href="{{ x.url | built }}" rel="noopener">its primary source</a> on <span data-num-exempt="the date it was checked">{{ x.checked | built }}</span> (&ldquo;<span data-num-exempt="the primary source's own words">{{ x.quote | built }}</span>&rdquo;){% else %}: not yet checked against its primary source{% endif %}</li>{% endfor %}</ul>
+  </div>
+</section>
+{% endif %}
+
+<section id="sources" class="section">
+  <div class="section-label"><span class="section-num" data-num-exempt="a section number">07</span>Appendix</div>
+  <h2 class="section-title">{{ appendix_title | default("Sources and Methodology") | built }}</h2>
+
+  <details id="sec-data-sources" data-sec="data-sources" data-zone="provenance" data-zone-name="data-sources"{{ CA.get('data-sources', '') | built }}>
+    <summary>Data Sources (<span data-prov-block="the data as fetched">{{ data_sources | default([]) | length | py }}</span> API Endpoints)</summary>
+    <div class="inner">
+      <table class="tbl" data-prov-block="the data as fetched">
+        <thead><tr><th>Endpoint</th><th>Returns</th><th class="num">Records</th></tr></thead>
+        <tbody>
+          {% for ds in data_sources | default([]) %}
+          <tr id="src-{{ ds.id | default(ds.endpoint | replace('/api/', '')) | py }}"><td>{{ ds.endpoint | py }}</td><td>{{ ds.returns | org }}</td><td class="num">{{ ds.records | py }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </details>
+  <details id="sec-methodology" data-sec="methodology"{{ CA.get('methodology', '') | built }}>
+    <summary>Methodology</summary>
+    <div class="inner">
+      {% if data_inventory_sentence %}
+      <p style="color:var(--muted);font-size:var(--sm);margin-bottom:8px" data-prov-block="the data as fetched">{{ data_inventory_sentence | words_html | built }}</p>
+      {% endif %}
+      <p>{{ methodology | default("PENDING — Methodology description.") | built }}</p>
+    </div>
+  </details>
+  <details id="sec-ai-process" data-sec="ai-process"{{ CA.get('ai-process', '') | built }}>
+    <summary>AI Process</summary>
+    <div class="inner">
+      {% if data_inventory_sentence %}
+      <p style="color:var(--muted);font-size:var(--sm);margin-bottom:8px" data-cov-skip data-prov-block="the data as fetched">{{ data_inventory_sentence | words_html | built }}</p>
+      {% endif %}
+      <p>{% if ai_process is defined %}{{ ai_process | built }}{% else %}<span data-cov-skip>One structured analysis by the model wrote this narrative; Python computed the financial model, the cost per beneficiary, the SROI and the cost of inaction.</span>{% endif %}</p>
+    </div>
+  </details>
+  <details id="sec-assumptions" data-sec="assumptions"{{ CA.get('assumptions', '') | built }}>
+    <summary>Key Assumptions</summary>
+    <div class="inner">
+      {% for a in assumptions | default([]) %}
+      <p><span data-num-exempt="the list's own numbering">{{ loop.index | py }}.</span> {{ a | built }}</p>
+      {% endfor %}
+    </div>
+  </details>
+  {% if registry_rows %}
+  <details id="sec-registry" data-sec="registry" data-zone="provenance" data-zone-name="figure-registry" data-num-exempt="the registry's own listing (not counted: it lists every figure)">
+    <summary>The registry — every figure on this page: its kind, its source or formula ({{ registry_rows | length | py }} entries)</summary>
+    <div class="inner">
+      <p style="font-size:var(--sm);color:var(--muted)">MEASURED: read from the data or the brief. DERIVED: computed by Python from the data. EXTERNAL: an outside benchmark (<sup class="unv">&#8224;</sup> not yet checked against its primary source). MODELED: an assumption — the analysis's, Python's default or a Python constant, each named.</p>
+      {% if registry_checks %}
+      <h4 style="margin-top:10px">Figures checked against the data's own aggregates</h4>
+      <ul style="font-size:var(--sm)">{% for c in registry_checks %}<li>{{ c.entry | built }} {{ c.entry_label | label }} ({{ c.formula | py }}) — {{ c.against_label | label }} ({{ c.against_id | py }}): {{ c.against | built }}{% if c.against_quote %} — its words: &ldquo;{{ c.against_quote | py }}&rdquo;{% endif %}{% if c.equal %}: the same{% else %}: <strong>differs — sources disagree</strong> (the records' sum: {{ c.entry_asof | py }}; the aggregate: {{ c.against_asof | py }}; {{ c.speaks | py }}){% endif %}.</li>{% endfor %}</ul>
+      {% endif %}
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch">
+      <table class="tbl reg-tbl">
+        <thead><tr><th>Id</th><th>Figure</th><th>Kind</th><th>What it is</th><th>Source or formula</th><th>Assumption</th></tr></thead>
+        <tbody>{% for r in registry_rows %}<tr data-reg-id="{{ r.id | py }}"><td><code>{{ r.id | py }}</code></td><td>{{ r.span | built }}</td><td>{{ r.kind | py }}</td><td>{{ r.reader | label }}{% if r.reader != r.label %} <span class="src">({{ r.label | label }})</span>{% endif %}{% if r.tags %} <span style="color:var(--dim)">({{ r.tags | py }})</span>{% endif %}</td><td>{{ r.source | label }}{% if r.verified == 'yes' %} — checked against <a href="{{ r.url | py }}" rel="noopener">its primary source</a> {{ r.checked | py }}: &ldquo;{{ r.quote | py }}&rdquo;{% endif %}</td><td>{{ r.assumption | label }}</td></tr>{% endfor %}</tbody>
+      </table>
+      </div>
+      {% if registry_problems %}<p style="font-size:.78rem;color:var(--dim)">Problems: {{ registry_problems | join('; ') | py }}</p>{% endif %}
+    </div>
+  </details>
+  {% endif %}
+  {% if integrity %}
+  <details id="integrity-details" data-zone="provenance" data-zone-name="integrity-details" data-num-exempt="the integrity details (they quote the page)">
+    <summary>Data integrity — what the check found</summary>
+    <div class="inner" style="font-size:var(--sm)">
+      {% if integrity.authored %}
+      <p>{{ integrity.line | py }}. The line counts only the quantities in the model's prose, in digits or in words: each is a registry figure it cited (from the data, the brief or Python's computation; from an outside source; the writer's assumption, shown dashed), or a quantity with no link, listed below with its sentence. A link shows where a number comes from. It does not check the sentence around it.</p>
+      <p>Read by the quantity reader {{ integrity.reader_version | py }}.{% if integrity.rules %} Set aside on this page, by rule: {% for r in integrity.rules %}{{ r[0] | py }} {{ r[1] | py }}{% if not loop.last %}; {% endif %}{% endfor %}.{% endif %}</p>
+      {% if integrity.by_kind %}<p>In the model's prose, by kind: {% for k in integrity.by_kind %}{{ k.kind | py }} {{ k.n | py }}{% if not loop.last %} · {% endif %}{% endfor %}{% if integrity.X %} (outside sources checked against their primary source: {{ integrity.XV | py }} of {{ integrity.X | py }}){% endif %}.</p>{% endif %}
+      <p>Every other number on the page, by who wrote it: registry figures Python placed {{ integrity.py_spans | sum(attribute='n') | py }}{% if integrity.py_spans %} ({% for k in integrity.py_spans %}{{ k.kind | py }} {{ k.n | py }}{% if not loop.last %} · {% endif %}{% endfor %}){% endif %}; in tables and blocks Python computed whole {{ integrity.blocks | sum(attribute=1) | py }}{% if integrity.blocks %} ({% for b in integrity.blocks %}{{ b[0] | py }} {{ b[1] | py }}{% if not loop.last %}; {% endif %}{% endfor %}){% endif %}; the organizers' own words {{ integrity.org_n | py }} (quoted, not checked); Python's own counts and labels {{ integrity.py_n | py }}; registry labels {{ integrity.label_n | py }}. Not figures {{ integrity.not_figures | sum(attribute=1) | py }}{% if integrity.not_figures %} ({% for r in integrity.not_figures %}{{ r[0] | py }} {{ r[1] | py }}{% if not loop.last %}; {% endif %}{% endfor %}){% endif %}. This page's own apparatus {{ integrity.apparatus | sum(attribute=1) | py }} (the registry listing, these details and the chat's offline answers, which repeat the page's words).</p>
+      {% else %}
+      <p>{{ integrity.line | py }} (traced: inside a registry figure, or in a table Python computed whole). Not counted: {{ integrity.exempt | py }} dates, years, ZIPs, record ids, names and section or list numbers.</p>
+      {% if integrity.by_kind %}<p>Traced figures by kind: {% for k in integrity.by_kind %}{{ k.kind | py }} {{ k.n | py }}{% if not loop.last %} · {% endif %}{% endfor %}. Tables and blocks Python computed: {% for b in integrity.blocks %}{{ b[0] | py }} ({{ b[1] | py }}){% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
+      {% endif %}
+      {% if integrity.removed %}<p>{{ integrity.removed | length | py }} sentence(s) removed from the page — each one under &ldquo;Flagged&rdquo; below by where it was and the rule it broke (the sentence itself is kept only in the run's record, so it ships on no page).</p>{% endif %}
+      {% if integrity.dropped %}<h4>Dropped</h4><ul>{% for d in integrity.dropped %}<li>{{ d.what | py }} — {{ d.why | py }}</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.untraced %}<h4>{% if integrity.authored %}Numbers in the model's prose with no link{% else %}Untraced numbers{% endif %} ({{ integrity.untraced_total | py }})</h4><ul>{% for u in integrity.untraced %}<li>{{ u.text | py }}{% if u.sec %} ({{ u.sec | py }}){% endif %}: &ldquo;{{ u.context | py }}&rdquo;</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.quoted %}<h4>Quoted from the organizers' text ({{ integrity.quoted | length | py }}; MEASURED — Python found each where the writer said)</h4><ul>{% for q in integrity.quoted %}<li>{{ q.shown | py }} — {{ q.where | py }}: &ldquo;{{ q.sentence | py }}&rdquo;</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.computed %}<h4>Comparisons Python computed ({{ integrity.computed | length | py }}; each its inputs' weakest kind)</h4><ul>{% for c in integrity.computed %}<li>{{ c.shown | py }} ({{ c.kind | py }}) — {{ c.label | py }}: {{ c.formula | py }}</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.declared %}<h4>Declared not figures by the writer ({{ integrity.declared | length | py }}; not counted — check none is a quantity)</h4><ul>{% for d in integrity.declared %}<li>{{ d.text | py }} ({{ d.kind | py }}): &ldquo;{{ d.context | py }}&rdquo;</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.refused %}<h4>Quotes and declarations Python refused ({{ integrity.refused | length | py }}; on the page as typed, each a number with no link)</h4><ul>{% for r in integrity.refused %}<li>{{ r.text | py }} ({{ r.rule | py }}) — {{ r.why | py }}</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.unattributed %}<h4>Not attributed — a defect of this page ({{ integrity.N | py }})</h4><ul>{% for u in integrity.unattributed %}<li>{{ u.text | py }}{% if u.sec %} ({{ u.sec | py }}){% endif %}: &ldquo;{{ u.context | py }}&rdquo;</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.badges %}<p>Source tags naming no endpoint of this run (linked to the sources section): {{ integrity.badges | join(', ') | py }}.</p>{% endif %}
+      {% if integrity.flagged %}<p>Flagged and kept on the page: a number in the hero or an evidence card that is no registry figure, a unit word that contradicts its figure, a quote the text it names does not hold, and a declared non-figure that reads as a quantity (each of the last two on the page as typed, with no link). Each is listed below; its key moves it with the override file.</p>{% endif %}
+      {% if integrity.undecided %}<h4>Could not be read as a number or a name ({{ integrity.K | py }}; not in the count above)</h4><ul>{% for u in integrity.undecided %}<li>{{ u.text | py }} ({{ u.rule | py }}): &ldquo;{{ u.sentence | py }}&rdquo;</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.listed %}<h4>Typed and listed by category ({{ integrity.L | py }}; not in the count above)</h4><ul>{% for u in integrity.listed %}<li>{{ u.text | py }} — {{ u.category | py }}: {{ u.why | py }} &ldquo;{{ u.sentence | py }}&rdquo;</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.typed_counts %}<h4>Typed counts their list does not hold ({{ integrity.typed_counts | length | py }}; flagged)</h4><ul>{% for c in integrity.typed_counts %}<li>{{ c.text | py }}: says {{ c.says | py }}; {{ c.list | py }}: {{ c.holds | py }} &mdash; &ldquo;{{ c.sentence | py }}&rdquo;</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.vague %}<h4>Vague quantities in the model's prose ({{ integrity.vague_total | py }}; listed, never valued)</h4><ul>{% for v in integrity.vague %}<li>{{ v.text | py }}: &ldquo;{{ v.sentence | py }}&rdquo;</li>{% endfor %}</ul>{% endif %}
+      {% if integrity.decoding %}<p>The model's replies: {{ integrity.decoding | length | py }} key(s) given twice in one object — the last kept: {% for d in integrity.decoding %}{{ d.key | py }} ({{ d.where | py }}){% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
+      {% if integrity.admit_line %}<p>Tags in the model's replies, as read in: {{ integrity.admit_line | py }}.</p>{% endif %}
+      {% if integrity.flags_page %}<h4>Flagged</h4><ul>{% for v in integrity.flags_page %}<li>{{ v.rule | py }} — {{ v.where | py }}: {{ v.context | py }}</li>{% endfor %}</ul>{% endif %}
+      {% if diagram_untraced %}<p>The workflow diagram's typed figures: {{ diagram_untraced | join(', ') | py }}.</p>{% endif %}
+    </div>
+  </details>
+  {% endif %}
+</section>
+
+{% if closing_statement %}
+<div class="closing" data-reveal data-prov-block="the closing statement (Python, from the financial model and the brief)">
+  <p>{{ closing_statement | built }}</p>
+</div>
+{% endif %}
+
+{% if architect_url %}
+<style>.arch-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:999px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.25);color:rgba(34,211,238,.95);font-size:.88rem;font-weight:600;text-decoration:none;transition:all .2s;letter-spacing:.01em}.arch-cta:hover{background:rgba(34,211,238,.2);border-color:rgba(34,211,238,.5);transform:translateY(-1px);box-shadow:0 2px 12px rgba(34,211,238,.15)}.arch-zip{display:inline;padding:1px 7px;border-radius:999px;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);color:rgba(34,211,238,.95);font-size:inherit;font-weight:700;text-decoration:none;cursor:pointer;transition:background .2s,border-color .2s,box-shadow .2s;white-space:nowrap}.arch-zip:hover{background:rgba(34,211,238,.2);border-color:rgba(34,211,238,.4);box-shadow:0 0 8px rgba(34,211,238,.15)}</style>
+<div style="text-align:center;margin:18px 0 0" data-reveal>
+  <a class="arch-cta" href="{{ architect_url | py }}?tab=finder" target="_blank" rel="noopener">🔍 Explore resources in the interactive tool</a>
+</div>
+{% endif %}
+
+<!--naipc:sd-notes-->
+<style>.sd-ref{font-size:inherit;vertical-align:baseline;line-height:inherit;white-space:nowrap;color:inherit;text-decoration:underline dotted}.sd-notes{margin:28px 0 12px;font-size:.92em;line-height:1.55}.sd-notes h2{font-size:1.05em;margin:0 0 8px}.sd-notes ol{margin:0 0 0 1.4em;padding:0}.sd-notes li{margin:4px 0}.sd-notes .sd-back{margin-left:6px;white-space:nowrap;color:inherit}</style>
+<footer class="footer">
+  <div>Prepared by <strong>{{ team_name | default("Team") | py }}</strong> &middot; Oracle Track</div>
+  <div>{{ competition_label | default("NAIPC") | py }}</div>
+  {% if qr_svg %}
+  <div style="flex-basis:100%;text-align:center;margin-top:8px">
+    <div class="qr-wrap" title="Scan to view on your phone">{{ qr_svg | built }}</div>
+    <div style="font-size:11px;color:var(--dim);margin-top:6px">Scan to open on mobile</div>
+  </div>
+  {% endif %}
+</footer>
+
+{# Chatbot UI — rendered only when chat is on (P0.11b); off in P0.11a #}
+{% if chatbot_enabled %}
+<button class="chat-fab" id="chatFab" aria-label="Ask the AI about this analysis" title="Ask the AI">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-header">
+    <span>Ask the AI about this analysis</span>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">&times;</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="chat-msg ai">I'm the <strong>Ctrl Alt Defeat</strong> AI analyst. Ask me about the data, financials, SROI methodology, or any finding on this page.
+      <div class="chat-chips">
+        <span class="chat-chip" data-q="What is the SROI and how was it calculated?">SROI explained</span>
+        <span class="chat-chip" data-q="How many people are affected and what are the key statistics?">Key statistics</span>
+        <span class="chat-chip" data-q="What are the biggest risks to this program?">Key risks</span>
+        <span class="chat-chip" data-q="Walk me through the financial model and cost structure.">Financial model</span>
+      </div>
+    </div>
+  </div>
+  <div class="chat-msg error" id="chatUnavailable" hidden>Chat is unavailable right now. The quick answers below cover the common questions.</div>
+  <details class="chat-faq" id="chatFaq" data-num-exempt="the chat's offline answers (they repeat the page's own words)" style="padding:6px 12px;font-size:12px"><summary style="cursor:pointer;font-weight:600">Quick answers (no AI)</summary>{% for item in chat_faq %}<p style="margin:6px 0"><strong>{{ item.q | py }}</strong><br>{{ item.a_html | default(item.a | model) | built }}</p>{% endfor %}</details>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chatInput" placeholder="Ask about the data, SROI, financials..." aria-label="Type your question">
+    <button class="chat-send" id="chatSend">Send</button>
+  </div>
+</div>
+<script>window.CHAT={"proxy":{{ chat_proxy_url | tojson | built }},"track":{{ chat_track | tojson | built }},"context_id":{{ chat_context_id | tojson | built }},"tags":{{ chat_tags | tojson | built }}};</script>
+{% endif %}
+
+</div>
+
+{# ================================================================= #}
+{# SCRIPTS — Chart.js (inline or CDN) + Mermaid (CDN fallback only)   #}
+{# + data injection + UI interactivity                                 #}
+{# ================================================================= #}
+
+{# Chart.js: inline if provided, otherwise CDN #}
+{% if chartjs_inline %}
+<script>{{ chartjs_inline | built }}</script>
+{% else %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+{% endif %}
+<script>if(typeof Chart!=="undefined"){Chart.defaults.locale="en-US"}</script>{# BUILD IC (D7; review b F7): the charts format for the page, not the device #}
+
+{# Mermaid: only when we have diagram_mermaid (no pre-rendered SVG). P0.6 (D10, Rule 7): the vendored classic build beside the
+   page (output/vendor/mermaid.min.js, copied by render_html) — works from file:// and from the site with no WiFi; the CDN module
+   (pinned to the same version) only when the vendored file is missing #}
+{% if diagram_mermaid and not diagram_svg %}
+{% if mermaid_local %}
+<script src="vendor/mermaid.min.js"></script>
+<script>
+{# BUILD IC-5 (D15): securityLevel "strict" — Mermaid binds no callback (a click line's tip() is never called, so no window.tip) and still
+   shows each node's tooltip on hover (the vendored build, verified in Chromium); a label is text: Python's entity-encoded words #}
+mermaid.initialize({startOnLoad:true,securityLevel:"strict",theme:"dark",
+  flowchart:{nodeSpacing:30,rankSpacing:55,padding:14,useMaxWidth:false},
+  themeVariables:{fontFamily:"'Plus Jakarta Sans',system-ui,sans-serif",fontSize:"24px",
+    primaryColor:"#1e1145",primaryTextColor:"#e9ecff",primaryBorderColor:"#7C3AED",
+    lineColor:"rgba(255,255,255,.55)",secondaryColor:"#0c2a3a",tertiaryColor:"#11183a"}
+});
+</script>
+{% else %}
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.esm.min.mjs";
+mermaid.initialize({startOnLoad:true,securityLevel:"strict",theme:"dark",
+  flowchart:{nodeSpacing:30,rankSpacing:55,padding:14,useMaxWidth:false},
+  themeVariables:{fontFamily:"'Plus Jakarta Sans',system-ui,sans-serif",fontSize:"24px",
+    primaryColor:"#1e1145",primaryTextColor:"#e9ecff",primaryBorderColor:"#7C3AED",
+    lineColor:"rgba(255,255,255,.55)",secondaryColor:"#0c2a3a",tertiaryColor:"#11183a"}
+});
+</script>
+{% endif %}
+{% endif %}
+
+{# DATA INJECTION — Jinja2 processes |tojson here, OUTSIDE raw blocks #}
+{# Per implementation guide Section 5: inject all chart data in one block #}
+<script>
+  var CHART_DATA = {{ chart_data | default({}) | tojson | built }};
+  var SIM_MODEL = {{ simulator_model | default({}) | tojson | built }};
+  var SIM_L = {{ sim_labels | default({}) | tojson | built }};
+</script>
+
+{# JS LOGIC — inside raw block, safe from Jinja2 interpretation #}
+{# Per implementation guide: callbacks use JS template literals with ${} #}
+{# which Jinja2 would misinterpret without raw block protection #}
+{% raw %}
+<script>
+(()=>{
+  const reduced=window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+  /* Smooth scroll + Evidence Trail citation handler */
+  document.addEventListener("click",e=>{
+    const a=e.target.closest('a[href^="#"]');
+    if(!a)return;
+    /* Citation badge: open details, scroll, highlight */
+    if(a.classList.contains("src-link")){
+      e.preventDefault();
+      var src=a.dataset.src;
+      var target=src?document.getElementById("src-"+src):null;
+      if(target){
+        var det=target.closest("details:not([open])");
+        if(det)det.open=true;
+        /* Wait 50ms for details to render (MDN: display:none→visible needs a tick) */
+        setTimeout(function(){
+          target.scrollIntoView({behavior:reduced?"auto":"smooth",block:"center"});
+          var cells=target.querySelectorAll("td");
+          /* Delay flash 200ms so scroll brings row into view first */
+          setTimeout(function(){
+            /* Inline-style highlight on each td — highest specificity, no cascade conflicts */
+            cells.forEach(function(td){td.style.backgroundColor="rgba(34,211,238,.3)"});
+            /* Delay fade-out until highlight is clearly visible */
+            setTimeout(function(){
+              void target.offsetWidth;
+              cells.forEach(function(td){
+                td.style.transition="background-color 2s ease-out";
+                td.style.backgroundColor="";
+              });
+              /* Clean up inline styles after fade completes */
+              setTimeout(function(){
+                cells.forEach(function(td){td.style.transition=""});
+              },2100);
+            },reduced?0:500);
+          },reduced?0:200);
+        },50);
+      }else{
+        var fb=document.getElementById("sources");
+        if(fb)fb.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+      }
+      return;
+    }
+    /* Default anchor scroll */
+    const el=document.querySelector(a.getAttribute("href"));
+    if(!el)return;
+    e.preventDefault();
+    el.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+  });
+
+  /* IntersectionObserver: reveals + counters */
+  const obs=new IntersectionObserver(entries=>{
+    for(const ent of entries){
+      if(!ent.isIntersecting)continue;
+      if(ent.target.hasAttribute("data-reveal"))ent.target.classList.add("is-visible");
+      if(ent.target.classList.contains("counter")){
+        const el=ent.target, target=Number(el.dataset.target||"0"),
+              fmt=el.dataset.format||"raw",
+              dur=reduced?0:Number(el.dataset.duration||"900"),
+              delay=reduced?0:Number(el.dataset.delay||"0");
+        if(delay>0){setTimeout(()=>animateCounter(el,target,dur,fmt),delay)}
+        else{animateCounter(el,target,dur,fmt)}
+      }
+      obs.unobserve(ent.target);
+    }
+  },{threshold:.18});
+  document.querySelectorAll("[data-reveal],.counter").forEach(el=>obs.observe(el));
+
+  /* B3 (D2): a counter ends on the registry's form; (Phase 4) on Block 1's when the hero's toggle chose it — the toggle marks the
+     counter done, and a count-up still running stops instead of writing over the choice */
+  function finalText(el,target,fmt){return el.dataset.view==="b1"&&el.dataset.b1Shown?el.dataset.b1Shown:(el.dataset.shown||fmtN(target,fmt))}
+  function animateCounter(el,target,dur,fmt){
+    if(el.dataset.done==="1")return;
+    if(dur<=0){el.textContent=finalText(el,target,fmt);el.dataset.done="1";return}
+    const t0=performance.now();
+    const tick=t=>{
+      if(el.dataset.done==="1")return;
+      const p=Math.min(1,(t-t0)/dur);
+      const eased=1-Math.pow(1-p,3);
+      el.textContent=fmtN(target*eased,fmt);
+      if(p<1)requestAnimationFrame(tick);
+      else{el.textContent=finalText(el,target,fmt);el.dataset.done="1"}
+    };
+    requestAnimationFrame(tick);
+  }
+  function sig2(v){if(!isFinite(v))return"";if(v===0)return"0";var s=v<0?"-":"",a=Math.abs(v);if(a>=10)return s+Math.round(a).toLocaleString("en-US");var d=Math.max(1,1-Math.floor(Math.log10(a)));var o=a.toFixed(d);if(a<1&&parseFloat(o)>=1)o=(Math.floor(a*1000)/1000).toFixed(3);return s+(parseFloat(o)>=10?Math.round(a).toLocaleString("en-US"):o)}   /* B3: naipc_registry.sig2 */
+  window.sig2=sig2;
+  function fmtN(n,f){
+    if(f==="compact")return Intl.NumberFormat("en-US",{notation:"compact",maximumFractionDigits:1}).format(Math.round(n));
+    if(f==="dollar")return"$"+Intl.NumberFormat("en-US").format(Math.round(n));
+    if(f==="ratio")return sig2(n)+" : 1";
+    return Intl.NumberFormat("en-US").format(Math.round(n));
+  }
+
+  /* Tabs */
+  document.querySelectorAll("[data-tabs]").forEach(root=>{
+    const tabs=[...root.querySelectorAll('[role="tab"]')];
+    function activate(tab){
+      tabs.forEach(t=>{
+        const sel=t===tab;
+        t.setAttribute("aria-selected",String(sel));
+        t.tabIndex=sel?0:-1;
+        const p=root.querySelector("#"+CSS.escape(t.getAttribute("aria-controls")));
+        if(p)p.hidden=!sel;
+      });
+    }
+    root.addEventListener("click",e=>{const b=e.target.closest('[role="tab"]');if(b)activate(b)});
+    root.addEventListener("keydown",e=>{
+      const idx=tabs.indexOf(document.activeElement);if(idx<0)return;
+      let n;
+      if(e.key==="ArrowRight")n=tabs[(idx+1)%tabs.length];
+      if(e.key==="ArrowLeft")n=tabs[(idx-1+tabs.length)%tabs.length];
+      if(n){e.preventDefault();n.focus()}
+    });
+    activate(tabs.find(t=>t.getAttribute("aria-selected")==="true")||tabs[0]);
+  });
+
+  /* Accordion */
+  document.querySelectorAll("[data-accordion]").forEach(w=>{
+    w.addEventListener("toggle",e=>{
+      const d=e.target;
+      if(!(d instanceof HTMLDetailsElement)||!d.open)return;
+      w.querySelectorAll("details[open]").forEach(o=>{if(o!==d)o.open=false});
+    },true);
+  });
+
+  /* Chart.js initialization from CHART_DATA global */
+  function initCharts(){
+    if(typeof Chart==="undefined"||!window.CHART_DATA)return;
+    Chart.defaults.font.family="'Plus Jakarta Sans',system-ui,sans-serif";
+    Chart.defaults.color="rgba(255,255,255,.7)";
+
+    const scenarios = [
+      {id:"chart-base", key:"base"},
+      {id:"chart-bull", key:"bull"},
+      {id:"chart-bear", key:"bear"}
+    ];
+
+    for(const sc of scenarios){
+      const ctx=document.getElementById(sc.id);
+      const d=CHART_DATA[sc.key];
+      if(!ctx||!d)continue;
+      new Chart(ctx,{
+        type:"bar",
+        data:{labels:d.labels, datasets:d.datasets},
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          layout:{padding:{left:20}},
+          plugins:{
+            legend:{position:"bottom",labels:{boxWidth:10,boxHeight:10,padding:10,font:{size:11}}},
+            tooltip:{callbacks:{label:function(i){
+              const prefix = i.dataset.type==="line" ? "Revenue" : i.dataset.label;
+              return `${prefix}: $${i.raw}K`;
+            }}}
+          },
+          scales:{
+            x:{stacked:!!d.stacked, grid:{display:false}},
+            y:{stacked:!!d.stacked, grid:{color:"rgba(255,255,255,.06)"}, ticks:{padding:12,callback:function(v){return "$"+v+"K"}}}
+          }
+        }
+      });
+    }
+  }
+
+  /* Print: canvas to img swap */
+  function swapCanvasForPrint(){
+    document.querySelectorAll("canvas").forEach(c=>{
+      try{
+        const ch=Chart.getChart(c);if(!ch)return;
+        const img=document.createElement("img");
+        img.className="chart-print-img";img.src=ch.toBase64Image();img.style.maxWidth="100%";
+        c.style.display="none";c.dataset._ps="1";c.after(img);
+      }catch(e){}
+    });
+  }
+  function restoreCanvas(){
+    document.querySelectorAll("img.chart-print-img").forEach(i=>i.remove());
+    document.querySelectorAll("canvas[data-_ps]").forEach(c=>{c.style.display="";delete c.dataset._ps});
+  }
+  window.addEventListener("beforeprint",swapCanvasForPrint);
+  window.addEventListener("afterprint",restoreCanvas);
+
+  if(typeof Chart!=="undefined"){initCharts()}
+  else{const poll=setInterval(()=>{if(typeof Chart!=="undefined"){clearInterval(poll);initCharts()}},100);setTimeout(()=>clearInterval(poll),8000)}
+
+  /* === CHAT READER (P0.11b) — byte-identical in the Oracle, Architect and Muse pages === */
+(function () {
+  var C = window.CHAT;
+  if (!C || !C.proxy || !C.context_id) return;
+  function $(id) { return document.getElementById(id); }
+  var box = $("chatMessages") || $("chat-body"), input = $("chatInput") || $("chat-q"), send = $("chatSend") || $("chat-send");
+  var fab = $("chatFab"), panel = $("chatPanel") || $("chatbot"), closeBtn = $("chatClose"), toggle = $("chat-toggle"), head = $("chat-head"), tip = $("chat-tip");
+  var note = $("chatUnavailable"), faq = $("chatFaq");
+  if (!box || !input || !send || !panel) return;
+  var RELOAD = "That message couldn't be sent. Please reload the page and try again.";
+  var CUT = "The answer was interrupted. Please try again.";
+  var DATA = "This page's chat data didn't load. Please reload the page.";
+  var NOTHERE = "Chat isn't available on this copy of the page.";
+  var MSG = {
+    chat_disabled: "Chat is switched off right now. The quick answers below cover the common questions.",
+    chat_budget_unavailable: "Chat has reached its usage limit for now. The quick answers below cover the common questions.",
+    chat_configuration_error: "Chat isn't available right now. The quick answers below cover the common questions.",
+    chat_busy: "Chat is busy right now.",
+    chat_upstream_unavailable: "The AI service is temporarily unavailable.",
+    chat_timeout: "The answer took too long. Please try again.",
+    client_identity_unavailable: "Chat isn't available right now.",
+    origin_not_allowed: NOTHERE, preflight_denied: NOTHERE, method_not_allowed: NOTHERE, not_found: NOTHERE,
+    context_unavailable: DATA, context_invalid: DATA, context_too_large: DATA,
+    empty_message: "Type a question first.",
+    message_too_long: "That question is too long (2,000 characters at most).",
+    conversation_too_long: "This conversation is too long. Reload the page to start a new one.",
+    body_too_large: "This conversation is too long. Reload the page to start a new one.",
+    invalid_json: RELOAD, empty_body: RELOAD, json_required: RELOAD, invalid_request: RELOAD, invalid_context_id: RELOAD,
+    invalid_message_count: RELOAD, invalid_message: RELOAD, invalid_turn_order: RELOAD,
+    incomplete_stream: CUT, interrupted_stream: CUT, upstream_stream_error: CUT, invalid_upstream_stream: CUT,
+    _http: "Chat isn't available right now.",
+    _unreachable: "Chat is busy or unreachable. Please try again in a moment.",
+    _cut: "The answer was cut off. Try asking a narrower question.",
+    _refusal: "I can't help with that one. Try a question about the data on this page.",
+    _empty: "No answer came back. Please try again."
+  };
+  var OFF = { chat_disabled: 1, chat_budget_unavailable: 1, chat_configuration_error: 1 };
+  var history = [], busy = false;
+  function openPanel() {
+    if (fab) panel.classList.add("open"); else { panel.style.display = "flex"; if (toggle) toggle.style.display = "none"; }
+    if (tip && tip.parentNode) tip.parentNode.removeChild(tip);
+    input.focus();
+  }
+  function closePanel() {
+    if (fab) panel.classList.remove("open"); else { panel.style.display = "none"; if (toggle) toggle.style.display = "flex"; }
+  }
+  if (fab) fab.addEventListener("click", openPanel);
+  if (closeBtn) closeBtn.addEventListener("click", closePanel);
+  if (toggle) toggle.addEventListener("click", openPanel);
+  if (head && !fab) head.addEventListener("click", closePanel);
+  if (tip) setTimeout(function () { tip.classList.add("hide"); setTimeout(function () { if (tip.parentNode) tip.parentNode.removeChild(tip); }, 600); }, 6000);
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  /* BUILD IC-5 (D11): a tag form the pages' rule reads becomes the page's words (the table: window.CHAT.tags, from the registry) —
+     on the answer's own text, before md() escapes it (D11b: the pages' order, REG.out_text's; md stays esc(t)'s markup) */
+  var TT = C.tags || null, TAG = null, TAGP = null, TAGO = null, CONF = null;
+  try {
+    if (TT && TT.any) {
+      TAG = new RegExp(TT.any, "gi"); TAGP = new RegExp("\\(\\s*(?:" + TT.any + ")\\s*\\)", "gi");
+      TAGO = new RegExp("\\(\\s*(?:" + TT.any + ")", "gi"); CONF = new RegExp(TT.confidence, "i");
+    }
+  } catch (e) { TAG = null; }
+  function tagWords(g) {
+    var w = g.w || g.wb, c = String((g.w ? g.c : g.cb) || "").trim().replace(/^[:\uff1a,\-\u2013\u2014]+/, "").trim();
+    var k = String(w || "").toLowerCase().replace(/[\s_-]+/g, ""); k = (TT.kinds && TT.kinds[k]) || k;
+    if (k === "data") {
+      var n = c.split(/[,;]/).map(function (x) { return x.trim(); }).filter(function (x) { return x; });
+      return n.length ? "data: " + n.join(", ") : "data";
+    }
+    if (k === "estimate") {
+      var m = CONF ? c.match(CONF) : null;
+      return m ? "estimate, " + m[1].toLowerCase() + (m[2] ? "\u2013" + m[2].toLowerCase() : "") + " confidence" : "estimate";
+    }
+    return c ? k + ": " + c : k;
+  }
+  function untag(s) {
+    if (!TAG) return s;
+    function one(open, close) { return function () { var a = arguments, g = a[a.length - 1]; return open + tagWords(g) + close; }; }
+    return s.replace(TAGP, one("(", ")")).replace(TAGO, one("(", "")).replace(TAG, one("(", ")"));
+  }
+  /* while streaming, the words after an unclosed bracket wait for its close, or for TT.hold characters (no tag is shown half-written) */
+  var HOLD = new RegExp("[\\[\u3010\uff3b][^\\]\u3011\uff3d]{0," + ((TT && TT.hold ? TT.hold : 60) - 1) + "}$");
+  function held(t) { var m = HOLD.exec(t); return m ? t.slice(0, m.index) : t; }
+  function md(t) {
+    return esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/^- (.+)$/gm, "\u2022 $1").replace(/\n/g, "<br>");
+  }
+  /* BUILD IC-5 (D2 g): a bubble's first words are set as text — the user's question, or the reply's "" or "\u2026" — never as markup */
+  function add(role, text) {
+    var d = document.createElement("div");
+    d.className = "chat-msg " + role;
+    d.textContent = text;
+    box.appendChild(d); box.scrollTop = box.scrollHeight;
+    return d;
+  }
+  function showError(bubble, text, partial) {
+    bubble.className = "chat-msg error";
+    bubble.innerHTML = (partial ? md(untag(partial)) + "<br>" : "") + esc(text);
+  }
+  /* The proxy accepts 1, 3 or 5 messages that start and end with a user turn: trim whole pairs from the front. */
+  function trimHistory() { while (history.length > 5) history.splice(0, 2); }
+  function ask(q) {
+    q = String(q == null ? "" : q).trim();
+    if (!q || busy) return Promise.resolve(false);
+    if (q.length > 2000) { showError(add("ai", ""), MSG.message_too_long); return Promise.resolve(false); }
+    busy = true; send.disabled = true;
+    add("user", q); input.value = "";
+    history.push({ role: "user", content: q }); trimHistory();
+    var bubble = add("ai", "\u2026"), text = "", stop = null, state = "open", code = "";
+    function end(ok) {
+      if (!ok && history.length && history[history.length - 1].role === "user") history.pop();   /* never leave an unanswered turn */
+      busy = false; send.disabled = false;
+      return ok;
+    }
+    return fetch(String(C.proxy).replace(/\/+$/, "") + "/chat", {
+      method: "POST", credentials: "omit", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ context_id: C.context_id, messages: history })
+    }).then(function (r) {
+      if (!r.ok) {
+        var ra = r.headers.get("Retry-After");
+        return r.json().catch(function () { return null; }).then(function (j) {
+          var c = j && j.error && j.error.code ? String(j.error.code) : "";
+          if (OFF[c]) { if (note) note.hidden = false; if (faq) faq.open = true; }
+          showError(bubble, (MSG[c] || MSG._http) + (ra && /^\d+$/.test(ra) ? " Try again in " + ra + " s." : ""));
+          return end(false);
+        });
+      }
+      var rd = r.body.getReader(), dec = new TextDecoder("utf-8"), buf = "";
+      function frame(f) {
+        var ev = "", data = [], lines = f.split("\n");
+        for (var i = 0; i < lines.length; i++) {
+          if (lines[i].indexOf("event:") === 0) ev = lines[i].slice(6).trim();
+          else if (lines[i].indexOf("data:") === 0) data.push(lines[i].slice(5).replace(/^ /, ""));
+        }
+        if (!data.length) return;
+        var o;
+        try { o = JSON.parse(data.join("\n")); } catch (e) { return; }
+        var t = o && o.type;
+        if (ev === "error" || t === "error") { state = "error"; code = o && o.error && o.error.code ? String(o.error.code) : ""; return; }
+        if (t === "content_block_delta" && o.delta && o.delta.type === "text_delta" && typeof o.delta.text === "string") {
+          text += o.delta.text; bubble.innerHTML = md(untag(held(text))); box.scrollTop = box.scrollHeight;
+        } else if (t === "message_delta" && o.delta && o.delta.stop_reason) {
+          stop = o.delta.stop_reason;
+        } else if (t === "message_stop") {
+          state = "stopped";
+        }
+      }
+      /* Frames end at a blank line; lines end with LF, CRLF or CR. A trailing lone CR waits for the next chunk. */
+      function drain(final) {
+        var keep = !final && buf.charAt(buf.length - 1) === "\r";
+        var s = (keep ? buf.slice(0, -1) : buf).replace(/\r\n?/g, "\n");
+        var parts = s.split("\n\n"), rest = parts.pop();
+        buf = rest + (keep ? "\r" : "");
+        for (var i = 0; i < parts.length && state === "open"; i++) frame(parts[i]);
+        if (final && state === "open" && rest.trim()) frame(rest);
+      }
+      function finish() {
+        if (state === "stopped" && stop === "end_turn") {
+          if (!text.trim()) { showError(bubble, MSG._empty); return end(false); }
+          bubble.innerHTML = md(untag(text));             /* BUILD IC-5 (D11): the whole answer, a held tail included */
+          history.push({ role: "assistant", content: text }); trimHistory();
+          busy = false; send.disabled = false;
+          return true;
+        }
+        if (state === "stopped" && stop === "max_tokens") { showError(bubble, MSG._cut, text); return end(false); }
+        if (state === "stopped" && stop === "refusal") {
+          bubble.className = "chat-msg ai"; bubble.innerHTML = esc(MSG._refusal);
+          history = []; busy = false; send.disabled = false;
+          return false;
+        }
+        showError(bubble, MSG[code] || CUT, text);
+        return end(false);
+      }
+      function pump() {
+        return rd.read().then(function (res) {
+          if (res.done) { buf += dec.decode(); drain(true); return finish(); }
+          buf += dec.decode(res.value, { stream: true }); drain(false);
+          if (state !== "open") { rd.cancel().catch(function () {}); return finish(); }
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function () { showError(bubble, MSG._unreachable, text); return end(false); });
+  }
+  send.addEventListener("click", function () { ask(input.value); });
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
+  var chips = document.querySelectorAll(".chat-chip[data-q]");
+  for (var i = 0; i < chips.length; i++) chips[i].addEventListener("click", function () {
+    var q = this.getAttribute("data-q");
+    if (q) { ask(q); if (this.parentElement) this.parentElement.style.display = "none"; }
+  });
+  window.openChatbot = function (q) { openPanel(); return ask(q); };
+  var asks = document.querySelectorAll(".ask-ai-btn[data-ask]");
+  for (var k = 0; k < asks.length; k++) asks[k].addEventListener("click", function () {
+    var t = this.getAttribute("data-ask");
+    if (t) window.openChatbot("What evidence supports the finding: " + t + "? Cite the specific data sources and explain.");
+  });
+  window.ChatReader = { ask: ask, history: function () { return history.slice(); }, codes: function () { return Object.keys(MSG); } };
+})();
+/* === END CHAT READER === */
+
+/* === WHAT-IF SIMULATOR === */
+  if(window.SIM_MODEL && Object.keys(SIM_MODEL).length>0){(function(){
+    var M=SIM_MODEL;
+    var sliderBen=document.getElementById("simBen");
+    var sliderCV=document.getElementById("simCV");
+    if(!sliderBen||!sliderCV)return;
+
+    /* Configure sliders from Python-injected ranges */
+    sliderBen.min=M.ranges.ben_min;sliderBen.max=M.ranges.ben_max;sliderBen.step=M.ranges.ben_step;sliderBen.value=M.defaults.beneficiaries;
+    sliderCV.min=M.ranges.cv_min;sliderCV.max=M.ranges.cv_max;sliderCV.step=M.ranges.cv_step;sliderCV.value=M.defaults.contract;
+
+    /* Generate tick labels */
+    /* BUILD IC-5 (D2 g): each tick a <span> whose text is set as text, not a string of markup */
+    function makeTicks(el,min,max,fmt){el.textContent="";for(var v=min;v<=max;v+=Math.round((max-min)/3)){var t=document.createElement("span");t.textContent=fmt(v);el.appendChild(t)}}
+    var L=window.SIM_L||{};var budgetWord=L.budget||"Budget";var unitsWord=L.units||"beneficiaries";   /* P0.6 review F1 */
+    makeTicks(document.getElementById("simBenTicks"),M.ranges.ben_min,M.ranges.ben_max,fmtBen);
+    makeTicks(document.getElementById("simCVTicks"),M.ranges.cv_min,M.ranges.cv_max,function(v){return "$"+(v/1000)+"K"});
+
+    /* AnimatedNumber with shared rAF loop and interrupt support */
+    var animInstances=new Set();var animRaf=null;
+    function animTick(ts){animInstances.forEach(function(a){a._frame(ts)});animRaf=animInstances.size>0?requestAnimationFrame(animTick):null}
+    function AnimNum(el,opts){
+      opts=opts||{};this.el=el;this.dur=opts.duration||220;this.prefix=opts.prefix||"";this.suffix=opts.suffix||"";
+      this.dec=opts.decimals||0;this.fmt=opts.fmt||null;this.cur=opts.initial||0;this.start=this.cur;this.end=this.cur;this.t0=null;this.active=false;this._render(this.cur)
+    }
+    AnimNum.prototype.set=function(v){if(v===this.end&&!this.active)return;this.start=this.cur;this.end=v;this.t0=null;if(!this.active){this.active=true;animInstances.add(this);if(!animRaf)animRaf=requestAnimationFrame(animTick)}};
+    AnimNum.prototype._frame=function(ts){if(!this.t0)this.t0=ts;var p=Math.min((ts-this.t0)/this.dur,1);var e=1-Math.pow(1-p,3);this.cur=this.start+(this.end-this.start)*e;this._render(this.cur);if(p>=1){this.cur=this.end;this._render(this.end);this.active=false;animInstances.delete(this)}};
+    AnimNum.prototype._render=function(v){if(this.fmt){this.el.textContent=this.fmt(v);return}var a=Math.abs(v).toFixed(this.dec);var parts=a.split(".");parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,",");var sign=v<0?"-":"";this.el.textContent=this.prefix+sign+parts.join(".")+this.suffix};
+
+    /* Initialize animated numbers using computeMetrics (single source of truth) */
+    function computeMetrics(ben,cv){
+      var varTotal=M.variable_cost_per_ben*ben;
+      var direct=M.fixed_costs+varTotal;
+      var indirect=Math.round(direct*M.indirect_rate);
+      var total=direct+indirect;
+      var cpb=ben>0?Math.round(total/ben):0;
+      var surplus=cv-total;
+      var sv=ben*M.social_value_per_ben;
+      var rawSroi=total>0?sv/total:0;
+      /* Epsilon of 0.05 prevents false "capped" display from floating-point
+         precision loss in the svpb derivation chain. At rawSroi=4.02 the
+         displayed value rounds to 4.0 anyway; "capped" only adds information
+         when rawSroi >= 4.05 (would display as 4.1+ without the cap). */
+      return {cpb:cpb,surplus:Math.round(surplus),sroi:rawSroi}   /* B3 (D1): never capped */
+    }
+
+    var initR=computeMetrics(M.defaults.beneficiaries,M.defaults.contract);
+    var animCPB=new AnimNum(document.getElementById("simCpbVal"),{prefix:"$",decimals:0,initial:initR.cpb});
+    var animSur=new AnimNum(document.getElementById("simSurVal"),{prefix:"$",decimals:0,initial:initR.surplus});
+    var animSROI=new AnimNum(document.getElementById("simSroiVal"),{fmt:function(v){return sig2(v)+" : 1"},initial:initR.sroi});   /* B3 (D1): the registry's form */
+
+    /* Cost breakdown for chart */
+    function computeChart(ben,cv){
+      var varTotal=M.variable_cost_per_ben*ben;
+      var direct=M.fixed_costs+varTotal;
+      var indirect=Math.round(direct*M.indirect_rate);
+      var total=direct+indirect;
+      return {
+        bars:[M.y1_costs.personnel/1000, varTotal/1000, M.y1_costs.technology/1000, indirect/1000],
+        threshold:cv/1000, total:total/1000
+      }
+    }
+
+    /* Slider fill gradient */
+    function updateFill(slider){
+      var pct=((slider.value-slider.min)/(slider.max-slider.min))*100;
+      slider.style.backgroundSize=pct+"% 100%";
+    }
+    updateFill(sliderBen);updateFill(sliderCV);
+
+    /* Format helpers */
+    function fmtK(v){return v>=1000?"$"+(v/1000|0)+"K":v>=0?"$"+v:"−$"+Math.abs(v>=1000?(v/1000|0):v)+(Math.abs(v)>=1000?"K":"")}
+    function fmtBen(v){return v>=1000?(Math.round(v/100)/10)+"K":String(v)}   /* P0.6 review F1: 600 reads "600", not "0.6K" */
+
+    /* Display value labels */
+    document.getElementById("simBenVal").textContent=fmtBen(M.defaults.beneficiaries);
+    document.getElementById("simCVVal").textContent=fmtK(M.defaults.contract);
+
+    /* Threshold colors */
+    function applyThresholds(r){
+      var cpbEl=document.getElementById("simCpbVal");
+      var surEl=document.getElementById("simSurVal");
+      var sroiEl=document.getElementById("simSroiVal");
+      /* Deltas from base */
+      var base=computeMetrics(M.defaults.beneficiaries,M.defaults.contract);
+      /* P0.6 review F1: the cost colour compares with this plan's own base case, not a fixed $40/$50 (one event's scale) */
+      cpbEl.style.color=r.cpb>base.cpb?"#ffaa00":"#4ade80";
+      surEl.style.color=r.surplus>=0?"#4ade80":"#ff4444";
+      sroiEl.style.color=r.sroi>=1?"#4ade80":"#ffaa00";   /* B3 (D1): below 1 in the warn colour */
+
+      var dcpb=r.cpb-base.cpb;var dsur=r.surplus-base.surplus;
+      var cpbD=document.getElementById("simCpbDelta");var surD=document.getElementById("simSurDelta");var sroiD=document.getElementById("simSroiDelta");
+      cpbD.textContent=Math.abs(dcpb)>0?(dcpb>0?"▲ +$":"▼ −$")+Math.abs(dcpb)+" from base":"";
+      cpbD.style.color=dcpb>0?"#ff4444":"#4ade80";
+      surD.textContent=r.surplus<0?"▼ DEFICIT":"";surD.style.color="#ff4444";
+      if(r.surplus>=0&&Math.abs(dsur)>0){surD.textContent=(dsur>0?"▲ +$":"▼ −$")+(Math.abs(dsur)/1000|0)+"K from base";surD.style.color=dsur>0?"#4ade80":"#ffaa00"}
+      sroiD.textContent=r.sroi<1?"below 1 on the outcomes modeled":"";sroiD.style.color="var(--dim)";
+
+      /* Modified border on metric cards */
+      var modified=parseInt(sliderBen.value)!==M.defaults.beneficiaries||parseInt(sliderCV.value)!==M.defaults.contract;
+      document.querySelectorAll(".sim-metric").forEach(function(c){c.classList.toggle("modified",modified)});
+      document.getElementById("simReset").classList.toggle("show",modified);
+    }
+
+    /* Chart initialization — waits for Chart.js */
+    var simChart=null;
+    function initSimChart(){
+      if(typeof Chart==="undefined")return;
+      var ctx=document.getElementById("simChart");if(!ctx)return;
+      var init=computeChart(M.defaults.beneficiaries,M.defaults.contract);
+      simChart=new Chart(ctx,{
+        type:"bar",
+        data:{
+          labels:M.cost_labels,
+          datasets:[
+            {type:"bar",label:"Year 1 Costs",data:init.bars,backgroundColor:M.cost_colors,borderRadius:4,order:2,barPercentage:0.7},
+            {type:"line",label:budgetWord,data:[init.threshold,init.threshold,init.threshold,init.threshold],
+             borderColor:"#4ade80",borderWidth:2.5,borderDash:[6,3],pointRadius:0,fill:false,order:1}
+          ]
+        },
+        options:{
+          responsive:true,maintainAspectRatio:false,
+          animation:false,
+          layout:{padding:{left:4,right:4,top:8}},
+          plugins:{
+            legend:{display:true,position:"bottom",labels:{boxWidth:10,boxHeight:10,padding:8,font:{size:10}}},
+            tooltip:{callbacks:{label:function(i){return i.dataset.label+": $"+Math.round(i.raw)+"K"}}}
+          },
+          scales:{
+            x:{grid:{display:false},ticks:{font:{size:10}}},
+            y:{min:0,max:M.y_max/1000,grid:{color:"rgba(255,255,255,.06)"},ticks:{padding:8,font:{size:10},callback:function(v){return "$"+v+"K"}}}
+          }
+        }
+      });
+    }
+
+    /* Main update handler */
+    var ticking=false;
+    function onInput(){
+      var ben=parseInt(sliderBen.value);var cv=parseInt(sliderCV.value);
+      updateFill(sliderBen);updateFill(sliderCV);
+      document.getElementById("simBenVal").textContent=fmtBen(ben);
+      document.getElementById("simCVVal").textContent=fmtK(cv);
+      sliderBen.setAttribute("aria-valuetext",ben.toLocaleString("en-US")+" "+unitsWord);
+      sliderCV.setAttribute("aria-valuetext","$"+(cv/1000)+"K "+budgetWord.toLowerCase());
+
+      var r=computeMetrics(ben,cv);
+      animCPB.set(r.cpb);animSur.set(r.surplus);animSROI.set(r.sroi);
+      applyThresholds(r);
+
+      /* Throttle chart redraw to 1/frame */
+      if(!ticking&&simChart){requestAnimationFrame(function(){
+        var c=computeChart(ben,cv);
+        simChart.data.datasets[0].data=c.bars;
+        simChart.data.datasets[1].data=[c.threshold,c.threshold,c.threshold,c.threshold];
+        simChart.update("none");
+        ticking=false;
+      });ticking=true}
+    }
+    sliderBen.addEventListener("input",onInput);
+    sliderCV.addEventListener("input",onInput);
+
+    /* Reset */
+    document.getElementById("simReset").addEventListener("click",function(){
+      sliderBen.value=M.defaults.beneficiaries;sliderCV.value=M.defaults.contract;
+      onInput();
+    });
+
+    /* Print handler: populate static fallback */
+    window.addEventListener("beforeprint",function(){
+      document.getElementById("simPrintBen").textContent=parseInt(sliderBen.value).toLocaleString("en-US");
+      document.getElementById("simPrintCV").textContent="$"+(parseInt(sliderCV.value)/1000)+"K";
+      document.getElementById("simPrintCPB").textContent=document.getElementById("simCpbVal").textContent;
+      document.getElementById("simPrintSur").textContent=document.getElementById("simSurVal").textContent;
+      document.getElementById("simPrintSROI").textContent=document.getElementById("simSroiVal").textContent;
+    });
+
+    /* Initialize: run first computation + start chart when Chart.js ready */
+    onInput();
+    if(typeof Chart!=="undefined"){initSimChart()}
+    else{var sp=setInterval(function(){if(typeof Chart!=="undefined"){clearInterval(sp);initSimChart()}},100);setTimeout(function(){clearInterval(sp)},8000)}
+  })()}
+})();
+</script>
+{% endraw %}
+</body>
+</html>

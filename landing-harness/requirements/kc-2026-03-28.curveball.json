@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "MODELED",
+  "source": "hackhaus dashboard screenshot 675 (FireShot Capture 675 - Dashboard — Root Down_), transcribed in tracker G.3.b; the announcement's wording is unknown",
+  "announced_at": "13:00",
+  "text": "Emergency: 1,000 lbs Fresh Produce — 48hr Spoilage. A local farm donated 1,000 pounds of fresh tomatoes and peppers. Spoils in 48 hours. Needs immediate distribution plan — cold chain, transportation, and targeting to highest-need areas. Community Vote Required — 2 Priority Zones. City council added a community vote requirement for Zones 2 and 3 (ZIPs 66101, 66105). One zone is 80% Spanish-speaking. Vote deadline: 14 days. Residents must support the initiative — not just organizations.",
+  "tests": [],
+  "api_changed": [
+    "supply-alerts"
+  ],
+  "_note": "MODELED: the text is G.3.b items 1 and 4 as title + '. ' + description (the DR#1 Block 2 command carries this exact text); the matching post-curveball API file is tools/fixtures/kc-2026-03-28/post/supply-alerts.json, whose invented fields (status, lastUpdated, sa-003/sa-004 ids, types, severities, ZIP lists, date, source) are listed in MODELED.txt beside it; P0.7 merges this sidecar at the reveal"
+}

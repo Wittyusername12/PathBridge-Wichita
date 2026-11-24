@@ -1,0 +1,268 @@
+{
+  "source": "clinics",
+  "count": 10,
+  "data": [
+    {
+      "id": "clinic-pcc-austin",
+      "name": "PCC Austin Family Health Center",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "FQHC",
+      "address": "5425 W Lake St, Chicago, IL 60644",
+      "lat": 41.8857,
+      "lng": -87.7621,
+      "capacityPerDay": 120,
+      "waitWeeks": 3.5,
+      "languages": [
+        "English",
+        "Spanish"
+      ],
+      "accepts": [
+        "Medicaid",
+        "Sliding Scale",
+        "Uninsured"
+      ],
+      "specialties": [
+        "primary-care",
+        "pediatrics",
+        "behavioral-health"
+      ],
+      "openHours": "Mon-Fri 8a-5p"
+    },
+    {
+      "id": "clinic-erie-humboldt",
+      "name": "Erie Family Health - Humboldt Park",
+      "area": "Humboldt Park",
+      "areaCode": 23,
+      "type": "FQHC",
+      "address": "2750 W North Ave, Chicago, IL 60647",
+      "lat": 41.9103,
+      "lng": -87.6943,
+      "capacityPerDay": 200,
+      "waitWeeks": 2.5,
+      "languages": [
+        "English",
+        "Spanish",
+        "Polish"
+      ],
+      "accepts": [
+        "All Insurance",
+        "Sliding Scale",
+        "Uninsured"
+      ],
+      "specialties": [
+        "primary-care",
+        "pediatrics",
+        "dental",
+        "obstetrics",
+        "behavioral-health"
+      ],
+      "openHours": "Mon-Fri 8a-7p, Sat 8a-1p"
+    },
+    {
+      "id": "clinic-mile-sq-south-shore",
+      "name": "Mile Square Health - South Shore",
+      "area": "South Shore",
+      "areaCode": 43,
+      "type": "FQHC",
+      "address": "7037 S Stony Island Ave, Chicago, IL 60649",
+      "lat": 41.7662,
+      "lng": -87.5862,
+      "capacityPerDay": 85,
+      "waitWeeks": 5,
+      "languages": [
+        "English"
+      ],
+      "accepts": [
+        "Medicaid",
+        "Uninsured",
+        "Sliding Scale"
+      ],
+      "specialties": [
+        "primary-care",
+        "behavioral-health"
+      ],
+      "openHours": "Mon-Fri 8a-5p"
+    },
+    {
+      "id": "clinic-heartland-boty",
+      "name": "Heartland Health - Back of the Yards",
+      "area": "New City",
+      "areaCode": 61,
+      "type": "FQHC",
+      "address": "4638 S Ashland Ave, Chicago, IL 60609",
+      "lat": 41.8114,
+      "lng": -87.6643,
+      "capacityPerDay": 150,
+      "waitWeeks": 2.5,
+      "languages": [
+        "English",
+        "Spanish",
+        "Mandarin"
+      ],
+      "accepts": [
+        "All Insurance",
+        "Sliding Scale"
+      ],
+      "specialties": [
+        "primary-care",
+        "dental",
+        "pediatrics",
+        "women-health"
+      ],
+      "openHours": "Mon-Fri 8a-6p"
+    },
+    {
+      "id": "clinic-community-health",
+      "name": "CommunityHealth",
+      "area": "Near West Side",
+      "areaCode": 28,
+      "type": "free-clinic",
+      "address": "2611 W Chicago Ave, Chicago, IL 60622",
+      "lat": 41.8957,
+      "lng": -87.6919,
+      "capacityPerDay": 60,
+      "waitWeeks": 1.5,
+      "languages": [
+        "English",
+        "Spanish"
+      ],
+      "accepts": [
+        "Uninsured Only"
+      ],
+      "specialties": [
+        "primary-care",
+        "women-health",
+        "chronic-disease"
+      ],
+      "openHours": "Mon-Fri 9a-5p"
+    },
+    {
+      "id": "clinic-lawndale-christian",
+      "name": "Lawndale Christian Health Center",
+      "area": "North Lawndale",
+      "areaCode": 29,
+      "type": "FQHC",
+      "address": "3860 W Ogden Ave, Chicago, IL 60623",
+      "lat": 41.8565,
+      "lng": -87.7248,
+      "capacityPerDay": 95,
+      "waitWeeks": 4,
+      "languages": [
+        "English"
+      ],
+      "accepts": [
+        "Medicaid",
+        "Sliding Scale"
+      ],
+      "specialties": [
+        "primary-care",
+        "dental",
+        "behavioral-health",
+        "diabetes"
+      ],
+      "openHours": "Mon-Fri 8a-5p"
+    },
+    {
+      "id": "clinic-tca-roseland",
+      "name": "TCA Health - Roseland",
+      "area": "Roseland",
+      "areaCode": 49,
+      "type": "FQHC",
+      "address": "11406 S Michigan Ave, Chicago, IL 60628",
+      "lat": 41.6886,
+      "lng": -87.6226,
+      "capacityPerDay": 70,
+      "waitWeeks": 5,
+      "languages": [
+        "English"
+      ],
+      "accepts": [
+        "Medicaid",
+        "Sliding Scale"
+      ],
+      "specialties": [
+        "primary-care",
+        "pediatrics"
+      ],
+      "openHours": "Mon-Fri 8:30a-5p"
+    },
+    {
+      "id": "clinic-aunt-martha-south",
+      "name": "Aunt Martha's - South Side",
+      "area": "South Chicago",
+      "areaCode": 46,
+      "type": "FQHC",
+      "address": "8201 S Houston Ave, Chicago, IL 60617",
+      "lat": 41.7459,
+      "lng": -87.5547,
+      "capacityPerDay": 110,
+      "waitWeeks": 3.5,
+      "languages": [
+        "English",
+        "Spanish"
+      ],
+      "accepts": [
+        "All Insurance",
+        "Sliding Scale"
+      ],
+      "specialties": [
+        "primary-care",
+        "pediatrics",
+        "dental",
+        "behavioral-health"
+      ],
+      "openHours": "Mon-Fri 8a-6p"
+    },
+    {
+      "id": "clinic-bobby-wright",
+      "name": "Bobby E. Wright Behavioral Health",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "behavioral-health",
+      "address": "9 S Kedzie Ave, Chicago, IL 60612",
+      "lat": 41.8813,
+      "lng": -87.7069,
+      "capacityPerDay": 45,
+      "waitWeeks": 6,
+      "languages": [
+        "English"
+      ],
+      "accepts": [
+        "Medicaid",
+        "Sliding Scale"
+      ],
+      "specialties": [
+        "behavioral-health",
+        "substance-abuse",
+        "crisis"
+      ],
+      "openHours": "Mon-Fri 8:30a-5p"
+    },
+    {
+      "id": "clinic-access-austin",
+      "name": "ACCESS Austin",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "urgent-care",
+      "address": "5713 W Chicago Ave, Chicago, IL 60651",
+      "lat": 41.8941,
+      "lng": -87.7694,
+      "capacityPerDay": 40,
+      "waitWeeks": 0,
+      "languages": [
+        "English",
+        "Spanish"
+      ],
+      "accepts": [
+        "All Insurance",
+        "Self-Pay"
+      ],
+      "specialties": [
+        "urgent-care",
+        "primary-care"
+      ],
+      "openHours": "Mon-Sat 8a-8p"
+    }
+  ]
+}

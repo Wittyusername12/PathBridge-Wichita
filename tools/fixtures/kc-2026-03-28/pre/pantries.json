@@ -1,0 +1,246 @@
+{
+  "source": "pantries",
+  "count": 12,
+  "data": [
+    {
+      "id": "p-001",
+      "name": "Harvesters Community Food Network",
+      "address": "3801 Topping Ave, Kansas City, MO 64129",
+      "zip": "64129",
+      "lat": 39.0654,
+      "lng": -94.5368,
+      "hours": "Mon-Fri 8am-4pm",
+      "phone": "816-929-3000",
+      "language": [
+        "English",
+        "Spanish"
+      ],
+      "idRequired": false,
+      "type": "food_bank",
+      "serves": "Jackson County",
+      "monthlyCapacity": 2500000,
+      "coldStorage": true,
+      "coldStorageCapacity": "industrial"
+    },
+    {
+      "id": "p-002",
+      "name": "Bishop Sullivan Center - Pantry",
+      "address": "3936 Troost Ave, Kansas City, MO 64110",
+      "zip": "64110",
+      "lat": 39.0402,
+      "lng": -94.5712,
+      "hours": "Mon,Wed,Fri 9am-12pm",
+      "phone": "816-931-4751",
+      "language": [
+        "English",
+        "Spanish"
+      ],
+      "idRequired": false,
+      "type": "pantry",
+      "serves": "64110, 64111, 64112",
+      "monthlyCapacity": 800,
+      "coldStorage": false
+    },
+    {
+      "id": "p-003",
+      "name": "Guadalupe Centers - Food Pantry",
+      "address": "1015 W Avenida Cesar E Chavez, Kansas City, MO 64108",
+      "zip": "64108",
+      "lat": 39.0833,
+      "lng": -94.5867,
+      "hours": "Tue,Thu 10am-2pm",
+      "phone": "816-472-4770",
+      "language": [
+        "Spanish",
+        "English"
+      ],
+      "idRequired": false,
+      "type": "pantry",
+      "serves": "Westside KC",
+      "monthlyCapacity": 600,
+      "coldStorage": true,
+      "coldStorageCapacity": "small_fridge"
+    },
+    {
+      "id": "p-004",
+      "name": "Reconciliation Services",
+      "address": "3101 Troost Ave, Kansas City, MO 64109",
+      "zip": "64109",
+      "lat": 39.0545,
+      "lng": -94.5712,
+      "hours": "Mon-Fri 9am-3pm",
+      "phone": "816-931-4751",
+      "language": [
+        "English"
+      ],
+      "idRequired": true,
+      "type": "pantry",
+      "serves": "64109 area",
+      "monthlyCapacity": 450,
+      "coldStorage": false
+    },
+    {
+      "id": "p-005",
+      "name": "Community Assistance Council",
+      "address": "10901 Blue Ridge Blvd, Kansas City, MO 64134",
+      "zip": "64134",
+      "lat": 38.9281,
+      "lng": -94.5292,
+      "hours": "Mon-Thu 9am-3pm",
+      "phone": "816-763-3277",
+      "language": [
+        "English"
+      ],
+      "idRequired": true,
+      "type": "pantry",
+      "serves": "South KC",
+      "monthlyCapacity": 700,
+      "coldStorage": true,
+      "coldStorageCapacity": "walk_in"
+    },
+    {
+      "id": "p-006",
+      "name": "Salvation Army - Kansas City",
+      "address": "101 W Linwood Blvd, Kansas City, MO 64111",
+      "zip": "64111",
+      "lat": 39.0568,
+      "lng": -94.5884,
+      "hours": "Mon,Wed 10am-1pm",
+      "phone": "816-756-5392",
+      "language": [
+        "English",
+        "Spanish"
+      ],
+      "idRequired": false,
+      "type": "pantry",
+      "serves": "Midtown KC",
+      "monthlyCapacity": 500,
+      "coldStorage": false
+    },
+    {
+      "id": "p-007",
+      "name": "Della Lamb Community Services",
+      "address": "500 Woodland Ave, Kansas City, MO 64106",
+      "zip": "64106",
+      "lat": 39.1069,
+      "lng": -94.5589,
+      "hours": "Mon-Fri 8:30am-4:30pm",
+      "phone": "816-842-8040",
+      "language": [
+        "English",
+        "Spanish",
+        "Somali",
+        "Swahili"
+      ],
+      "idRequired": false,
+      "type": "refugee_services",
+      "serves": "Northeast KC",
+      "monthlyCapacity": 350,
+      "coldStorage": true,
+      "coldStorageCapacity": "small_fridge"
+    },
+    {
+      "id": "p-008",
+      "name": "Sheffield Place",
+      "address": "6604 E 12th St, Kansas City, MO 64126",
+      "zip": "64126",
+      "lat": 39.0939,
+      "lng": -94.5022,
+      "hours": "Mon-Fri 7am-7pm",
+      "phone": "816-483-9927",
+      "language": [
+        "English"
+      ],
+      "idRequired": false,
+      "type": "shelter_pantry",
+      "serves": "Residents + community",
+      "monthlyCapacity": 200,
+      "coldStorage": false
+    },
+    {
+      "id": "p-009",
+      "name": "After the Harvest KC",
+      "address": "Mobile distribution",
+      "zip": "various",
+      "lat": 39.0997,
+      "lng": -94.5786,
+      "hours": "Schedule varies",
+      "phone": "816-921-1903",
+      "language": [
+        "English",
+        "Spanish"
+      ],
+      "idRequired": false,
+      "type": "mobile_distribution",
+      "serves": "Underserved ZIPs",
+      "monthlyCapacity": 150000,
+      "coldStorage": false,
+      "coldStorageNotes": "Mobile distribution — produce must move to partner sites with cold storage",
+      "scheduledRoutes": [
+        "64127",
+        "64130",
+        "66101",
+        "66105"
+      ],
+      "routeSchedule": "Tue,Thu — ZIPs 64127 and 64130; Wed,Fri — ZIPs 66101 and 66105"
+    },
+    {
+      "id": "p-010",
+      "name": "Crosslines Community Outreach",
+      "address": "736 Shawnee Ave, Kansas City, KS 66105",
+      "zip": "66105",
+      "lat": 39.1144,
+      "lng": -94.6369,
+      "hours": "Mon-Fri 9am-12pm, 1pm-3pm",
+      "phone": "913-281-3388",
+      "language": [
+        "English",
+        "Spanish"
+      ],
+      "idRequired": true,
+      "type": "pantry",
+      "serves": "KCK Wyandotte County",
+      "monthlyCapacity": 900,
+      "coldStorage": true,
+      "coldStorageCapacity": "walk_in"
+    },
+    {
+      "id": "p-011",
+      "name": "Kansas City Community Gardens",
+      "address": "6917 Kensington Ave, Kansas City, MO 64132",
+      "zip": "64132",
+      "lat": 39.0178,
+      "lng": -94.5412,
+      "hours": "Seasonal",
+      "phone": "816-931-3877",
+      "language": [
+        "English"
+      ],
+      "idRequired": false,
+      "type": "community_garden",
+      "serves": "Open to public",
+      "monthlyCapacity": 50,
+      "coldStorage": false
+    },
+    {
+      "id": "p-012",
+      "name": "El Centro Academy for Children",
+      "address": "650 Minnesota Ave, Kansas City, KS 66101",
+      "zip": "66101",
+      "lat": 39.1159,
+      "lng": -94.6278,
+      "hours": "Mon-Fri during school",
+      "phone": "913-677-0100",
+      "language": [
+        "Spanish",
+        "English"
+      ],
+      "idRequired": false,
+      "type": "school_pantry",
+      "serves": "Enrolled families",
+      "monthlyCapacity": 120,
+      "coldStorage": false,
+      "coldStorageNotes": "School pantry — limited to non-perishables unless same-day distribution"
+    }
+  ]
+}

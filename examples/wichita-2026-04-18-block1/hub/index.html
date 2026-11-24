@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="naipc-build" content="IC-8">
+<meta name="naipc-run" content="20261123T012811Z">
+<meta name="naipc-invocations" content="Hub 1; Business case 1; Navigator 1; Campaign 1">
+<title>Relay Wichita — Full Stack Submission</title>
+<meta property="og:title" content="Relay Wichita — Ctrl Alt Defeat"/>
+<meta name="description" content="Relay Wichita addresses a compounding civic crisis in Wichita. A 90 -day, $500K pilot.">
+<meta property="og:description" content="Relay Wichita addresses a compounding civic crisis in Wichita. A 90 -day, $500K pilot.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="Relay Wichita addresses a compounding civic crisis in Wichita. A 90 -day, $500K pilot.">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ── Design tokens ── */
+:root{
+  --bg:#060812;--bg2:#0c0e1e;
+  --text:#eef0ff;--text2:#a0a4c0;--dim:#5a5e78;
+  --accent:#8b5cf6;
+  --purple:#8b5cf6;--green:#22c55e;--pink:#ec4899;--cyan:#22d3ee;
+  --surface:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);
+  --glow-purple:rgba(139,92,246,.35);--glow-green:rgba(34,197,94,.35);--glow-pink:rgba(236,72,153,.35);
+  --r:20px;--font:'Plus Jakarta Sans',system-ui,sans-serif;--display:'Sora','Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── Mouse spotlight ── */
+.spotlight{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(800px circle at var(--mx,50%) var(--my,50%),rgba(139,92,246,.15),transparent 55%);
+  opacity:0;transition:opacity .4s ease}
+
+/* ── Floating orbs ── */
+.orbs{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.12}
+.orb:nth-child(1){width:600px;height:600px;background:var(--purple);top:-15%;left:-10%;animation:drift1 28s ease-in-out infinite}
+.orb:nth-child(2){width:500px;height:500px;background:var(--cyan);bottom:-10%;right:-8%;animation:drift2 24s ease-in-out infinite}
+.orb:nth-child(3){width:350px;height:350px;background:var(--pink);top:40%;left:60%;animation:drift3 32s ease-in-out infinite}
+.orb:nth-child(4){width:280px;height:280px;background:var(--green);top:20%;right:25%;animation:drift1 20s ease-in-out infinite reverse}
+@keyframes drift1{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,-40px)}}
+@keyframes drift2{0%,100%{transform:translate(0,0)}50%{transform:translate(-50px,30px)}}
+@keyframes drift3{0%,100%{transform:translate(0,0)}33%{transform:translate(-30px,-50px)}66%{transform:translate(40px,20px)}}
+
+/* ── Layout ── */
+.page{position:relative;z-index:1;max-width:1040px;margin:0 auto;padding:80px 28px 48px;display:flex;flex-direction:column;align-items:center}
+
+/* ── Hero ── */
+.hero{text-align:center;margin-bottom:48px}
+.brand{font-family:var(--display);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;
+  background:linear-gradient(135deg,var(--purple),var(--cyan),var(--pink),var(--purple));background-size:300% 300%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:gradShift 6s ease infinite}
+@keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.tagline{color:var(--text2);font-size:clamp(.95rem,1.6vw,1.15rem);margin-top:10px;max-width:54ch;margin-left:auto;margin-right:auto;line-height:1.55}
+.badge{display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding:6px 18px;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.25);color:rgba(200,180,255,.9);
+  animation:pulseBadge 3s ease-in-out infinite}
+@keyframes pulseBadge{0%,100%{box-shadow:0 0 0 0 rgba(139,92,246,.2)}50%{box-shadow:0 0 20px 4px rgba(139,92,246,.15)}}
+
+/* ── Hero stats ── */
+.stats-bar{display:flex;justify-content:center;gap:40px;margin-top:32px;flex-wrap:wrap}
+.hero-stat{text-align:center}
+.hero-stat .num{font-family:var(--display);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;font-variant-numeric:tabular-nums}
+.hero-stat .num.purple{color:var(--purple)}.hero-stat .num.green{color:var(--green)}.hero-stat .num.pink{color:var(--pink)}
+.hero-stat .lbl{font-size:.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em;margin-top:2px;font-weight:600}
+
+/* ── Tracks grid ── */
+.tracks{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;width:100%;margin-bottom:40px}
+@media(max-width:780px){.tracks{grid-template-columns:1fr}}
+
+/* ── Track card ── */
+.track{position:relative;border-radius:var(--r);background:var(--surface);border:1px solid var(--border);
+  backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%);
+  padding:28px 24px;text-align:left;text-decoration:none;color:var(--text);display:block;
+  transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .4s ease;overflow:hidden;isolation:isolate;will-change:transform}
+/* Top accent bar */
+.track::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transition:height .3s ease,opacity .3s ease}
+.track.oracle::before{background:linear-gradient(90deg,#8b5cf6,#a78bfa)}
+.track.architect::before{background:linear-gradient(90deg,#22c55e,#4ade80)}
+.track.muse::before{background:linear-gradient(90deg,#ec4899,#f472b6)}
+/* Hover: card lifts + glow bleeds from edges */
+.track:hover{transform:translateY(-6px)}
+.track.oracle:hover{box-shadow:0 8px 40px var(--glow-purple),0 0 80px -20px var(--glow-purple)}
+.track.architect:hover{box-shadow:0 8px 40px var(--glow-green),0 0 80px -20px var(--glow-green)}
+.track.muse:hover{box-shadow:0 8px 40px var(--glow-pink),0 0 80px -20px var(--glow-pink)}
+.track:hover::before{height:4px;opacity:.9}
+/* Hover glow overlay */
+.track::after{content:'';position:absolute;inset:0;border-radius:var(--r);opacity:0;transition:opacity .4s ease;pointer-events:none;z-index:-1}
+.track.oracle::after{background:radial-gradient(ellipse at 50% 0%,rgba(139,92,246,.08),transparent 70%)}
+.track.architect::after{background:radial-gradient(ellipse at 50% 0%,rgba(34,197,94,.08),transparent 70%)}
+.track.muse::after{background:radial-gradient(ellipse at 50% 0%,rgba(236,72,153,.08),transparent 70%)}
+.track:hover::after{opacity:1}
+
+.track-icon{font-size:2rem;margin-bottom:14px;display:inline-block;transition:transform .3s ease}
+.track:hover .track-icon{transform:scale(1.15) translateY(-2px)}
+.track .label{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.track.oracle .label{color:#a78bfa}.track.architect .label{color:#4ade80}.track.muse .label{color:#f472b6}
+.track h2{font-family:var(--display);font-size:1.25rem;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+.track p{color:var(--text2);font-size:.92rem;line-height:1.55}
+.track .meta{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap}
+.track .meta span{font-size:.82rem;color:var(--dim)}
+.track .meta strong{color:var(--text);font-weight:700}
+
+/* ── Motif line ── */
+.motif{text-align:center;margin-bottom:36px;font-size:.8rem;letter-spacing:.25em;text-transform:uppercase;color:var(--dim);font-weight:600}
+.motif .dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--dim);vertical-align:middle;margin:0 12px}
+
+/* ── Pitch ── */
+.pitch{border-radius:var(--r);background:var(--surface);border:1px solid var(--border);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  padding:28px 32px;margin-bottom:40px;width:100%;max-width:800px;text-align:left}
+.pitch p{color:var(--text2);font-size:.88rem;line-height:1.75}
+.pitch strong{color:var(--text);font-weight:700}
+
+/* ── Footer ── */
+footer{text-align:center;color:var(--dim);font-size:.72rem;padding-top:20px;border-top:1px solid var(--border);width:100%;max-width:800px}
+footer .team{font-family:var(--display);font-weight:700;color:var(--text2);font-size:.85rem;letter-spacing:.02em;margin-bottom:4px}
+.qr-wrap{display:block;width:110px;height:110px;border-radius:12px;overflow:hidden;background:#fff;padding:5px;margin:12px auto 0}
+.qr-wrap svg{width:100%;height:100%;display:block}
+
+/* ── Entrance choreography ── */
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero{animation:rise .7s cubic-bezier(.16,1,.3,1) both;animation-delay:.1s}
+.stats-bar{animation:rise .6s cubic-bezier(.16,1,.3,1) both;animation-delay:.35s}
+.track:nth-child(1){animation:rise .6s cubic-bezier(.16,1,.3,1) both;animation-delay:.5s}
+.track:nth-child(2){animation:rise .6s cubic-bezier(.16,1,.3,1) both;animation-delay:.65s}
+.track:nth-child(3){animation:rise .6s cubic-bezier(.16,1,.3,1) both;animation-delay:.8s}
+.motif{animation:rise .5s ease both;animation-delay:.95s}
+.pitch{animation:rise .6s ease both;animation-delay:1.05s}
+footer{animation:rise .5s ease both;animation-delay:1.2s}
+
+/* ── Reduced motion ── */
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .brand{background-size:100% 100%}
+  /* Diagram: show static snapshot — lines drawn, no dots, no pulses */
+  .flow-path{stroke-dashoffset:0!important}
+  .flow-dot{display:none}
+  /* Show diagram immediately for reduced-motion users */
+  .diagram-wrap{opacity:1!important;transform:none!important}
+}
+/* ── Mobile ── */
+@media(max-width:600px){
+  .page{padding:48px 16px 32px}
+  .stats-bar{gap:24px}
+  .pitch{padding:20px}
+}
+/* ── Particle canvas ── */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;will-change:transform;transform:translate3d(0,0,0)}
+
+/* ── Light sweep ── */
+#sweep{position:fixed;top:0;bottom:0;width:180px;left:-180px;z-index:2;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  box-shadow:0 0 60px 30px rgba(255,255,255,.03);
+  will-change:transform;animation:sweepAcross 1.8s ease-in-out 1.5s both}
+@keyframes sweepAcross{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 360px))}}
+
+/* ── Boot terminal ── */
+.term{max-width:min(640px,calc(100vw - 2rem));width:100%;margin-bottom:32px;padding:16px 20px;
+  border-radius:12px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.06);
+  font-family:'Consolas','SF Mono','Monaco','Menlo','DejaVu Sans Mono','Courier New',monospace;
+  font-size:clamp(.72rem,2vw,.875rem);line-height:1.7;color:#94a3b8;position:relative;overflow:hidden;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.term::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);
+  pointer-events:none}
+.term-line{white-space:pre-wrap;word-break:break-all}
+.term-line .cmd{color:#67e8f9}
+.term-line .check{opacity:0;color:#4ade80;margin-left:.3em;transition:opacity .15s ease-out}
+.term-line .check.visible{opacity:1}
+.cursor{display:inline-block;width:.55em;height:1.1em;background:#67e8f9;margin-left:1px;vertical-align:text-bottom;animation:cblink 1s step-end infinite}
+@keyframes cblink{0%,100%{opacity:1}50%{opacity:0}}
+.term-final{opacity:0;color:#fff;font-weight:700}
+.term-final.show{animation:completePulse .6s ease-out forwards}
+@keyframes completePulse{0%{opacity:0;text-shadow:0 0 20px rgba(255,255,255,.8)}40%{opacity:1;text-shadow:0 0 12px rgba(255,255,255,.4)}100%{opacity:1;text-shadow:0 0 4px rgba(255,255,255,.1)}}
+
+/* ── Data-flow diagram ── */
+.diagram-wrap{width:100%;max-width:1040px;margin-bottom:40px;text-align:center}
+.diagram-title{font-family:var(--display);font-size:clamp(1rem,2.2vw,1.3rem);font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--text);margin-bottom:20px}
+.diagram-title span{color:var(--cyan)}
+.flow-svg{width:100%;height:auto;max-width:1040px;display:block;contain:content;will-change:transform;isolation:isolate}
+/* Line-drawing: pathLength="1" normalizes all paths — no JS needed for lengths */
+.flow-path{fill:none;stroke-dasharray:1;stroke-dashoffset:1}
+.flow-svg.is-visible .flow-path.tier1{animation:drawPath 1s ease forwards}
+.flow-svg.is-visible .flow-path.tier2{animation:drawPath 1s ease forwards;animation-delay:1s}
+@keyframes drawPath{to{stroke-dashoffset:0}}
+/* API node heartbeat */
+.api-node{transform-box:fill-box;transform-origin:center}
+.flow-svg.is-visible .api-node{animation:heartbeat 2.5s ease-in-out infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.1);opacity:1}}
+/* Track node pulse (synced with 2.5s dot travel — pulse at 90-95% of cycle) */
+.track-circle{transform-box:fill-box;transform-origin:center}
+.flow-svg.is-visible .track-circle{animation:trkPulse 2.5s ease infinite;animation-delay:4.3s}
+@keyframes trkPulse{0%,85%,100%{transform:scale(1)}92%{transform:scale(1.12)}}
+/* Flowing dots hidden until diagram activates */
+.flow-dot{opacity:0}.flow-svg.is-visible .flow-dot{opacity:1}
+/* Synergy cards */
+.synergy-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:1040px;margin-top:20px;margin-bottom:8px}
+.syn-card{border-radius:var(--r);background:var(--surface);border:1px solid var(--border);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:18px 16px;text-align:left}
+.syn-card h4{font-family:var(--display);font-size:.95rem;font-weight:700;margin-bottom:6px;letter-spacing:.02em}
+.syn-card.oracle h4{color:#a78bfa}.syn-card.architect h4{color:#4ade80}.syn-card.muse h4{color:#f472b6}
+.syn-card p{color:var(--text2);font-size:.88rem;line-height:1.55}
+.syn-card strong{color:var(--text)}
+.syn-card a{color:#4ade80;text-decoration:none;border-bottom:1px solid rgba(34,197,94,.3)}
+.syn-card a:hover{border-bottom-color:#4ade80}
+/* Entrance for diagram — starts hidden, JS adds .active after terminal finishes */
+.diagram-wrap{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.diagram-wrap.active{opacity:1;transform:translateY(0)}
+/* Responsive: hide endpoint labels on mobile */
+@media(max-width:600px){.ep-label{display:none}.synergy-cards{grid-template-columns:1fr}}
+
+/* ── Pitch Deck Carousel ── */
+.deck-shell{position:relative;width:100%;align-self:stretch;contain:layout style;
+  margin-bottom:32px;animation:rise .6s ease both;animation-delay:1.3s}
+.deck-heading{text-align:center;font-family:var(--display);font-size:clamp(1.15rem,2.8vw,1.6rem);
+  font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text);margin-bottom:16px}
+.deck-heading span{color:var(--cyan)}
+/* Progress bar — clip-path reveal of static gradient (per ChatGPT/Gemini: no squish) */
+.deck-progress{position:absolute;top:0;left:0;right:0;height:3px;border-radius:999px;
+  background:rgba(255,255,255,.06);z-index:3;pointer-events:none}
+.deck-progress-fill{position:absolute;inset:0;border-radius:999px;
+  background:linear-gradient(90deg,#8b5cf6 0%,#22c55e 50%,#ec4899 100%);
+  clip-path:inset(0 calc(100% - var(--progress,0%)) 0 0)}
+/* Counter — absolute overlay, pointer-events:none so clicks pass through */
+.deck-counter{position:absolute;top:14px;right:16px;z-index:3;pointer-events:none;
+  font-family:var(--mono);font-size:.7rem;color:rgba(255,255,255,.45);
+  font-variant-numeric:tabular-nums}
+/* Scroller — grid layout, NO scroll-behavior in CSS (only in JS calls) */
+.deck-scroller{display:grid;grid-auto-flow:column;grid-auto-columns:100%;
+  overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-ms-overflow-style:none;outline:none}
+.deck-scroller::-webkit-scrollbar{display:none}
+/* Slides */
+.deck-slide{scroll-snap-align:start;scroll-snap-stop:always;min-height:320px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:40px 48px;text-align:center;box-sizing:border-box}
+.deck-slide-label{font-family:var(--mono);font-size:.8rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:10px}
+.deck-slide-big{font-family:var(--display);font-size:clamp(3rem,8vw,6rem);
+  font-weight:900;line-height:1;letter-spacing:-.02em;color:#fff;margin-bottom:10px}
+.deck-slide-sub{font-size:clamp(1rem,2vw,1.3rem);color:var(--text2);
+  max-width:600px;line-height:1.5}
+.deck-slide-sub strong{color:#fff}
+/* Two-column layout for slides 3-4 (CSS Grid per all sources) */
+.deck-cols{display:grid;grid-template-columns:1fr 60px 1fr;gap:12px;
+  align-items:center;width:100%;max-width:800px;text-align:left}
+.deck-col{padding:20px;border-radius:var(--r);background:rgba(6,8,18,.85);
+  border:1px solid var(--border)}
+.deck-col h5{font-family:var(--display);font-size:1.05rem;font-weight:700;margin-bottom:6px}
+.deck-col p{font-size:.95rem;color:var(--text2);line-height:1.5}
+.deck-col p strong{color:#fff}
+.deck-col.purple{border-color:rgba(139,92,246,.25)}.deck-col.purple h5{color:#a78bfa}
+.deck-col.green{border-color:rgba(34,197,94,.25)}.deck-col.green h5{color:#4ade80}
+.deck-col.pink{border-color:rgba(236,72,153,.25)}.deck-col.pink h5{color:#f472b6}
+/* Connector arrow between columns */
+.deck-connector{display:flex;align-items:center;justify-content:center}
+.deck-connector-line{width:100%;height:2px;border-radius:999px;
+  background:linear-gradient(90deg,#8b5cf6,#22c55e,#ec4899);position:relative}
+.deck-connector-line::after{content:'';position:absolute;right:-4px;top:-4px;
+  border-top:5px solid transparent;border-bottom:5px solid transparent;
+  border-left:8px solid #ec4899}
+/* Track buttons row for slide 5 */
+.deck-track-btns{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.deck-track-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;
+  border-radius:8px;font-size:.78rem;font-weight:600;color:#fff;text-decoration:none;
+  border:1px solid var(--border);background:rgba(6,8,18,.85);transition:border-color .2s}
+.deck-track-btn:hover{border-color:rgba(255,255,255,.25)}
+.deck-track-btn .dot-indicator{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+/* Arrows */
+.deck-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--border);
+  background:rgba(6,8,18,.8);color:var(--text);font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:border-color .2s,opacity .2s;
+  touch-action:manipulation}
+.deck-arrow:hover{border-color:rgba(255,255,255,.25)}
+.deck-arrow[disabled]{opacity:.3;pointer-events:none;cursor:default}
+.deck-arrow--prev{left:-6px}.deck-arrow--next{right:-6px}
+/* Dots */
+.deck-dots{display:flex;justify-content:center;gap:10px;margin-top:14px}
+.deck-dot{width:6px;height:6px;border-radius:50%;border:none;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.2);transition:background .2s,transform .2s;
+  touch-action:manipulation}
+.deck-dot.active{background:#8b5cf6;transform:scale(1.4)}
+/* System diagram on slide 2 — three colored circles with connector */
+.deck-system{display:flex;align-items:center;gap:0;margin:16px 0 10px}
+.deck-system-node{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:.65rem;font-weight:700;color:#fff;font-family:var(--display)}
+.deck-system-line{width:48px;height:2px;flex-shrink:0}
+/* Responsive */
+@media(max-width:700px){
+  .deck-arrow{display:none}
+  .deck-slide{padding:32px 20px}
+  .deck-cols{grid-template-columns:1fr}
+  .deck-connector{height:28px}.deck-connector-line{width:2px;height:100%}
+  .deck-connector-line::after{display:none}
+}
+
+
+.cb-panel{width:100%;max-width:800px;margin:-16px 0 40px;padding:22px 26px;border-radius:var(--r);background:var(--surface);
+  border:1px solid rgba(245,158,11,.35);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-align:left;
+  animation:rise .6s cubic-bezier(.16,1,.3,1) both;animation-delay:.45s}
+.cb-panel .cb-head{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fbbf24;margin-bottom:8px}
+.cb-panel p,.cb-panel li{color:var(--text2);font-size:.9rem;line-height:1.6}
+.cb-panel .cb-first{color:var(--text);font-weight:700;font-size:1rem;margin-bottom:6px}
+.cb-panel ul{margin:6px 0 10px 18px}
+.cb-panel table{width:100%;border-collapse:collapse;margin:8px 0 10px;font-size:.84rem}
+.cb-panel th,.cb-panel td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top}
+.cb-panel th{color:var(--text);font-weight:700}
+.cb-panel .cb-src{font-size:.78rem;color:var(--dim);font-style:italic;margin-top:6px}
+.cb-panel a{color:#fbbf24}
+@media(max-width:600px){.cb-panel{padding:18px}.cb-panel table{font-size:.78rem}}
+@media print{.orbs,.badge{display:none!important}body{background:#fff;color:#111}.track{border:1px solid #ddd;box-shadow:none!important;backdrop-filter:none!important}.pitch{backdrop-filter:none!important}#particles,#sweep,.term,.diagram-wrap,.deck-shell{display:none!important}}
+</style>
+</head>
+<body>
+
+<!-- Particle constellation — ambient data mesh -->
+<canvas id="particles" aria-hidden="true"></canvas>
+
+<!-- Mouse spotlight — ambient cursor glow -->
+<div class="spotlight" id="spotlight" aria-hidden="true"></div>
+
+<!-- Floating orbs — ambient depth -->
+<div class="orbs" aria-hidden="true">
+  <div class="orb"></div><div class="orb"></div><div class="orb"></div><div class="orb"></div>
+</div>
+
+<!-- Light sweep — scanner beam, fires once -->
+<div id="sweep" aria-hidden="true"></div>
+
+<div class="page">
+
+  <!-- ═══ Hero ═══ -->
+  <header class="hero">
+    <div class="brand"><em>Relay</em> Wichita</div>
+    <p class="tagline">A <span class="prov" data-prov="pilot_days" data-kind="MEASURED" title="MEASURED — measured in the data · the pilot&#x27;s length">90</span>-day, <span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span> pilot.</p>
+    <div class="badge">Full Stack Submission · Homelessness and Youth Transitions</div>
+
+    <div class="stats-bar">
+      <div class="hero-stat">
+        <div class="num purple" data-count="$500K"><span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span></div>
+        <div class="lbl">Contract</div>
+      </div>
+      
+      <div class="hero-stat">
+        <div class="num pink" data-count="120"><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></div>
+        <div class="lbl">Year 1 People</div>
+      </div>
+    </div>
+  </header>
+
+  
+  
+  <section class="cb-panel" id="this-build" data-cov-skip data-prov-block="Python&#39;s words and counts, from the data" aria-label="This build">
+    <h2 class="cb-head">This build</h2>
+    <ul><li>Business case — built</li><li>Navigator — built</li><li>Campaign — built</li></ul>
+  </section>
+  
+
+  
+
+  <!-- ═══ Track Cards ═══ -->
+  <div class="tracks" data-prov-block="Python&#39;s words and counts, from the data">
+    <a class="track oracle" href="https://ctrl-alt-defeat.netlify.app" target="_blank" rel="noopener">
+      <div class="track-icon">📊</div>
+      <div class="label">The Oracle — Business Case</div>
+      <h2>Strategic & Operational Blueprint</h2>
+      <p>Data-driven business plan with 3-year financial model, SROI analysis, implementation phases, and risk register.</p>
+      <div class="meta">
+        <span><strong><span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span></strong> contract</span>
+        
+        <span><strong><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></strong> Year 1</span>
+      </div>
+      
+    </a>
+
+    <a class="track architect" href="https://ctrl-alt-defeat-arch.netlify.app" target="_blank" rel="noopener">
+      <div class="track-icon">🔍</div>
+      <div class="label">The Architect — Resident Tool</div>
+      <h2>Interactive Resource Navigator</h2>
+      <p>Resource finder built from the challenge data — search, filters and charts in the browser, and a chat assistant (Claude, through a server-side proxy).</p>
+      <div class="meta">
+        <span><strong>28</strong> resources</span>
+        
+      </div>
+      
+    </a>
+
+    <a class="track muse" href="https://ctrl-alt-defeat-muse.netlify.app" target="_blank" rel="noopener">
+      <div class="track-icon">🎨</div>
+      <div class="label">The Muse — Launch Campaign</div>
+      <h2>Community Outreach Playbook</h2>
+      <p>Bilingual marketing campaign with audience personas, channel strategy, social media posts, print flyer, and partner pitch.</p>
+      <div class="meta">
+        <span><strong>3</strong> personas</span>
+        <span><strong>6</strong> channels</span>
+        <span><strong>EN/ES</strong> bilingual</span>
+      </div>
+      
+    </a>
+  </div>
+
+  <!-- ═══ Boot Terminal — Pipeline Sequence ═══ -->
+  <div class="term" id="terminal" style="animation:rise .5s ease both;animation-delay:1.0s">
+    <div id="term-body"></div><span class="cursor" id="term-cursor">█</span>
+  </div>
+
+  <!-- ═══ Data-Flow Diagram — Full Stack Integration Proof ═══ -->
+  <div class="diagram-wrap" data-prov-block="Python&#39;s words and counts, from the data">
+    <div class="diagram-title">One API <span>·</span> Three Tracks <span>·</span> Zero Seams</div>
+
+    
+    
+    
+    
+    
+
+    <svg id="flow-svg" class="flow-svg" data-zone="provenance" data-zone-name="data-flow" viewBox="0 0 1040 540" preserveAspectRatio="xMidYMid meet"
+         role="img" aria-labelledby="flow-title flow-desc" xmlns="http://www.w3.org/2000/svg">
+      <title id="flow-title">Data Flow Architecture</title>
+      <desc id="flow-desc">7 challenge API endpoints; the pipeline passes every one to all three tracks: Oracle, Architect and Muse.</desc>
+
+      
+      
+      
+      <path class="flow-path tier1" pathLength="1" d="M 520,60 C 520,155 60.0,155 60.0,250" stroke="rgba(160,164,192,.15)" stroke-width="1"/>
+      
+      
+      <path class="flow-path tier1" pathLength="1" d="M 520,60 C 520,155 213.3,155 213.3,250" stroke="rgba(160,164,192,.15)" stroke-width="1"/>
+      
+      
+      <path class="flow-path tier1" pathLength="1" d="M 520,60 C 520,155 366.7,155 366.7,250" stroke="rgba(160,164,192,.15)" stroke-width="1"/>
+      
+      
+      <path class="flow-path tier1" pathLength="1" d="M 520,60 C 520,155 520.0,155 520.0,250" stroke="rgba(160,164,192,.15)" stroke-width="1"/>
+      
+      
+      <path class="flow-path tier1" pathLength="1" d="M 520,60 C 520,155 673.3,155 673.3,250" stroke="rgba(160,164,192,.15)" stroke-width="1"/>
+      
+      
+      <path class="flow-path tier1" pathLength="1" d="M 520,60 C 520,155 826.7,155 826.7,250" stroke="rgba(160,164,192,.15)" stroke-width="1"/>
+      
+      
+      <path class="flow-path tier1" pathLength="1" d="M 520,60 C 520,155 980.0,155 980.0,250" stroke="rgba(160,164,192,.15)" stroke-width="1"/>
+      
+
+      
+      
+      
+      
+      
+      
+      <path id="fp-0-o" class="flow-path tier2" pathLength="1" d="M 60.0,250 C 60.0,355 260,355 260,460" stroke="rgba(139,92,246,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-0-a" class="flow-path tier2" pathLength="1" d="M 60.0,250 C 60.0,355 520,355 520,460" stroke="rgba(34,197,94,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-0-m" class="flow-path tier2" pathLength="1" d="M 60.0,250 C 60.0,355 780,355 780,460" stroke="rgba(236,72,153,.2)" stroke-width="1.5"/>
+      
+      
+      
+      
+      
+      
+      <path id="fp-1-o" class="flow-path tier2" pathLength="1" d="M 213.3,250 C 213.3,355 260,355 260,460" stroke="rgba(139,92,246,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-1-a" class="flow-path tier2" pathLength="1" d="M 213.3,250 C 213.3,355 520,355 520,460" stroke="rgba(34,197,94,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-1-m" class="flow-path tier2" pathLength="1" d="M 213.3,250 C 213.3,355 780,355 780,460" stroke="rgba(236,72,153,.2)" stroke-width="1.5"/>
+      
+      
+      
+      
+      
+      
+      <path id="fp-2-o" class="flow-path tier2" pathLength="1" d="M 366.7,250 C 366.7,355 260,355 260,460" stroke="rgba(139,92,246,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-2-a" class="flow-path tier2" pathLength="1" d="M 366.7,250 C 366.7,355 520,355 520,460" stroke="rgba(34,197,94,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-2-m" class="flow-path tier2" pathLength="1" d="M 366.7,250 C 366.7,355 780,355 780,460" stroke="rgba(236,72,153,.2)" stroke-width="1.5"/>
+      
+      
+      
+      
+      
+      
+      <path id="fp-3-o" class="flow-path tier2" pathLength="1" d="M 520.0,250 C 520.0,355 260,355 260,460" stroke="rgba(139,92,246,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-3-a" class="flow-path tier2" pathLength="1" d="M 520.0,250 C 520.0,355 520,355 520,460" stroke="rgba(34,197,94,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-3-m" class="flow-path tier2" pathLength="1" d="M 520.0,250 C 520.0,355 780,355 780,460" stroke="rgba(236,72,153,.2)" stroke-width="1.5"/>
+      
+      
+      
+      
+      
+      
+      <path id="fp-4-o" class="flow-path tier2" pathLength="1" d="M 673.3,250 C 673.3,355 260,355 260,460" stroke="rgba(139,92,246,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-4-a" class="flow-path tier2" pathLength="1" d="M 673.3,250 C 673.3,355 520,355 520,460" stroke="rgba(34,197,94,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-4-m" class="flow-path tier2" pathLength="1" d="M 673.3,250 C 673.3,355 780,355 780,460" stroke="rgba(236,72,153,.2)" stroke-width="1.5"/>
+      
+      
+      
+      
+      
+      
+      <path id="fp-5-o" class="flow-path tier2" pathLength="1" d="M 826.7,250 C 826.7,355 260,355 260,460" stroke="rgba(139,92,246,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-5-a" class="flow-path tier2" pathLength="1" d="M 826.7,250 C 826.7,355 520,355 520,460" stroke="rgba(34,197,94,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-5-m" class="flow-path tier2" pathLength="1" d="M 826.7,250 C 826.7,355 780,355 780,460" stroke="rgba(236,72,153,.2)" stroke-width="1.5"/>
+      
+      
+      
+      
+      
+      
+      <path id="fp-6-o" class="flow-path tier2" pathLength="1" d="M 980.0,250 C 980.0,355 260,355 260,460" stroke="rgba(139,92,246,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-6-a" class="flow-path tier2" pathLength="1" d="M 980.0,250 C 980.0,355 520,355 520,460" stroke="rgba(34,197,94,.2)" stroke-width="1.5"/>
+      
+      
+      <path id="fp-6-m" class="flow-path tier2" pathLength="1" d="M 980.0,250 C 980.0,355 780,355 780,460" stroke="rgba(236,72,153,.2)" stroke-width="1.5"/>
+      
+      
+
+      
+      
+      <circle class="api-node" cx="520" cy="60" r="14" fill="#22d3ee"/>
+      <text x="520" y="34" text-anchor="middle" fill="#a0a4c0" font-size="11" font-family="Consolas,Monaco,monospace">Challenge API</text>
+
+      
+      
+      
+      <circle cx="60.0" cy="250" r="5" fill="#5a5e78"/>
+      <text class="ep-label" x="60.0" y="275" text-anchor="middle" fill="#5a5e78" font-size="9" font-family="Consolas,Monaco,monospace">community-snapshot</text>
+      
+      
+      <circle cx="213.3" cy="250" r="5" fill="#5a5e78"/>
+      <text class="ep-label" x="213.3" y="275" text-anchor="middle" fill="#5a5e78" font-size="9" font-family="Consolas,Monaco,monospace">shelter-inventory</text>
+      
+      
+      <circle cx="366.7" cy="250" r="5" fill="#5a5e78"/>
+      <text class="ep-label" x="366.7" y="275" text-anchor="middle" fill="#5a5e78" font-size="9" font-family="Consolas,Monaco,monospace">intake-network</text>
+      
+      
+      <circle cx="520.0" cy="250" r="5" fill="#5a5e78"/>
+      <text class="ep-label" x="520.0" y="275" text-anchor="middle" fill="#5a5e78" font-size="9" font-family="Consolas,Monaco,monospace">transition-programs</text>
+      
+      
+      <circle cx="673.3" cy="250" r="5" fill="#5a5e78"/>
+      <text class="ep-label" x="673.3" y="275" text-anchor="middle" fill="#5a5e78" font-size="9" font-family="Consolas,Monaco,monospace">stabilization-docs</text>
+      
+      
+      <circle cx="826.7" cy="250" r="5" fill="#5a5e78"/>
+      <text class="ep-label" x="826.7" y="275" text-anchor="middle" fill="#5a5e78" font-size="9" font-family="Consolas,Monaco,monospace">rehousing-options</text>
+      
+      
+      <circle cx="980.0" cy="250" r="5" fill="#5a5e78"/>
+      <text class="ep-label" x="980.0" y="275" text-anchor="middle" fill="#5a5e78" font-size="9" font-family="Consolas,Monaco,monospace">system-status</text>
+      
+
+      
+      
+      <circle class="track-circle" cx="260" cy="460" r="18" fill="#8b5cf6"/>
+      <text x="260" y="492" text-anchor="middle" fill="#8b5cf6" font-size="12" font-weight="700" font-family="Sora,sans-serif">Oracle</text>
+      
+      <circle class="track-circle" cx="520" cy="460" r="18" fill="#22c55e"/>
+      <text x="520" y="492" text-anchor="middle" fill="#22c55e" font-size="12" font-weight="700" font-family="Sora,sans-serif">Architect</text>
+      
+      <circle class="track-circle" cx="780" cy="460" r="18" fill="#ec4899"/>
+      <text x="780" y="492" text-anchor="middle" fill="#ec4899" font-size="12" font-weight="700" font-family="Sora,sans-serif">Muse</text>
+      
+
+      
+      
+      
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#8b5cf6" opacity=".1"/><circle r="3" fill="#8b5cf6" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="2.0s"><mpath href="#fp-0-o"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#22c55e" opacity=".1"/><circle r="3" fill="#22c55e" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="2.23s"><mpath href="#fp-0-a"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#ec4899" opacity=".1"/><circle r="3" fill="#ec4899" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="2.46s"><mpath href="#fp-0-m"/></animateMotion></g>
+      
+      
+      
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#8b5cf6" opacity=".1"/><circle r="3" fill="#8b5cf6" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="2.69s"><mpath href="#fp-1-o"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#22c55e" opacity=".1"/><circle r="3" fill="#22c55e" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="2.92s"><mpath href="#fp-1-a"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#ec4899" opacity=".1"/><circle r="3" fill="#ec4899" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="3.15s"><mpath href="#fp-1-m"/></animateMotion></g>
+      
+      
+      
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#8b5cf6" opacity=".1"/><circle r="3" fill="#8b5cf6" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="3.38s"><mpath href="#fp-2-o"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#22c55e" opacity=".1"/><circle r="3" fill="#22c55e" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="3.61s"><mpath href="#fp-2-a"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#ec4899" opacity=".1"/><circle r="3" fill="#ec4899" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="3.84s"><mpath href="#fp-2-m"/></animateMotion></g>
+      
+      
+      
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#8b5cf6" opacity=".1"/><circle r="3" fill="#8b5cf6" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="4.07s"><mpath href="#fp-3-o"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#22c55e" opacity=".1"/><circle r="3" fill="#22c55e" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="4.3s"><mpath href="#fp-3-a"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#ec4899" opacity=".1"/><circle r="3" fill="#ec4899" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="4.53s"><mpath href="#fp-3-m"/></animateMotion></g>
+      
+      
+      
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#8b5cf6" opacity=".1"/><circle r="3" fill="#8b5cf6" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="4.76s"><mpath href="#fp-4-o"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#22c55e" opacity=".1"/><circle r="3" fill="#22c55e" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="4.99s"><mpath href="#fp-4-a"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#ec4899" opacity=".1"/><circle r="3" fill="#ec4899" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="5.22s"><mpath href="#fp-4-m"/></animateMotion></g>
+      
+      
+      
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#8b5cf6" opacity=".1"/><circle r="3" fill="#8b5cf6" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="5.45s"><mpath href="#fp-5-o"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#22c55e" opacity=".1"/><circle r="3" fill="#22c55e" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="5.68s"><mpath href="#fp-5-a"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#ec4899" opacity=".1"/><circle r="3" fill="#ec4899" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="5.91s"><mpath href="#fp-5-m"/></animateMotion></g>
+      
+      
+      
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#8b5cf6" opacity=".1"/><circle r="3" fill="#8b5cf6" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="6.14s"><mpath href="#fp-6-o"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#22c55e" opacity=".1"/><circle r="3" fill="#22c55e" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="6.37s"><mpath href="#fp-6-a"/></animateMotion></g>
+      
+      
+      
+      
+      <g class="flow-dot"><circle r="8" fill="#ec4899" opacity=".1"/><circle r="3" fill="#ec4899" opacity=".35"/><circle r="1.5" fill="#fff"/><animateMotion dur="2.5s" repeatCount="indefinite" begin="6.6s"><mpath href="#fp-6-m"/></animateMotion></g>
+      
+      
+      
+    </svg>
+
+    <!-- Synergy cards — regular HTML below SVG (never foreignObject per all research) -->
+    <div class="synergy-cards">
+      <div class="syn-card oracle">
+        <h4>Oracle Identifies</h4>
+        <p>Reads the challenge data and builds the business case on a <strong><span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span> contract</strong>. The Muse's campaign is written from its program, figures and story.</p>
+      </div>
+      <div class="syn-card architect">
+        <h4>Architect Serves</h4>
+        <p>Turns the same challenge data into an <a href="https://ctrl-alt-defeat-arch.netlify.app" target="_blank" rel="noopener">interactive dashboard</a> — the tool the Muse's campaign points residents to.</p>
+      </div>
+      <div class="syn-card muse">
+        <h4>Muse Mobilizes</h4>
+        <p>Turns the Oracle's business case and the challenge data into a bilingual outreach campaign for the program's Year-1 target of <strong><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></strong> people.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Pitch Deck — Full Stack Integration Narrative ═══ -->
+  <section class="deck-shell" id="deckShell" data-prov-block="Python&#39;s words and counts, from the data"
+           role="region" aria-roledescription="carousel"
+           aria-label="Cross-track integration narrative">
+    <div class="deck-heading">The Integration <span>Blueprint</span></div>
+
+    <!-- Progress bar -->
+    <div class="deck-progress" aria-hidden="true"><div class="deck-progress-fill"></div></div>
+
+    <!-- Counter -->
+    <div class="deck-counter" id="deckCounter" aria-live="polite" aria-atomic="true" data-num-exempt="the deck's place among its slides (a position)">1 / 5</div>
+
+    <!-- Prev arrow -->
+    <button class="deck-arrow deck-arrow--prev" id="deckPrev" type="button"
+            aria-label="Previous slide" disabled>‹</button>
+
+    <!-- Scroll container -->
+    <div class="deck-scroller" id="deckScroller" tabindex="0">
+
+      <!-- Slide 1: The Crisis -->
+      <article class="deck-slide" role="group" aria-roledescription="slide" aria-label="1 of 5">
+        <div class="deck-slide-label">The Target</div>
+        <div class="deck-slide-big"><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></div>
+        <div class="deck-slide-sub">people in Year 1 — the program's target. <strong>Relay Wichita</strong> reaches them with three integrated artifacts built from <strong>7</strong> challenge API endpoints by a single competitor.</div>
+        
+      </article>
+
+      <!-- Slide 2: The System -->
+      <article class="deck-slide" role="group" aria-roledescription="slide" aria-label="2 of 5">
+        <div class="deck-slide-label">The System</div>
+        <div class="deck-system">
+          <div class="deck-system-node" style="background:#8b5cf6">O</div>
+          <div class="deck-system-line" style="background:linear-gradient(90deg,#8b5cf6,#22c55e)"></div>
+          <div class="deck-system-node" style="background:#22c55e">A</div>
+          <div class="deck-system-line" style="background:linear-gradient(90deg,#22c55e,#ec4899)"></div>
+          <div class="deck-system-node" style="background:#ec4899">M</div>
+        </div>
+        <div class="deck-slide-sub" style="margin-top:8px">
+          <strong>Oracle</strong> builds the business case.
+          <strong>Architect</strong> builds the tool.
+          <strong>Muse</strong> builds the campaign.<br>
+          Same data · Same brand · Same story.</div>
+      </article>
+
+      <!-- Slide 3: Oracle → Architect -->
+      <article class="deck-slide" role="group" aria-roledescription="slide" aria-label="3 of 5">
+        <div class="deck-slide-label">Oracle → Architect</div>
+        <div class="deck-cols">
+          <div class="deck-col purple">
+            <h5>Oracle Analyzes</h5>
+            <p>Builds the business case on a <strong><span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span> contract</strong> — the financial model behind the program.</p>
+          </div>
+          <div class="deck-connector"><div class="deck-connector-line"></div></div>
+          <div class="deck-col green">
+            <h5>Architect Builds</h5>
+            <p>Builds an <strong>interactive dashboard</strong> from the same challenge data — the tool a resident opens.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Slide 4: Architect → Muse -->
+      <article class="deck-slide" role="group" aria-roledescription="slide" aria-label="4 of 5">
+        <div class="deck-slide-label">Architect → Muse</div>
+        <div class="deck-cols">
+          <div class="deck-col green">
+            <h5>Architect Serves</h5>
+            <p>A resource finder residents can search and filter by category — the destination the Muse's campaign points to.</p>
+          </div>
+          <div class="deck-connector"><div class="deck-connector-line"></div></div>
+          <div class="deck-col pink">
+            <h5>Muse Recruits</h5>
+            <p>Bilingual outreach for the program's Year-1 target of <strong><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></strong> people — the flyer's QR code opens the Architect's dashboard.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Slide 5: The Investment -->
+      <article class="deck-slide" role="group" aria-roledescription="slide" aria-label="5 of 5">
+        <div class="deck-slide-label">The Investment</div>
+        <div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;margin-bottom:12px">
+          <div style="text-align:center"><div class="deck-slide-big" style="font-size:clamp(2rem,5vw,3.5rem)"><span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span></div><div style="font-size:.85rem;color:var(--dim);letter-spacing:.06em">CONTRACT</div></div>
+          
+          <div style="text-align:center"><div class="deck-slide-big" style="font-size:clamp(2rem,5vw,3.5rem)"><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></div><div style="font-size:.85rem;color:var(--dim);letter-spacing:.06em">YEAR 1 · PEOPLE</div></div>
+        </div>
+        <div class="deck-track-btns">
+          <a href="https://ctrl-alt-defeat.netlify.app" target="_blank" rel="noopener" class="deck-track-btn"><span class="dot-indicator" style="background:#8b5cf6"></span>Oracle</a>
+          <a href="https://ctrl-alt-defeat-arch.netlify.app" target="_blank" rel="noopener" class="deck-track-btn"><span class="dot-indicator" style="background:#22c55e"></span>Architect</a>
+          <a href="https://ctrl-alt-defeat-muse.netlify.app" target="_blank" rel="noopener" class="deck-track-btn"><span class="dot-indicator" style="background:#ec4899"></span>Muse</a>
+        </div>
+        <div class="deck-slide-sub" style="margin-top:12px;font-size:.8rem">One venture · Three artifacts · One competitor</div>
+      </article>
+
+    </div>
+
+    <!-- Next arrow -->
+    <button class="deck-arrow deck-arrow--next" id="deckNext" type="button"
+            aria-label="Next slide">›</button>
+
+    <!-- Dot indicators -->
+    <div class="deck-dots" aria-label="Slide navigation">
+      <button class="deck-dot active" type="button" aria-label="Go to slide 1" aria-current="true"></button>
+      <button class="deck-dot" type="button" aria-label="Go to slide 2"></button>
+      <button class="deck-dot" type="button" aria-label="Go to slide 3"></button>
+      <button class="deck-dot" type="button" aria-label="Go to slide 4"></button>
+      <button class="deck-dot" type="button" aria-label="Go to slide 5"></button>
+    </div>
+  </section>
+
+  <!-- ═══ Motif ═══ -->
+  <div class="motif">Same Data <span class="dot"></span> Same Brand <span class="dot"></span> Same Story</div>
+
+  <!-- ═══ Venture Pitch ═══ -->
+  <div class="pitch" data-prov-block="Python&#39;s words and counts, from the data">
+    <p><strong>Relay Wichita</strong> addresses a compounding civic crisis in Wichita. A <span class="prov" data-prov="pilot_days" data-kind="MEASURED" title="MEASURED — measured in the data · the pilot&#x27;s length">90</span>-day, <span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span> pilot. It turns the city&#39;s existing assets into a relay with a named owner at every handoff: Second Light, Open Door, H.O.T., CrossRoads, BRIDGES, DCF IL, City ID, NEXTenant, Housing First and rapid rehousing. This submission presents three integrated artifacts — an investable business case (Oracle), a working resident navigation tool (Architect), and a bilingual community outreach campaign (Muse) — all built from the same challenge API data, fetched at run time, by a single competitor using Claude. The business case is built on a <strong><span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span> contract</strong>, serving <strong><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></strong> people in Year 1. Same data. Same brand. Same story.</p>
+  </div>
+
+  
+  <style>.sd-ref{font-size:inherit;vertical-align:baseline;line-height:inherit;white-space:nowrap;color:inherit;text-decoration:underline dotted}.sd-notes{margin:28px 0 12px;font-size:.92em;line-height:1.55}.sd-notes h2{font-size:1.05em;margin:0 0 8px}.sd-notes ol{margin:0 0 0 1.4em;padding:0}.sd-notes li{margin:4px 0}.sd-notes .sd-back{margin-left:6px;white-space:nowrap;color:inherit}</style>
+
+  <!-- ═══ Footer ═══ -->
+  <footer>
+    <div class="integrity-line" data-integrity-line data-num-exempt="the integrity line's own counts">Data integrity: of 45 numbers read on this page, 10 from the data; 7 the writer&#39;s assumption; 26 computed by Python; 2 not a quantity.</div>
+    <div class="team">Ctrl Alt Defeat</div>
+    <div>NAIPC Wichita Regional · April 18, 2026</div>
+    <div style="margin-top:6px;color:var(--dim)">Built from the challenge API data, fetched at run time, by a solo competitor using Claude (Anthropic).</div>
+    
+    <div class="qr-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="148" height="148" viewBox="0 0 148 148" class="segno"><g transform="scale(4)"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#1a1a2e" d="M4 4.5h7m4 0h1m2 0h2m3 0h1m2 0h7m-29 1h1m5 0h1m3 0h2m3 0h4m1 0h1m1 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m3 0h1m1 0h1m1 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h1m1 0h1m4 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m6 0h1m1 0h1m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h7m1 0h2m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-20 1h1m2 0h1m2 0h4m1 0h1m-21 1h1m2 0h1m1 0h2m1 0h1m1 0h1m2 0h3m5 0h1m1 0h1m-24 1h1m1 0h4m1 0h2m1 0h1m1 0h3m1 0h1m3 0h4m1 0h1m2 0h1m-29 1h3m2 0h2m5 0h3m3 0h5m1 0h4m-24 1h2m3 0h1m2 0h3m1 0h1m6 0h2m1 0h2m-28 1h4m1 0h2m3 0h2m2 0h1m1 0h2m2 0h3m2 0h1m1 0h2m-28 1h5m4 0h1m1 0h1m4 0h5m-22 1h1m2 0h1m1 0h2m2 0h4m4 0h1m2 0h1m1 0h2m1 0h4m-28 1h5m2 0h2m3 0h1m1 0h1m1 0h4m2 0h1m1 0h1m1 0h1m-28 1h2m1 0h1m1 0h3m4 0h4m1 0h1m1 0h3m1 0h1m3 0h1m-26 1h3m2 0h2m5 0h1m1 0h1m4 0h3m1 0h1m2 0h1m-29 1h1m4 0h2m1 0h2m1 0h1m1 0h1m2 0h3m1 0h2m2 0h1m2 0h2m-25 1h2m2 0h1m2 0h1m1 0h1m1 0h1m1 0h1m2 0h3m4 0h2m-29 1h1m2 0h4m1 0h3m1 0h1m1 0h3m1 0h1m1 0h5m1 0h1m-19 1h2m3 0h1m2 0h1m2 0h2m3 0h1m1 0h3m-29 1h7m3 0h1m2 0h2m2 0h1m2 0h1m1 0h1m1 0h1m2 0h1m-28 1h1m5 0h1m1 0h2m1 0h1m1 0h1m1 0h2m3 0h1m3 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h3m2 0h1m2 0h1m2 0h5m2 0h2m-29 1h1m1 0h3m1 0h1m1 0h1m2 0h1m2 0h1m4 0h1m2 0h1m1 0h4m-28 1h1m1 0h3m1 0h1m5 0h2m5 0h3m2 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m4 0h4m1 0h2m3 0h1m2 0h1m-28 1h7m1 0h3m6 0h1m1 0h2m3 0h2m1 0h1"/></g></svg>
+</div>
+    <div style="font-size:.65rem;margin-top:4px;color:var(--dim)">Scan to open on mobile</div>
+    
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  // ── 0. Pause SMIL immediately (per Claude research §5) ──
+  // SMIL animations can't be stopped by CSS prefers-reduced-motion.
+  // Pause for ALL users. For reduced-motion: stays paused (CSS shows static paths).
+  // For normal: IntersectionObserver unpauses on scroll.
+  var flowSvg = document.getElementById('flow-svg');
+  if(flowSvg) flowSvg.pauseAnimations();
+
+  var rmq = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(rmq) return;
+
+  // ── 1. Mouse Spotlight ──
+  var spot = document.getElementById('spotlight');
+  var spotOn = false;
+  var mouseX = -9999, mouseY = -9999;
+  document.addEventListener('mousemove', function(e){
+    mouseX = e.clientX; mouseY = e.clientY;
+    document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+    document.documentElement.style.setProperty('--my', e.clientY + 'px');
+    if(!spotOn){ spot.style.opacity = '1'; spotOn = true; }
+  });
+  document.addEventListener('mouseleave', function(){ mouseX = -9999; mouseY = -9999; });
+
+  // ── 2. Particle Constellation Canvas ──
+  var cvs = document.getElementById('particles');
+  var ctx = cvs.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W, H, particles = [];
+
+  function sizeCanvas(){
+    W = window.innerWidth; H = window.innerHeight;
+    cvs.width = W * dpr; cvs.height = H * dpr;
+    cvs.style.width = W + 'px'; cvs.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  sizeCanvas();
+  window.addEventListener('resize', function(){ sizeCanvas(); initParticles(); });
+
+  function initParticles(){
+    var area = W * H;
+    var count = Math.max(30, Math.min(70, Math.round(50 * area / (1920*1080))));
+    particles = [];
+    for(var i=0; i<count; i++){
+      particles.push({
+        x: Math.random()*W, y: Math.random()*H,
+        vx: (Math.random()-.5)*.4, vy: (Math.random()-.5)*.4,
+        r: Math.random()*1.2+.8
+      });
+    }
+  }
+  initParticles();
+
+  var THRESHOLD = Math.min(150, W * 0.08);
+  var lastT = 0;
+  function drawParticles(ts){
+    var dt = Math.min((ts - lastT) / 16.67, 6); // cap at ~6 frames to prevent teleport
+    lastT = ts;
+    ctx.clearRect(0, 0, W, H);
+
+    // Update + mouse repulsion
+    for(var i=0; i<particles.length; i++){
+      var p = particles[i];
+      // Mouse repulsion (research: REPEL_RADIUS=120, REPEL_FORCE=0.3)
+      if(mouseX > 0){
+        var dx = p.x - mouseX, dy = p.y - mouseY;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 120 && dist > 0){
+          var f = 0.3 * (1 - dist/120);
+          p.vx += (dx/dist) * f;
+          p.vy += (dy/dist) * f;
+        }
+      }
+      p.vx *= 0.97; p.vy *= 0.97; // dampen
+      p.x += p.vx * dt; p.y += p.vy * dt;
+      // Bounce off edges
+      if(p.x < 0){ p.x = 0; p.vx *= -1; }
+      if(p.x > W){ p.x = W; p.vx *= -1; }
+      if(p.y < 0){ p.y = 0; p.vy *= -1; }
+      if(p.y > H){ p.y = H; p.vy *= -1; }
+    }
+
+    // Draw connections (linear opacity falloff per research)
+    for(var i=0; i<particles.length; i++){
+      for(var j=i+1; j<particles.length; j++){
+        var dx = particles[i].x - particles[j].x;
+        var dy = particles[i].y - particles[j].y;
+        var d = Math.sqrt(dx*dx + dy*dy);
+        if(d < THRESHOLD){
+          var alpha = (1 - d/THRESHOLD) * 0.15;
+          ctx.strokeStyle = 'rgba(140,180,255,' + alpha + ')';
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw particles
+    ctx.fillStyle = 'rgba(140,180,255,0.45)';
+    for(var i=0; i<particles.length; i++){
+      ctx.beginPath();
+      ctx.arc(particles[i].x, particles[i].y, particles[i].r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    requestAnimationFrame(drawParticles);
+  }
+  requestAnimationFrame(drawParticles);
+
+  // ── 3. Light Sweep Cleanup ──
+  var sweep = document.getElementById('sweep');
+  if(sweep){
+    sweep.addEventListener('animationend', function(){ sweep.remove(); }, {once: true});
+  }
+
+  // ── 4. 3D Card Tilt ──
+  var cards = document.querySelectorAll('.track');
+  cards.forEach(function(card){
+    card.addEventListener('animationend', function(){
+      card.style.animation = 'none';
+    }, {once: true});
+    card.addEventListener('mousemove', function(e){
+      card.style.transition = 'box-shadow .4s ease';
+      var rect = card.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      var rx = -(y / rect.height) * 8;
+      var ry =  (x / rect.width)  * 8;
+      card.style.transform = 'perspective(1000px) rotateX('+rx+'deg) rotateY('+ry+'deg) translateY(-6px)';
+    });
+    card.addEventListener('mouseleave', function(){
+      card.style.transition = 'transform .4s cubic-bezier(.4,0,.2,1), box-shadow .4s ease';
+      card.style.transform = '';
+    });
+  });
+
+  // ── 5. Animated Number Counters ──
+  var nums = Array.prototype.map.call(document.querySelectorAll('.hero-stat .num'), function(n){ return n.querySelector('.prov') || n; });   
+  var cTargets = [];
+  function parseTarget(text){
+    var m = /^\$([0-9]+(?:\.[0-9]+)?)([KM]?)$/.exec(text);   
+    if(m){
+      var s = m[2], dec = (m[1].split('.')[1] || '').length;
+      return {val:parseFloat(m[1]), fmt:function(v){return '$'+v.toFixed(dec)+s}};
+    } else if(text.indexOf(':') !== -1){
+      return {val:parseFloat(text), fmt:function(v){return v.toFixed(1)+' : 1'}};
+    } else {
+      return {val:parseInt(text.replace(/,/g,'')), fmt:function(v){return Math.round(v).toLocaleString("en-US")}};
+    }
+  }
+  nums.forEach(function(el){ var t = parseTarget(el.textContent.trim()); cTargets.push(t); el.textContent = t.fmt(0); });
+  function runCounter(el, t){
+    var dur=1500, start=performance.now();
+    function tick(now){ var p=Math.min((now-start)/dur,1); el.textContent=t.fmt(t.val*(1-Math.pow(1-p,3))); if(p<1)requestAnimationFrame(tick); }
+    requestAnimationFrame(tick);
+  }
+  var statsBar = document.querySelector('.stats-bar');
+  if(statsBar){
+    statsBar.addEventListener('animationend', function(){
+      statsBar.style.animation = 'none';
+      nums.forEach(function(el,i){ runCounter(el, cTargets[i]); });
+    }, {once: true});
+  }
+
+  // ── 6. Boot Sequence Terminal ──
+  var termBody = document.getElementById('term-body');
+  var termCursor = document.getElementById('term-cursor');
+  var termEl = document.getElementById('terminal');
+  // Release terminal entrance animation lock
+  if(termEl) termEl.addEventListener('animationend', function(){ termEl.style.animation='none'; }, {once:true});
+
+  var termLines = [
+    {cmd: '> connect challenge api \u2014 ' + "7 endpoints", check: true},
+    {cmd: '> analyze \u00b7 ' + "claude opus 5.5", check: true},
+    {cmd: '> generate oracle \u2014 ' + "$500K contract", check: true},
+    {cmd: '> generate architect \u2014 interactive navigator', check: true},
+    {cmd: '> generate muse \u2014 bilingual campaign', check: true},
+    {cmd: '> pipeline complete \u00b7 3 artifacts built', check: false, final: true}
+  ];
+
+  function typeChar(text, el, i, speed, done){
+    if(i >= text.length){ if(done) done(); return; }
+    el.textContent += text[i];
+    setTimeout(function(){ typeChar(text, el, i+1, speed, done); }, speed);
+  }
+
+  function typeLine(idx){
+    if(idx >= termLines.length) return;
+    var line = termLines[idx];
+    var div = document.createElement('div');
+    div.className = 'term-line';
+
+    if(line.final){
+      // Final line appears all at once with glow pulse (research: "not typed")
+      div.className = 'term-line term-final';
+      div.textContent = line.cmd;
+      termBody.appendChild(div);
+      // Move cursor after final line
+      termBody.parentNode.insertBefore(termCursor, termBody.nextSibling);
+      setTimeout(function(){ div.classList.add('show'); }, 100);
+      // Stop cursor blinking after completion
+      setTimeout(function(){ termCursor.style.animation = 'none'; termCursor.style.opacity = '1'; }, 800);
+      // ── TRIGGER DIAGRAM after terminal completes ──
+      // 800ms delay lets the glow pulse settle before the diagram fades in
+      setTimeout(function(){
+        var dw = document.querySelector('.diagram-wrap');
+        if(dw) dw.classList.add('active');
+        // Start SVG animation after diagram fades in (800ms transition)
+        setTimeout(function(){
+          if(flowSvg && !diagramStarted){
+            flowSvg.classList.add('is-visible');
+            flowSvg.setCurrentTime(0);
+            flowSvg.unpauseAnimations();
+            diagramStarted = true;
+          }
+        }, 900);
+      }, 800);
+      return;
+    }
+
+    var cmdSpan = document.createElement('span');
+    cmdSpan.className = 'cmd';
+    div.appendChild(cmdSpan);
+
+    if(line.check){
+      var checkSpan = document.createElement('span');
+      checkSpan.className = 'check';
+      checkSpan.textContent = ' \u2713';
+      div.appendChild(checkSpan);
+    }
+
+    termBody.appendChild(div);
+    // Move cursor to end of current line
+    termBody.parentNode.insertBefore(termCursor, termBody.nextSibling);
+
+    typeChar(line.cmd, cmdSpan, 0, 35, function(){
+      // Flash checkmark after line finishes typing
+      if(line.check){
+        var ck = div.querySelector('.check');
+        if(ck) ck.classList.add('visible');
+      }
+      // Pause then type next line
+      setTimeout(function(){ typeLine(idx + 1); }, 300);
+    });
+  }
+
+  // Start terminal typing 2.5s after page load (after sweep begins, per timeline)
+  setTimeout(function(){ typeLine(0); }, 2500);
+
+  // ── 7. Data-Flow Diagram Visibility Observer ──
+  // diagramStarted shared between terminal completion trigger and this observer.
+  // Initial trigger is now handled by terminal completion (see section 6 above).
+  // This observer only handles pause/unpause when scrolling in/out of view for CPU saving.
+  var diagramStarted = false;
+  if(flowSvg){
+    var flowObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          if(diagramStarted) flowSvg.unpauseAnimations();
+        } else if(diagramStarted){
+          flowSvg.pauseAnimations();
+        }
+      });
+    }, {threshold: 0.15});
+    flowObs.observe(flowSvg);
+  }
+
+  // ── 8. Pitch Deck Carousel ──
+  // Architecture: wrapper + scroller + overlay chrome (ChatGPT research)
+  // Snap-point array from slide.offsetLeft (ChatGPT — more reliable than clientWidth)
+  // rAF-gated passive scroll listener (all sources agree)
+  // NO scroll-behavior:smooth in CSS — only in JS calls (Perplexity/Gemini)
+  // animationend releases fill-mode lock (all sources)
+  var deckShell = document.getElementById('deckShell');
+  var deckScroller = document.getElementById('deckScroller');
+  if(deckScroller){
+    var deckSlides = [].slice.call(deckScroller.querySelectorAll('.deck-slide'));
+    var deckCounter = document.getElementById('deckCounter');
+    var deckPrev = document.getElementById('deckPrev');
+    var deckNext = document.getElementById('deckNext');
+    var deckDots = [].slice.call(document.querySelectorAll('.deck-dot'));
+    var snapPoints = [];
+    var deckCurrent = 0;
+    var deckRaf = 0;
+    var deckBehavior = rmq ? 'instant' : 'smooth';
+
+    // Release animation-fill-mode:both lock (per all research sources)
+    deckShell.addEventListener('animationend', function(){
+      deckShell.style.opacity = '1';
+      deckShell.style.animation = 'none';
+    }, {once: true});
+
+    // Build snap-point array (refresh on resize)
+    function deckMeasure(){
+      snapPoints = deckSlides.map(function(s){ return s.offsetLeft; });
+      deckUpdateUI();
+    }
+
+    // Find nearest slide index from current scrollLeft
+    function deckNearest(){
+      var x = deckScroller.scrollLeft;
+      var best = 0, bestD = Infinity;
+      for(var i = 0; i < snapPoints.length; i++){
+        var d = Math.abs(snapPoints[i] - x);
+        if(d < bestD){ bestD = d; best = i; }
+      }
+      return best;
+    }
+
+    // Navigate to a specific slide
+    function deckGoTo(idx){
+      var c = Math.max(0, Math.min(idx, deckSlides.length - 1));
+      deckScroller.scrollTo({left: snapPoints[c], behavior: deckBehavior});
+    }
+
+    // Update all UI: counter, arrows, dots, progress bar
+    function deckUpdateUI(){
+      deckCurrent = deckNearest();
+      // Counter
+      deckCounter.textContent = (deckCurrent + 1) + ' / ' + deckSlides.length;
+      // Arrows (disable at edges per Perplexity — no layout shift vs hiding)
+      deckPrev.disabled = deckCurrent === 0;
+      deckNext.disabled = deckCurrent === deckSlides.length - 1;
+      // Dots
+      deckDots.forEach(function(dot, i){
+        dot.classList.toggle('active', i === deckCurrent);
+        dot.setAttribute('aria-current', i === deckCurrent ? 'true' : 'false');
+      });
+      // Progress bar — clip-path driven by CSS custom property scoped to shell
+      var max = deckScroller.scrollWidth - deckScroller.clientWidth;
+      var pct = max <= 0 ? 100 : (deckScroller.scrollLeft / max) * 100;
+      deckShell.style.setProperty('--progress', pct + '%');
+    }
+
+    // Scroll listener: rAF-gated + passive (per Claude/Perplexity/Gemini research)
+    deckScroller.addEventListener('scroll', function(){
+      if(deckRaf) return;
+      deckRaf = requestAnimationFrame(function(){
+        deckRaf = 0;
+        deckUpdateUI();
+      });
+    }, {passive: true});
+
+    // Arrow clicks
+    deckPrev.addEventListener('click', function(){ deckGoTo(deckCurrent - 1); });
+    deckNext.addEventListener('click', function(){ deckGoTo(deckCurrent + 1); });
+
+    // Dot clicks
+    deckDots.forEach(function(dot, i){
+      dot.addEventListener('click', function(){ deckGoTo(i); });
+    });
+
+    // Keyboard: ArrowLeft/Right only, don't intercept Up/Down (Perplexity §2d)
+    deckScroller.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); deckGoTo(deckCurrent - 1); }
+      else if(e.key === 'ArrowRight'){ e.preventDefault(); deckGoTo(deckCurrent + 1); }
+    });
+
+    // Resize: recalculate snap points
+    window.addEventListener('resize', deckMeasure);
+
+    // Initialize
+    deckMeasure();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "source": "store-closures",
+  "count": 4,
+  "data": [
+    {
+      "name": "Save-A-Lot — Prospect Ave",
+      "address": "2607 Prospect Ave, Kansas City, MO 64127",
+      "zip": "64127",
+      "closedDate": "2024-08-15",
+      "type": "discount_grocery",
+      "squareFt": 18000,
+      "employeesLost": 28,
+      "nearestAlternative": "Aldi — 2.8 miles",
+      "impactedPopulation": 12400
+    },
+    {
+      "name": "Price Chopper — Blue Parkway",
+      "address": "4301 Blue Pkwy, Kansas City, MO 64130",
+      "closedDate": "2024-11-30",
+      "zip": "64130",
+      "type": "full_service",
+      "squareFt": 42000,
+      "employeesLost": 65,
+      "nearestAlternative": "Walmart Supercenter — 3.4 miles",
+      "impactedPopulation": 18700
+    },
+    {
+      "name": "Aldi — Independence Ave",
+      "address": "2700 Independence Ave, Kansas City, MO 64124",
+      "zip": "64124",
+      "closedDate": "2025-02-28",
+      "type": "discount_grocery",
+      "squareFt": 16000,
+      "employeesLost": 22,
+      "nearestAlternative": "Sun Fresh — 1.9 miles",
+      "impactedPopulation": 9200
+    },
+    {
+      "name": "Dollar General Market — Van Brunt",
+      "address": "3400 Van Brunt Blvd, Kansas City, MO 64128",
+      "zip": "64128",
+      "closedDate": "2025-06-30",
+      "type": "limited_grocery",
+      "squareFt": 8500,
+      "employeesLost": 8,
+      "nearestAlternative": "Family Dollar — 0.8 miles (no fresh food)",
+      "impactedPopulation": 6100
+    }
+  ]
+}

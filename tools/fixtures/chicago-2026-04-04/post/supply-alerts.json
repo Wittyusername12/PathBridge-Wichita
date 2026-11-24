@@ -1,0 +1,70 @@
+{
+  "status": "emergency",
+  "lastUpdated": "2026-04-04T13:00:00-05:00",
+  "alerts": [
+    {
+      "id": "alert-001",
+      "severity": "critical",
+      "title": "West Suburban Medical Center — Permanently Closed",
+      "date": "2026-03-25",
+      "area": "Austin",
+      "description": "West Suburban Medical Center has permanently closed all services including its emergency department. 23,000+ patients displaced.",
+      "impactedAreas": [
+        "Austin",
+        "West Garfield Park",
+        "East Garfield Park",
+        "Oak Park"
+      ]
+    },
+    {
+      "id": "alert-004",
+      "severity": "critical",
+      "title": "BREAKING: Loretto Hospital Cuts ER to Daytime Only",
+      "date": "2026-04-04",
+      "area": "Austin",
+      "description": "Loretto Hospital has announced it is reducing emergency department hours to 7 AM - 7 PM effective immediately, citing critical staffing shortages after absorbing West Suburban's patient overflow. Austin now has ZERO overnight emergency care within 4 miles.",
+      "impactedAreas": [
+        "Austin",
+        "West Garfield Park",
+        "East Garfield Park"
+      ]
+    },
+    {
+      "id": "alert-005",
+      "severity": "info",
+      "title": "Community Response: 3 Churches Offer Overnight Screening",
+      "date": "2026-04-04",
+      "area": "Austin",
+      "description": "Austin Community Coalition announces 3 churches will open their community halls as overnight health screening and triage sites (7 PM - 7 AM), staffed by volunteer nurses and community health workers. Sites: Greater Mt. Zion (5765 W Midway Park), Austin Town Hall (5610 W Lake St), New Mt. Pilgrim (4301 W Washington Blvd).",
+      "impactedAreas": [
+        "Austin"
+      ],
+      "resources": [
+        {
+          "name": "Greater Mt. Zion",
+          "address": "5765 W Midway Park",
+          "lat": 41.8951,
+          "lng": -87.7692,
+          "hours": "7PM-7AM",
+          "staffing": "2 RNs, 4 CHWs"
+        },
+        {
+          "name": "Austin Town Hall",
+          "address": "5610 W Lake St",
+          "lat": 41.8857,
+          "lng": -87.7665,
+          "hours": "7PM-7AM",
+          "staffing": "1 RN, 3 CHWs, 1 EMT"
+        },
+        {
+          "name": "New Mt. Pilgrim",
+          "address": "4301 W Washington Blvd",
+          "lat": 41.8828,
+          "lng": -87.7294,
+          "hours": "7PM-7AM",
+          "staffing": "2 RNs, 2 CHWs"
+        }
+      ]
+    }
+  ]
+}

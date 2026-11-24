@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "kind": "VERBATIM",
+  "source": "chicago_competition_info.png (the brief) — tracker G.2.c",
+  "announced_at": "13:00",
+  "text": "Breaking: Emergency Hospital Closure. Everything just changed. St. Mary's Hospital just announced emergency closure effective immediately. 12,000 patients need rerouting. Three nearby clinics are already at 95% capacity. The patients include 2,400 with chronic conditions requiring ongoing care, 800 prenatal patients, and 3,100 elderly patients who relied on St. Mary's ER as their primary care access point. The supply alert API has been updated. You have until 2:30 PM.",
+  "tests": [],
+  "api_changed": [
+    "supply-alerts"
+  ],
+  "_note": "the announcement and the API disagree — St. Mary's appears in no API file (§7.4b); the announcement-vs-API test"
+}

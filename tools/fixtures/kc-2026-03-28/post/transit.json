@@ -1,0 +1,94 @@
+{
+  "source": "transit",
+  "count": 8,
+  "data": [
+    {
+      "stopId": "t-001",
+      "route": "31 - 31st Street",
+      "lat": 39.0545,
+      "lng": -94.5712,
+      "nearPantry": "p-004",
+      "walkMinutes": 3,
+      "frequency": "30min",
+      "operatingHours": "5:30am-11pm",
+      "zip": "64109"
+    },
+    {
+      "stopId": "t-002",
+      "route": "39 - Prospect",
+      "lat": 39.0402,
+      "lng": -94.5712,
+      "nearPantry": "p-002",
+      "walkMinutes": 2,
+      "frequency": "15min",
+      "operatingHours": "5:00am-12am",
+      "zip": "64110"
+    },
+    {
+      "stopId": "t-003",
+      "route": "12 - 12th Street",
+      "lat": 39.0939,
+      "lng": -94.5022,
+      "nearPantry": "p-008",
+      "walkMinutes": 5,
+      "frequency": "30min",
+      "operatingHours": "6:00am-10pm",
+      "zip": "64126"
+    },
+    {
+      "stopId": "t-004",
+      "route": "24 - Independence",
+      "lat": 39.0997,
+      "lng": -94.5589,
+      "nearPantry": "p-007",
+      "walkMinutes": 4,
+      "frequency": "20min",
+      "operatingHours": "5:30am-11pm",
+      "zip": "64106"
+    },
+    {
+      "stopId": "t-005",
+      "route": "71 - Blue Ridge",
+      "lat": 38.9281,
+      "lng": -94.5292,
+      "nearPantry": "p-005",
+      "walkMinutes": 8,
+      "frequency": "30min",
+      "operatingHours": "6:00am-9pm",
+      "zip": "64134"
+    },
+    {
+      "stopId": "t-006",
+      "route": "35 - 35th Street",
+      "lat": 39.0402,
+      "lng": -94.5867,
+      "nearPantry": "p-003",
+      "walkMinutes": 6,
+      "frequency": "30min",
+      "operatingHours": "6:00am-10pm",
+      "zip": "64108"
+    },
+    {
+      "stopId": "t-007",
+      "route": "51 - KCK / Minnesota",
+      "lat": 39.1159,
+      "lng": -94.6278,
+      "nearPantry": "p-012",
+      "walkMinutes": 2,
+      "frequency": "20min",
+      "operatingHours": "5:30am-11pm",
+      "zip": "66101"
+    },
+    {
+      "stopId": "t-008",
+      "route": "101 - Troost MAX",
+      "lat": 39.0568,
+      "lng": -94.5884,
+      "nearPantry": "p-006",
+      "walkMinutes": 3,
+      "frequency": "10min",
+      "operatingHours": "5:00am-12am",
+      "zip": "64111"
+    }
+  ]
+}

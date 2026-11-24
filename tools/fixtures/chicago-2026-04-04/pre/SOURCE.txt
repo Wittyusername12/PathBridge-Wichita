@@ -1,0 +1,10 @@
+FETCHED - chicago-2026-04-04/pre/supply-alerts.json is the live API's response, byte for byte (VERBATIM).
+Fetched 2026-10-21 (~17:20 local) on Shane's machine by the tracker's R0 command (PLAN P0.8b + DR#1 + P0.3, DO THIS):
+  python -X utf8 -B -c "import urllib.request,hashlib,json,os;p=os.path.expandvars(r'%USERPROFILE%\Downloads\chi-supply-alerts-pre.json');b=urllib.request.urlopen('https://aipromptchamp.com/api/challenge/chi/supply-alerts',timeout=30).read();open(p,'wb').write(b);d=json.loads(b.decode('utf-8-sig'));print(p,len(b),'bytes sha256',hashlib.sha256(b).hexdigest());print(d['status'],d['lastUpdated'],[(a['id'],a['severity'],a['date']) for a in d['alerts']])"
+URL: https://aipromptchamp.com/api/challenge/chi/supply-alerts
+1170 bytes; sha256 939764d6acf7d977dbaa12d32535f40e55019e7f0f6fa06a419bb8da78688f6b
+status "strained"; lastUpdated 2026-04-04T09:00:00-05:00; alerts alert-001 (critical, 2026-03-25), alert-002 (warning, 2026-03-28),
+alert-003 (warning, 2026-04-01). The server's own serialization is one minified line with \u2014 / \u002B escapes.
+The other six files of this set are the cached project files (byte-identical to post/, which did not change at the curveball
+per the brief). post/supply-alerts.json is the cached post-curveball file (alert-001/004/005, "emergency", 13:00).
+Built by tests/build_fixture_sets.py (P0.8b). This marker is not served: the fixture server serves *.json only.

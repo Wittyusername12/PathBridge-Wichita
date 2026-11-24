@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv*/
+
+# Secrets (never committed)
+.env
+*.key
+
+# Run data each harness writes
+checkpoints/
+checkpoints_archive/
+chat-context-archive/
+coverage/
+output/
+output_prev/
+versions/
+runs/
+test_run/
+test_output/
+*.log
+*.draft.json
+
+# Screenshots
+FireShot/

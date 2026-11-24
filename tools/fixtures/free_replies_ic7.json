@@ -1,0 +1,337 @@
+{
+ "about": "the Muse's replies to IC-6's requests (no schema sent), each text path's items and characters — tools/sample_contract_ic7.py's measure (ic7_dev/free_lengths_ic7.py)",
+ "calls": {
+  "muse/call1": {
+   "brand_handle": {
+    "chars": 70,
+    "items": 4,
+    "replies": 4
+   },
+   "brief_answers[].answer": {
+    "chars": 6055,
+    "items": 12,
+    "replies": 2
+   },
+   "brief_answers[].id": {
+    "chars": 240,
+    "items": 12,
+    "replies": 2
+   },
+   "calendar[].deliverables[]": {
+    "chars": 886,
+    "items": 28,
+    "replies": 4
+   },
+   "calendar[].milestones[]": {
+    "chars": 3511,
+    "items": 60,
+    "replies": 4
+   },
+   "calendar[].month_label": {
+    "chars": 488,
+    "items": 12,
+    "replies": 4
+   },
+   "calendar[].phase_name": {
+    "chars": 168,
+    "items": 12,
+    "replies": 4
+   },
+   "channel_plan[].audience": {
+    "chars": 1262,
+    "items": 24,
+    "replies": 4
+   },
+   "channel_plan[].channel": {
+    "chars": 1030,
+    "items": 24,
+    "replies": 4
+   },
+   "channel_plan[].content_type": {
+    "chars": 1857,
+    "items": 24,
+    "replies": 4
+   },
+   "channel_plan[].frequency": {
+    "chars": 744,
+    "items": 24,
+    "replies": 4
+   },
+   "channel_plan[].kpi": {
+    "chars": 1617,
+    "items": 24,
+    "replies": 4
+   },
+   "channel_plan[].reach": {
+    "chars": 47,
+    "items": 12,
+    "replies": 2
+   },
+   "hero_lead": {
+    "chars": 1063,
+    "items": 4,
+    "replies": 4
+   },
+   "hero_stats[].label": {
+    "chars": 681,
+    "items": 16,
+    "replies": 4
+   },
+   "hero_stats[].value": {
+    "chars": 468,
+    "items": 16,
+    "replies": 4
+   },
+   "hero_title": {
+    "chars": 466,
+    "items": 4,
+    "replies": 4
+   },
+   "kpis[].emoji": {
+    "chars": 27,
+    "items": 24,
+    "replies": 4
+   },
+   "kpis[].metric": {
+    "chars": 1478,
+    "items": 24,
+    "replies": 4
+   },
+   "kpis[].target": {
+    "chars": 299,
+    "items": 12,
+    "replies": 2
+   },
+   "kpis[].timeframe": {
+    "chars": 346,
+    "items": 24,
+    "replies": 4
+   },
+   "og_description": {
+    "chars": 555,
+    "items": 4,
+    "replies": 4
+   },
+   "persona_text": {
+    "chars": 658,
+    "items": 4,
+    "replies": 4
+   },
+   "personas[].barriers[]": {
+    "chars": 4585,
+    "items": 57,
+    "replies": 4
+   },
+   "personas[].channels[]": {
+    "chars": 1459,
+    "items": 45,
+    "replies": 4
+   },
+   "personas[].data_evidence[].label": {
+    "chars": 3248,
+    "items": 48,
+    "replies": 4
+   },
+   "personas[].data_evidence[].stat": {
+    "chars": 1237,
+    "items": 48,
+    "replies": 4
+   },
+   "personas[].emoji": {
+    "chars": 32,
+    "items": 12,
+    "replies": 4
+   },
+   "personas[].location": {
+    "chars": 571,
+    "items": 12,
+    "replies": 4
+   },
+   "personas[].name": {
+    "chars": 64,
+    "items": 12,
+    "replies": 4
+   },
+   "personas[].occupation": {
+    "chars": 576,
+    "items": 12,
+    "replies": 4
+   },
+   "personas[].quote": {
+    "chars": 1574,
+    "items": 12,
+    "replies": 4
+   },
+   "short_tagline": {
+    "chars": 241,
+    "items": 4,
+    "replies": 4
+   }
+  },
+  "muse/call2": {
+   "flyer.body_en": {
+    "chars": 616,
+    "items": 2,
+    "replies": 2
+   },
+   "flyer.body_es": {
+    "chars": 701,
+    "items": 2,
+    "replies": 2
+   },
+   "flyer.bullets_en[]": {
+    "chars": 682,
+    "items": 10,
+    "replies": 2
+   },
+   "flyer.bullets_es[]": {
+    "chars": 780,
+    "items": 10,
+    "replies": 2
+   },
+   "flyer.contact_info": {
+    "chars": 258,
+    "items": 2,
+    "replies": 2
+   },
+   "flyer.cta_en": {
+    "chars": 91,
+    "items": 2,
+    "replies": 2
+   },
+   "flyer.cta_es": {
+    "chars": 101,
+    "items": 2,
+    "replies": 2
+   },
+   "flyer.headline_en": {
+    "chars": 74,
+    "items": 2,
+    "replies": 2
+   },
+   "flyer.headline_es": {
+    "chars": 98,
+    "items": 2,
+    "replies": 2
+   },
+   "flyer.subheadline_en": {
+    "chars": 178,
+    "items": 2,
+    "replies": 2
+   },
+   "flyer.subheadline_es": {
+    "chars": 213,
+    "items": 2,
+    "replies": 2
+   },
+   "partner_pitch.benefits[]": {
+    "chars": 1413,
+    "items": 14,
+    "replies": 2
+   },
+   "partner_pitch.data_points[].label": {
+    "chars": 615,
+    "items": 10,
+    "replies": 2
+   },
+   "partner_pitch.data_points[].stat": {
+    "chars": 261,
+    "items": 10,
+    "replies": 2
+   },
+   "partner_pitch.headline": {
+    "chars": 116,
+    "items": 2,
+    "replies": 2
+   },
+   "partner_pitch.problem": {
+    "chars": 749,
+    "items": 2,
+    "replies": 2
+   },
+   "partner_pitch.solution": {
+    "chars": 709,
+    "items": 2,
+    "replies": 2
+   },
+   "social_posts[].card_class": {
+    "chars": 28,
+    "items": 6,
+    "replies": 2
+   },
+   "social_posts[].hashtags[]": {
+    "chars": 369,
+    "items": 25,
+    "replies": 2
+   },
+   "social_posts[].image_desc": {
+    "chars": 1354,
+    "items": 6,
+    "replies": 2
+   },
+   "social_posts[].image_headline": {
+    "chars": 315,
+    "items": 6,
+    "replies": 2
+   },
+   "social_posts[].language": {
+    "chars": 58,
+    "items": 6,
+    "replies": 2
+   },
+   "social_posts[].location": {
+    "chars": 182,
+    "items": 6,
+    "replies": 2
+   },
+   "social_posts[].platform": {
+    "chars": 108,
+    "items": 6,
+    "replies": 2
+   },
+   "social_posts[].text": {
+    "chars": 5181,
+    "items": 6,
+    "replies": 2
+   }
+  }
+ },
+ "sources": [
+  {
+   "call": "muse/call1",
+   "file": "tests/fixtures/live/ic3_r8/Muse-harness/checkpoints/muse_block1.json",
+   "sha256_16": "e3f4a3a13f5150b4",
+   "what": "ic3_r8 muse_block1.json strategic (run 20261112T041820Z)"
+  },
+  {
+   "call": "muse/call2",
+   "file": "tests/fixtures/live/ic3_r8/Muse-harness/checkpoints/muse_block1.json",
+   "sha256_16": "e3f4a3a13f5150b4",
+   "what": "ic3_r8 muse_block1.json creative (run 20261112T041820Z)"
+  },
+  {
+   "call": "muse/call1",
+   "file": "tests/fixtures/live/p1b1/Muse-harness/checkpoints/muse_block1.json",
+   "sha256_16": "03a99d2df561fa18",
+   "what": "p1b1 muse_block1.json strategic (run 20261114T045417Z)"
+  },
+  {
+   "call": "muse/call2",
+   "file": "tests/fixtures/live/p1b1/Muse-harness/checkpoints/muse_block1.json",
+   "sha256_16": "03a99d2df561fa18",
+   "what": "p1b1 muse_block1.json creative (run 20261114T045417Z)"
+  },
+  {
+   "call": "muse/call1",
+   "file": "tests/fixtures/live/p2b1/Muse-harness/checkpoints/journal_call1_20261116T235259Z_1.txt",
+   "sha256_16": "3a3d89ab9ac9a206",
+   "what": "p2b1 journal_call1_20261116T235259Z_1.txt (R7, as written)"
+  },
+  {
+   "call": "muse/call1",
+   "file": "tests/fixtures/live/p2b1/Muse-harness/checkpoints/journal_call1_20261116T235259Z_2.txt",
+   "sha256_16": "727990fe20340002",
+   "what": "p2b1 journal_call1_20261116T235259Z_2.txt (R7, as written)"
+  }
+ ]
+}

@@ -1,0 +1,7 @@
+{
+ "what": "BUILD IC-3 (D9): tests/t_requests_ic3.py on this tree \u2014 the check on the request bodies",
+ "pass": 20,
+ "total": 20,
+ "harness_sha256": "27cd685efc7003833ec7ff4a9ca5e57b805acf75065fadf0530d4fc1a3c16ee6",
+ "ledger_entries": 87
+}

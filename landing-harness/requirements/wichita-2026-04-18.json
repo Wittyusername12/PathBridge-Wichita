@@ -1,0 +1,331 @@
+{
+  "schema_version": 1,
+  "_note": "Fixture typed from the Wichita brief (Wichita_Challenge.png, transcribed at 3x in tracker §7.5 / G.1). Every quote is the brief's wording.",
+  "challenge": {
+    "id": "wichita-2026-04-18",
+    "event": "naipc-regional-wichita-2026",
+    "day": 1,
+    "date": "2026-04-18",
+    "city": "Wichita",
+    "venue": "Groover Labs",
+    "title": "No Wrong Door",
+    "tagline": "Build a transition system that prevents homelessness and supports foster youth in Wichita",
+    "mission": "You are designing a 90-day Wichita pilot. The city is offering $500,000. $100,000 is reserved for marketing, trust-building, and adoption. Teams must work with existing assets: Second Light, Open Door, H.O.T., CrossRoads, BRIDGES, DCF IL, City ID, NEXTenant, Housing First and rapid rehousing pathways."
+  },
+  "constraints": {
+    "contract_usd": {
+      "value": 500000,
+      "quote": "The city is offering $500,000."
+    },
+    "opex_usd": null,
+    "reserved_marketing_usd": {
+      "value": 100000,
+      "quote": "$100,000 is reserved for marketing, trust-building, and adoption."
+    },
+    "pilot_days": {
+      "value": 90,
+      "quote": "You are designing a 90-day Wichita pilot."
+    },
+    "beneficiary_unit": {
+      "value": "people",
+      "quote": "736 — People homeless — 2025 PIT Count"
+    },
+    "required_assets": {
+      "value": [
+        "Second Light",
+        "Open Door",
+        "H.O.T.",
+        "CrossRoads",
+        "BRIDGES",
+        "DCF IL",
+        "City ID",
+        "NEXTenant",
+        "Housing First",
+        "rapid rehousing pathways"
+      ],
+      "quote": "Teams must work with existing assets: Second Light, Open Door, H.O.T., CrossRoads, BRIDGES, DCF IL, City ID, NEXTenant, Housing First and rapid rehousing pathways."
+    }
+  },
+  "named_users": [
+    {
+      "id": "maya",
+      "name": "Maya",
+      "age": 19,
+      "role": "Recently exited foster care",
+      "quote": "I can maybe find somewhere to sleep this week, but I still don't know how I'm supposed to get my ID, keep my health coverage, and start school."
+    },
+    {
+      "id": "denise",
+      "name": "Denise",
+      "age": 42,
+      "role": "Mother of two",
+      "quote": "I don't know whether I should call 211, the city, Family Promise, or somebody else. By the time I figure it out, I'm already behind."
+    },
+    {
+      "id": "robert",
+      "name": "Robert",
+      "age": 58,
+      "role": "Veteran",
+      "quote": "People keep telling me there are beds somewhere, but that doesn't help if none of them fit my situation tonight."
+    },
+    {
+      "id": "jordan",
+      "name": "Jordan",
+      "age": null,
+      "role": "Case manager",
+      "quote": "Most of my job is still phone calls, spreadsheets, and tribal knowledge. The system works best if you already know all the doors."
+    },
+    {
+      "id": "tanya",
+      "name": "Tanya",
+      "age": null,
+      "role": "Outreach responder",
+      "quote": "We can get someone to safety for the night, but the next steps break down on documents, benefits, transportation, and follow-through."
+    },
+    {
+      "id": "luis",
+      "name": "Luis",
+      "age": null,
+      "role": "Landlord",
+      "quote": "I'm not against renting to someone in transition. I need one clear contact, reduced risk, and confidence that the support won't disappear."
+    }
+  ],
+  "tracks": {
+    "oracle": {
+      "kind": "deliverables",
+      "title": "The Oracle — BUILD THE DASHBOARD AND INTERVENTION MODEL",
+      "mission": "Build a dashboard, operating model, and business case showing how Wichita should spend the $500K, how the 90-day pilot works, the $100K marketing allocation, and what outcomes prove renewal.",
+      "items": [
+        {
+          "id": "bottleneck-dashboard",
+          "text": "Transition bottleneck dashboard"
+        },
+        {
+          "id": "use-of-funds",
+          "text": "Use-of-funds model"
+        },
+        {
+          "id": "prioritization-model",
+          "text": "Prioritization model"
+        },
+        {
+          "id": "youth-handoff-failures",
+          "text": "Youth handoff failure analysis"
+        },
+        {
+          "id": "cost-of-instability",
+          "text": "Cost-of-instability analysis"
+        },
+        {
+          "id": "pilot-kpi-framework",
+          "text": "Pilot KPI framework"
+        },
+        {
+          "id": "renewal-case",
+          "text": "Renewal case"
+        },
+        {
+          "id": "oracle-m1",
+          "text": "how the 90-day pilot works",
+          "source": "mission"
+        },
+        {
+          "id": "oracle-m2",
+          "text": "the $100K marketing allocation",
+          "source": "mission"
+        }
+      ]
+    },
+    "architect": {
+      "kind": "deliverables",
+      "title": "The Architect — BUILD THE PROTOTYPE",
+      "mission": "Build a working prototype that helps Wichita route people faster through crisis, stabilization, and housing transition.",
+      "items": [
+        {
+          "id": "public-intake-flow",
+          "text": "Public intake flow"
+        },
+        {
+          "id": "case-manager-dashboard",
+          "text": "Case-manager dashboard"
+        },
+        {
+          "id": "fit-matcher",
+          "text": "Bed and pathway fit matcher"
+        },
+        {
+          "id": "document-benefits-checklist",
+          "text": "Document-and-benefits checklist"
+        },
+        {
+          "id": "youth-transition-navigator",
+          "text": "Youth transition navigator"
+        },
+        {
+          "id": "housing-readiness-tracker",
+          "text": "Housing readiness tracker"
+        }
+      ]
+    },
+    "muse": {
+      "kind": "deliverables",
+      "title": "The Muse — BUILD THE TRUST AND ADOPTION SYSTEM",
+      "mission": "You have $100K for marketing. Build messaging, trust, and adoption that makes a no-wrong-door pathway usable by people in crisis and credible to landlords and providers.",
+      "items": [
+        {
+          "id": "youth-outreach-kit",
+          "text": "Youth-friendly outreach kit"
+        },
+        {
+          "id": "landlord-trust-campaign",
+          "text": "Landlord trust campaign"
+        },
+        {
+          "id": "bilingual-pathway-messaging",
+          "text": "Bilingual pathway messaging"
+        },
+        {
+          "id": "anti-stigma-comms",
+          "text": "Anti-stigma comms"
+        },
+        {
+          "id": "brand-system",
+          "text": "Brand system"
+        },
+        {
+          "id": "channel-plan-and-budget",
+          "text": "Channel plan and budget"
+        }
+      ]
+    }
+  },
+  "winning_looks_like": [
+    {
+      "id": "win-1",
+      "text": "Reduce confusion about where to start"
+    },
+    {
+      "id": "win-2",
+      "text": "Make bed and program matching more precise"
+    },
+    {
+      "id": "win-3",
+      "text": "Help youth move toward stable adulthood"
+    },
+    {
+      "id": "win-4",
+      "text": "Reduce failed handoffs between systems"
+    },
+    {
+      "id": "win-5",
+      "text": "Make documents and benefits part of the housing workflow"
+    },
+    {
+      "id": "win-6",
+      "text": "Use Wichita's existing assets instead of pretending the city is starting from zero"
+    }
+  ],
+  "scoring": {
+    "dimensions": [
+      "Problem Understanding",
+      "Solution Quality",
+      "Presentation & Polish",
+      "Adaptability",
+      "AI Mastery"
+    ],
+    "descriptors": {
+      "Problem Understanding": "Did they actually understand the problem? Do they know who the users/customers are and what they need? Or did they build something generic?",
+      "Solution Quality": "Is the solution good? Is the business plan sound? Is the product useful? Is the marketing strategy smart? Would this actually work?",
+      "Presentation & Polish": "Is it well-built and clearly presented? Can you interact with the dashboard? Does the plan read well? Are materials production-ready?",
+      "Adaptability": "How did they respond to the curveball? Did they rethink their approach or just bolt something on? (Score after Block 2)",
+      "AI Mastery": "How effectively did they use AI? Did they direct it or just accept first outputs? Evidence of iteration, challenging AI, using it creatively?"
+    },
+    "scale": "circle one 1-5 per dimension per judge; TOTAL / 25 × 4 = / 100",
+    "scale_legend": {
+      "1": "Didn't address",
+      "2": "Significant gaps",
+      "3": "Adequate",
+      "4": "Strong work",
+      "5": "Exceptional"
+    },
+    "notes": "Adaptability is scored after Block 2; each judge adds 'What stood out? (one sentence)'; the panel is three industry experts and one non-human (AI) judge",
+    "source": "Kansas_City_scorecard.png (KC Regional 2026 judge scorecard, March 28, 2026), read 2026-09-29; the same five dimensions appear on every 2026 brief"
+  },
+  "api": {
+    "base_url": "https://aipromptchamp.com",
+    "prefix": "/api/challenge/wich",
+    "note": "All endpoints return JSON. CORS enabled. Append ?zip=true for compressed responses.",
+    "endpoints": [
+      {
+        "name": "community-snapshot",
+        "description": "Core community indicators and 2025 PIT data",
+        "records_expected": 1,
+        "curveball_updates": false
+      },
+      {
+        "name": "shelter-inventory",
+        "description": "Shelter and program fit data by provider",
+        "records_expected": 10,
+        "curveball_updates": true
+      },
+      {
+        "name": "intake-network",
+        "description": "Front-door entry pathways and intake points",
+        "records_expected": 8,
+        "curveball_updates": false
+      },
+      {
+        "name": "transition-programs",
+        "description": "Transition-age youth supports and programs",
+        "records_expected": 8,
+        "curveball_updates": false
+      },
+      {
+        "name": "stabilization-docs",
+        "description": "Friction-heavy stabilization steps",
+        "records_expected": 10,
+        "curveball_updates": false
+      },
+      {
+        "name": "rehousing-options",
+        "description": "Rehousing and landlord placement options",
+        "records_expected": 10,
+        "curveball_updates": false
+      },
+      {
+        "name": "system-status",
+        "description": "System status and live alerts",
+        "records_expected": null,
+        "curveball_updates": true,
+        "_note": "the project's cached file is named systems-status; the live path is system-status"
+      }
+    ]
+  },
+  "schedule": {
+    "source": "Eventbrite listing (the brief capture has no schedule)",
+    "block1": "09:30-12:00",
+    "curveball": "13:00",
+    "block2": "13:00-15:00",
+    "submissions_due": null
+  },
+  "submission": {
+    "form_url": null,
+    "deadline": null,
+    "event_code": null,
+    "_note": "the submission form was on the challenge page; the URL was not captured"
+  },
+  "team": {
+    "program_name": null,
+    "brand_html": null
+  },
+  "curveball": null,
+  "provenance": {
+    "brief_files": [
+      "Wichita_Challenge.png",
+      "curveball.png",
+      "API_info.png"
+    ],
+    "transcription": "tracker §7.5 and Appendix G.1 (2026-09-27, 3× crops)",
+    "modeled_fields": []
+  }
+}

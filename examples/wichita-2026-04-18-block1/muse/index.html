@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Relay Wichita — Community Outreach Campaign</title>
+<meta property="og:title" content="Relay Wichita — Launch Campaign"/>
+<meta name="description" content="Only 17 of 87 Wichita shelter beds are reachable tonight. Relay Wichita makes every door lead home.">
+<meta property="og:description" content="Only 17 of 87 Wichita shelter beds are reachable tonight. Relay Wichita makes every door lead home.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="Only 17 of 87 Wichita shelter beds are reachable tonight. Relay Wichita makes every door lead home.">
+
+<meta name="naipc-build" content="IC-8">
+<meta name="naipc-challenge" content="wichita-2026-04-18">
+<meta name="naipc-run" content="20261123T012811Z">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ═══ Design System — Glassmorphism (matches Oracle + Architect) ═══ */
+:root{
+  --bg:#0a0a1a;--bg-alt:#12122a;
+  --text:#f0f0f5;--text-sec:#a0a0b8;--muted:#6b6b80;
+  --accent:#8b5cf6;
+  --accent-soft:color-mix(in srgb,var(--accent) 15%,transparent);
+  --surface:rgba(255,255,255,0.05);--border:rgba(255,255,255,0.10);
+  --glass-blur:12px;--radius:16px;
+  --bad:#ef4444;--warn:#f59e0b;--good:#22c55e;
+  --font:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;
+  background-image:radial-gradient(ellipse at 20% 50%,color-mix(in srgb,var(--accent) 8%,transparent) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 20%,rgba(236,72,153,.06) 0%,transparent 50%)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Glass card */
+.glass{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  backdrop-filter:blur(var(--glass-blur)) saturate(150%);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(150%);
+  box-shadow:0 8px 32px rgba(0,0,0,.35);position:relative;overflow:hidden}
+@supports not (backdrop-filter:blur(1px)){.glass{background:rgba(18,18,42,.92)}}
+
+/* Layout */
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{margin-bottom:40px}
+.sec-label{text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--accent);margin-bottom:8px}
+.sec-title{font-size:28px;font-weight:800;margin-bottom:16px;line-height:1.2}
+
+/* ═══ Header ═══ */
+header{padding:28px 0 20px;border-bottom:1px solid var(--border);margin-bottom:32px}
+header .inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+header h1{font-size:22px;font-weight:800}
+header h1 em{font-style:normal;color:var(--accent)}
+.badge{background:var(--accent-soft);color:var(--accent);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+
+/* ═══ Hero ═══ */
+.hero{padding:48px 32px;text-align:center;margin-bottom:32px}
+.hero h2{font-size:36px;font-weight:800;line-height:1.15;max-width:800px;margin:0 auto 16px}
+.hero h2 em{font-style:normal;color:var(--accent)}
+.hero .lead{font-size:16px;color:var(--text-sec);max-width:640px;margin:0 auto 24px}
+.hero .stats{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.hero .stat{text-align:center}
+.hero .stat .n{font-size:28px;font-weight:800;color:var(--accent)}
+.hero .stat .l{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ═══ Persona Cards ═══ */
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.persona{border-left:4px solid var(--accent);padding:20px}
+.persona .icon{font-size:2.5rem;margin-bottom:8px}
+.persona h3{font-size:18px;font-weight:700;margin-bottom:2px}
+.persona .subtitle{color:var(--text-sec);font-size:13px;margin-bottom:12px}
+.persona .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.persona .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600}
+.persona .pill.barrier{background:rgba(239,68,68,.15);color:#fca5a5}
+.persona .pill.channel{background:var(--accent-soft);color:var(--accent)}
+.persona blockquote{border-left:none;padding:0;margin:10px 0 0;font-style:italic;color:var(--text-sec);font-size:13px;position:relative;padding-left:20px}
+.persona blockquote::before{content:'\201C';position:absolute;left:0;top:-6px;font-size:2rem;color:var(--accent);opacity:.3;font-style:normal}
+/* Persona data evidence */
+.persona-evidence{margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
+.persona-evidence .ev-title{text-transform:uppercase;letter-spacing:.5px;font-weight:700;font-size:10px;margin-bottom:6px;color:var(--text-sec)}
+.persona-evidence .ev-row{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.persona-evidence .ev-label{color:var(--text-sec)}
+.persona-evidence .ev-stat{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.persona-evidence .ev-src{font-size:10px;color:var(--muted);opacity:.7}
+
+/* ═══ Channel Matrix ═══ */
+.matrix-table{width:100%;border-collapse:collapse;font-size:13px}
+.matrix-table thead{position:sticky;top:0}
+.matrix-table th{background:rgba(255,255,255,.08);padding:10px 12px;text-align:left;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.matrix-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.matrix-table tbody tr:nth-child(even){background:rgba(255,255,255,.03)}
+.matrix-table th[scope="col"]{border-bottom:2px solid var(--accent)}
+
+/* ═══ Accordion Timeline ═══ */
+/* Single outer glass container — prevents backdrop-filter seam artifacts (research: all 3 sources) */
+.timeline{border:1px solid var(--border);border-radius:16px;overflow:hidden;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.04);box-shadow:0 18px 40px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)}
+.phase+.phase{border-top:1px solid rgba(255,255,255,.06)}
+/* Phase header: <button> inside <h3> — WAI-ARIA accordion pattern */
+.phase-heading{margin:0}
+.phase-trigger{width:100%;border:0;background:transparent;color:var(--text);
+  padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;
+  align-items:center;gap:12px;text-align:left;cursor:pointer;font-family:var(--font);
+  transition:background-color .2s ease}
+.phase-trigger:hover{background:rgba(255,255,255,.04)}
+.phase-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.phase.is-open .phase-trigger{background:rgba(255,255,255,.07);box-shadow:inset 3px 0 0 var(--accent)}
+/* Badge circle */
+.phase-badge{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  font-weight:700;font-size:14px;color:#fff;flex-shrink:0;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 88%,white),var(--accent));
+  box-shadow:0 4px 14px rgba(139,92,246,.3)}
+/* Title + month group */
+.phase-copy{min-width:0;display:grid;gap:2px}
+.phase-title{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.phase-month{font-size:13px;color:var(--muted)}
+/* Milestone count pill */
+.phase-count{white-space:nowrap;padding:4px 10px;border-radius:999px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);font-size:12px;font-weight:600;flex-shrink:0}
+/* CSS chevron — border-right + border-bottom rotated */
+.phase-chevron{width:10px;height:10px;flex-shrink:0;
+  border-right:2px solid rgba(255,255,255,.6);border-bottom:2px solid rgba(255,255,255,.6);
+  transform:rotate(45deg);transition:transform .28s cubic-bezier(.33,1,.68,1)}
+.phase.is-open .phase-chevron{transform:rotate(225deg)}
+/* Panel: CSS Grid 0fr→1fr for smooth height transition (research: best technique for Chrome 146+) */
+.phase-panel{display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .34s cubic-bezier(.33,1,.68,1)}
+.phase.is-open .phase-panel{grid-template-rows:1fr}
+/* Inner wrapper: min-height:0 is CRITICAL (all 3 sources emphasize this) */
+.phase-panel-inner{min-height:0;overflow:hidden}
+/* Padding on inner content, NOT on the grid child (prevents collapsed gap) */
+.phase-milestones{padding:0 16px 14px 60px;opacity:0;transform:translateY(-4px);
+  transition:opacity .16s ease,transform .22s ease}
+.phase.is-open .phase-milestones{opacity:1;transform:translateY(0);transition-delay:.04s}
+.phase-milestones ul{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.phase-milestones li{padding:3px 0 3px 22px;position:relative;font-size:13px;color:var(--text-sec);line-height:1.45}
+.phase-milestones li::before{content:'✓';position:absolute;left:0;color:color-mix(in srgb,var(--accent) 70%,white);font-weight:700}
+.deliverables{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.deliverables li::before{content:'📄';color:var(--accent)}
+@media(max-width:640px){
+  .phase-trigger{grid-template-columns:auto minmax(0,1fr) auto}
+  .phase-count{display:none}
+}
+
+/* ═══ Social Media Mockups ═══ */
+.social-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+/* Photo-sharing (Instagram-like) */
+.social-card{border-radius:12px;overflow:hidden;max-width:480px}
+.social-card.photo{background:#fff;color:#1a1a1a;border:1px solid #dbdbdb}
+.social-card.micro{background:#fff;color:#0f1419;border:1px solid #e1e8ed;border-radius:16px}
+.social-card.feed{background:#fff;color:#1c1e21;border:1px solid #e4e6eb;border-top:3px solid #1877f2}
+.sc-head{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.sc-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#ec4899);flex-shrink:0}
+.sc-name{font-weight:700;font-size:14px}
+.sc-meta{font-size:12px;color:#8e8e8e}
+.sc-dots{margin-left:auto;color:#8e8e8e;font-size:18px}
+/* Base media area — shared layout for all card types */
+.sc-media{height:200px;display:flex;align-items:flex-end;padding:14px;position:relative;overflow:hidden;
+  border-top:1px solid rgba(0,0,0,.05);border-bottom:1px solid rgba(0,0,0,.05)}
+/* Instagram hero card — gradient campaign graphic (most authentic for photo-sharing platforms) */
+.sc-media.media--hero{
+  background:
+    radial-gradient(circle at 16% 18%,rgba(255,255,255,.16) 0 9%,transparent 10% 100%),
+    radial-gradient(circle at 86% 16%,rgba(255,255,255,.12) 0 10%,transparent 11% 100%),
+    radial-gradient(circle at 72% 76%,rgba(255,255,255,.12) 0 14%,transparent 15% 100%),
+    linear-gradient(135deg,hsl(278 83% 68%) 0%,hsl(262 90% 60%) 38%,hsl(232 90% 62%) 72%,hsl(198 82% 54%) 100%);
+  align-items:center;justify-content:center}
+.sc-media.media--hero::before{content:"";position:absolute;inset:-12% -8% auto auto;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%);
+  filter:blur(18px);mix-blend-mode:screen;opacity:.55;pointer-events:none}
+/* Facebook stat card — dark data tile with accent stripe (authentic for community feeds) */
+.sc-media.media--stat{
+  background:
+    linear-gradient(180deg,rgba(16,18,34,.92),rgba(11,16,32,.98)),
+    radial-gradient(circle at 85% 18%,rgba(139,92,246,.35),transparent 30%),
+    radial-gradient(circle at 20% 100%,rgba(56,189,248,.18),transparent 32%);
+  flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:18px}
+.sc-media.media--stat::before{content:"";position:absolute;left:0;top:0;width:6px;height:100%;
+  background:linear-gradient(180deg,hsl(272 88% 74%),hsl(222 92% 66%))}
+.sc-media-stat-value{font-size:40px;font-weight:900;color:#fff;letter-spacing:-.04em;line-height:.9;margin-bottom:6px}
+.sc-media-stat-label{font-size:12px;font-weight:600;color:rgba(255,255,255,.78);text-transform:uppercase;letter-spacing:.04em}
+.sc-media-text{background:rgba(0,0,0,.55);border-radius:10px;padding:10px;color:#fff;width:100%;font-size:13px}
+.sc-media-text strong{display:block;margin-bottom:4px}
+.sc-body{padding:10px 14px;font-size:14px;line-height:1.5}
+.sc-tags{color:#00376b;margin-top:6px;font-size:13px}
+.social-card.micro .sc-tags{color:#1d9bf0}
+.social-card.feed .sc-tags{color:#1877f2}
+.sc-actions{padding:8px 14px;display:flex;gap:20px;font-size:14px;color:#8e8e8e;border-top:1px solid rgba(0,0,0,.08)}
+.sc-metrics{padding:6px 14px 12px;font-size:12px;color:#8e8e8e;display:flex;gap:16px}
+.sc-label{display:block;text-align:center;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+
+/* ═══ Phone Mockup Frames ═══ */
+.social-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.phone-frame{background:#111;border:3px solid #222;border-radius:36px;padding:10px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);position:relative;max-width:380px;margin:0 auto}
+.phone-screen{position:relative;border-radius:26px;overflow:hidden;background:#1a1a1a;min-height:420px}
+.phone-screen::before{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:80px;height:22px;background:#111;border-radius:12px;z-index:5}
+.phone-screen-inner{padding-top:32px}
+.phone-frame .social-card{border-radius:0;max-width:none;border-left:0;border-right:0}
+.phone-frame .social-card:last-child{border-bottom:0}
+.phone-frame .sc-label{color:var(--text-sec);margin-bottom:0;padding:6px 0 2px;background:var(--surface)}
+
+/* ═══ Bilingual Flyer ═══ */
+.flyer-section{background:#fff;color:#111;border-radius:var(--radius);padding:28px;max-width:700px;margin:0 auto}
+.flyer-header{border-bottom:3px solid var(--accent);padding-bottom:14px;margin-bottom:16px;text-align:center}
+.flyer-brand{font-size:24px;font-weight:800;color:#111}
+.flyer-tagline{color:#444;margin-top:4px;font-size:14px}
+.flyer-cta{text-align:center;margin:16px 0;padding:16px;background:color-mix(in srgb,var(--accent) 10%,#fff);border-radius:12px}
+.flyer-cta h3{font-size:20px;font-weight:800;color:#111}
+.flyer-cta p{color:#333;margin-top:4px}
+.flyer-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0}
+.flyer-col h4{font-size:14px;font-weight:700;margin-bottom:6px;color:#111;text-transform:uppercase;letter-spacing:.5px}
+.flyer-col p{font-size:13px;color:#333;line-height:1.6}
+.flyer-col ul{list-style:disc;padding-left:18px;font-size:13px;color:#333}
+.flyer-col ul li{margin-bottom:4px}
+.flyer-footer{margin-top:16px;border-top:2px solid #eee;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px}
+.flyer-footer .contact{font-size:12px;color:#444}
+.flyer-qr{width:100px;height:100px}
+.flyer-qr svg{width:100%;height:100%;display:block}
+
+/* ═══ Campaign Reach Calculator ═══ */
+.calc-panel{padding:24px;margin-top:20px}
+.calc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px}
+.calc-head h3{font-size:18px;font-weight:700;margin:0}
+.calc-reset{background:none;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:var(--font);opacity:0;transition:opacity .3s}
+.calc-reset.show{opacity:1}
+.calc-reset:hover{color:var(--text);border-color:var(--accent)}
+.calc-sliders{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px}
+@media(max-width:600px){.calc-sliders{grid-template-columns:1fr}}
+.calc-slider-group label{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.calc-slider-val{float:right;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+.calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;outline:none;cursor:pointer;background:rgba(255,255,255,.08);background-image:linear-gradient(135deg,var(--accent),#ec4899);background-size:50% 100%;background-repeat:no-repeat;border:1px solid rgba(255,255,255,.08);margin-top:4px}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#d0d0e0);border:2px solid var(--accent);box-shadow:0 0 8px rgba(139,92,246,.4);cursor:pointer;margin-top:-6px}
+.calc-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#d0d0e0);border:2px solid var(--accent);box-shadow:0 0 8px rgba(139,92,246,.4);cursor:pointer}
+.calc-slider::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:transparent}
+.calc-slider::-moz-range-track{height:8px;border-radius:4px;background:rgba(255,255,255,.08)}
+.calc-slider::-moz-range-progress{height:8px;border-radius:4px 0 0 4px;background:linear-gradient(135deg,var(--accent),#ec4899)}
+.calc-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:600px){.calc-metrics{grid-template-columns:repeat(2,1fr)}}
+.calc-metric{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 12px;text-align:center;transition:border-color .3s}
+.calc-metric.modified{border-color:rgba(139,92,246,.35);box-shadow:0 0 10px rgba(139,92,246,.08)}
+.calc-metric-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.calc-metric-value{font-size:1.5rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;
+  transition:color .3s ease}
+.calc-metric-value.cpa-good{color:#4ade80}
+.calc-metric-value.cpa-warn{color:#f59e0b}
+.calc-metric-value.cpa-high{color:#ef4444}
+.calc-metric-sub{font-size:10px;color:var(--muted);margin-top:4px}
+/* Delta indicators: % change from baseline */
+.calc-metric-delta{font-size:11px;font-weight:600;height:16px;margin-top:2px;
+  font-variant-numeric:tabular-nums;transition:opacity .2s}
+.calc-metric-delta.delta-up{color:#4ade80}
+.calc-metric-delta.delta-down{color:#f87171}
+.calc-metric-delta.delta-neutral{color:var(--muted)}
+/* Note explaining digital amplification */
+.calc-note{font-size:11px;color:var(--muted);margin:-8px 0 10px;padding:0 4px}
+/* Hint text: fades after first interaction */
+.calc-hint{text-align:center;font-size:12px;color:var(--accent);margin:8px 0;opacity:0.8;
+  transition:opacity .5s ease}
+.calc-hint.hidden{opacity:0;pointer-events:none}
+/* Methodology disclosure */
+.calc-methodology{margin-top:12px;font-size:12px;border-top:1px solid var(--border);padding-top:10px}
+.calc-methodology summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:12px}
+.calc-methodology summary:hover{text-decoration:underline}
+.calc-methodology-body{margin-top:8px;color:var(--text-sec);line-height:1.6}
+.calc-methodology-body p{margin:4px 0}
+.calc-methodology-body strong{color:var(--text)}
+
+/* ═══ Inline Cross-Track CTA ═══ */
+.inline-cta{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border:1px solid var(--accent);border-radius:8px;color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;margin-top:12px}
+.inline-cta:hover{background:var(--accent);color:#000;text-decoration:none;transform:translateY(-1px)}
+
+/* Print button */
+/* Tear-off strip — removed from stylesheet entirely; markup is dead in the DOM but hidden by default */
+
+
+/* ═══ Partner Pitch ═══ */
+.pitch{padding:24px}
+.pitch-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+.pitch h3{font-size:18px;font-weight:700;margin-bottom:12px}
+.pitch-narrative p{color:var(--text-sec);font-size:14px;margin-bottom:12px;line-height:1.6}
+.pitch-benefits{list-style:none;padding:0}
+.pitch-benefits li{padding:8px 0 8px 24px;position:relative;font-size:14px;color:var(--text-sec);border-bottom:1px solid var(--border)}
+.pitch-benefits li::before{content:'✦';position:absolute;left:0;color:var(--accent)}
+.pitch-stats{display:grid;gap:12px}
+.pitch-stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.pitch-stat .num{font-size:24px;font-weight:800;color:var(--accent)}
+.pitch-stat .label{font-size:12px;color:var(--muted);margin-top:4px}
+.pitch-cta{margin-top:20px;text-align:center}
+.pitch-cta a{display:inline-block;background:var(--accent);color:#000;padding:12px 32px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none}
+.pitch-cta a:hover{opacity:.9;text-decoration:none}
+
+/* ═══ KPI Cards ═══ */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.kpi-card{padding:20px;text-align:center}
+.kpi-card .emoji{font-size:1.8rem;margin-bottom:6px}
+.kpi-card .target{font-size:28px;font-weight:800;color:var(--accent)}
+.kpi-card .metric{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi-card .timeframe{font-size:11px;color:var(--text-sec);margin-top:2px}
+
+/* ═══ Cross-Track Links ═══ */
+.cross-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.cross-link{padding:20px;display:flex;align-items:center;gap:14px;transition:transform .2s}
+.cross-link:hover{transform:translateY(-2px)}
+.cross-link .icon{font-size:2rem}
+.cross-link h4{font-size:14px;font-weight:700}
+.cross-link p{font-size:12px;color:var(--text-sec);margin-top:2px}
+
+/* ═══ Footer ═══ */
+footer{text-align:center;padding:32px 0;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+.qr-wrap{display:block;width:140px;height:140px;border-radius:10px;overflow:hidden;background:#fff;padding:6px;margin:12px auto 0}
+.qr-wrap svg{width:100%;height:100%;display:block}
+
+/* ═══ Details/Accordion ═══ */
+details{margin-top:16px}
+details summary{cursor:pointer;font-weight:700;font-size:14px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+details .inn{padding:16px;font-size:13px;color:var(--text-sec);line-height:1.7}
+
+/* ═══ Chatbot (Atlas AI — matches Oracle/Architect) ═══ */
+.chatbot{position:fixed;bottom:16px;right:24px;z-index:100;width:360px;max-height:480px;display:flex;flex-direction:column;
+  background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.chatbot .chat-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);cursor:pointer}
+.chatbot .chat-head h3{margin:0;font-size:14px;font-weight:700}
+.chatbot .chat-body{flex:1;overflow-y:auto;padding:12px;font-size:13px;min-height:200px}
+.chatbot .chat-msg{margin-bottom:10px;padding:8px 12px;border-radius:10px;line-height:1.5;max-width:90%}
+.chatbot .chat-msg.user{background:rgba(139,92,246,.15);margin-left:auto;border:1px solid rgba(139,92,246,.2)}
+.chatbot .chat-msg.ai{background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.chatbot .chat-input{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--border)}
+.chatbot .chat-input input{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none}
+.chatbot .chat-input button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer}
+.chat-toggle{position:fixed;bottom:24px;right:24px;z-index:99;width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;
+  border:2px solid rgba(255,255,255,.15);font-size:22px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(139,92,246,.5);transition:all .2s;
+  animation:chatPulse 2.5s ease-in-out infinite}
+.chat-toggle:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(139,92,246,.7)}
+@keyframes chatPulse{0%{box-shadow:0 4px 20px rgba(139,92,246,.4)}50%{box-shadow:0 4px 24px rgba(236,72,153,.55)}100%{box-shadow:0 4px 20px rgba(139,92,246,.4)}}
+.chat-tip{position:fixed;bottom:36px;right:90px;z-index:99;background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:8px 14px;font-size:12px;color:var(--text);white-space:nowrap;opacity:1;transition:opacity .5s;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.chat-tip.hide{opacity:0}
+
+/* ═══ Animations ═══ */
+@keyframes fadeSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:600px){.flyer-cols{grid-template-columns:1fr}.pitch-grid{grid-template-columns:1fr}.chatbot{width:calc(100vw - 32px);right:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <div class="inner">
+      <h1><em>Relay</em> Wichita</h1>
+      <div>
+        <span class="badge">🎨 Muse Track</span>
+        <span class="badge" style="margin-left:6px" title="Domain label from the Oracle track&#39;s analysis of the same data (Claude)">Homelessness and Youth Transitions</span>
+      </div>
+    </div>
+    <div style="color:var(--text-sec);font-size:13px;margin-top:6px">Connecting neighbors in transition to a trusted path home.</div>
+  </header>
+
+  <!-- ═══ CAMPAIGN HERO ═══ -->
+  <section class="hero glass" id="sec-hero" data-sec="hero" style="animation:fadeSlide .5s ease both">
+    <div class="sec-label" data-cov-skip>Community Outreach Campaign</div>
+    <h2>Only <em><span class="prov" data-prov="status001-reachable" data-kind="MEASURED" title="MEASURED — measured in the data · reachable emergency beds, by alert Effective Bed Availability Under 20%">17</span> of <span class="prov" data-prov="status001-total" data-kind="MEASURED" title="MEASURED — measured in the data · emergency shelter beds, by alert Effective Bed Availability Under 20%">87</span></em> shelter beds are reachable tonight. <em>Every door</em> should lead home.</h2>
+    <p class="lead">Wichita has <span class="prov" data-prov="intake-network.count" data-kind="MEASURED" title="MEASURED — measured in the data · the intake network records">8</span> intake doors, yet <span class="prov" data-prov="community-snapshot.unshelteredHeadcount" data-kind="MEASURED" title="MEASURED — measured in the data · people unsheltered on the Point-in-Time night">195</span> people slept outside on the 2025 count night. Relay Wichita gives youth, families, veterans and landlords a trusted contact who carries each person from the door to a home.</p>
+    <div class="stats">
+      
+      <div class="stat"><div class="n"><span class="prov" data-prov="community-snapshot.unshelteredHeadcount" data-kind="MEASURED" title="MEASURED — measured in the data · people unsheltered on the Point-in-Time night">195</span></div><div class="l">People unsheltered on the 2025 count night</div></div>
+      
+      <div class="stat"><div class="n"><span class="prov" data-prov="status001-reachable" data-kind="MEASURED" title="MEASURED — measured in the data · reachable emergency beds, by alert Effective Bed Availability Under 20%">17</span> of <span class="prov" data-prov="status001-total" data-kind="MEASURED" title="MEASURED — measured in the data · emergency shelter beds, by alert Effective Bed Availability Under 20%">87</span></div><div class="l">Emergency beds actually reachable now</div></div>
+      
+      <div class="stat"><div class="n"><span class="prov" data-prov="state_id_days" data-kind="DERIVED" title="DERIVED — computed by Python from the data · fewest days to a Kansas state ID from no documents">31</span> days</div><div class="l">Fewest days to a state ID from no documents</div></div>
+      
+      <div class="stat"><div class="n"><span class="prov" data-prov="community-snapshot.fosterHomelessnessAge21" data-kind="MEASURED" title="MEASURED — measured in the data · share of youth from foster care homeless by 21">42%</span></div><div class="l">Youth from foster care homeless by age 21</div></div>
+      
+    </div>
+  </section>
+
+  
+
+  
+  
+  <style>@media (max-width:600px){ #brief table,#brief thead,#brief tbody,#brief tr,#brief td{display:block;width:auto!important;min-width:0!important}#brief thead{display:none}#brief tr{padding:10px 0;border-bottom:1px solid rgba(127,127,127,.25)}#brief td{padding:3px 0!important;border:0!important}}</style>
+  <section id="brief" class="glass" data-brief-panel style="padding:20px">
+    <div class="sec-label">How this answers the brief</div>
+    <div style="font-weight:800;font-size:20px;margin-bottom:6px" data-verbatim="the brief's own words">The Muse — BUILD THE TRUST AND ADOPTION SYSTEM</div>
+    <p style="color:var(--text-sec);font-size:13px;margin-bottom:12px" data-verbatim="the brief's own words">You have $100K for marketing. Build messaging, trust, and adoption that makes a no-wrong-door pathway usable by people in crisis and credible to landlords and providers.</p>
+    <div style="overflow-x:auto">
+      <table class="matrix-table">
+        <thead><tr><th scope="col">The brief asks</th><th scope="col">Our answer</th><th scope="col">Where on this page</th></tr></thead>
+        <tbody>
+        
+        <tr data-brief-row="youth-outreach-kit" data-brief-answer="model">
+          <td data-brief-cell="q" data-verbatim="the brief's own words" style="vertical-align:top;font-weight:700;min-width:9rem">Youth-friendly outreach kit</td>
+          <td data-brief-cell="a" style="vertical-align:top">The youth kit goes out through CrossRoads, DCF IL and BRIDGES, led by peer navigators with lived experience. It holds a pocket ID checklist that turns the 31-day document chain into plain steps, a bus-pass voucher guide, and a KanCare keep-your-coverage card. The goal is to cut lost contact below 20%, against DCF IL&#39;s 38%.</td>
+          <td data-brief-cell="l" data-num-exempt="the page's section numbers" style="vertical-align:top;min-width:8rem">—</td>
+        </tr>
+        
+        <tr data-brief-row="landlord-trust-campaign" data-brief-answer="model">
+          <td data-brief-cell="q" data-verbatim="the brief's own words" style="vertical-align:top;font-weight:700;min-width:9rem">Landlord trust campaign</td>
+          <td data-brief-cell="a" style="vertical-align:top">Landlord Luis asked for one clear contact, less risk and support that lasts, so every NEXTenant landlord gets a named Relay contact and a fact sheet on rapid rehousing and Housing First supports. We run landlord briefings every 2 weeks and aim to sign 15 new landlords by day 90. We will share Wichita&#39;s retention rate of 80% to show tenants stay housed.</td>
+          <td data-brief-cell="l" data-num-exempt="the page's section numbers" style="vertical-align:top;min-width:8rem">—</td>
+        </tr>
+        
+        <tr data-brief-row="bilingual-pathway-messaging" data-brief-answer="model">
+          <td data-brief-cell="q" data-verbatim="the brief's own words" style="vertical-align:top;font-weight:700;min-width:9rem">Bilingual pathway messaging</td>
+          <td data-brief-cell="a" style="vertical-align:top">Every script, wallet card, flyer and text message is written in English and Spanish at a 6th-grade level. 211 and Open Door already support Spanish, so Relay builds on them with Spanish radio spots and transit posters. The target is 20% of contacts served in Spanish.</td>
+          <td data-brief-cell="l" data-num-exempt="the page's section numbers" style="vertical-align:top;min-width:8rem"><a href="#print-flyer" data-brief-link="flyer">Bilingual flyer</a></td>
+        </tr>
+        
+        <tr data-brief-row="anti-stigma-comms" data-brief-answer="model">
+          <td data-brief-cell="q" data-verbatim="the brief's own words" style="vertical-align:top;font-weight:700;min-width:9rem">Anti-stigma comms</td>
+          <td data-brief-cell="a" style="vertical-align:top">The anti-stigma series tells real stories from youth, parents and veterans, with their consent. It points out that 69% of people served were newly homeless, so homelessness can happen to any neighbor. Messages focus on what people are working toward, like school, a job and a home, not on labels.</td>
+          <td data-brief-cell="l" data-num-exempt="the page's section numbers" style="vertical-align:top;min-width:8rem">—</td>
+        </tr>
+        
+        <tr data-brief-row="brand-system" data-brief-answer="model">
+          <td data-brief-cell="q" data-verbatim="the brief's own words" style="vertical-align:top;font-weight:700;min-width:9rem">Brand system</td>
+          <td data-brief-cell="a" style="vertical-align:top">Relay Wichita uses a baton-handoff mark to show that no person is dropped between services. The brand has a warm color set, plain bilingual wording and the handle @RelayWichita, with co-branding space for Second Light, Open Door, H.O.T., CrossRoads, BRIDGES, DCF IL, City ID and NEXTenant. The promise is simple: every door leads home.</td>
+          <td data-brief-cell="l" data-num-exempt="the page's section numbers" style="vertical-align:top;min-width:8rem"><a href="#sec-creative" data-brief-link="creative">04 Creative Assets</a><br><a href="#print-flyer" data-brief-link="flyer">Bilingual flyer</a></td>
+        </tr>
+        
+        <tr data-brief-row="channel-plan-and-budget" data-brief-answer="model">
+          <td data-brief-cell="q" data-verbatim="the brief's own words" style="vertical-align:top;font-weight:700;min-width:9rem">Channel plan and budget</td>
+          <td data-brief-cell="a" style="vertical-align:top">The $100K marketing reserve is split across youth peer outreach and kits at $25,000, landlord briefings at $20,000, bilingual front-door scripts and print at $15,000, anti-stigma video at $15,000, social media at $15,000, and brand design at $10,000. Channels favor partners, phones and social media because many people in crisis lack a carro or reliable transit. Each channel has its own KPI that is tracked on the pilot dashboard.</td>
+          <td data-brief-cell="l" data-num-exempt="the page's section numbers" style="vertical-align:top;min-width:8rem"><a href="#sec-channels" data-brief-link="channels">02 Channel Strategy</a><br><a href="#sec-calculator" data-brief-link="calculator">06 Reach Calculator</a></td>
+        </tr>
+        
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <script>
+  /* === BRIEF PANEL (P0.3): a panel link opens a closed <details> around its target, then scrolls to it === */
+  (function(){
+    var panel=document.getElementById("brief");if(!panel)return;
+    panel.addEventListener("click",function(ev){
+      var a=ev.target.closest?ev.target.closest("a[data-brief-link]"):null;if(!a)return;
+      var t=document.getElementById((a.getAttribute("href")||"").slice(1));if(!t)return;
+      ev.preventDefault();ev.stopPropagation();
+      for(var n=t;n&&n!==document.body;n=n.parentElement){if(n.tagName==="DETAILS"&&!n.open)n.open=true;}
+      setTimeout(function(){t.scrollIntoView({behavior:"smooth",block:"start"});},50);
+    });
+  })();
+  </script>
+  
+
+  <!-- ═══ AUDIENCE PERSONAS ═══ -->
+  <section id="sec-audiences" data-sec="audiences">
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">01</span> &middot; Target Audiences</div>
+    <div class="sec-title" data-cov-skip>Who We're Reaching</div>
+    <div class="personas">
+      
+      <div class="persona glass" style="animation:fadeSlide .4s ease both;animation-delay:0ms">
+        <div class="icon">🎒</div>
+        <h3>Maya, <span class="prov" data-prov="q.4f218" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the brief&#x27;s own words · the brief · “- maya: Maya, 19 — Recently exited foster care: &quot;I can maybe find somewhere to sleep this week, but I still don&#x27;t know how I&#x27;m supposed to get my ID, keep my health coverage, and start school.&quot;”">19</span></h3>
+        <div class="subtitle">Recently exited foster care, hoping to start school · Wichita, staying at the CrossRoads youth shelter</div>
+        
+        <div class="pills">
+          <span class="pill barrier">A state ID needs a birth certificate, a Social Security card and proof of residency, which takes at least <span class="prov" data-prov="state_id_days" data-kind="DERIVED" title="DERIVED — computed by Python from the data · fewest days to a Kansas state ID from no documents">31</span> days from no documents</span> <span class="pill barrier">A monthly bus pass costs <span class="prov" data-prov="q.c9ad8" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Wichita Transit Bus Pass (known blockers) · “Monthly pass costs $50 which is prohibitive for a zero-income client · Purchase channels limited to the transit center or online · Reduced fare requires a separate application and supporting documentation”">$50</span>, and buses run <span class="prov" data-prov="q.2bfae" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Wichita Transit Bus Pass (doc notes) · “Wichita Transit runs 30-60 minute headways and no Sunday service.”">30-60</span> minutes apart with no Sunday service</span> <span class="pill barrier">Aged-out KanCare coverage loses <span class="prov" data-prov="transition-programs.prog-003.transitionDropoutRate" data-kind="MEASURED" title="MEASURED — measured in the data · transition dropout rate — Aged-Out Medical (KanCare Extension)">42%</span> of youth, so her health coverage is at risk</span> <span class="pill barrier">DCF Independent Living benefits stop at age 21, whether or not she has housing or income</span>
+        </div>
+        <div class="pills">
+          <span class="pill channel">CrossRoads Drop-In Center peer navigators</span> <span class="pill channel">DCF IL caseworker referrals</span> <span class="pill channel">Instagram and TikTok short videos</span> <span class="pill channel">Text line for youth</span>
+        </div>
+        <blockquote>"I can find a bed this week. What I need is someone to walk me through my ID, my health coverage and school, step by step."</blockquote>
+        
+        <div class="persona-evidence">
+          <div class="ev-title" data-cov-skip>📊 Figures Claude cited</div>
+          
+          <div class="ev-row"><span class="ev-label">CrossRoads youth beds in use (data: shelter inventory)</span> <span class="ev-stat"><span class="prov" data-prov="shelter-inventory.shelter-003.bedsInUse" data-kind="MEASURED" title="MEASURED — measured in the data · beds in use — CrossRoads at Youthville (Wichita Children&#x27;s Home)">10</span> of <span class="prov" data-prov="shelter-inventory.shelter-003.bedsOnline" data-kind="MEASURED" title="MEASURED — measured in the data · beds online — CrossRoads at Youthville (Wichita Children&#x27;s Home)">12</span></span></div>
+          
+          <div class="ev-row"><span class="ev-label">Fewest days to a Kansas state ID from no documents (data: stabilization docs)</span> <span class="ev-stat"><span class="prov" data-prov="state_id_days" data-kind="DERIVED" title="DERIVED — computed by Python from the data · fewest days to a Kansas state ID from no documents">31</span> days</span></div>
+          
+          <div class="ev-row"><span class="ev-label">Youth from foster care homeless by age 19 (data: community snapshot)</span> <span class="ev-stat"><span class="prov" data-prov="community-snapshot.fosterHomelessnessAge19" data-kind="MEASURED" title="MEASURED — measured in the data · share of youth from foster care homeless by 19">29%</span></span></div>
+          
+          <div class="ev-row"><span class="ev-label">Aged-out KanCare extension dropout rate (data: transition programs)</span> <span class="ev-stat"><span class="prov" data-prov="transition-programs.prog-003.transitionDropoutRate" data-kind="MEASURED" title="MEASURED — measured in the data · transition dropout rate — Aged-Out Medical (KanCare Extension)">42%</span></span></div>
+          
+        </div>
+        
+      </div>
+      
+      <div class="persona glass" style="animation:fadeSlide .4s ease both;animation-delay:100ms">
+        <div class="icon">👩‍👧‍👦</div>
+        <h3>Denise, <span class="prov" data-prov="q.1ec79" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the brief&#x27;s own words · the brief · “- denise: Denise, 42 — Mother of two: &quot;I don&#x27;t know whether I should call 211, the city, Family Promise, or somebody else.”">42</span></h3>
+        <div class="subtitle">Mother of <span class="prov" data-prov="q.f561f" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the brief&#x27;s own words · the brief · “- denise: Denise, 42 — Mother of two: &quot;I don&#x27;t know whether I should call 211, the city, Family Promise, or somebody else.”">two</span> children · Wichita, between housing</div>
+        
+        <div class="pills">
+          <span class="pill barrier">Too many doors: <span class="prov" data-prov="intake-network.count" data-kind="MEASURED" title="MEASURED — measured in the data · the intake network records">8</span> intake sites, and she cannot tell which one to call</span> <span class="pill barrier">A family intake queue can run <span class="prov" data-prov="q.970ad" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Family Promise Intake Line (operator notes) · “Current intake queue typically runs 2-4 weeks, long enough to be effectively blocked for crisis families.”">2-4</span> weeks, too slow for a family in crisis</span> <span class="pill barrier">Family shelter has a <span class="prov" data-prov="q.468de" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · St. Anthony Family Shelter (Catholic Charities) (operator notes) · “Emergency family shelter with a 90-day stay limit.”">90</span>-day stay limit</span> <span class="pill barrier">Most private landlords use a <span class="prov" data-prov="q.10f55" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Employment Verification Letter (doc notes) · “Most private Wichita landlords use a 3x-rent income rule.”">3x</span>-rent income rule she cannot meet yet</span>
+        </div>
+        <div class="pills">
+          <span class="pill channel">211 phone line in English and Spanish</span> <span class="pill channel">Open Door walk-in intake</span> <span class="pill channel">Bilingual flyers at schools and clinics</span>
+        </div>
+        <blockquote>"I don't need more phone numbers. I need the right one, and I need someone to stay with me until my kids have a place."</blockquote>
+        
+        <div class="persona-evidence">
+          <div class="ev-title" data-cov-skip>📊 Figures Claude cited</div>
+          
+          <div class="ev-row"><span class="ev-label">Intake sites in the network (data: intake network)</span> <span class="ev-stat"><span class="prov" data-prov="intake-network.count" data-kind="MEASURED" title="MEASURED — measured in the data · the intake network records">8</span></span></div>
+          
+          <div class="ev-row"><span class="ev-label">Typical family intake queue (data: intake network)</span> <span class="ev-stat"><span class="prov" data-prov="q.970ad" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Family Promise Intake Line (operator notes) · “Current intake queue typically runs 2-4 weeks, long enough to be effectively blocked for crisis families.”">2-4</span> weeks</span></div>
+          
+          <div class="ev-row"><span class="ev-label">People served who were newly homeless (data: community snapshot)</span> <span class="ev-stat"><span class="prov" data-prov="community-snapshot.newlyHomelessShare" data-kind="MEASURED" title="MEASURED — measured in the data · newly homeless share — community snapshot">69%</span></span></div>
+          
+          <div class="ev-row"><span class="ev-label">Average days to housing in Wichita (data: community snapshot)</span> <span class="ev-stat"><span class="prov" data-prov="community-snapshot.avgDaysToHousing" data-kind="MEASURED" title="MEASURED — measured in the data · average days to housing in Wichita">45</span> days</span></div>
+          
+        </div>
+        
+      </div>
+      
+      <div class="persona glass" style="animation:fadeSlide .4s ease both;animation-delay:200ms">
+        <div class="icon">🎖️</div>
+        <h3>Robert, <span class="prov" data-prov="q.a680e" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the brief&#x27;s own words · the brief · “- robert: Robert, 58 — Veteran: &quot;People keep telling me there are beds somewhere, but that doesn&#x27;t help if none of them fit my situation tonight.&quot;”">58</span></h3>
+        <div class="subtitle">Veteran · Downtown Wichita, unsheltered</div>
+        
+        <div class="pills">
+          <span class="pill barrier">Only <span class="prov" data-prov="status001-reachable" data-kind="MEASURED" title="MEASURED — measured in the data · reachable emergency beds, by alert Effective Bed Availability Under 20%">17</span> of <span class="prov" data-prov="status001-total" data-kind="MEASURED" title="MEASURED — measured in the data · emergency shelter beds, by alert Effective Bed Availability Under 20%">87</span> emergency beds are reachable for people living outside</span> <span class="pill barrier">Union Rescue Mission's breathalyzer gate filters out <span class="prov" data-prov="q.1f31c" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Union Rescue Mission (operator notes) · “Intake gate includes breathalyzer screening at the door and chapel attendance expected during stay — in practice this filters out roughly a third of would-be intakes with active substance use.”">roughly a third</span> of would-be intakes</span> <span class="pill barrier">Bed referrals are still placed by phone because Second Light bed-matching is not live yet</span> <span class="pill barrier">City ID needs proof of Wichita residency, which unsheltered people rarely can show</span>
+        </div>
+        <div class="pills">
+          <span class="pill channel">H.O.T. street outreach</span> <span class="pill channel">Open Door daytime drop-in</span> <span class="pill channel">VASH and veteran service partners</span>
+        </div>
+        <blockquote>"Tell me about a bed that fits me tonight, not a bed somewhere in theory."</blockquote>
+        
+        <div class="persona-evidence">
+          <div class="ev-title" data-cov-skip>📊 Figures Claude cited</div>
+          
+          <div class="ev-row"><span class="ev-label">Emergency beds actually reachable now (data: system status)</span> <span class="ev-stat"><span class="prov" data-prov="status001-reachable" data-kind="MEASURED" title="MEASURED — measured in the data · reachable emergency beds, by alert Effective Bed Availability Under 20%">17</span> of <span class="prov" data-prov="status001-total" data-kind="MEASURED" title="MEASURED — measured in the data · emergency shelter beds, by alert Effective Bed Availability Under 20%">87</span></span></div>
+          
+          <div class="ev-row"><span class="ev-label">People unsheltered on the 2025 count night (data: community snapshot)</span> <span class="ev-stat"><span class="prov" data-prov="community-snapshot.unshelteredHeadcount" data-kind="MEASURED" title="MEASURED — measured in the data · people unsheltered on the Point-in-Time night">195</span></span></div>
+          
+          <div class="ev-row"><span class="ev-label">VASH placements of veterans in a year (data: community snapshot)</span> <span class="ev-stat"><span class="prov" data-prov="community-snapshot.vashPlacementsAnnual" data-kind="MEASURED" title="MEASURED — measured in the data · VASH placements annual — community snapshot">52</span></span></div>
+          
+          <div class="ev-row"><span class="ev-label">Share of intakes filtered out by the breathalyzer gate (data: shelter inventory)</span> <span class="ev-stat"><span class="prov" data-prov="q.1f31c" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Union Rescue Mission (operator notes) · “Intake gate includes breathalyzer screening at the door and chapel attendance expected during stay — in practice this filters out roughly a third of would-be intakes with active substance use.”">roughly a third</span></span></div>
+          
+        </div>
+        
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ═══ CHANNEL STRATEGY MATRIX ═══ -->
+  <section id="sec-channels" data-sec="channels" data-req="channel-plan-and-budget">
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">02</span> &middot; Channel Strategy</div>
+    <div class="sec-title" data-cov-skip>How We Reach Them</div>
+    <div class="glass" style="padding:20px;overflow-x:auto">
+      <table class="matrix-table">
+        <thead><tr>
+          <th scope="col">Channel</th>
+          <th scope="col">Audience</th>
+          <th scope="col">Content Type</th>
+          <th scope="col">Frequency</th>
+          <th scope="col">KPI</th>
+          <th scope="col">Est. Reach</th>
+        </tr></thead>
+        <tbody>
+        
+        <tr>
+          <td style="font-weight:700">Youth peer outreach at CrossRoads and DCF IL</td>
+          <td>Youth ages 18-24 aging out of foster care</td>
+          <td>Pocket ID checklist, document-steps comic, peer navigator talks</td>
+          <td>Weekly drop-in sessions plus every new DCF IL case</td>
+          <td>Youth who start a birth-certificate or ID request within <span class="prov prov-m" data-prov="model.12de84" data-kind="MODELED" title="MODELED — an assumption · days of first contact">7</span> days</td>
+          <td style="color:var(--accent);font-weight:700"><span class="prov prov-m" data-prov="model.3932e4" data-kind="MODELED" title="MODELED — an assumption · youth reached through CrossRoads, DCF IL and BRIDGES">300</span> youth</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight:700">211 and Open Door bilingual front-door scripts</td>
+          <td>Families and adults calling or walking in, English and Spanish</td>
+          <td>Bilingual call scripts, wallet cards, text follow-ups</td>
+          <td>Daily, every call and walk-in</td>
+          <td>Share of contacts with a confirmed warm handoff</td>
+          <td style="color:var(--accent);font-weight:700"><span class="prov prov-m" data-prov="model.3dcd6a" data-kind="MODELED" title="MODELED — an assumption · callers and walk-ins hearing Relay scripts">2,000</span> people</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight:700">H.O.T. street outreach kits</td>
+          <td>Unsheltered adults and veterans</td>
+          <td>Weatherproof cards with tonight's reachable beds, water bottles with the Relay text line</td>
+          <td>Every outreach shift, weekdays</td>
+          <td>Street contacts referred to a bed that fits them</td>
+          <td style="color:var(--accent);font-weight:700"><span class="prov prov-m" data-prov="model.019fee" data-kind="MODELED" title="MODELED — an assumption · unsheltered people the H.O.T. team aims to reach">195</span> people</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight:700">NEXTenant landlord briefings</td>
+          <td>Wichita landlords and property managers</td>
+          <td>Landlord breakfasts, risk-guarantee fact sheet, named contact card</td>
+          <td>Every <span class="prov prov-m" data-prov="model.d4ddbd" data-kind="MODELED" title="MODELED — an assumption · weeks between landlord briefings">2</span> weeks</td>
+          <td>New landlords signed to NEXTenant</td>
+          <td style="color:var(--accent);font-weight:700"><span class="prov prov-m" data-prov="model.b1d70f" data-kind="MODELED" title="MODELED — an assumption · landlords and managers briefed">150</span> landlords</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight:700">Instagram, TikTok and Facebook</td>
+          <td>Youth, families and the wider community</td>
+          <td>Short real-story videos, myth-busting posts, Spanish captions</td>
+          <td><span class="prov prov-m" data-prov="model.0793f8" data-kind="MODELED" title="MODELED — an assumption · posts per week">4</span> posts a week</td>
+          <td>Text-line sign-ups from social posts</td>
+          <td style="color:var(--accent);font-weight:700"><span class="prov prov-m" data-prov="model.1f76d7" data-kind="MODELED" title="MODELED — an assumption · social media impressions">25,000</span> impressions</td>
+        </tr>
+        
+        <tr>
+          <td style="font-weight:700">Transit center posters and Spanish radio</td>
+          <td>Bus riders and Spanish-speaking households</td>
+          <td>Bilingual posters, radio spots, QR code to the pathway</td>
+          <td>Posters all <span class="prov" data-prov="pilot_days" data-kind="MEASURED" title="MEASURED — measured in the data · the pilot&#x27;s length">90</span> days; radio weekly</td>
+          <td>QR scans and radio-driven calls</td>
+          <td style="color:var(--accent);font-weight:700"><span class="prov prov-m" data-prov="model.dde28f" data-kind="MODELED" title="MODELED — an assumption · riders and listeners reached">15,000</span> people</td>
+        </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    <a class="inline-cta" data-cov-skip href="https://ctrl-alt-defeat-arch.netlify.app" target="_blank" style="margin-top:16px">🔍 Explore the Interactive Resource Finder →</a>
+  </section>
+  <section id="sec-calendar" data-sec="calendar">
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">03</span> &middot; Launch Timeline</div>
+    <div class="sec-title" data-cov-skip>90-Day Campaign Calendar</div>
+    <div class="timeline" aria-label="Campaign rollout phases">
+      
+      <div class="phase is-open" style="animation:fadeSlide .4s ease both;animation-delay:0ms">
+        <h3 class="phase-heading">
+          <button
+            id="phase-trigger-1"
+            class="phase-trigger"
+            type="button"
+            aria-expanded="true"
+            aria-controls="phase-panel-1">
+            <span class="phase-badge" data-num-exempt="the list's own numbering (a position)">1</span>
+            <span class="phase-copy">
+              <span class="phase-title">Partner Onboarding</span>
+              <span class="phase-month">Days 1-30</span>
+              
+            </span>
+            <span class="phase-count">5 milestones</span>
+            <span class="phase-chevron" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div id="phase-panel-1" class="phase-panel" role="region" aria-labelledby="phase-trigger-1">
+          <div class="phase-panel-inner">
+            <div class="phase-milestones">
+              <ul>
+                <li>Sign data-sharing and referral agreements with Open Door, H.O.T., CrossRoads and BRIDGES</li><li>Train <span class="prov prov-m" data-prov="model.d20175" data-kind="MODELED" title="MODELED — an assumption · front-line staff trained on Relay scripts">40</span> front-line staff on the no-wrong-door script</li><li>Test the brand and messages with <span class="prov prov-m" data-prov="model.dc4307" data-kind="MODELED" title="MODELED — an assumption · youth and families in listening sessions">12</span> youth and families</li><li>Recruit <span class="prov prov-m" data-prov="model.b57ad2" data-kind="MODELED" title="MODELED — an assumption · peer navigators with lived experience">6</span> peer navigators</li><li>Launch landlord briefings with NEXTenant</li>
+              </ul>
+              
+              <ul class="deliverables">
+                <li>Brand system and bilingual message guide</li><li>Youth outreach kit, printed and digital</li><li>Landlord fact sheet with a named contact</li>
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="phase" style="animation:fadeSlide .4s ease both;animation-delay:120ms">
+        <h3 class="phase-heading">
+          <button
+            id="phase-trigger-2"
+            class="phase-trigger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="phase-panel-2">
+            <span class="phase-badge" data-num-exempt="the list's own numbering (a position)">2</span>
+            <span class="phase-copy">
+              <span class="phase-title">Soft Launch</span>
+              <span class="phase-month">Days 31-60</span>
+              
+            </span>
+            <span class="phase-count">5 milestones</span>
+            <span class="phase-chevron" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div id="phase-panel-2" class="phase-panel" role="region" aria-labelledby="phase-trigger-2">
+          <div class="phase-panel-inner">
+            <div class="phase-milestones">
+              <ul>
+                <li>Turn on the Relay text line through 211 and Open Door</li><li>Put street cards in every H.O.T. outreach shift</li><li>Start weekly social posts in English and Spanish</li><li>Flag homeless applicants for <span class="prov" data-prov="q.f7827" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · SNAP (Food Assistance) Enrollment (doc notes) · “Expedited 7-day processing exists for homeless applicants and is consistently underused because front-line intake staff do not flag eligibility.”">7</span>-day expedited food benefits at intake</li><li>Sign <span class="prov prov-m" data-prov="model.d98d3e" data-kind="MODELED" title="MODELED — an assumption · landlords signed by day 60">8</span> landlords</li>
+              </ul>
+              
+              <ul class="deliverables">
+                <li>Bilingual pathway flyers and wallet cards</li><li>Mid-pilot dashboard of handoffs and drop-offs</li>
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="phase" style="animation:fadeSlide .4s ease both;animation-delay:240ms">
+        <h3 class="phase-heading">
+          <button
+            id="phase-trigger-3"
+            class="phase-trigger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="phase-panel-3">
+            <span class="phase-badge" data-num-exempt="the list's own numbering (a position)">3</span>
+            <span class="phase-copy">
+              <span class="phase-title">Full Campaign</span>
+              <span class="phase-month">Days 61-90</span>
+              
+            </span>
+            <span class="phase-count">5 milestones</span>
+            <span class="phase-chevron" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div id="phase-panel-3" class="phase-panel" role="region" aria-labelledby="phase-trigger-3">
+          <div class="phase-panel-inner">
+            <div class="phase-milestones">
+              <ul>
+                <li>Run transit center posters and Spanish radio spots</li><li>Publish anti-stigma real-story series</li><li>Host a landlord and provider open house</li><li>Review KPIs against targets and report to the city</li><li>Prepare the renewal case</li>
+              </ul>
+              
+              <ul class="deliverables">
+                <li>Anti-stigma video series</li><li>Pilot results report and renewal pitch</li>
+              </ul>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ═══ PRODUCED CREATIVE ASSETS ═══ -->
+  <section id="sec-creative" data-sec="creative" data-req="brand-system">
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">04</span> &middot; Creative Assets</div>
+    <div class="sec-title" data-cov-skip>Produced Marketing Materials</div>
+
+    <!-- Social Media Post Mockups -->
+    <h3 style="font-size:16px;font-weight:700;margin:20px 0 12px">Social Media Posts <span style="font-weight:400;font-size:12px;color:var(--muted)">— mockups; the engagement numbers are illustrative</span></h3>
+    <div class="social-grid">
+      
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-screen-inner">
+            <div class="sc-label">Photo-Sharing Platform</div>
+            
+            <div class="social-card photo">
+              <div class="sc-head">
+                <div class="sc-avatar"></div>
+                <div>
+                  <div class="sc-name">@RelayWichita</div>
+                  <div class="sc-meta">CrossRoads Drop-In Center, Wichita, KS · English</div>
+                </div>
+                <div class="sc-dots">⋯</div>
+              </div>
+              
+              
+              
+              <div class="sc-media media--hero">
+                <div class="sc-media-text">
+                  <strong>Aged out of foster care? You don't have to figure out the ID, the bus and KanCare alone.</strong>
+                  <span>A young woman with a backpack sits at a CrossRoads Drop-In Center table beside a peer navigator. Spread between them: a birth certificate request form, a Wichita Transit route map and a KanCare renewal letter, with sticky notes marking each next step. Bold overlay text sits across the top third of the photo, and the @RelayWichita handle runs in the bottom corner.</span>
+                </div>
+              </div>
+              
+              
+              
+              <div class="sc-body">
+                🎒 Just left foster care and trying to start school in Wichita? Here's the real math: 🪪 A Kansas state ID needs a birth certificate, a Social Security card AND proof of residency. Starting from no documents, that takes at least <span class="prov" data-prov="state_id_days" data-kind="DERIVED" title="DERIVED — computed by Python from the data · fewest days to a Kansas state ID from no documents">31</span> days. 🚌 A monthly Wichita Transit pass costs <span class="prov" data-prov="q.c9ad8" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Wichita Transit Bus Pass (known blockers) · “Monthly pass costs $50 which is prohibitive for a zero-income client · Purchase channels limited to the transit center or online · Reduced fare requires a separate application and supporting documentation”">$50</span>, buses run <span class="prov" data-prov="q.2bfae" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Wichita Transit Bus Pass (doc notes) · “Wichita Transit runs 30-60 minute headways and no Sunday service.”">30-60</span> minutes apart, and there's no Sunday service. 🏥 Aged-out KanCare coverage loses <span class="prov" data-prov="transition-programs.prog-003.transitionDropoutRate" data-kind="MEASURED" title="MEASURED — measured in the data · transition dropout rate — Aged-Out Medical (KanCare Extension)">42%</span> of youth, so your health coverage can slip away quietly. ⏳ DCF Independent Living benefits stop at age 21, whether or not you have housing or income. Relay Wichita gives you one trusted contact who works with the CrossRoads peer navigators and your DCF IL caseworker. They track every document, every renewal and every deadline with you, from the door to a home. 💬 Text us, DM @RelayWichita, or ask for Relay at the CrossRoads Drop-In Center.
+                <div class="sc-tags">#RelayWichita #AgingOut #FosterYouth #Wichita #YouthVoice</div>
+              </div>
+              <div class="sc-actions" data-cov-skip>
+                <span>♡</span><span>💬</span><span>🔄</span><span>⌁</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-screen-inner">
+            <div class="sc-label">Microblog Platform</div>
+            
+            <div class="social-card micro">
+              <div class="sc-head">
+                <div class="sc-avatar"></div>
+                <div>
+                  <div class="sc-name">@RelayWichita</div>
+                  <div class="sc-meta">Wichita, KS · Bilingual EN/ES</div>
+                </div>
+                <div class="sc-dots">⋯</div>
+              </div>
+              
+              
+              
+              
+              <div class="sc-body">
+                🚪 Wichita has <span class="prov" data-prov="intake-network.count" data-kind="MEASURED" title="MEASURED — measured in the data · the intake network records">8</span> intake sites. Not sure which one to call? Call <span class="nf" data-num-exempt="declared by the writer: a phone or service number" title="Not a figure — declared by the writer: a phone or service number">211</span> in English or Spanish and ask for Relay Wichita. You'll get one trusted contact who stays with your family until you're home. 🏠 / 🚪 Wichita tiene <span class="prov" data-prov="intake-network.count" data-kind="MEASURED" title="MEASURED — measured in the data · the intake network records">8</span> lugares de admisión. ¿No sabe a cuál llamar? Llame al <span class="nf" data-num-exempt="declared by the writer: a phone or service number" title="Not a figure — declared by the writer: a phone or service number">211</span> en inglés o español y pida Relay Wichita. Una persona de confianza acompaña a su familia hasta llegar a un hogar. 🏠
+                <div class="sc-tags">#RelayWichita #Wichita #FamiliasWichita #HousingHelp</div>
+              </div>
+              <div class="sc-actions" data-cov-skip>
+                <span>♡</span><span>💬</span><span>🔄</span><span>⌁</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-screen-inner">
+            <div class="sc-label">Community Feed</div>
+            
+            <div class="social-card feed">
+              <div class="sc-head">
+                <div class="sc-avatar"></div>
+                <div>
+                  <div class="sc-name">@RelayWichita</div>
+                  <div class="sc-meta">Downtown Wichita, KS · English</div>
+                </div>
+                <div class="sc-dots">⋯</div>
+              </div>
+              
+              
+              
+              <div class="sc-media media--stat">
+                <div class="sc-media-stat-value"><span class="prov" data-prov="community-snapshot.unshelteredHeadcount" data-kind="MEASURED" title="MEASURED — measured in the data · people unsheltered on the Point-in-Time night">195</span></div>
+                <div class="sc-media-stat-label">People unsheltered on the 2025 count night</div>
+              </div>
+              
+              
+              <div class="sc-body">
+                🤝 PARTNER SPOTLIGHT: H.O.T. street outreach + Open Door daytime drop-in. These teams meet people where they are, often before anyone else does. Here's what they're up against downtown: 🛏️ Only <span class="prov" data-prov="status001-reachable" data-kind="MEASURED" title="MEASURED — measured in the data · reachable emergency beds, by alert Effective Bed Availability Under 20%">17</span> of <span class="prov" data-prov="status001-total" data-kind="MEASURED" title="MEASURED — measured in the data · emergency shelter beds, by alert Effective Bed Availability Under 20%">87</span> emergency beds are reachable for people living outside right now, just <span class="prov" data-prov="calc.pct_of.83afc381" data-kind="DERIVED" title="DERIVED — computed by Python from the data · a as a percent of b: reachable emergency beds, by alert Effective Bed Availability Under 20% against emergency shelter beds, by alert Effective Bed Availability Under 20%">19.5%</span>. 🚫 Union Rescue Mission's breathalyzer gate filters out <span class="prov" data-prov="q.1f31c" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Union Rescue Mission (operator notes) · “Intake gate includes breathalyzer screening at the door and chapel attendance expected during stay — in practice this filters out roughly a third of would-be intakes with active substance use.”">roughly a third</span> of would-be intakes. ☎️ Bed referrals are still placed by phone, because Second Light bed-matching isn't live yet. 🪪 City ID needs proof of Wichita residency, which is hard to show when you sleep outside. Relay Wichita links H.O.T. outreach workers, Open Door and VASH and veteran service partners to one named contact. That contact holds the referral until a bed or a unit that actually fits is confirmed. 🇺🇸 Veterans: VASH recorded <span class="prov" data-prov="community-snapshot.vashPlacementsAnnual" data-kind="MEASURED" title="MEASURED — measured in the data · VASH placements annual — community snapshot">52</span> placements of veterans in a year. Let's get you on that path. Find Relay at Open Door, or flag down an H.O.T. outreach worker.
+                <div class="sc-tags">#RelayWichita #Veterans #StreetOutreach #DowntownWichita #EndHomelessness</div>
+              </div>
+              <div class="sc-actions" data-cov-skip>
+                <span>♡</span><span>💬</span><span>🔄</span><span>⌁</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Bilingual Community Flyer -->
+  <section id="print-flyer" data-sec="flyer" data-req="bilingual-pathway-messaging brand-system">
+    <h3 style="font-size:16px;font-weight:700;margin:0 0 12px">📋 Bilingual Community Flyer</h3>
+    <div class="flyer-section">
+      <div class="flyer-header">
+        <div class="flyer-brand">Relay Wichita</div>
+        <div class="flyer-tagline">Connecting neighbors in transition to a trusted path home.</div>
+      </div>
+      <div class="flyer-cta">
+        <h3>Your contact, from the door to a home.</h3>
+        <p>Youth · Families · Veterans: Relay Wichita stays with you.</p>
+        <h3 style="margin-top:10px;color:#555" lang="es">Su contacto, de la puerta a un hogar.</h3>
+        <p style="color:#666" lang="es">Jóvenes · Familias · Veteranos: Relay Wichita se queda con usted.</p>
+      </div>
+      <div class="flyer-cols">
+        <div class="flyer-col" lang="en">
+          <h4>English</h4>
+          <p>Wichita has <span class="prov" data-prov="intake-network.count" data-kind="MEASURED" title="MEASURED — measured in the data · the intake network records">8</span> places to ask for help. You should not have to repeat your story at each one. Relay Wichita gives you a trusted contact who calls ahead, keeps your paperwork moving, and stays with you until you are housed.</p>
+          
+          <ul><li>Help getting your birth certificate, Social Security card and state ID</li><li>Families: shelter has a <span class="prov" data-prov="q.468de" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · St. Anthony Family Shelter (Catholic Charities) (operator notes) · “Emergency family shelter with a 90-day stay limit.”">90</span>-day limit, so we plan your next step early</li><li>Help keeping KanCare and benefits active</li><li>Veterans: a direct link to VASH and veteran services</li><li>Help with bus fare and getting to appointments</li></ul>
+          
+        </div>
+        <div class="flyer-col" lang="es">
+          <h4>Español</h4>
+          <p>Wichita tiene <span class="prov" data-prov="intake-network.count" data-kind="MEASURED" title="MEASURED — measured in the data · the intake network records">8</span> lugares donde pedir ayuda. Usted no debería tener que contar su historia en cada uno. Relay Wichita le da una persona de confianza que llama por usted, avanza sus documentos y se queda a su lado hasta que tenga vivienda.</p>
+          
+          <ul><li>Ayuda para obtener su acta de nacimiento, tarjeta de Seguro Social e identificación estatal</li><li>Familias: el albergue tiene un límite de <span class="prov" data-prov="q.468de" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · St. Anthony Family Shelter (Catholic Charities) (operator notes) · “Emergency family shelter with a 90-day stay limit.”">90</span> días, así que planeamos su próximo paso con tiempo</li><li>Ayuda para mantener activos KanCare y sus beneficios</li><li>Veteranos: conexión directa con VASH y servicios para veteranos</li><li>Ayuda con el pasaje de autobús y para llegar a sus citas</li></ul>
+          
+        </div>
+      </div>
+      <div class="flyer-footer">
+        <div class="contact">
+          <strong>Call 211 and say "Relay Wichita", or walk in to Open Door.</strong><br/>
+          <strong lang="es">Llame al 211 y diga "Relay Wichita", o visite Open Door sin cita.</strong><br/>
+          Call <span class="nf" data-num-exempt="declared by the writer: a phone or service number" title="Not a figure — declared by the writer: a phone or service number">211</span> (English / Español) · Open Door walk-in intake · CrossRoads Drop-In Center (youth) · @RelayWichita
+        </div>
+        
+        <div class="flyer-qr"><svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" class="segno"><g transform="scale(4)"><path fill="#fff" d="M0 0h45v45h-45z"/><path class="qrline" stroke="#1a1a2e" d="M4 4.5h7m5 0h1m3 0h3m1 0h1m1 0h2m2 0h2m2 0h7m-37 1h1m5 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h5m2 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m4 0h2m1 0h1m1 0h1m2 0h2m2 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h1m2 0h2m3 0h2m2 0h1m4 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h3m2 0h2m1 0h1m1 0h1m1 0h3m2 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h4m1 0h1m1 0h7m2 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-28 1h1m1 0h1m5 0h1m1 0h7m1 0h2m-29 1h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m3 0h1m2 0h1m-35 1h2m2 0h1m1 0h1m4 0h1m1 0h4m2 0h2m1 0h2m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m-35 1h1m1 0h3m1 0h2m4 0h4m3 0h2m7 0h4m1 0h2m-36 1h1m1 0h1m4 0h3m1 0h3m1 0h2m1 0h1m1 0h1m1 0h4m1 0h1m1 0h1m4 0h1m-36 1h3m2 0h2m7 0h2m1 0h1m2 0h2m1 0h3m1 0h4m2 0h1m1 0h2m-37 1h1m2 0h3m4 0h1m3 0h1m1 0h1m1 0h1m1 0h2m6 0h1m1 0h1m-31 1h1m1 0h5m5 0h3m2 0h1m2 0h1m3 0h1m1 0h1m2 0h1m1 0h1m2 0h3m-33 1h1m2 0h3m1 0h2m3 0h1m2 0h9m4 0h1m-33 1h4m1 0h3m2 0h2m2 0h2m5 0h1m2 0h2m3 0h2m2 0h1m1 0h1m-36 1h1m4 0h1m2 0h3m1 0h2m1 0h1m4 0h2m2 0h2m1 0h4m2 0h1m2 0h1m-36 1h2m3 0h2m1 0h1m1 0h3m4 0h1m2 0h2m1 0h1m4 0h3m1 0h1m1 0h2m-33 1h1m6 0h1m1 0h3m1 0h9m1 0h3m1 0h1m3 0h1m-35 1h6m2 0h2m1 0h1m4 0h3m1 0h1m3 0h1m2 0h3m-31 1h3m2 0h1m1 0h2m1 0h1m1 0h1m4 0h1m2 0h2m2 0h2m2 0h1m1 0h2m1 0h1m1 0h2m-36 1h1m1 0h1m1 0h2m1 0h1m5 0h1m1 0h1m1 0h1m10 0h1m1 0h1m2 0h3m-37 1h2m1 0h2m3 0h1m3 0h1m1 0h2m1 0h5m1 0h1m1 0h4m3 0h1m2 0h1m-35 1h2m1 0h3m1 0h4m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m1 0h4m2 0h1m1 0h2m-35 1h2m1 0h1m2 0h3m2 0h1m1 0h2m1 0h1m5 0h3m1 0h1m1 0h1m3 0h3m-37 1h1m2 0h4m2 0h1m1 0h1m3 0h3m4 0h1m7 0h1m2 0h1m1 0h2m-36 1h3m4 0h1m1 0h1m2 0h2m1 0h2m1 0h3m1 0h4m2 0h3m3 0h1m-36 1h1m4 0h7m1 0h1m1 0h1m1 0h1m1 0h4m1 0h2m2 0h6m1 0h1m-28 1h3m2 0h2m1 0h1m3 0h1m3 0h2m1 0h2m3 0h2m2 0h1m-37 1h7m2 0h2m1 0h3m1 0h2m2 0h1m1 0h1m2 0h4m1 0h1m1 0h2m1 0h2m-37 1h1m5 0h1m3 0h1m2 0h1m1 0h1m4 0h6m1 0h2m3 0h2m-34 1h1m1 0h3m1 0h1m1 0h1m1 0h5m4 0h3m3 0h2m1 0h6m1 0h2m-37 1h1m1 0h3m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m3 0h2m2 0h1m-36 1h1m1 0h3m1 0h1m1 0h4m1 0h2m3 0h1m2 0h1m2 0h2m1 0h1m4 0h5m-37 1h1m5 0h1m3 0h2m1 0h3m1 0h5m2 0h2m2 0h1m2 0h2m2 0h1m-36 1h7m1 0h1m1 0h2m1 0h1m3 0h1m2 0h2m2 0h2m1 0h4m2 0h1m1 0h2"/></g></svg>
+</div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Pitch One-Pager -->
+  <section id="sec-pitch" data-sec="pitch">
+    <h3 style="font-size:16px;font-weight:700;margin:0 0 12px">🤝 Partner Recruitment Pitch</h3>
+    <div class="pitch glass">
+      <div class="pitch-grid">
+        <div class="pitch-narrative">
+          <h3>Stop losing people between your door and the next one.</h3>
+          <p>Wichita runs <span class="prov" data-prov="intake-network.count" data-kind="MEASURED" title="MEASURED — measured in the data · the intake network records">8</span> intake doors, yet <span class="prov" data-prov="community-snapshot.unshelteredHeadcount" data-kind="MEASURED" title="MEASURED — measured in the data · people unsheltered on the Point-in-Time night">195</span> people slept outside on the 2025 count night. <span class="prov" data-prov="q.08402" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · 211 Kansas / United Way (operator notes) · “Roughly every third caller ends up in a loop because downstream beds or case managers are unavailable and there is no way to hold a live warm-handoff across agencies after hours.”">Roughly every third</span> caller to 211 ends up in a loop, because there is no way to hold a warm handoff across agencies after hours. The family intake queue runs <span class="prov" data-prov="q.970ad" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · Family Promise Intake Line (operator notes) · “Current intake queue typically runs 2-4 weeks, long enough to be effectively blocked for crisis families.”">2-4</span> weeks, and only <span class="prov" data-prov="status001-reachable" data-kind="MEASURED" title="MEASURED — measured in the data · reachable emergency beds, by alert Effective Bed Availability Under 20%">17</span> of <span class="prov" data-prov="status001-total" data-kind="MEASURED" title="MEASURED — measured in the data · emergency shelter beds, by alert Effective Bed Availability Under 20%">87</span> emergency beds are reachable for people living outside.</p>
+          <p>Relay Wichita assigns each youth, family, veteran and landlord one named contact who carries the referral from your door to a confirmed placement. In a <span class="prov" data-prov="pilot_days" data-kind="MEASURED" title="MEASURED — measured in the data · the pilot&#x27;s length">90</span>-day pilot, <span class="prov prov-m" data-prov="staff_count" data-kind="MODELED" title="MODELED — an assumption · staff in the plan">2</span> relay staff work alongside 211, Open Door, CrossRoads, H.O.T. outreach and VASH partners. Together they close the documents, benefits and bed-matching gaps that cause people to drop out.</p>
+          <h4 style="font-size:14px;margin:12px 0 8px">Partnership Benefits</h4>
+          <ul class="pitch-benefits">
+            <li>Warm handoffs replace cold referrals: your staff hand off to a named person, not a phone tree</li><li>Fewer repeat visits from people who have already cycled through another partner that day</li><li>Document navigation from birth certificate to state ID, starting from no documents</li><li>Coverage checks at KanCare and DCF Independent Living transition points, where youth most often drop off</li><li>A planned next step for families before the <span class="prov" data-prov="q.468de" data-kind="MEASURED" title="QUOTED — the organizers&#x27; own words, found by Python where the writer said · in the record&#x27;s own words · St. Anthony Family Shelter (Catholic Charities) (operator notes) · “Emergency family shelter with a 90-day stay limit.”">90</span>-day family shelter limit runs out</li><li>Landlords get one named contact for tenant issues after move-in</li><li>Shared outcome reporting your board and funders can use</li>
+          </ul>
+          <div class="pitch-cta" data-cov-skip>
+            <a href="https://ctrl-alt-defeat-arch.netlify.app" target="_blank">🔍 Explore the Interactive Tool →</a>
+          </div>
+          <div class="pitch-cta" data-cov-skip style="margin-top:8px">
+            <a href="https://ctrl-alt-defeat.netlify.app#financials" target="_blank">📊 See the Full Business Case →</a>
+          </div>
+        </div>
+        <div class="pitch-stats">
+          
+          <div class="pitch-stat">
+            <div class="num"><span class="prov" data-prov="community-snapshot.shelteredAndUnshelteredTotal" data-kind="MEASURED" title="MEASURED — measured in the data · people homeless on the 2025 Point-in-Time night">736</span></div>
+            <div class="label">people homeless on the 2025 Point-in-Time night</div>
+          </div>
+          
+          <div class="pitch-stat">
+            <div class="num"><span class="prov" data-prov="calc.pct_of.83afc381" data-kind="DERIVED" title="DERIVED — computed by Python from the data · a as a percent of b: reachable emergency beds, by alert Effective Bed Availability Under 20% against emergency shelter beds, by alert Effective Bed Availability Under 20%">19.5%</span></div>
+            <div class="label">share of emergency beds reachable for people living outside right now</div>
+          </div>
+          
+          <div class="pitch-stat">
+            <div class="num"><span class="prov" data-prov="community-snapshot.fosterHomelessnessAge21" data-kind="MEASURED" title="MEASURED — measured in the data · share of youth from foster care homeless by 21">42%</span></div>
+            <div class="label">of youth from foster care homeless by age 21</div>
+          </div>
+          
+          <div class="pitch-stat">
+            <div class="num"><span class="prov" data-prov="community-snapshot.avgDaysToHousing" data-kind="MEASURED" title="MEASURED — measured in the data · average days to housing in Wichita">45</span> days</div>
+            <div class="label">average days to housing in Wichita, vs <span class="prov" data-prov="community-snapshot.nationalDaysToHousing" data-kind="MEASURED" title="MEASURED — measured in the data · average days to housing nationally">176</span> days nationally</div>
+          </div>
+          
+          <div class="pitch-stat">
+            <div class="num"><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></div>
+            <div class="label">people Relay Wichita plans to serve in Year 1</div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CAMPAIGN KPIs ═══ -->
+  <section id="sec-kpis" data-sec="kpis">
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">05</span> &middot; Success Metrics</div>
+    <div class="sec-title" data-cov-skip>Campaign KPI Targets (Year 1)</div>
+    <div class="kpis">
+      
+      <div class="kpi-card glass" style="animation:fadeSlide .3s ease both;animation-delay:0ms">
+        <div class="emoji">🚪</div>
+        <div class="target"><span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span></div>
+        <div class="metric">People connected to a housing pathway with a named contact</div>
+        <div class="timeframe">Year 1</div>
+        
+      </div>
+      
+      <div class="kpi-card glass" style="animation:fadeSlide .3s ease both;animation-delay:80ms">
+        <div class="emoji">🤝</div>
+        <div class="target"><span class="prov prov-m" data-prov="model.87993e" data-kind="MODELED" title="MODELED — an assumption · share of contacts with a confirmed warm handoff">80%</span></div>
+        <div class="metric">Contacts handed off live to the next service, not just given a number</div>
+        <div class="timeframe">By day 90</div>
+        
+      </div>
+      
+      <div class="kpi-card glass" style="animation:fadeSlide .3s ease both;animation-delay:160ms">
+        <div class="emoji">🪪</div>
+        <div class="target"><span class="prov prov-m" data-prov="model.507e98" data-kind="MODELED" title="MODELED — an assumption · days from intake to a birth-certificate request">3</span> days</div>
+        <div class="metric">Days from intake to a birth-certificate request for youth with no documents</div>
+        <div class="timeframe">By day 90</div>
+        
+      </div>
+      
+      <div class="kpi-card glass" style="animation:fadeSlide .3s ease both;animation-delay:240ms">
+        <div class="emoji">🏠</div>
+        <div class="target"><span class="prov prov-m" data-prov="model.7dddd0" data-kind="MODELED" title="MODELED — an assumption · new landlords signed to NEXTenant">15</span></div>
+        <div class="metric">New landlords signed to NEXTenant</div>
+        <div class="timeframe">By day 90</div>
+        
+      </div>
+      
+      <div class="kpi-card glass" style="animation:fadeSlide .3s ease both;animation-delay:320ms">
+        <div class="emoji">🗣️</div>
+        <div class="target"><span class="prov prov-m" data-prov="model.785321" data-kind="MODELED" title="MODELED — an assumption · share of pathway contacts served in Spanish">20%</span></div>
+        <div class="metric">Pathway contacts served in Spanish</div>
+        <div class="timeframe">By day 90</div>
+        
+      </div>
+      
+      <div class="kpi-card glass" style="animation:fadeSlide .3s ease both;animation-delay:400ms">
+        <div class="emoji">📉</div>
+        <div class="target"><span class="prov prov-m" data-prov="model.941299" data-kind="MODELED" title="MODELED — an assumption · youth who lose contact after exit">20%</span></div>
+        <div class="metric">Youth who lose contact with their navigator, down from DCF IL's <span class="prov" data-prov="transition-programs.prog-001.transitionDropoutRate" data-kind="MEASURED" title="MEASURED — measured in the data · transition dropout rate — DCF Independent Living Program">38%</span></div>
+        <div class="timeframe">By day 90</div>
+        
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- ═══ CAMPAIGN REACH CALCULATOR ═══ -->
+  <section id="sec-calculator" data-sec="calculator" data-sec-items="4" data-req="channel-plan-and-budget">
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">06</span> &middot; What-If Scenarios</div>
+    <div class="sec-title" data-cov-skip>Campaign Reach Calculator</div>
+    <div class="calc-panel glass">
+      <div class="calc-head">
+        <h3>📈 Explore Investment Scenarios</h3>
+        <button class="calc-reset" id="calcReset">↺ Reset</button>
+      </div>
+      <p class="calc-note">Budget drives paid digital amplification of community channels</p>
+      <div class="calc-sliders">
+        <div class="calc-slider-group">
+          <label for="calcBudget">Monthly Budget <span class="calc-slider-val" id="calcBudgetVal">$1,000</span></label>
+          <input type="range" id="calcBudget" class="calc-slider" min="500" max="5000" step="100" value="1000"
+                 aria-label="Monthly campaign budget" aria-valuemin="500" aria-valuemax="5000">
+        </div>
+        <div class="calc-slider-group">
+          <label for="calcPartners">Community Partners <span class="calc-slider-val" id="calcPartnerVal">5</span></label>
+          <input type="range" id="calcPartners" class="calc-slider" min="2" max="15" step="1" value="5"
+                 aria-label="Number of community partners" aria-valuemin="2" aria-valuemax="15">
+        </div>
+      </div>
+      <div class="calc-hint" id="calcHint">📊 Drag the sliders to explore scenarios</div>
+      <div class="calc-metrics" aria-live="polite">
+        <div class="calc-metric" id="calcImpCard">
+          <div class="calc-metric-label">Monthly Impressions</div>
+          <div class="calc-metric-value" id="calcImpVal">0</div>
+          <div class="calc-metric-delta" id="calcImpDelta"></div>
+          <div class="calc-metric-sub">across all channels</div>
+        </div>
+        <div class="calc-metric" id="calcQRCard">
+          <div class="calc-metric-label">QR Code Scans</div>
+          <div class="calc-metric-value" id="calcQRVal">0</div>
+          <div class="calc-metric-delta" id="calcQRDelta"></div>
+          <div class="calc-metric-sub">from printed materials</div>
+        </div>
+        <div class="calc-metric" id="calcEnrollCard">
+          <div class="calc-metric-label">New Enrollments</div>
+          <div class="calc-metric-value" id="calcEnrollVal">0</div>
+          <div class="calc-metric-delta" id="calcEnrollDelta"></div>
+          <div class="calc-metric-sub">per month</div>
+        </div>
+        <div class="calc-metric" id="calcCPACard">
+          <div class="calc-metric-label">Cost per Enrollment</div>
+          <div class="calc-metric-value" id="calcCPAVal">$0</div>
+          <div class="calc-metric-delta" id="calcCPADelta"></div>
+          <div class="calc-metric-sub" id="calcCPANote">acquisition cost</div>
+        </div>
+      </div>
+      <details class="calc-methodology">
+        <summary>📊 Model Methodology &amp; Formulas</summary>
+        <div class="calc-methodology-body">
+          <p>A scenario tool: its settings are assumptions you can move, not measured figures. Channel weights from the campaign's plan (the model's); every output is arithmetic in your browser on these settings — no model call.</p>
+          <p><strong>Digital Reach</strong> = base × (budget / $1,000)<sup>0.6</sup> — diminishing returns on ad spend</p>
+          <p><strong>Community Reach</strong> = base × (partners / 5) — linear partner scaling</p>
+          <p><strong>QR Scans</strong> = community × 3% × awareness — the 3% a setting of this tool</p>
+          <p><strong>Enrollments</strong> = digital × 0.03% + community × 0.10% + partners × 1 — split rates reflect higher trust in community channels</p>
+          <p><strong>CPA</strong> = budget / enrollments — not bounded: a result far from the base case shows, labelled</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ═══ CROSS-TRACK LINKS ═══ -->
+  <section id="sec-synergy" data-sec="synergy">
+    <div class="sec-label" data-cov-skip>Full Stack Synergy</div>
+    <div class="sec-title" data-cov-skip>One Venture, Three Artifacts</div>
+    <div class="cross-links">
+      <a class="cross-link glass" href="https://ctrl-alt-defeat.netlify.app" target="_blank">
+        <div class="icon">📊</div>
+        <div><h4>Business Case (Oracle)</h4><p><span class="prov" data-prov="budget" data-kind="MEASURED" title="MEASURED — measured in the data · Contract (the brief)">$500K</span> contract, 3-year plan</p></div>
+      </a>
+      <a class="cross-link glass" href="https://ctrl-alt-defeat-arch.netlify.app" target="_blank">
+        <div class="icon">🔍</div>
+        <div><h4>Resident Tool (Architect)</h4><p>Interactive resource finder built from the same challenge data</p></div>
+      </a>
+      <a class="cross-link glass" href="#" style="border:2px solid var(--accent)">
+        <div class="icon">🎨</div>
+        <div><h4>Launch Campaign (Muse)</h4><p>You are here — outreach strategy + creative assets</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ AI PROCESS ═══ -->
+  <details open id="sec-how-built" data-sec="how-built">
+    <summary>🤖 How This Campaign Was Built — AI Process</summary>
+    <div class="inn">
+      <p id="sec-who-serves" data-sec="who-serves"><strong data-cov-skip>Who this serves:</strong> Relay Wichita serves youth aging out of foster care, families and veterans facing homelessness, and the landlords and providers who help them find a home.</p>
+      <p>Built by a Python harness that fetches the challenge data and makes two structured calls to <strong>Claude</strong> (Anthropic API); Python checks each answer against a schema, builds this page and computes the reach calculator.</p>
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">1.</span> Data Ingestion</strong> — 7 challenge API endpoint(s) fetched at run time; a summary goes to the model, trimmed to a fixed length: each endpoint's record count and first three records by one rule for every shape (a list under “data”, “alerts” or another record key, a bare list, an object as one record), with the envelope's own fields such as an alert feed's status.</p>
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">2.</span> Audience Research</strong> — The first call (strategy) drafts the personas, each with the figures it cites, plus the channel plan, the calendar and the KPIs.</p>
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">3.</span> Creative Generation</strong> — The second call writes the bilingual copy (English + Spanish), the social posts and the partner pitch as structured output.</p>
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">4.</span> Channel Strategy</strong> — The prompt asks the model to match each channel to the personas' barriers (for example, digital and community partners rather than print where people lack a car).</p>
+      
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">5.</span> Ask Atlas AI</strong> — Claude answers questions about this campaign from a context file built from it, through a server-side proxy; no key is on the page.</p>
+    </div>
+  </details>
+
+  <!-- ═══ ABOUT ═══ -->
+  <details>
+    <summary>ℹ️ About This Playbook</summary>
+    <div class="inn">
+      <p>7 API endpoints (49 records): community snapshot (1), shelter inventory (10), intake network (8), transition programs (8), stabilization docs (10), rehousing options (10), system status (2). Marketing content generated by Claude (Anthropic API) with Pydantic validation.</p>
+      <p><strong>Ctrl Alt Defeat</strong> · NAIPC Wichita Regional · April 18, 2026</p>
+    </div>
+  </details>
+
+  
+  <style>.sd-ref{font-size:inherit;vertical-align:baseline;line-height:inherit;white-space:nowrap;color:inherit;text-decoration:underline dotted}.sd-notes{margin:28px 0 12px;font-size:.92em;line-height:1.55}.sd-notes h2{font-size:1.05em;margin:0 0 8px}.sd-notes ol{margin:0 0 0 1.4em;padding:0}.sd-notes li{margin:4px 0}.sd-notes .sd-back{margin-left:6px;white-space:nowrap;color:inherit}</style>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="integrity-line" data-integrity-line data-num-exempt="the integrity line's own counts">Data integrity: of 210 numbers read on this page, 66 from the data; 25 the writer&#39;s assumption; 47 computed by Python; 3 the program&#39;s own design; 19 no source found; 50 not a quantity.</div>
+    <div>Ctrl Alt Defeat · Muse Track · NAIPC Wichita Regional · April 18, 2026</div>
+    
+    <div class="qr-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" class="segno"><g transform="scale(4)"><path fill="#fff" d="M0 0h45v45h-45z"/><path class="qrline" stroke="#1a1a2e" d="M4 4.5h7m5 0h1m3 0h3m1 0h1m1 0h2m2 0h2m2 0h7m-37 1h1m5 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h5m2 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m4 0h2m1 0h1m1 0h1m2 0h2m2 0h1m2 0h2m2 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m3 0h1m2 0h2m3 0h2m2 0h1m4 0h2m1 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h3m2 0h2m1 0h1m1 0h1m1 0h3m2 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m5 0h1m1 0h4m1 0h1m1 0h7m2 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-28 1h1m1 0h1m5 0h1m1 0h7m1 0h2m-29 1h1m1 0h1m1 0h1m1 0h1m3 0h1m1 0h3m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m1 0h2m3 0h1m2 0h1m-35 1h2m2 0h1m1 0h1m4 0h1m1 0h4m2 0h2m1 0h2m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m-35 1h1m1 0h3m1 0h2m4 0h4m3 0h2m7 0h4m1 0h2m-36 1h1m1 0h1m4 0h3m1 0h3m1 0h2m1 0h1m1 0h1m1 0h4m1 0h1m1 0h1m4 0h1m-36 1h3m2 0h2m7 0h2m1 0h1m2 0h2m1 0h3m1 0h4m2 0h1m1 0h2m-37 1h1m2 0h3m4 0h1m3 0h1m1 0h1m1 0h1m1 0h2m6 0h1m1 0h1m-31 1h1m1 0h5m5 0h3m2 0h1m2 0h1m3 0h1m1 0h1m2 0h1m1 0h1m2 0h3m-33 1h1m2 0h3m1 0h2m3 0h1m2 0h9m4 0h1m-33 1h4m1 0h3m2 0h2m2 0h2m5 0h1m2 0h2m3 0h2m2 0h1m1 0h1m-36 1h1m4 0h1m2 0h3m1 0h2m1 0h1m4 0h2m2 0h2m1 0h4m2 0h1m2 0h1m-36 1h2m3 0h2m1 0h1m1 0h3m4 0h1m2 0h2m1 0h1m4 0h3m1 0h1m1 0h2m-33 1h1m6 0h1m1 0h3m1 0h9m1 0h3m1 0h1m3 0h1m-35 1h6m2 0h2m1 0h1m4 0h3m1 0h1m3 0h1m2 0h3m-31 1h3m2 0h1m1 0h2m1 0h1m1 0h1m4 0h1m2 0h2m2 0h2m2 0h1m1 0h2m1 0h1m1 0h2m-36 1h1m1 0h1m1 0h2m1 0h1m5 0h1m1 0h1m1 0h1m10 0h1m1 0h1m2 0h3m-37 1h2m1 0h2m3 0h1m3 0h1m1 0h2m1 0h5m1 0h1m1 0h4m3 0h1m2 0h1m-35 1h2m1 0h3m1 0h4m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m1 0h4m2 0h1m1 0h2m-35 1h2m1 0h1m2 0h3m2 0h1m1 0h2m1 0h1m5 0h3m1 0h1m1 0h1m3 0h3m-37 1h1m2 0h4m2 0h1m1 0h1m3 0h3m4 0h1m7 0h1m2 0h1m1 0h2m-36 1h3m4 0h1m1 0h1m2 0h2m1 0h2m1 0h3m1 0h4m2 0h3m3 0h1m-36 1h1m4 0h7m1 0h1m1 0h1m1 0h1m1 0h4m1 0h2m2 0h6m1 0h1m-28 1h3m2 0h2m1 0h1m3 0h1m3 0h2m1 0h2m3 0h2m2 0h1m-37 1h7m2 0h2m1 0h3m1 0h2m2 0h1m1 0h1m2 0h4m1 0h1m1 0h2m1 0h2m-37 1h1m5 0h1m3 0h1m2 0h1m1 0h1m4 0h6m1 0h2m3 0h2m-34 1h1m1 0h3m1 0h1m1 0h1m1 0h5m4 0h3m3 0h2m1 0h6m1 0h2m-37 1h1m1 0h3m1 0h1m4 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h2m1 0h1m3 0h2m2 0h1m-36 1h1m1 0h3m1 0h1m1 0h4m1 0h2m3 0h1m2 0h1m2 0h2m1 0h1m4 0h5m-37 1h1m5 0h1m3 0h2m1 0h3m1 0h5m2 0h2m2 0h1m2 0h2m2 0h1m-36 1h7m1 0h1m1 0h2m1 0h1m3 0h1m2 0h2m2 0h2m1 0h4m2 0h1m1 0h2"/></g></svg>
+</div>
+    <div style="font-size:11px;margin-top:4px;color:var(--muted)">Scan to open on mobile</div>
+    
+  </footer>
+
+</div>
+
+
+<!-- Atlas AI Chatbot -->
+<button class="chat-toggle" id="chat-toggle" title="Ask Atlas AI about marketing strategy">💬</button>
+<div class="chat-tip" id="chat-tip">Ask about the campaign, personas, or channels</div>
+<div class="chatbot" id="chatbot" style="display:none">
+  <div class="chat-head" id="chat-head">
+    <h3>💬 Atlas AI</h3>
+    <span style="color:var(--muted);font-size:12px">Powered by Claude · Marketing strategy assistant</span>
+  </div>
+  <div class="chat-body" id="chat-body">
+    <div class="chat-msg ai">I can answer questions about this campaign's strategy, personas, channels, and creative assets. Try: "Which channels reach each persona?" or "Draft a social post for the launch."</div>
+  </div>
+  <div class="chat-msg error" id="chatUnavailable" hidden>Chat is unavailable right now. The quick answers below cover the common questions.</div>
+  <details class="chat-faq" id="chatFaq" style="padding:6px 12px;font-size:12px"><summary style="cursor:pointer;font-weight:600">Quick answers (no AI)</summary><p style="margin:6px 0"><strong>Who is this campaign for?</strong><br>Its personas: Maya, Denise, Robert.</p><p style="margin:6px 0"><strong>Which channels does it use?</strong><br>Youth peer outreach at CrossRoads and DCF IL, 211 and Open Door bilingual front-door scripts, H.O.T. street outreach kits, NEXTenant landlord briefings, Instagram, TikTok and Facebook, Transit center posters and Spanish radio.</p><p style="margin:6px 0"><strong>How is success measured?</strong><br>People connected to a housing pathway with a named contact (<span class="prov prov-m" data-prov="beneficiaries_y1" data-kind="MODELED" title="MODELED — an assumption · people served in Year 1">120</span>, Year 1); Contacts handed off live to the next service, not just given a number (<span class="prov prov-m" data-prov="model.87993e" data-kind="MODELED" title="MODELED — an assumption · share of contacts with a confirmed warm handoff">80%</span>, By day 90); Days from intake to a birth-certificate request for youth with no documents (<span class="prov prov-m" data-prov="model.507e98" data-kind="MODELED" title="MODELED — an assumption · days from intake to a birth-certificate request">3</span> days, By day 90); New landlords signed to NEXTenant (<span class="prov prov-m" data-prov="model.7dddd0" data-kind="MODELED" title="MODELED — an assumption · new landlords signed to NEXTenant">15</span>, By day 90).</p><p style="margin:6px 0"><strong>Where is the business case?</strong><br>On the Oracle page; the resource finder is on the Architect page.</p></details>
+  <div class="chat-input">
+    <input id="chat-q" placeholder="Ask about the campaign…" autocomplete="off"/>
+    <button id="chat-send">Send</button>
+  </div>
+</div>
+<script>window.CHAT={"proxy":"https://naipc-chat.swaldrop2.workers.dev","track":"muse","context_id":"545c307a0142b4b32c4f91292d3cb643365db27705de6c194f8baecb6cdd51d5","tags":{"any": "\\[\\[\\s*(?\u003cw\u003echallenge[\\s_-]*data|estimated?|benchmark|source)\\b(?\u003cc\u003e[^\\[\\]]*)\\]\\]|(?:\\[|\u3010|\uff3b)\\s*(?\u003cwb\u003echallenge[\\s_-]*data|estimated?|benchmark|source)\\b(?\u003ccb\u003e[^\\[\\]\u3010\u3011\uff3b\uff3d]*)(?:\\]|\u3011|\uff3d)", "confidence": "\\b(low|medium|high)\\b(?:\\s*[\u2013\u2014-]\\s*(low|medium|high)\\b)?(?!\\s*[\u2013\u2014-]\\s*\\w)", "hold": 60, "kinds": {"challengedata": "data", "estimated": "estimate"}, "version": 1}};</script>
+
+
+<script>
+/* ═══ Print: auto-scale flyer to fit exactly one letter page ═══ */
+
+</script>
+
+<script>
+/* ═══ Campaign Reach Calculator — slider-driven reach model ═══ */
+var CALC_MODEL = {"base_budget": 1000, "base_partners": 5, "budget_exp": 0.6, "community_base": 2000, "community_enroll_rate": 0.001, "defaults": {"budget": 1000, "partners": 5}, "digital_base": 30645, "digital_enroll_rate": 0.0003, "qr_rate": 0.03, "ranges": {"budget_max": 5000, "budget_min": 500, "budget_step": 100, "partner_max": 15, "partner_min": 2, "partner_step": 1}, "referrals_per_partner": 1};
+if(CALC_MODEL && CALC_MODEL.digital_base){(function(){
+  var M=CALC_MODEL;
+  var sBudget=document.getElementById("calcBudget");
+  var sPartner=document.getElementById("calcPartners");
+  if(!sBudget||!sPartner)return;
+
+  /* Configure sliders from Python-injected ranges */
+  sBudget.min=M.ranges.budget_min;sBudget.max=M.ranges.budget_max;
+  sBudget.step=M.ranges.budget_step;sBudget.value=M.defaults.budget;
+  sPartner.min=M.ranges.partner_min;sPartner.max=M.ranges.partner_max;
+  sPartner.step=M.ranges.partner_step;sPartner.value=M.defaults.partners;
+
+  /* AnimNum — animated number with shared rAF loop + interrupt support
+     (Adapted from Oracle template's proven AnimatedNumber pattern) */
+  var animSet=new Set(),animRaf=null;
+  function animTick(ts){animSet.forEach(function(a){a._frame(ts)});
+    animRaf=animSet.size>0?requestAnimationFrame(animTick):null}
+  function AnimNum(el,opts){
+    opts=opts||{};this.el=el;this.dur=opts.duration||280;
+    this.prefix=opts.prefix||"";this.suffix=opts.suffix||"";
+    this.dec=opts.decimals||0;this.cur=opts.initial||0;
+    this.start=this.cur;this.end=this.cur;this.t0=null;this.active=false;
+    this._render(this.cur)
+  }
+  AnimNum.prototype.set=function(v){
+    if(v===this.end&&!this.active)return;
+    this.start=this.cur;this.end=v;this.t0=null;
+    if(!this.active){this.active=true;animSet.add(this);
+      if(!animRaf)animRaf=requestAnimationFrame(animTick)}
+  };
+  AnimNum.prototype._frame=function(ts){
+    if(!this.t0)this.t0=ts;
+    var p=Math.min((ts-this.t0)/this.dur,1);
+    var e=1-Math.pow(1-p,3); /* ease-out-cubic */
+    this.cur=this.start+(this.end-this.start)*e;
+    this._render(this.cur);
+    if(p>=1){this.cur=this.end;this._render(this.end);
+      this.active=false;animSet.delete(this)}
+  };
+  AnimNum.prototype._render=function(v){
+    var a=Math.abs(v).toFixed(this.dec);
+    var parts=a.split(".");
+    parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,",");
+    this.el.textContent=this.prefix+(v<0?"-":"")+parts.join(".")+this.suffix
+  };
+
+  
+  function computeReach(budget,partners){
+    var dReach=M.digital_base*Math.pow(budget/M.base_budget,M.budget_exp);
+    var cReach=M.community_base*(partners/M.base_partners);
+    var imp=Math.round(dReach+cReach);
+    /* Awareness: digital ads amplify offline actions (a setting of this tool).
+       Floor at 1.0: below-baseline spend removes boost, doesn't penalize organic reach. */
+    var awareness=Math.max(1.0,1+0.3*(budget/M.base_budget-1));
+    var qr=Math.round(cReach*M.qr_rate*awareness);
+    /* Split conversion: community impressions convert 3.3× better than digital (trusted context) */
+    var enroll=Math.round(dReach*M.digital_enroll_rate+cReach*M.community_enroll_rate+partners*M.referrals_per_partner);
+    enroll=Math.max(enroll,1);
+    var cpa=budget/enroll;
+    return {imp:imp,qr:qr,enroll:enroll,cpa:Math.round(cpa)}
+  }
+
+  /* Initialize animated numbers with base-case values */
+  var initR=computeReach(M.defaults.budget,M.defaults.partners);
+  var baseR=initR; /* Store baseline for delta calculations */
+  var animImp=new AnimNum(document.getElementById("calcImpVal"),{initial:initR.imp});
+  var animQR=new AnimNum(document.getElementById("calcQRVal"),{initial:initR.qr});
+  var animEnroll=new AnimNum(document.getElementById("calcEnrollVal"),{initial:initR.enroll});
+  var animCPA=new AnimNum(document.getElementById("calcCPAVal"),{prefix:"$",initial:initR.cpa});
+  var calcHint=document.getElementById("calcHint");
+
+  /* Delta display helper: shows "▲ +34% vs base" or "▼ -18% vs base" */
+  function showDelta(elId,current,baseline,invert){
+    var el=document.getElementById(elId);
+    if(!el||current===baseline){el.textContent="";el.className="calc-metric-delta";return}
+    var pct=Math.round((current-baseline)/Math.max(baseline,1)*100);
+    var arrow=pct>0?"▲":"▼";var sign=pct>0?"+":"";
+    /* For CPA, lower is better: invert the color logic */
+    var cls=invert?(pct<0?"delta-up":"delta-down"):(pct>0?"delta-up":"delta-down");
+    if(pct===0)cls="delta-neutral";
+    el.textContent=arrow+" "+sign+pct+"% vs base";
+    el.className="calc-metric-delta "+cls
+  }
+
+  /* Slider fill gradient — accent color fills from left to thumb position */
+  function updateFill(slider){
+    var pct=((slider.value-slider.min)/(slider.max-slider.min))*100;
+    slider.style.backgroundSize=pct+"% 100%"
+  }
+  updateFill(sBudget);updateFill(sPartner);
+
+  /* Format helpers for slider value labels */
+  function fmtBudget(v){return "$"+Number(v).toLocaleString("en-US")}
+  function fmtPartner(v){return v}
+
+  /* Display initial value labels */
+  document.getElementById("calcBudgetVal").textContent=fmtBudget(M.defaults.budget);
+  document.getElementById("calcPartnerVal").textContent=fmtPartner(M.defaults.partners);
+
+  /* Unified input handler — called on every slider tick */
+  function onInput(){
+    var budget=parseInt(sBudget.value);
+    var partners=parseInt(sPartner.value);
+    updateFill(sBudget);updateFill(sPartner);
+    document.getElementById("calcBudgetVal").textContent=fmtBudget(budget);
+    document.getElementById("calcPartnerVal").textContent=fmtPartner(partners);
+
+    var r=computeReach(budget,partners);
+    animImp.set(r.imp);animQR.set(r.qr);animEnroll.set(r.enroll);animCPA.set(r.cpa);
+    
+    var cpaNote=document.getElementById("calcCPANote");
+    if(cpaNote){var far=baseR.cpa>0&&(r.cpa>5*baseR.cpa||r.cpa<baseR.cpa/5);
+      cpaNote.textContent=far?"far from the base case — a result of these settings, not a measured cost":"acquisition cost"}
+
+    /* Delta indicators: % change from baseline (research: all 4 sources recommend) */
+    var modified=budget!==M.defaults.budget||partners!==M.defaults.partners;
+    if(modified){
+      showDelta("calcImpDelta",r.imp,baseR.imp,false);
+      showDelta("calcQRDelta",r.qr,baseR.qr,false);
+      showDelta("calcEnrollDelta",r.enroll,baseR.enroll,false);
+      showDelta("calcCPADelta",r.cpa,baseR.cpa,true); /* CPA inverted: lower=better=green */
+    } else {
+      ["calcImpDelta","calcQRDelta","calcEnrollDelta","calcCPADelta"].forEach(function(id){
+        var el=document.getElementById(id);if(el){el.textContent="";el.className="calc-metric-delta"}});
+    }
+
+    /* Hide hint text after first interaction */
+    if(calcHint&&modified)calcHint.classList.add("hidden");
+
+    var cpaEl=document.getElementById("calcCPAVal");
+    cpaEl.classList.remove("cpa-good","cpa-warn","cpa-high");     /* no colour band: a fixed cut-off of no source would judge the result */
+
+    /* ARIA: update valuetext so screen readers announce meaningful labels */
+    sBudget.setAttribute("aria-valuetext",fmtBudget(budget)+" monthly budget");
+    sPartner.setAttribute("aria-valuetext",partners+" community partners");
+
+    /* Modified border glow when sliders differ from defaults */
+    document.querySelectorAll(".calc-metric").forEach(function(c){
+      c.classList.toggle("modified",modified)});
+    document.getElementById("calcReset").classList.toggle("show",modified);
+  }
+  sBudget.addEventListener("input",onInput);
+  sPartner.addEventListener("input",onInput);
+
+  /* Reset button */
+  document.getElementById("calcReset").addEventListener("click",function(){
+    sBudget.value=M.defaults.budget;sPartner.value=M.defaults.partners;
+    onInput();
+  });
+})()}
+</script>
+
+<script>
+/* ═══ Accordion Timeline — true accordion, always-one-open ═══ */
+(function(){
+  var tl=document.querySelector('.timeline');
+  if(!tl)return;
+  function getTriggers(){return[].slice.call(tl.querySelectorAll('.phase-trigger'))}
+  function togglePhase(trigger){
+    if(trigger.getAttribute('aria-expanded')==='true')return;
+    getTriggers().forEach(function(t){
+      var phase=t.closest('.phase');
+      var isTarget=t===trigger;
+      phase.classList.toggle('is-open',isTarget);
+      t.setAttribute('aria-expanded',String(isTarget));
+    });
+  }
+  tl.addEventListener('click',function(e){
+    var trigger=e.target.closest('.phase-trigger');
+    if(trigger&&tl.contains(trigger))togglePhase(trigger);
+  });
+  tl.addEventListener('keydown',function(e){
+    var trigger=e.target.closest('.phase-trigger');
+    if(!trigger||!tl.contains(trigger))return;
+    var list=getTriggers();var idx=list.indexOf(trigger);
+    switch(e.key){
+      case'ArrowDown':e.preventDefault();list[(idx+1)%list.length].focus();break;
+      case'ArrowUp':e.preventDefault();list[(idx-1+list.length)%list.length].focus();break;
+      case'Home':e.preventDefault();list[0].focus();break;
+      case'End':e.preventDefault();list[list.length-1].focus();break;
+    }
+  });
+})();
+</script>
+
+<script>
+/* === CHAT READER (P0.11b) — byte-identical in the Oracle, Architect and Muse pages === */
+(function () {
+  var C = window.CHAT;
+  if (!C || !C.proxy || !C.context_id) return;
+  function $(id) { return document.getElementById(id); }
+  var box = $("chatMessages") || $("chat-body"), input = $("chatInput") || $("chat-q"), send = $("chatSend") || $("chat-send");
+  var fab = $("chatFab"), panel = $("chatPanel") || $("chatbot"), closeBtn = $("chatClose"), toggle = $("chat-toggle"), head = $("chat-head"), tip = $("chat-tip");
+  var note = $("chatUnavailable"), faq = $("chatFaq");
+  if (!box || !input || !send || !panel) return;
+  var RELOAD = "That message couldn't be sent. Please reload the page and try again.";
+  var CUT = "The answer was interrupted. Please try again.";
+  var DATA = "This page's chat data didn't load. Please reload the page.";
+  var NOTHERE = "Chat isn't available on this copy of the page.";
+  var MSG = {
+    chat_disabled: "Chat is switched off right now. The quick answers below cover the common questions.",
+    chat_budget_unavailable: "Chat has reached its usage limit for now. The quick answers below cover the common questions.",
+    chat_configuration_error: "Chat isn't available right now. The quick answers below cover the common questions.",
+    chat_busy: "Chat is busy right now.",
+    chat_upstream_unavailable: "The AI service is temporarily unavailable.",
+    chat_timeout: "The answer took too long. Please try again.",
+    client_identity_unavailable: "Chat isn't available right now.",
+    origin_not_allowed: NOTHERE, preflight_denied: NOTHERE, method_not_allowed: NOTHERE, not_found: NOTHERE,
+    context_unavailable: DATA, context_invalid: DATA, context_too_large: DATA,
+    empty_message: "Type a question first.",
+    message_too_long: "That question is too long (2,000 characters at most).",
+    conversation_too_long: "This conversation is too long. Reload the page to start a new one.",
+    body_too_large: "This conversation is too long. Reload the page to start a new one.",
+    invalid_json: RELOAD, empty_body: RELOAD, json_required: RELOAD, invalid_request: RELOAD, invalid_context_id: RELOAD,
+    invalid_message_count: RELOAD, invalid_message: RELOAD, invalid_turn_order: RELOAD,
+    incomplete_stream: CUT, interrupted_stream: CUT, upstream_stream_error: CUT, invalid_upstream_stream: CUT,
+    _http: "Chat isn't available right now.",
+    _unreachable: "Chat is busy or unreachable. Please try again in a moment.",
+    _cut: "The answer was cut off. Try asking a narrower question.",
+    _refusal: "I can't help with that one. Try a question about the data on this page.",
+    _empty: "No answer came back. Please try again."
+  };
+  var OFF = { chat_disabled: 1, chat_budget_unavailable: 1, chat_configuration_error: 1 };
+  var history = [], busy = false;
+  function openPanel() {
+    if (fab) panel.classList.add("open"); else { panel.style.display = "flex"; if (toggle) toggle.style.display = "none"; }
+    if (tip && tip.parentNode) tip.parentNode.removeChild(tip);
+    input.focus();
+  }
+  function closePanel() {
+    if (fab) panel.classList.remove("open"); else { panel.style.display = "none"; if (toggle) toggle.style.display = "flex"; }
+  }
+  if (fab) fab.addEventListener("click", openPanel);
+  if (closeBtn) closeBtn.addEventListener("click", closePanel);
+  if (toggle) toggle.addEventListener("click", openPanel);
+  if (head && !fab) head.addEventListener("click", closePanel);
+  if (tip) setTimeout(function () { tip.classList.add("hide"); setTimeout(function () { if (tip.parentNode) tip.parentNode.removeChild(tip); }, 600); }, 6000);
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  
+  var TT = C.tags || null, TAG = null, TAGP = null, TAGO = null, CONF = null;
+  try {
+    if (TT && TT.any) {
+      TAG = new RegExp(TT.any, "gi"); TAGP = new RegExp("\\(\\s*(?:" + TT.any + ")\\s*\\)", "gi");
+      TAGO = new RegExp("\\(\\s*(?:" + TT.any + ")", "gi"); CONF = new RegExp(TT.confidence, "i");
+    }
+  } catch (e) { TAG = null; }
+  function tagWords(g) {
+    var w = g.w || g.wb, c = String((g.w ? g.c : g.cb) || "").trim().replace(/^[:\uff1a,\-\u2013\u2014]+/, "").trim();
+    var k = String(w || "").toLowerCase().replace(/[\s_-]+/g, ""); k = (TT.kinds && TT.kinds[k]) || k;
+    if (k === "data") {
+      var n = c.split(/[,;]/).map(function (x) { return x.trim(); }).filter(function (x) { return x; });
+      return n.length ? "data: " + n.join(", ") : "data";
+    }
+    if (k === "estimate") {
+      var m = CONF ? c.match(CONF) : null;
+      return m ? "estimate, " + m[1].toLowerCase() + (m[2] ? "\u2013" + m[2].toLowerCase() : "") + " confidence" : "estimate";
+    }
+    return c ? k + ": " + c : k;
+  }
+  function untag(s) {
+    if (!TAG) return s;
+    function one(open, close) { return function () { var a = arguments, g = a[a.length - 1]; return open + tagWords(g) + close; }; }
+    return s.replace(TAGP, one("(", ")")).replace(TAGO, one("(", "")).replace(TAG, one("(", ")"));
+  }
+  /* while streaming, the words after an unclosed bracket wait for its close, or for TT.hold characters (no tag is shown half-written) */
+  var HOLD = new RegExp("[\\[\u3010\uff3b][^\\]\u3011\uff3d]{0," + ((TT && TT.hold ? TT.hold : 60) - 1) + "}$");
+  function held(t) { var m = HOLD.exec(t); return m ? t.slice(0, m.index) : t; }
+  function md(t) {
+    return esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/^- (.+)$/gm, "\u2022 $1").replace(/\n/g, "<br>");
+  }
+  
+  function add(role, text) {
+    var d = document.createElement("div");
+    d.className = "chat-msg " + role;
+    d.textContent = text;
+    box.appendChild(d); box.scrollTop = box.scrollHeight;
+    return d;
+  }
+  function showError(bubble, text, partial) {
+    bubble.className = "chat-msg error";
+    bubble.innerHTML = (partial ? md(untag(partial)) + "<br>" : "") + esc(text);
+  }
+  /* The proxy accepts 1, 3 or 5 messages that start and end with a user turn: trim whole pairs from the front. */
+  function trimHistory() { while (history.length > 5) history.splice(0, 2); }
+  function ask(q) {
+    q = String(q == null ? "" : q).trim();
+    if (!q || busy) return Promise.resolve(false);
+    if (q.length > 2000) { showError(add("ai", ""), MSG.message_too_long); return Promise.resolve(false); }
+    busy = true; send.disabled = true;
+    add("user", q); input.value = "";
+    history.push({ role: "user", content: q }); trimHistory();
+    var bubble = add("ai", "\u2026"), text = "", stop = null, state = "open", code = "";
+    function end(ok) {
+      if (!ok && history.length && history[history.length - 1].role === "user") history.pop();   /* never leave an unanswered turn */
+      busy = false; send.disabled = false;
+      return ok;
+    }
+    return fetch(String(C.proxy).replace(/\/+$/, "") + "/chat", {
+      method: "POST", credentials: "omit", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ context_id: C.context_id, messages: history })
+    }).then(function (r) {
+      if (!r.ok) {
+        var ra = r.headers.get("Retry-After");
+        return r.json().catch(function () { return null; }).then(function (j) {
+          var c = j && j.error && j.error.code ? String(j.error.code) : "";
+          if (OFF[c]) { if (note) note.hidden = false; if (faq) faq.open = true; }
+          showError(bubble, (MSG[c] || MSG._http) + (ra && /^\d+$/.test(ra) ? " Try again in " + ra + " s." : ""));
+          return end(false);
+        });
+      }
+      var rd = r.body.getReader(), dec = new TextDecoder("utf-8"), buf = "";
+      function frame(f) {
+        var ev = "", data = [], lines = f.split("\n");
+        for (var i = 0; i < lines.length; i++) {
+          if (lines[i].indexOf("event:") === 0) ev = lines[i].slice(6).trim();
+          else if (lines[i].indexOf("data:") === 0) data.push(lines[i].slice(5).replace(/^ /, ""));
+        }
+        if (!data.length) return;
+        var o;
+        try { o = JSON.parse(data.join("\n")); } catch (e) { return; }
+        var t = o && o.type;
+        if (ev === "error" || t === "error") { state = "error"; code = o && o.error && o.error.code ? String(o.error.code) : ""; return; }
+        if (t === "content_block_delta" && o.delta && o.delta.type === "text_delta" && typeof o.delta.text === "string") {
+          text += o.delta.text; bubble.innerHTML = md(untag(held(text))); box.scrollTop = box.scrollHeight;
+        } else if (t === "message_delta" && o.delta && o.delta.stop_reason) {
+          stop = o.delta.stop_reason;
+        } else if (t === "message_stop") {
+          state = "stopped";
+        }
+      }
+      /* Frames end at a blank line; lines end with LF, CRLF or CR. A trailing lone CR waits for the next chunk. */
+      function drain(final) {
+        var keep = !final && buf.charAt(buf.length - 1) === "\r";
+        var s = (keep ? buf.slice(0, -1) : buf).replace(/\r\n?/g, "\n");
+        var parts = s.split("\n\n"), rest = parts.pop();
+        buf = rest + (keep ? "\r" : "");
+        for (var i = 0; i < parts.length && state === "open"; i++) frame(parts[i]);
+        if (final && state === "open" && rest.trim()) frame(rest);
+      }
+      function finish() {
+        if (state === "stopped" && stop === "end_turn") {
+          if (!text.trim()) { showError(bubble, MSG._empty); return end(false); }
+          bubble.innerHTML = md(untag(text));             
+          history.push({ role: "assistant", content: text }); trimHistory();
+          busy = false; send.disabled = false;
+          return true;
+        }
+        if (state === "stopped" && stop === "max_tokens") { showError(bubble, MSG._cut, text); return end(false); }
+        if (state === "stopped" && stop === "refusal") {
+          bubble.className = "chat-msg ai"; bubble.innerHTML = esc(MSG._refusal);
+          history = []; busy = false; send.disabled = false;
+          return false;
+        }
+        showError(bubble, MSG[code] || CUT, text);
+        return end(false);
+      }
+      function pump() {
+        return rd.read().then(function (res) {
+          if (res.done) { buf += dec.decode(); drain(true); return finish(); }
+          buf += dec.decode(res.value, { stream: true }); drain(false);
+          if (state !== "open") { rd.cancel().catch(function () {}); return finish(); }
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function () { showError(bubble, MSG._unreachable, text); return end(false); });
+  }
+  send.addEventListener("click", function () { ask(input.value); });
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
+  var chips = document.querySelectorAll(".chat-chip[data-q]");
+  for (var i = 0; i < chips.length; i++) chips[i].addEventListener("click", function () {
+    var q = this.getAttribute("data-q");
+    if (q) { ask(q); if (this.parentElement) this.parentElement.style.display = "none"; }
+  });
+  window.openChatbot = function (q) { openPanel(); return ask(q); };
+  var asks = document.querySelectorAll(".ask-ai-btn[data-ask]");
+  for (var k = 0; k < asks.length; k++) asks[k].addEventListener("click", function () {
+    var t = this.getAttribute("data-ask");
+    if (t) window.openChatbot("What evidence supports the finding: " + t + "? Cite the specific data sources and explain.");
+  });
+  window.ChatReader = { ask: ask, history: function () { return history.slice(); }, codes: function () { return Object.keys(MSG); } };
+})();
+/* === END CHAT READER === */
+</script>
+
+</body>
+</html>

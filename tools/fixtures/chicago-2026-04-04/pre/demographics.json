@@ -1,0 +1,232 @@
+{
+  "source": "demographics",
+  "count": 10,
+  "data": [
+    {
+      "area": "Austin",
+      "areaCode": 25,
+      "population": 96200,
+      "medianIncome": 32400,
+      "pctNoVehicle": 0.38,
+      "pctUninsured": 0.142,
+      "pctBelow65Uninsured": 0.168,
+      "pctOver65": 0.14,
+      "pctUnder18": 0.28,
+      "avgErDistanceMi": 4.2,
+      "diabetesRate": 0.184,
+      "asthmaRate": 0.121,
+      "hypertensionRate": 0.412,
+      "copdRate": 0.087,
+      "obesityRate": 0.38,
+      "mentalHealthPoorDays": 5.8,
+      "lifeExpectancy": 71.2,
+      "primaryLanguages": [
+        "English"
+      ]
+    },
+    {
+      "area": "South Shore",
+      "areaCode": 43,
+      "population": 53800,
+      "medianIncome": 28900,
+      "pctNoVehicle": 0.41,
+      "pctUninsured": 0.161,
+      "pctBelow65Uninsured": 0.192,
+      "pctOver65": 0.16,
+      "pctUnder18": 0.24,
+      "avgErDistanceMi": 3.8,
+      "diabetesRate": 0.178,
+      "asthmaRate": 0.136,
+      "hypertensionRate": 0.397,
+      "copdRate": 0.092,
+      "obesityRate": 0.36,
+      "mentalHealthPoorDays": 6.1,
+      "lifeExpectancy": 70.4,
+      "primaryLanguages": [
+        "English"
+      ]
+    },
+    {
+      "area": "Roseland",
+      "areaCode": 49,
+      "population": 38400,
+      "medianIncome": 33100,
+      "pctNoVehicle": 0.35,
+      "pctUninsured": 0.128,
+      "pctBelow65Uninsured": 0.154,
+      "pctOver65": 0.18,
+      "pctUnder18": 0.26,
+      "avgErDistanceMi": 5.1,
+      "diabetesRate": 0.162,
+      "asthmaRate": 0.118,
+      "hypertensionRate": 0.374,
+      "copdRate": 0.079,
+      "obesityRate": 0.34,
+      "mentalHealthPoorDays": 5.4,
+      "lifeExpectancy": 72.8,
+      "primaryLanguages": [
+        "English"
+      ]
+    },
+    {
+      "area": "Humboldt Park",
+      "areaCode": 23,
+      "population": 54100,
+      "medianIncome": 35200,
+      "pctNoVehicle": 0.32,
+      "pctUninsured": 0.184,
+      "pctBelow65Uninsured": 0.218,
+      "pctOver65": 0.1,
+      "pctUnder18": 0.3,
+      "avgErDistanceMi": 2.9,
+      "diabetesRate": 0.149,
+      "asthmaRate": 0.142,
+      "hypertensionRate": 0.348,
+      "copdRate": 0.081,
+      "obesityRate": 0.33,
+      "mentalHealthPoorDays": 5.2,
+      "lifeExpectancy": 74.1,
+      "primaryLanguages": [
+        "English",
+        "Spanish"
+      ]
+    },
+    {
+      "area": "Brighton Park",
+      "areaCode": 58,
+      "population": 45900,
+      "medianIncome": 41300,
+      "pctNoVehicle": 0.28,
+      "pctUninsured": 0.226,
+      "pctBelow65Uninsured": 0.271,
+      "pctOver65": 0.08,
+      "pctUnder18": 0.32,
+      "avgErDistanceMi": 3.4,
+      "diabetesRate": 0.123,
+      "asthmaRate": 0.098,
+      "hypertensionRate": 0.286,
+      "copdRate": 0.054,
+      "obesityRate": 0.31,
+      "mentalHealthPoorDays": 4.6,
+      "lifeExpectancy": 78.2,
+      "primaryLanguages": [
+        "Spanish",
+        "English"
+      ]
+    },
+    {
+      "area": "North Lawndale",
+      "areaCode": 29,
+      "population": 34800,
+      "medianIncome": 25700,
+      "pctNoVehicle": 0.44,
+      "pctUninsured": 0.157,
+      "pctBelow65Uninsured": 0.189,
+      "pctOver65": 0.12,
+      "pctUnder18": 0.31,
+      "avgErDistanceMi": 2.6,
+      "diabetesRate": 0.191,
+      "asthmaRate": 0.127,
+      "hypertensionRate": 0.438,
+      "copdRate": 0.098,
+      "obesityRate": 0.41,
+      "mentalHealthPoorDays": 6.4,
+      "lifeExpectancy": 68.9,
+      "primaryLanguages": [
+        "English"
+      ]
+    },
+    {
+      "area": "Uptown",
+      "areaCode": 3,
+      "population": 56300,
+      "medianIncome": 48200,
+      "pctNoVehicle": 0.36,
+      "pctUninsured": 0.112,
+      "pctBelow65Uninsured": 0.138,
+      "pctOver65": 0.14,
+      "pctUnder18": 0.16,
+      "avgErDistanceMi": 2.1,
+      "diabetesRate": 0.098,
+      "asthmaRate": 0.094,
+      "hypertensionRate": 0.264,
+      "copdRate": 0.068,
+      "obesityRate": 0.24,
+      "mentalHealthPoorDays": 4.8,
+      "lifeExpectancy": 76.5,
+      "primaryLanguages": [
+        "English",
+        "Spanish",
+        "Mandarin",
+        "Vietnamese"
+      ]
+    },
+    {
+      "area": "South Chicago",
+      "areaCode": 46,
+      "population": 28100,
+      "medianIncome": 30200,
+      "pctNoVehicle": 0.37,
+      "pctUninsured": 0.174,
+      "pctBelow65Uninsured": 0.208,
+      "pctOver65": 0.13,
+      "pctUnder18": 0.29,
+      "avgErDistanceMi": 4.6,
+      "diabetesRate": 0.168,
+      "asthmaRate": 0.131,
+      "hypertensionRate": 0.382,
+      "copdRate": 0.084,
+      "obesityRate": 0.35,
+      "mentalHealthPoorDays": 5.6,
+      "lifeExpectancy": 72.1,
+      "primaryLanguages": [
+        "English",
+        "Spanish"
+      ]
+    },
+    {
+      "area": "West Garfield Park",
+      "areaCode": 26,
+      "population": 17400,
+      "medianIncome": 24100,
+      "pctNoVehicle": 0.48,
+      "pctUninsured": 0.168,
+      "pctBelow65Uninsured": 0.201,
+      "pctOver65": 0.11,
+      "pctUnder18": 0.33,
+      "avgErDistanceMi": 3.8,
+      "diabetesRate": 0.204,
+      "asthmaRate": 0.138,
+      "hypertensionRate": 0.451,
+      "copdRate": 0.101,
+      "obesityRate": 0.42,
+      "mentalHealthPoorDays": 6.8,
+      "lifeExpectancy": 67.4,
+      "primaryLanguages": [
+        "English"
+      ]
+    },
+    {
+      "area": "East Garfield Park",
+      "areaCode": 27,
+      "population": 19800,
+      "medianIncome": 26800,
+      "pctNoVehicle": 0.42,
+      "pctUninsured": 0.158,
+      "pctBelow65Uninsured": 0.191,
+      "pctOver65": 0.1,
+      "pctUnder18": 0.29,
+      "avgErDistanceMi": 3.2,
+      "diabetesRate": 0.188,
+      "asthmaRate": 0.129,
+      "hypertensionRate": 0.424,
+      "copdRate": 0.094,
+      "obesityRate": 0.39,
+      "mentalHealthPoorDays": 6.2,
+      "lifeExpectancy": 69.1,
+      "primaryLanguages": [
+        "English"
+      ]
+    }
+  ]
+}

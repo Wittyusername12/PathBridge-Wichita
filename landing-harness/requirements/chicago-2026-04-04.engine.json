@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "challenge": "chicago-2026-04-04",
+  "_note": "BUILD B1 (D1, D3): the prioritization model's published table for Chicago — one option set (the clinics a displaced patient can reach) and two presets labeled illustrative: the brief names no users, so no worked case speaks for a real person. BUILD B2: the intake for the Architect's Get Help tab — one step per attribute the clinics table reads (coverage, languages, needs), the options from the values the clinics hold; the two illustrative presets as its buttons.",
+  "option_sets": [
+    {
+      "id": "clinics",
+      "label": "A clinic for care now",
+      "endpoint": "clinics",
+      "name_field": "name",
+      "gates": [
+        {
+          "id": "open",
+          "label": "Open now",
+          "rule": "open_now",
+          "field": "openHours"
+        },
+        {
+          "id": "coverage",
+          "label": "Takes this person's coverage",
+          "rule": "in_set",
+          "field": "accepts",
+          "attr": "coverage"
+        },
+        {
+          "id": "capacity",
+          "label": "Sees patients each day",
+          "rule": "free_above_zero",
+          "fields": [
+            "capacityPerDay"
+          ]
+        }
+      ],
+      "factors": [
+        {
+          "id": "wait",
+          "label": "Weeks to a first visit",
+          "form": "inverse",
+          "field": "waitWeeks",
+          "ref": 6,
+          "max": 35,
+          "why": "urgency: a displaced patient goes without care until the first visit"
+        },
+        {
+          "id": "language",
+          "label": "Care in the person's language",
+          "form": "match",
+          "field": "languages",
+          "attr": "languages",
+          "max": 25,
+          "why": "access: a visit the person can follow"
+        },
+        {
+          "id": "service",
+          "label": "Offers the care needed",
+          "form": "match",
+          "field": "specialties",
+          "attr": "needs",
+          "max": 25,
+          "why": "fit: the service the person came for"
+        },
+        {
+          "id": "capacity",
+          "label": "Visits a day",
+          "form": "ratio",
+          "field": "capacityPerDay",
+          "ref": 200,
+          "max": 15,
+          "why": "capacity: room for the patients the closures displaced"
+        }
+      ],
+      "tie_breakers": [
+        "wait",
+        "capacity"
+      ],
+      "contact": {
+        "hours": "openHours",
+        "address": "address"
+      },
+      "show": [
+        "type",
+        "area"
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "id": "medicaid-spanish",
+      "named_user": null,
+      "illustrative": true,
+      "label": "Illustrative: a displaced patient on Medicaid who speaks Spanish and needs primary care",
+      "attrs": {
+        "coverage": {
+          "value": [
+            "Medicaid",
+            "All Insurance"
+          ],
+          "basis": "illustrative"
+        },
+        "languages": {
+          "value": [
+            "Spanish"
+          ],
+          "basis": "illustrative"
+        },
+        "needs": {
+          "value": [
+            "primary-care"
+          ],
+          "basis": "illustrative"
+        }
+      }
+    },
+    {
+      "id": "uninsured-behavioral",
+      "named_user": null,
+      "illustrative": true,
+      "label": "Illustrative: an uninsured adult who needs behavioral health care",
+      "attrs": {
+        "coverage": {
+          "value": [
+            "Uninsured",
+            "Uninsured Only",
+            "Sliding Scale",
+            "Self-Pay"
+          ],
+          "basis": "illustrative"
+        },
+        "languages": {
+          "value": [
+            "English"
+          ],
+          "basis": "illustrative"
+        },
+        "needs": {
+          "value": [
+            "behavioral-health"
+          ],
+          "basis": "illustrative"
+        }
+      }
+    }
+  ],
+  "intake": {
+    "steps": [
+      {
+        "id": "coverage",
+        "label": "How will you pay for care?",
+        "attr": "coverage",
+        "options": [
+          {
+            "label": "Medicaid",
+            "value": [
+              "Medicaid",
+              "All Insurance"
+            ]
+          },
+          {
+            "label": "Private insurance or Medicare",
+            "value": [
+              "All Insurance"
+            ]
+          },
+          {
+            "label": "No insurance",
+            "value": [
+              "Uninsured",
+              "Uninsured Only",
+              "Sliding Scale",
+              "Self-Pay"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "language",
+        "label": "What language do you want your care in?",
+        "attr": "languages",
+        "options": [
+          {
+            "label": "English",
+            "value": [
+              "English"
+            ]
+          },
+          {
+            "label": "Spanish / Español",
+            "value": [
+              "Spanish"
+            ]
+          },
+          {
+            "label": "Polish / Polski",
+            "value": [
+              "Polish"
+            ]
+          },
+          {
+            "label": "Mandarin / 普通话",
+            "value": [
+              "Mandarin"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "care",
+        "label": "What care do you need?",
+        "attr": "needs",
+        "options": [
+          {
+            "label": "Primary care",
+            "value": [
+              "primary-care"
+            ]
+          },
+          {
+            "label": "Care for a child",
+            "value": [
+              "pediatrics"
+            ]
+          },
+          {
+            "label": "Mental health",
+            "value": [
+              "behavioral-health"
+            ]
+          },
+          {
+            "label": "Dental",
+            "value": [
+              "dental"
+            ]
+          },
+          {
+            "label": "Pregnancy or women's health",
+            "value": [
+              "obstetrics",
+              "women-health"
+            ]
+          },
+          {
+            "label": "Diabetes or another chronic condition",
+            "value": [
+              "chronic-disease",
+              "diabetes"
+            ]
+          },
+          {
+            "label": "Substance use",
+            "value": [
+              "substance-abuse"
+            ]
+          },
+          {
+            "label": "Urgent or crisis care",
+            "value": [
+              "urgent-care",
+              "crisis"
+            ]
+          }
+        ]
+      }
+    ],
+    "plan": [
+      {
+        "title": "Care now",
+        "sets": [
+          "clinics"
+        ]
+      }
+    ]
+  }
+}

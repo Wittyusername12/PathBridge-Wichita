@@ -1,0 +1,622 @@
+{
+ "schema_version": 1,
+ "_note": "Wichita coverage map (P0.3 build, 2026-10-29) from §7.6: a NONE row stays unmapped (a gap, by id); PARTIAL rows point at their partial section; the six named users stay unmapped (0/6, Gate C's measure). The deliverable sections are P2–P4's work. BUILD B1 (11/03): prioritization-model → prioritization, use-of-funds → financials + use-of-funds, oracle-m2 (the $100K marketing allocation) → use-of-funds; maya, denise and robert → the prioritization block's worked cases (Jordan, Tanya and Luis: builds 2 and 4). BUILD B3 (11/09, D13): the deliverables' own sections — bottleneck-dashboard → bottlenecks, evidence; youth-handoff-failures → youth-handoffs; pilot-kpi-framework → kpi-framework; renewal-case → renewal-gates, renewal; oracle-m1 → plan, kpi-framework. BUILD IC-4 (11/13, D15): each requirement's link type and acceptance condition, and the six winning lines' links — requirements met, not merely linked; jordan, luis and the three campaign deliverables stay unlinked (P4).",
+ "challenge": "wichita-2026-04-18",
+ "tracks": {
+  "oracle": {
+   "bottleneck-dashboard": {
+    "sections": [
+     "bottlenecks",
+     "evidence"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "table",
+     "section": "bottlenecks",
+     "columns": [
+      "Listed",
+      "In use",
+      "Free now"
+     ]
+    }
+   },
+   "use-of-funds": {
+    "sections": [
+     "financials",
+     "use-of-funds"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "table",
+     "section": "use-of-funds",
+     "columns": [
+      "Line",
+      "Amount",
+      "Owner",
+      "Release cadence"
+     ]
+    }
+   },
+   "prioritization-model": {
+    "sections": [
+     "prioritization"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "table",
+     "section": "prioritization",
+     "columns": [
+      "Factor",
+      "Max points",
+      "Formula"
+     ]
+    }
+   },
+   "youth-handoff-failures": {
+    "sections": [
+     "youth-handoffs"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "table",
+     "section": "youth-handoffs",
+     "columns": [
+      "Where",
+      "What fails",
+      "Remedy"
+     ]
+    }
+   },
+   "cost-of-instability": {
+    "sections": [
+     "sroi",
+     "cost-of-inaction"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "all",
+     "children": [
+      {
+       "kind": "figure",
+       "section": "cost-of-inaction",
+       "figure": "coi_3yr"
+      },
+      {
+       "kind": "figure",
+       "section": "sroi",
+       "figure": "sroi"
+      }
+     ]
+    }
+   },
+   "pilot-kpi-framework": {
+    "sections": [
+     "kpi-framework"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "table",
+     "section": "kpi-framework",
+     "columns": [
+      "Indicator",
+      "Leading or lagging",
+      "Baseline",
+      "Target",
+      "By day"
+     ]
+    }
+   },
+   "renewal-case": {
+    "sections": [
+     "renewal-gates",
+     "renewal"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "table",
+     "section": "renewal-gates",
+     "columns": [
+      "Indicator",
+      "Target",
+      "By day"
+     ]
+    }
+   },
+   "oracle-m1": {
+    "sections": [
+     "plan",
+     "kpi-framework"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "review",
+     "why": "how the 90-day pilot works is the plan's own account: the operator reads its phases and the KPI framework's days against the brief's 90 days"
+    }
+   },
+   "oracle-m2": {
+    "sections": [
+     "use-of-funds"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "table",
+     "section": "use-of-funds",
+     "columns": [
+      "Item",
+      "Amount",
+      "Who it reaches"
+     ]
+    }
+   }
+  },
+  "architect": {
+   "public-intake-flow": {
+    "sections": [
+     "intake"
+    ],
+    "note": "The Get Help tab opens first: four questions from the engine sidecar (who needs a place, their age, what they need first, anything that decides where they can go), or one of the brief's people as a preset; a question left blank stays unknown, and the plan lists what to confirm instead of guessing.",
+    "link": "implements",
+    "condition": {
+     "kind": "review",
+     "why": "the intake is drawn by the page's script: the operator walks it once — one question at a time, the brief's people as presets, a blank answer kept unknown"
+    }
+   },
+   "case-manager-dashboard": {
+    "sections": [
+     "dashboard"
+    ],
+    "note": "Partly: the Dashboard tab shows the system-wide figures, the youth pipeline and the alerts in the data (as fetched at run time); there is no per-client caseload view.",
+    "link": "supports",
+    "condition": {
+     "kind": "all",
+     "children": [
+      {
+       "kind": "figure",
+       "section": "dashboard",
+       "figure": "data.record_count"
+      },
+      {
+       "kind": "sentence",
+       "section": "dashboard",
+       "phrases": [
+        "doors",
+        "phone calls",
+        "spreadsheets"
+       ]
+      }
+     ]
+    }
+   },
+   "fit-matcher": {
+    "sections": [
+     "plan"
+    ],
+    "note": "Your Plan ranks the beds, the doors, the transition programs and the rental properties for that person in the browser with the engine's published table (the gates first, then points out of 100), showing each option's breakdown and trace: tonight's best bed and open door, the next program and documents, and who to call back tomorrow.",
+    "link": "implements",
+    "condition": {
+     "kind": "all",
+     "children": [
+      {
+       "kind": "sentence",
+       "section": "plan",
+       "phrases": [
+        "bed",
+        "beds"
+       ]
+      },
+      {
+       "kind": "sentence",
+       "section": "plan",
+       "phrases": [
+        "pathway",
+        "program"
+       ]
+      }
+     ]
+    }
+   },
+   "document-benefits-checklist": {
+    "sections": [
+     "checklist"
+    ],
+    "note": "All ten stabilization-docs records in unlock order (a document before the ones it unlocks, ties by processing days), each with its days, fee, known blockers and who helps; the plan marks the documents the person needs and starts them in that order.",
+    "link": "implements",
+    "condition": {
+     "kind": "all",
+     "children": [
+      {
+       "kind": "sentence",
+       "section": "checklist",
+       "phrases": [
+        "document",
+        "documents"
+       ]
+      },
+      {
+       "kind": "sentence",
+       "section": "checklist",
+       "phrases": [
+        "benefit",
+        "benefits"
+       ]
+      }
+     ]
+    }
+   },
+   "youth-transition-navigator": {
+    "sections": [
+     "navigator"
+    ],
+    "note": "Every transition program with its age window, intake lag, free slots and eligibility text; for a chosen person, the programs they are inside come first, the one whose window ends soonest at the top, with the years left before the limit and the person's gate result.",
+    "link": "implements",
+    "condition": {
+     "kind": "all",
+     "children": [
+      {
+       "kind": "sentence",
+       "section": "navigator",
+       "phrases": [
+        "youth"
+       ]
+      },
+      {
+       "kind": "sentence",
+       "section": "navigator",
+       "phrases": [
+        "age",
+        "ages"
+       ]
+      }
+     ]
+    }
+   },
+   "housing-readiness-tracker": {
+    "sections": [
+     "readiness"
+    ],
+    "note": "The readiness steps (a voucher and its program, a deposit, veteran status, the documents for an application) are checked on the page and kept only in that browser; the ten rehousing-options properties are ranked for them by the same engine, each with its screening barriers in its own words and the steps still open.",
+    "link": "implements",
+    "condition": {
+     "kind": "all",
+     "children": [
+      {
+       "kind": "figure",
+       "section": "readiness",
+       "figure": "rehousing-options.count"
+      },
+      {
+       "kind": "sentence",
+       "section": "readiness",
+       "phrases": [
+        "screening barriers",
+        "screening"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "muse": {
+   "youth-outreach-kit": {
+    "sections": [],
+    "note": null
+   },
+   "landlord-trust-campaign": {
+    "sections": [],
+    "note": null
+   },
+   "bilingual-pathway-messaging": {
+    "sections": [
+     "flyer"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "languages",
+     "section": "flyer",
+     "langs": [
+      "en",
+      "es"
+     ]
+    }
+   },
+   "anti-stigma-comms": {
+    "sections": [],
+    "note": null
+   },
+   "brand-system": {
+    "sections": [
+     "creative",
+     "flyer"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "review",
+     "why": "a brand system is judged by eye: the operator checks that the creative and the flyer share one name, palette and voice"
+    }
+   },
+   "channel-plan-and-budget": {
+    "sections": [
+     "channels",
+     "calculator"
+    ],
+    "note": null,
+    "link": "implements",
+    "condition": {
+     "kind": "all",
+     "children": [
+      {
+       "kind": "table",
+       "section": "channels",
+       "columns": [
+        "Channel",
+        "Audience",
+        "Frequency"
+       ]
+      },
+      {
+       "kind": "sentence",
+       "section": "calculator",
+       "phrases": [
+        "budget"
+       ]
+      }
+     ]
+    }
+   }
+  }
+ },
+ "users": {
+  "maya": {
+   "track": "oracle",
+   "sections": [
+    "prioritization"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "sentence",
+    "section": "prioritization",
+    "user": "maya",
+    "phrases": [
+     "ID",
+     "health coverage",
+     "school"
+    ]
+   }
+  },
+  "denise": {
+   "track": "oracle",
+   "sections": [
+    "prioritization"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "sentence",
+    "section": "prioritization",
+    "user": "denise",
+    "phrases": [
+     "211",
+     "Family Promise",
+     "the city"
+    ]
+   }
+  },
+  "robert": {
+   "track": "oracle",
+   "sections": [
+    "prioritization"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "sentence",
+    "section": "prioritization",
+    "user": "robert",
+    "phrases": [
+     "bed",
+     "beds",
+     "tonight"
+    ]
+   }
+  },
+  "tanya": {
+   "track": "architect",
+   "sections": [
+    "plan",
+    "checklist"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "all",
+    "children": [
+     {
+      "kind": "sentence",
+      "section": "checklist",
+      "phrases": [
+       "document",
+       "documents"
+      ]
+     },
+     {
+      "kind": "sentence",
+      "section": "checklist",
+      "phrases": [
+       "benefit",
+       "benefits"
+      ]
+     },
+     {
+      "kind": "sentence",
+      "section": "plan",
+      "phrases": [
+       "transportation",
+       "transit"
+      ]
+     },
+     {
+      "kind": "sentence",
+      "section": "plan",
+      "phrases": [
+       "follow-through"
+      ]
+     }
+    ]
+   }
+  }
+ },
+ "winning": {
+  "win-1": {
+   "track": "architect",
+   "sections": [
+    "intake",
+    "plan"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "review",
+    "why": "where to start is the intake's first question and the plan's first door, drawn by the page's script: the operator walks it once as Denise"
+   }
+  },
+  "win-2": {
+   "track": "oracle",
+   "sections": [
+    "prioritization"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "table",
+    "section": "prioritization",
+    "columns": [
+     "Factor",
+     "Max points",
+     "Source field",
+     "Formula",
+     "Cap"
+    ]
+   }
+  },
+  "win-3": {
+   "track": "architect",
+   "sections": [
+    "navigator"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "sentence",
+    "section": "navigator",
+    "phrases": [
+     "youth",
+     "adulthood"
+    ]
+   }
+  },
+  "win-4": {
+   "track": "oracle",
+   "sections": [
+    "youth-handoffs",
+    "kpi-framework"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "all",
+    "children": [
+     {
+      "kind": "table",
+      "section": "youth-handoffs",
+      "columns": [
+       "Where",
+       "What fails",
+       "Remedy"
+      ]
+     },
+     {
+      "kind": "sentence",
+      "section": "kpi-framework",
+      "phrases": [
+       "handoff",
+       "handoffs"
+      ]
+     }
+    ]
+   }
+  },
+  "win-5": {
+   "track": "architect",
+   "sections": [
+    "checklist",
+    "readiness"
+   ],
+   "link": "implements",
+   "condition": {
+    "kind": "all",
+    "children": [
+     {
+      "kind": "sentence",
+      "section": "checklist",
+      "phrases": [
+       "documents",
+       "document"
+      ]
+     },
+     {
+      "kind": "sentence",
+      "section": "checklist",
+      "phrases": [
+       "benefits",
+       "benefit"
+      ]
+     },
+     {
+      "kind": "review",
+      "why": "the readiness tracker's form lists the checklist's documents as steps toward an application: the operator checks them against the checklist"
+     }
+    ]
+   }
+  },
+  "win-6": {
+   "track": "oracle",
+   "sections": [
+    "bottlenecks"
+   ],
+   "link": "supports",
+   "condition": {
+    "kind": "all",
+    "children": [
+     {
+      "kind": "table",
+      "section": "bottlenecks",
+      "columns": [
+       "Listed",
+       "In use",
+       "Free now"
+      ]
+     },
+     {
+      "kind": "sentence",
+      "section": "bottlenecks",
+      "phrases": [
+       "Second Light",
+       "Open Door",
+       "H.O.T.",
+       "CrossRoads",
+       "BRIDGES",
+       "DCF IL",
+       "City ID",
+       "NEXTenant",
+       "Housing First"
+      ]
+     }
+    ]
+   }
+  }
+ }
+}

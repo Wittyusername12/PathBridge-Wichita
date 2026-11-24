@@ -1,0 +1,12 @@
+MODELED - kc-2026-03-28/post/supply-alerts.json is NOT API data; the KC post-curveball API was never captured.
+Source of the two new alerts: hackhaus dashboard screenshot 675 (FireShot Capture 675 - Dashboard - Root Down_), transcribed in tracker
+Appendix G.3.b; their titles and descriptions are verbatim G.3.b items 1 and 4. The announcement's own wording is unknown.
+Kept verbatim from the pre file (-api-challenge-supply-alerts.txt): the envelope keys and alerts sa-001 and sa-002.
+Invented (tracker Decision 2026-10-20): status "emergency"; lastUpdated "2026-03-28T13:00:00-05:00";
+  sa-003 {type emergency_donation, severity critical, impactedZips [], date 2026-03-28, source "Curveball announcement (Mar 28, 2026, 1:00 PM)"};
+  sa-004 {type policy_change, severity high, impactedZips ["66101", "66105"], same date and source}.
+Why those values: both regionals' post files carry "emergency" with a 13:00 stamp and append the new alerts after the kept ones;
+KC's type vocabulary is snake_case; "critical" is both regionals' severity for the curveball's BREAKING alerts and "high" is KC's own
+top severity; the vote names its ZIPs, the produce names none (nothing guessed).
+sha256 of supply-alerts.json: c7d8d785853359c7da7d77b7f92100428e56425642a2b6197126ec90d880a2a2
+Built by tests/build_fixture_sets.py (P0.8b). This marker is not served: the fixture server serves *.json only.

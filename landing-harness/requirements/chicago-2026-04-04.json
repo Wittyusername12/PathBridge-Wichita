@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "_note": "Fixture typed from the Chicago page (chicago_competition_info.png); transcribed in tracker §7.5 / G.2. Questions-format; no named users; no budget stated.",
+  "challenge": {
+    "id": "chicago-2026-04-04",
+    "event": "naipc-regional-chicago-2026",
+    "day": 1,
+    "date": "2026-04-04",
+    "city": "Chicago",
+    "venue": "Sheraton Lisle Naperville",
+    "title": "Chicago's Hospitals Are Closing. 47,000 Patients Need a Plan.",
+    "tagline": "4 hospitals closed in 2 years. 47,000+ patients displaced. Remaining ERs overwhelmed. Build the navigation system that gets patients where they need to go.",
+    "mission": "Chicago is in a hospital closure crisis. 4 hospitals have closed in the last 2 years — mostly on the South and West sides. Over 47,000 patients have been displaced, forced to find new providers, navigate unfamiliar systems, and travel farther for care. Emergency rooms at remaining hospitals are overwhelmed. Community clinics are at capacity. Patients with chronic conditions are falling through the cracks. The communities hit hardest are the ones that were already underserved. You're building the patient navigation system. Design a solution that helps displaced patients find the right care — whether that's a new primary care provider, an FQHC, an urgent care, or a specialty clinic. Make it work for real people in real neighborhoods."
+  },
+  "constraints": {
+    "contract_usd": null,
+    "opex_usd": null,
+    "reserved_marketing_usd": null,
+    "pilot_days": null,
+    "beneficiary_unit": {
+      "value": "patients",
+      "quote": "47,000+ patients displaced."
+    },
+    "required_assets": null
+  },
+  "named_users": [],
+  "tracks": {
+    "oracle": {
+      "kind": "questions",
+      "title": "The Oracle — ANALYZE & MODEL CAPACITY",
+      "mission": "Analyze the displacement data. Model which clinics can absorb patients, where the gaps are, and what breaks first. Build the data case for where resources should go.",
+      "items": [
+        {
+          "id": "oracle-q1",
+          "text": "Does the analysis reveal real insights?"
+        },
+        {
+          "id": "oracle-q2",
+          "text": "Is the capacity model data-driven?"
+        },
+        {
+          "id": "oracle-q3",
+          "text": "Does it predict where the system breaks?"
+        },
+        {
+          "id": "oracle-q4",
+          "text": "How well did you use AI for analysis?"
+        },
+        {
+          "id": "oracle-m1",
+          "text": "Model which clinics can absorb patients, where the gaps are, and what breaks first.",
+          "source": "mission"
+        },
+        {
+          "id": "oracle-m2",
+          "text": "Build the data case for where resources should go.",
+          "source": "mission"
+        }
+      ]
+    },
+    "architect": {
+      "kind": "questions",
+      "title": "The Architect — BUILD THE NAVIGATION TOOL",
+      "mission": "Build a working patient navigation tool. A clinic finder, a triage dashboard, a routing app, a provider matcher — whatever helps displaced patients find care fast.",
+      "items": [
+        {
+          "id": "architect-q1",
+          "text": "Does it actually work? Can you demo it?"
+        },
+        {
+          "id": "architect-q2",
+          "text": "Would a displaced patient actually use this?"
+        },
+        {
+          "id": "architect-q3",
+          "text": "Does it account for real neighborhood barriers?"
+        },
+        {
+          "id": "architect-q4",
+          "text": "How well did you use AI to build it?"
+        }
+      ]
+    },
+    "muse": {
+      "kind": "questions",
+      "title": "The Muse — BUILD COMMUNITY TRUST",
+      "mission": "Build the outreach campaign that reaches displaced patients and rebuilds trust. These communities just lost their hospital — they need to believe the system still works for them.",
+      "items": [
+        {
+          "id": "muse-q1",
+          "text": "Do you understand who you're reaching?"
+        },
+        {
+          "id": "muse-q2",
+          "text": "Are channel choices realistic for these communities?"
+        },
+        {
+          "id": "muse-q3",
+          "text": "Did you actually produce materials?"
+        },
+        {
+          "id": "muse-q4",
+          "text": "How well did you use AI for creative work?"
+        }
+      ]
+    }
+  },
+  "winning_looks_like": [],
+  "scoring": {
+    "dimensions": [
+      "Problem Understanding",
+      "Solution Quality",
+      "Presentation & Polish",
+      "Adaptability",
+      "AI Mastery"
+    ],
+    "descriptors": {
+      "Problem Understanding": "Did they actually understand the problem? Do they know who the users/customers are and what they need? Or did they build something generic?",
+      "Solution Quality": "Is the solution good? Is the business plan sound? Is the product useful? Is the marketing strategy smart? Would this actually work?",
+      "Presentation & Polish": "Is it well-built and clearly presented? Can you interact with the dashboard? Does the plan read well? Are materials production-ready?",
+      "Adaptability": "How did they respond to the curveball? Did they rethink their approach or just bolt something on? (Score after Block 2)",
+      "AI Mastery": "How effectively did they use AI? Did they direct it or just accept first outputs? Evidence of iteration, challenging AI, using it creatively?"
+    },
+    "scale": "circle one 1-5 per dimension per judge; TOTAL / 25 × 4 = / 100",
+    "scale_legend": {
+      "1": "Didn't address",
+      "2": "Significant gaps",
+      "3": "Adequate",
+      "4": "Strong work",
+      "5": "Exceptional"
+    },
+    "notes": "Adaptability is scored after Block 2; each judge adds 'What stood out? (one sentence)'; the panel is three industry experts and one non-human (AI) judge",
+    "source": "Kansas_City_scorecard.png (KC Regional 2026 judge scorecard, March 28, 2026), read 2026-09-29; the same five dimensions appear on every 2026 brief"
+  },
+  "api": {
+    "base_url": "https://aipromptchamp.com",
+    "prefix": "/api/challenge/chi",
+    "note": "All endpoints return JSON. CORS enabled.",
+    "endpoints": [
+      {
+        "name": "hospitals",
+        "description": "Hospital closures, at-risk, and open facilities",
+        "records_expected": 13,
+        "curveball_updates": false
+      },
+      {
+        "name": "demographics",
+        "description": "Community area demographics, poverty, insurance rates",
+        "records_expected": 10,
+        "curveball_updates": false
+      },
+      {
+        "name": "clinics",
+        "description": "FQHCs and urgent care locations, capacity, languages",
+        "records_expected": 10,
+        "curveball_updates": false
+      },
+      {
+        "name": "er-visits",
+        "description": "Monthly ER visit data across hospitals",
+        "records_expected": 24,
+        "curveball_updates": false
+      },
+      {
+        "name": "patient-displacement",
+        "description": "Displaced patients by condition group",
+        "records_expected": 13,
+        "curveball_updates": false
+      },
+      {
+        "name": "311-health",
+        "description": "Post-closure health complaints via 311",
+        "records_expected": 15,
+        "curveball_updates": false
+      },
+      {
+        "name": "supply-alerts",
+        "description": "Current system status & emergency alerts",
+        "records_expected": null,
+        "curveball_updates": true
+      }
+    ]
+  },
+  "schedule": {
+    "source": "the Chicago page",
+    "registration": "09:00",
+    "go_live": "10:00",
+    "block1": "10:00-12:00",
+    "curveball": "13:00",
+    "block2": "13:00-14:30",
+    "submissions_due": "14:30",
+    "judging": "15:00-15:45"
+  },
+  "submission": {
+    "form_url": null,
+    "deadline": "14:30",
+    "event_code": null,
+    "_note": "the form was on the challenge page; the URL was not captured"
+  },
+  "team": {
+    "program_name": null,
+    "brand_html": null
+  },
+  "curveball": null,
+  "provenance": {
+    "brief_files": [
+      "chicago_competition_info.png"
+    ],
+    "transcription": "tracker §7.5 / G.2.c (2026-09-27; page re-opened 2026-09-28)",
+    "modeled_fields": []
+  }
+}

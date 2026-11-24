@@ -1,0 +1,12 @@
+{
+ "what": "BUILD IC-4 (done-test 14): tests/t_forms_ic4.py on this tree — T-f4-9, T-f4-10, T-f4-11, T-f4-12, T-f4-13: the switch-off bodies, the check on every body, the saved diff, the system prompt's words, the check's teeth",
+ "pass": 11,
+ "total": 11,
+ "sha256": {
+  "oracle-harness/oracle_harness.py": "27cd685efc7003833ec7ff4a9ca5e57b805acf75065fadf0530d4fc1a3c16ee6",
+  "architect-harness/architect_harness.py": "fb54492cd82982233f055ebdc093045e8287bab6013ff797d317f5197dd6a311",
+  "muse-harness/muse_harness.py": "6fb38cc792b930cba651ec70cb31128894e154d8f996d2cf0289f76e2400ab5b",
+  "oracle-harness/naipc_requirements.py": "919d04e95031e514dfa618451df3c01035d0bc8a8b0f58c4e414ab83067d8786",
+  "oracle-harness/naipc_registry.py": "3eb5d6bf9bf37695fade98c874725c59ea8b8ff2f4017d3cee6a03cdf7abefbb"
+ }
+}

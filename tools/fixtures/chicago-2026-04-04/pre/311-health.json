@@ -1,0 +1,156 @@
+{
+  "source": "311-health",
+  "count": 15,
+  "data": [
+    {
+      "id": "311-001",
+      "date": "2026-03-26",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "wellness-check",
+      "description": "Elderly neighbor, diabetic, does not know West Suburban closed. Has not refilled insulin in 4 days.",
+      "status": "open",
+      "priority": "high"
+    },
+    {
+      "id": "311-002",
+      "date": "2026-03-26",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "health-service",
+      "description": "Mother requesting information on pediatric asthma care. West Suburban ER was go-to for son's attacks.",
+      "status": "open",
+      "priority": "high"
+    },
+    {
+      "id": "311-003",
+      "date": "2026-03-27",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "wellness-check",
+      "description": "92-year-old wheelchair user. Was getting regular dialysis transport to West Suburban. Needs new transport arrangement.",
+      "status": "referred",
+      "priority": "critical"
+    },
+    {
+      "id": "311-004",
+      "date": "2026-03-27",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "health-service",
+      "description": "Group of residents from Central Ave asking where nearest ER is. Confused by rumors Loretto also closing.",
+      "status": "open",
+      "priority": "moderate"
+    },
+    {
+      "id": "311-005",
+      "date": "2026-03-28",
+      "area": "North Lawndale",
+      "areaCode": 29,
+      "type": "health-service",
+      "description": "Pregnant woman, 7 months. Lost OB when St. Elizabeth closed last year. Asking where to deliver.",
+      "status": "referred",
+      "priority": "high"
+    },
+    {
+      "id": "311-006",
+      "date": "2026-03-28",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "health-service",
+      "description": "Church pastor requesting bulk information packets for congregation. 'People are panicking.'",
+      "status": "open",
+      "priority": "moderate"
+    },
+    {
+      "id": "311-007",
+      "date": "2026-03-29",
+      "area": "South Shore",
+      "areaCode": 43,
+      "type": "wellness-check",
+      "description": "Family worried about father with heart condition. South Shore Hospital rumored to close next.",
+      "status": "open",
+      "priority": "moderate"
+    },
+    {
+      "id": "311-008",
+      "date": "2026-03-29",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "health-service",
+      "description": "Pharmacy on Madison St reports spike in patients asking for emergency prescription refills with no doctor on file.",
+      "status": "open",
+      "priority": "high"
+    },
+    {
+      "id": "311-009",
+      "date": "2026-03-30",
+      "area": "West Garfield Park",
+      "areaCode": 26,
+      "type": "wellness-check",
+      "description": "Neighbor reports elderly man with oxygen tank has not been seen leaving apartment in 5 days. Used to go to West Suburban weekly.",
+      "status": "dispatched",
+      "priority": "critical"
+    },
+    {
+      "id": "311-010",
+      "date": "2026-03-30",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "health-service",
+      "description": "Home health aide for 3 patients in Austin. All had appointments at West Suburban next week. Cannot reach anyone to reschedule.",
+      "status": "open",
+      "priority": "high"
+    },
+    {
+      "id": "311-011",
+      "date": "2026-03-30",
+      "area": "Humboldt Park",
+      "areaCode": 23,
+      "type": "health-service",
+      "description": "Spanish-speaking mother with sick infant. Went to Norwegian American but could not communicate symptoms. Requesting interpreter services.",
+      "status": "referred",
+      "priority": "high"
+    },
+    {
+      "id": "311-012",
+      "date": "2026-03-31",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "health-service",
+      "description": "Alderman's office requesting data on how many constituents were West Suburban patients. No central registry exists.",
+      "status": "open",
+      "priority": "moderate"
+    },
+    {
+      "id": "311-013",
+      "date": "2026-03-31",
+      "area": "Roseland",
+      "areaCode": 49,
+      "type": "wellness-check",
+      "description": "Diabetic woman missed her last 2 appointments because she thought Roseland Hospital was closing. It is still open.",
+      "status": "resolved",
+      "priority": "moderate"
+    },
+    {
+      "id": "311-014",
+      "date": "2026-04-01",
+      "area": "Austin",
+      "areaCode": 25,
+      "type": "health-service",
+      "description": "Mental health counselor reports 6 patients lost to follow-up since West Suburban behavioral health unit closed. Cannot locate them.",
+      "status": "open",
+      "priority": "critical"
+    },
+    {
+      "id": "311-015",
+      "date": "2026-04-01",
+      "area": "Brighton Park",
+      "areaCode": 58,
+      "type": "health-service",
+      "description": "Community organization requesting translated materials about clinic alternatives. Spanish and Polish needed.",
+      "status": "open",
+      "priority": "moderate"
+    }
+  ]
+}

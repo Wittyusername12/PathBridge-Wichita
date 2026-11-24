@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FreshRoute KC — Strategic &amp; Operational Blueprint</title>
+<meta property="og:description" content="A golden page for the coverage check"/>
+<meta name="naipc-challenge" content="chicago-2026-04-04">
+<meta name="naipc-run" content="GOLDEN-RUN">
+<style>
+:root{--text:#111;--dim:#666}
+.kpi>.kpi-val{font-weight:800}
+section > h2::after{content:"</section>"}
+</style>
+<script>window.__golden = "<div data-sec=\"summary\">not a block</div>";</script>
+</head>
+<body>
+<nav class="topnav"><a href="#summary">Summary</a> <a href="#brief">Brief</a> <a href="#financials">Financials</a></nav>
+<!-- ═══ HERO ═══ -->
+<header class="hero"><h1>FreshRoute KC</h1><p class="lead">A coordination layer for Kansas City&#x27;s food network.</p></header>
+<section class="kpi-strip" id="sec-kpis" data-sec="kpis" data-sec-items="4">
+  <div class="kpi"><div class="kpi-val" data-count="12000">0</div><div class="kpi-lbl">Year-1 beneficiaries</div></div>
+  <div class="kpi"><div class="kpi-val" data-count="36">0</div><div class="kpi-lbl">Cost per beneficiary</div></div>
+  <div class="kpi"><div class="kpi-val" data-count="2.9">0</div><div class="kpi-lbl">SROI</div></div>
+  <div class="kpi"><div class="kpi-val" data-count="60">0</div><div class="kpi-lbl">Pilot days</div></div>
+</section>
+<section id="brief" class="card" data-brief-panel>
+  <div class="sec-label">How this answers the brief</div>
+  <style>@media (max-width:600px){ #brief td{display:block} }</style>
+  <table class="matrix-table">
+    <thead><tr><th scope="col">The brief asks</th><th scope="col">Our answer</th><th scope="col">Where on this page</th></tr></thead>
+    <tbody>
+      <tr data-brief-row="oracle-q1" data-brief-answer="model">
+        <td data-brief-cell="q" style="vertical-align:top">Does the math work? Revenue, costs, margins?</td>
+        <td data-brief-cell="a" style="vertical-align:top">Yes. A three-year budget of $1.5M against $4.4M in present-value benefits; margins are shown per route.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#financials" data-brief-link="financials">04 Financial Model</a></td>
+      </tr>
+      <tr data-brief-row="oracle-q2" data-brief-answer="model">
+        <td data-brief-cell="q" style="vertical-align:top">Is the strategy data-driven?</td>
+        <td data-brief-cell="a" style="vertical-align:top">Every figure traces to one of the 8 endpoints, cited inline (📊 pantries, 📊 311-calls).</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#evidence" data-brief-link="evidence">02 Data Analysis</a><br><a href="#sec-data-sources" data-brief-link="data-sources">Data sources</a></td>
+      </tr>
+      <tr data-brief-row="oracle-q3" data-brief-answer="model">
+        <td data-brief-cell="q" style="vertical-align:top">Does it show city ROI on their $500K?</td>
+        <td data-brief-cell="a" style="vertical-align:top">2.9 : 1 social return on the city&#x27;s $500K, with the derivation table on this page.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#sec-sroi" data-brief-link="sroi">SROI derivation</a><br><a href="#sec-cost-of-inaction" data-brief-link="cost-of-inaction">Cost of inaction</a></td>
+      </tr>
+      <tr data-brief-row="oracle-q4" data-brief-answer="model">
+        <td data-brief-cell="q" style="vertical-align:top">How well did you use AI for analysis?</td>
+        <td data-brief-cell="a" style="vertical-align:top">Claude drafted the analysis from the endpoints; code computed every number &amp; checked each claim.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#sec-ai-process" data-brief-link="ai-process">AI process</a></td>
+      </tr>
+      <tr data-brief-row="oracle-m1" data-brief-answer="model">
+        <td data-brief-cell="q" style="vertical-align:top">How does the $500K get spent?</td>
+        <td data-brief-cell="a" style="vertical-align:top">Routes and drivers 62%, hubs 21%, data and outreach 17%.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#financials" data-brief-link="financials">04 Financial Model</a></td>
+      </tr>
+      <tr data-brief-row="oracle-m2" data-brief-answer="model">
+        <td data-brief-cell="q" style="vertical-align:top">What&#x27;s the 60-day plan?</td>
+        <td data-brief-cell="a" style="vertical-align:top">Days 1–20 sign the pantries and open two hubs; days 21–60 run daily routes and report weekly.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#plan" data-brief-link="plan">05 Delivery Plan</a></td>
+      </tr>
+      <tr data-brief-row="oracle-m3" data-brief-answer="none">
+        <td data-brief-cell="q" style="vertical-align:top">How do you convince the city to renew?</td>
+        <td data-brief-cell="a" style="vertical-align:top">—</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#sec-renewal" data-brief-link="renewal">Renewal / sustainability</a><br><a href="#sec-sroi" data-brief-link="sroi">SROI derivation</a></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<!-- ═══ SUMMARY ═══ -->
+<section id="summary" data-sec="summary">
+  <div class="sec-label" data-cov-skip>01 &middot; Executive Summary</div>
+  <h2>Executive Summary</h2>
+  <p class="bluf"><strong data-cov-skip>Bottom line:</strong> FreshRoute KC routes surplus produce from 3 regional hubs to 47 pantries across Wyandotte and Jackson counties &amp; reaches 12,000 people in year one at $36 per beneficiary <a class="src-link" href="#src-pantries" data-src="pantries" role="doc-noteref" title="View source: pantries">📊 pantries</a>.
+  <p>The city&#x27;s $500K buys a 60-day proof, then a renewal decision on measured results.</p>
+</section>
+<section id="sec-cost-of-inaction" data-sec="cost-of-inaction" data-req="oracle-q3">
+  <div class="sec-label" data-cov-skip>02 &middot; Cost of Inaction</div>
+  <p>Waiting three years costs approximately <strong>$2.9 million</strong> in avoidable emergency food spending.</p>
+</section>
+<!-- ═══ EVIDENCE ═══ -->
+<section id="evidence" data-sec="evidence" data-req="oracle-q2">
+  <h2>Data-Driven Evidence Base: 8 Endpoints</h2>
+  <div class="ev-grid">
+    <div class="ev-card"><h3>Pantry gaps</h3><p>Twelve ZIPs hold 61% of food-insecure residents but only 9 of 47 pantries; the gap is widest in 66101 and 66105.</p><div class="ev-src" data-cov-skip>Source: pantries, demographics</div></div>
+    <div class="ev-card"><h3>Shutoff calls</h3><p>The 311 line logged 2,354 utility-shutoff calls in twelve months, a leading signal of household food stress.</p><div class="ev-src" data-cov-skip>Source: 311-calls</div></div>
+    <div class="ev-card"><h3>Supply</h3><p>TEFAP deliveries fell 40% this quarter, a 3-million-lb gap that routing alone cannot close.</p><div class="ev-src" data-cov-skip>Source: supply-alerts</div></div>
+  </div>
+</section>
+<section id="operations" data-sec="operations">
+  <h2>Operations</h2>
+  <p>Two coordinators and four drivers run the routes on weekdays; volunteers staff the Saturday hub at the Central Avenue church.
+  <table class="ops"><thead><tr><th>Role<th>FTE<th>Cost</thead>
+    <tbody><tr><td>Route coordinator<td>2.0<td>$124,000
+    <tr><td>Driver<td>4.0<td>$188,000
+    <tr><td>Volunteer lead<td>0.5<td>$21,000</tbody></table>
+  <p>Drivers start at 6 a.m. so produce reaches pantries before doors open.</p>
+</section>
+<!-- ═══ FINANCIALS ═══ -->
+<section id="financials" data-sec="financials" data-req="oracle-q1 oracle-m1">
+  <h2>Financial Model</h2>
+  <p>Three-year budget of $1.5M against $4.4M in present-value social benefits.</p>
+  <canvas id="finChart" width="600" height="240"></canvas>
+  <script>new Chart(document.getElementById("finChart"), {type: "bar", data: {labels: ["Y1", "Y2", "Y3"]}}); var t = "</p><p>not text</p>";</script>
+  <details class="acc" id="sec-sroi" data-sec="sroi" data-req="oracle-q3 oracle-m3">
+    <summary>SROI derivation (3-year)</summary>
+    <table><thead><tr><th>Outcome<th>Proxy<th>Qty<th>Value<th>Note</thead><tbody>
+      <tr><td>ER visits avoided<td>$2,200/unit<td class="num">240<td class="num">$528,000<td>[ESTIMATE] Quantity is 2% of 12,000 Year 1 beneficiaries.
+      <tr><td>Utility shutoffs averted<td>$400/unit<td class="num">300<td class="num">$120,000<td>[ESTIMATE] Reconnection fees avoided; 8% of 3,860 callers [CHALLENGE_DATA: 311-calls].
+      <tr class="total"><td colspan="3" data-cov-skip>Adjusted PV of Social Benefits (3-year)<td class="num">$3,550,974<td>
+    </tbody></table>
+  </details>
+  <div id="sec-sensitivity" data-sec="sensitivity">
+    <p class="pending">PENDING — the sensitivity analysis appears after the financial model runs.</p>
+  </div>
+</section>
+<div class="card" id="simPanel" data-sec="simulator" data-sec-items="0">
+  <div class="sec-label" data-cov-skip>What-if simulator</div>
+  <label>Budget ($K) <input type="range" id="simBudget" min="250" max="750" value="500"></label>
+  <label>Reach <input type="number" id="simReach" value="12000"/></label>
+  <output id="simOut"></output>
+</div>
+<section id="plan" data-sec="plan" data-req="oracle-m2">
+  <h2>60-Day Implementation Plan</h2>
+  <div data-accordion>
+    <div class="phase"><button class="phase-hd" data-cov-skip>Phase 1 &middot; Days 1&ndash;20</button>
+      <div class="phase-bd"><p>Sign data-sharing agreements with the 9 pantries in 66101 and 66105 and map their cold storage.<div class="tip">Hubs open on day 14.</div> Routes start once two hubs are live.</div></div>
+    <div class="phase"><button class="phase-hd" data-cov-skip>Phase 2 &middot; Days 21&ndash;60</button>
+      <div class="phase-bd"><p>Run daily routes, measure pounds delivered per stop, and publish a weekly dashboard for the city.</div></div>
+  </div>
+</section>
+<details class="acc" id="sec-risks" data-sec="risks">
+  <summary>Risks &amp; mitigations</summary>
+  <ul>
+    <li><strong>Supply shortfall:</strong> the TEFAP cut deepens. <em>Mitigation:</em> a farm-rescue contract covers 20% of routed volume.
+    <li><strong>Turnout:</strong> ID rules suppress participation in 66101. <em>Mitigation:</em> no-ID pickup at partner sites.
+    <li><strong>Cold storage:</strong> two pantries cannot hold produce overnight. <em>Mitigation:</em> same-day routing to them.
+  </ul>
+</details>
+<div class="callout" id="sec-renewal" data-sec="renewal" data-req="oracle-m3"><span class="lbl" data-cov-skip>Renewal Trigger</span> Renew if 8,000 people are served by day 60 at under $45 each.</div>
+<section id="sec-data-sources" data-sec="data-sources" data-req="oracle-q2">
+  <h3>Data Sources</h3>
+  <ol>
+    <li id="src-pantries"><a href="https://example.org/api/pantries" target="_blank" rel="noopener">pantries</a> &mdash; 47 records, fetched at run time
+    <li id="src-311-calls"><a href="https://example.org/api/311-calls">311-calls</a> &mdash; 2,354 shutoff-led calls in twelve months
+    <li id="src-supply-alerts"><a href="https://example.org/api/supply-alerts">supply-alerts</a> &mdash; 2 alerts, status normal
+    <li id="src-demographics"><a href="https://example.org/api/demographics">demographics</a> &mdash; 12 ZIPs with population and vehicle access
+    <li id="src-food-atlas"><a href="https://example.org/api/food-atlas">food-atlas</a> &mdash; low-access tracts by distance to a grocery store
+  </ol>
+</section>
+<div id="sec-methodology" data-sec="methodology">
+  <h3>Methodology</h3>
+  <p>Costs come from the financial model; benefits use published proxies discounted at 3% over three years.</p>
+  <script>document.querySelectorAll(".acc").forEach(function (d) { if (d.open && 1 < 2) { d.dataset.x = "</div>"; } });</script>
+  <style>#sec-methodology > p { margin: 0 }</style>
+  <template id="tplRow"><p>A row template the page fills with JavaScript.</p></template>
+  <p>Every headline number traces to an endpoint or a stated assumption, and the assumptions list below names each one.</p>
+</div>
+<div id="sec-ai-process" data-sec="ai-process" data-req="oracle-q4">
+  <h3>How the AI was used</h3>
+  <ol>
+    <li>Claude read all 8 endpoints and drafted the analysis; code computed every figure.<br>The model never set a number.
+    <li>A second pass checked each claim against its source tag.<img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="">
+    <li>Separated observed facts from estimates, labelled [ESTIMATE].
+  </ol>
+</div>
+<ul id="sec-assumptions" data-sec="assumptions"><li>3% discount rate.<li>No inflation.</ul>
+<footer><p>Built for the challenge &middot; <a href="#brief">back to the brief</a></p></footer>
+</body>
+</html>

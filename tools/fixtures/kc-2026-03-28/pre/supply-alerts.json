@@ -1,0 +1,37 @@
+{
+  "status": "normal",
+  "lastUpdated": "2026-03-28T09:00:00-05:00",
+  "alerts": [
+    {
+      "id": "sa-001",
+      "type": "federal_cut",
+      "severity": "high",
+      "title": "TEFAP Federal Allocation Reduced 40%",
+      "description": "The Emergency Food Assistance Program allocation for Missouri was cut by 40% effective March 1, 2026. Harvesters reports a 3-million-pound shortfall this quarter.",
+      "impactedZips": [
+        "64130",
+        "64127",
+        "64128",
+        "64109",
+        "64132",
+        "66101",
+        "66105"
+      ],
+      "date": "2026-03-01",
+      "source": "USDA / Harvesters"
+    },
+    {
+      "id": "sa-002",
+      "type": "demand_spike",
+      "severity": "medium",
+      "title": "311 Food Assistance Calls Up 24%",
+      "description": "311 calls related to food assistance have increased 24% in ZIP 64130 and 28% in ZIP 66101 over the past 6 months.",
+      "impactedZips": [
+        "64130",
+        "66101"
+      ],
+      "date": "2026-02-15",
+      "source": "KC 311 Data"
+    }
+  ]
+}

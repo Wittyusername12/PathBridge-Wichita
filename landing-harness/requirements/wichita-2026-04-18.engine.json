@@ -1,0 +1,1307 @@
+{
+ "schema_version": 1,
+ "challenge": "wichita-2026-04-18",
+ "_note": "BUILD B1 (D1): the prioritization model's published table for Wichita — three option sets from the API (shelter-inventory, transition-programs, intake-network) and the three named users the engine serves (Jordan, Tanya and Luis get their views in builds 2 and 4). Annotations read a limit the data states only in a record's text; each quotes that record's own words (checked). slotsAvailable is read as a program's capacity: CrossRoads' 12 and BRIDGES' 8 match their bed counts in shelter-inventory (an inference, published in the factor's why). Review (11/03): HumanKind (permanent supportive housing) is left out of \"A bed tonight\" in its own words; ETV's enrollment condition is read from its record (to confirm for Maya); each program shows its eligibility text; an attribute derived from an age is assumed, with its reason. BUILD B2: a fourth set, \"A place to rent\" (rehousing-options), on the Architect page only (pages), for the housing readiness tracker; the intake (four steps), the plan, the checklist (stabilization-docs in unlock order), the navigator (the programs set) and the readiness steps; the doors' contact fields for the plan; Robert's veteran status as an eligibility the rental table reads (stated from his role).",
+ "option_sets": [
+  {
+   "id": "beds",
+   "label": "A bed tonight",
+   "endpoint": "shelter-inventory",
+   "name_field": "providerName",
+   "referral": {
+    "field": "requiresReferral",
+    "is": true
+   },
+   "annotations": {
+    "shelter-007": {
+     "serviceAudience": {
+      "value": [
+       "single-adults",
+       "families"
+      ],
+      "quote": "Singles and families served through parallel programs, not combined."
+     }
+    },
+    "shelter-010": {
+     "serviceAudience": {
+      "value": [
+       "single-adults"
+      ],
+      "quote": "Adults with serious mental illness; singles only."
+     },
+     "requires": {
+      "value": [
+       "serious mental illness"
+      ],
+      "quote": "Adults with serious mental illness; singles only."
+     }
+    }
+   },
+   "gates": [
+    {
+     "id": "household",
+     "label": "Serves this household",
+     "rule": "in_set",
+     "field": "serviceAudience",
+     "attr": "audiences",
+     "any_values": [
+      "all"
+     ]
+    },
+    {
+     "id": "condition",
+     "label": "Meets the site's own condition",
+     "rule": "in_set",
+     "field": "requires",
+     "attr": "conditions",
+     "if_missing": "pass"
+    },
+    {
+     "id": "age",
+     "label": "Serves this age",
+     "rule": "age_range",
+     "field": "servedAges",
+     "attr": "age"
+    },
+    {
+     "id": "free",
+     "label": "A bed free now",
+     "rule": "free_above_zero",
+     "fields": [
+      "bedsOnline",
+      "bedsInUse"
+     ]
+    }
+   ],
+   "factors": [
+    {
+     "id": "built-for",
+     "label": "Built for this group",
+     "form": "match",
+     "field": "serviceAudience",
+     "attr": "primary_audience",
+     "max": 40,
+     "why": "fit and vulnerability: a site built for this person's group — the data names the failure: \"When CrossRoads is full the default fallback is adult shelters\" (intake-004)"
+    },
+    {
+     "id": "free-beds",
+     "label": "Free beds",
+     "form": "ratio",
+     "fields": [
+      "bedsOnline",
+      "bedsInUse"
+     ],
+     "ref": 10,
+     "max": 20,
+     "why": "capacity: more free beds tonight, less chance of a turn-away at the door"
+    },
+    {
+     "id": "no-referral",
+     "label": "No referral needed",
+     "form": "bool",
+     "field": "requiresReferral",
+     "want": false,
+     "max": 20,
+     "why": "urgency: a bed tonight without waiting for a referral first"
+    },
+    {
+     "id": "low-barrier",
+     "label": "Low-barrier entry",
+     "form": "bool",
+     "field": "lowBarrierAccess",
+     "want": true,
+     "max": 20,
+     "why": "vulnerability: no sobriety or document condition at the door"
+    }
+   ],
+   "tie_breakers": [
+    "free-beds",
+    "no-referral"
+   ],
+   "exclude": {
+    "shelter-009": {
+     "why": "a housing placement, not a bed tonight",
+     "quote": "Singles and families in permanent supportive housing units."
+    }
+   },
+   "contact": {
+    "address": "address"
+   }
+  },
+  {
+   "id": "programs",
+   "label": "A transition program",
+   "endpoint": "transition-programs",
+   "name_field": "programName",
+   "placeholders": {
+    "slotsAvailable": {
+     "value": 999,
+     "reads_as": "no cap",
+     "why": "a placeholder, not a count (the other programs hold 8 to 50), and the record is Medicaid coverage: \"Medicaid coverage extended to age 26 for former Kansas foster youth with no income test\""
+    }
+   },
+   "gates": [
+    {
+     "id": "age",
+     "label": "Serves this age",
+     "rule": "age_range",
+     "field": "servedAges",
+     "attr": "age"
+    },
+    {
+     "id": "condition",
+     "label": "Meets the program's own condition",
+     "rule": "in_set",
+     "field": "requires",
+     "attr": "conditions",
+     "if_missing": "pass"
+    },
+    {
+     "id": "free",
+     "label": "A slot free",
+     "rule": "free_above_zero",
+     "fields": [
+      "slotsAvailable",
+      "activeEnrollment"
+     ]
+    }
+   ],
+   "factors": [
+    {
+     "id": "runway",
+     "label": "Years before the age limit",
+     "form": "ratio",
+     "range_top": "servedAges",
+     "minus_attr": "age",
+     "ref": 5,
+     "max": 25,
+     "why": "youth-cliff proximity: the years of eligibility left before the program's age limit — DCF IL's \"Benefits stop the day the youth turns 21\""
+    },
+    {
+     "id": "intake-lag",
+     "label": "Weeks to start",
+     "form": "inverse",
+     "field": "intakeLagWeeks",
+     "ref": 8,
+     "max": 25,
+     "why": "urgency: the weeks before a first appointment"
+    },
+    {
+     "id": "retention",
+     "label": "Participants who stay",
+     "form": "inverse",
+     "field": "transitionDropoutRate",
+     "ref": 0.5,
+     "max": 25,
+     "why": "follow-through: the share of participants who lose contact with the program"
+    },
+    {
+     "id": "free-slots",
+     "label": "Free slots",
+     "form": "ratio",
+     "fields": [
+      "slotsAvailable",
+      "activeEnrollment"
+     ],
+     "ref": 10,
+     "max": 25,
+     "why": "capacity: slots free now (slotsAvailable read as capacity: CrossRoads' 12 and BRIDGES' 8 match their beds)"
+    }
+   ],
+   "tie_breakers": [
+    "runway",
+    "intake-lag"
+   ],
+   "check_field": "eligibilityCriteria",
+   "annotations": {
+    "prog-002": {
+     "requires": {
+      "value": [
+       "enrolled in postsecondary education or training"
+      ],
+      "quote": "actively enrolled in postsecondary education or vocational training"
+     }
+    }
+   }
+  },
+  {
+   "id": "doors",
+   "label": "A door to call or walk into",
+   "endpoint": "intake-network",
+   "name_field": "siteName",
+   "annotations": {
+    "intake-006": {
+     "serves": {
+      "value": [
+       "families"
+      ],
+      "quote": "Serves families with children only; no unaccompanied youth and no single adults."
+     }
+    },
+    "intake-004": {
+     "serves": {
+      "value": [
+       "youth"
+      ],
+      "quote": "Only round-the-clock youth-specific intake point."
+     }
+    }
+   },
+   "gates": [
+    {
+     "id": "open",
+     "label": "Open now",
+     "rule": "open_now",
+     "field": "openHours"
+    },
+    {
+     "id": "serves",
+     "label": "Serves this person",
+     "rule": "in_set",
+     "field": "serves",
+     "attr": "audiences",
+     "if_missing": "pass"
+    },
+    {
+     "id": "youth",
+     "label": "Takes youth",
+     "rule": "bool",
+     "field": "youthAccess",
+     "want": true,
+     "when": {
+      "attr": "youth",
+      "is": true
+     }
+    }
+   ],
+   "factors": [
+    {
+     "id": "live-transfer",
+     "label": "Warm handoff",
+     "form": "bool",
+     "field": "liveTransferSupported",
+     "want": true,
+     "max": 40,
+     "why": "urgency: the next door is reached on the call — Denise: \"By the time I figure it out, I'm already behind\""
+    },
+    {
+     "id": "built-for",
+     "label": "Built for this group",
+     "form": "match",
+     "field": "serves",
+     "attr": "primary_audience",
+     "max": 30,
+     "why": "fit: a door built for this person's group"
+    },
+    {
+     "id": "languages",
+     "label": "Languages served",
+     "form": "ratio",
+     "field": "supportedLanguages",
+     "ref": 2,
+     "max": 30,
+     "why": "access: a second language served at the door"
+    }
+   ],
+   "tie_breakers": [
+    "live-transfer"
+   ],
+   "contact": {
+    "phone": "contactPhone",
+    "hours": "openHours",
+    "address": "address"
+   }
+  },
+  {
+   "id": "homes",
+   "label": "A place to rent",
+   "endpoint": "rehousing-options",
+   "name_field": "propertyName",
+   "pages": [
+    "architect"
+   ],
+   "holds": {
+    "unit-002": {
+     "deposit": {
+      "quote": "Deposit assistance runs through the NEXTenant side",
+      "why": "confirm the assistance covers this person's deposit"
+     }
+    },
+    "unit-004": {
+     "deposit": {
+      "quote": "NEXTenant contributes deposit assistance",
+      "why": "confirm the assistance covers this person's deposit"
+     }
+    }
+   },
+   "annotations": {
+    "unit-005": {
+     "eligibility": {
+      "value": [
+       "veteran"
+      ],
+      "quote": "Veteran status required"
+     }
+    }
+   },
+   "gates": [
+    {
+     "id": "voucher",
+     "label": "Takes this person's voucher",
+     "rule": "in_set",
+     "field": "voucherProgramsAccepted",
+     "attr": "vouchers",
+     "when": {
+      "attr": "voucher_status",
+      "is": "program known"
+     }
+    },
+    {
+     "id": "voucher-any",
+     "label": "Takes vouchers",
+     "rule": "bool",
+     "field": "acceptsVouchers",
+     "want": true,
+     "when": {
+      "attr": "voucher_status",
+      "is": "program not known"
+     }
+    },
+    {
+     "id": "deposit",
+     "label": "No deposit this person cannot pay",
+     "rule": "bool",
+     "field": "depositRequired",
+     "want": false,
+     "when": {
+      "attr": "deposit_ready",
+      "is": false
+     }
+    },
+    {
+     "id": "screening",
+     "label": "Meets the property's own eligibility",
+     "rule": "in_set",
+     "field": "eligibility",
+     "attr": "eligibilities",
+     "if_missing": "pass"
+    }
+   ],
+   "factors": [
+    {
+     "id": "rent",
+     "label": "Rent",
+     "form": "inverse",
+     "field": "medianRent1bd",
+     "ref": 1000,
+     "max": 35,
+     "why": "affordability: a lower rent is easier to keep (0: the rent is set by the voucher program)"
+    },
+    {
+     "id": "transit",
+     "label": "Distance to transit",
+     "form": "inverse",
+     "field": "distanceToTransitMi",
+     "ref": 3,
+     "max": 25,
+     "why": "follow-through: Tanya: \"the next steps break down on documents, benefits, transportation, and follow-through\""
+    },
+    {
+     "id": "no-deposit",
+     "label": "No deposit",
+     "form": "bool",
+     "field": "depositRequired",
+     "want": false,
+     "max": 20,
+     "why": "move-in cost: no deposit to raise before the keys"
+    },
+    {
+     "id": "units",
+     "label": "Units",
+     "form": "ratio",
+     "field": "unitCount",
+     "ref": 50,
+     "max": 20,
+     "why": "capacity: more units, a better chance of an opening"
+    }
+   ],
+   "tie_breakers": [
+    "rent",
+    "transit"
+   ],
+   "show": [
+    "screeningBarriers",
+    "ownerOrManager"
+   ]
+  }
+ ],
+ "presets": [
+  {
+   "id": "maya",
+   "named_user": "maya",
+   "attrs": {
+    "age": {
+     "value": 19,
+     "basis": "stated",
+     "from": "age"
+    },
+    "youth": {
+     "value": true,
+     "basis": "assumed",
+     "reason": "from her age, 19"
+    },
+    "foster_history": {
+     "value": true,
+     "basis": "stated",
+     "from": "role",
+     "quote": "Recently exited foster care"
+    },
+    "audiences": {
+     "value": [
+      "youth",
+      "single-adults"
+     ],
+     "basis": "assumed",
+     "reason": "youth from her age; single, because the brief names no partner or children for her"
+    },
+    "primary_audience": {
+     "value": [
+      "youth"
+     ],
+     "basis": "assumed",
+     "reason": "youth, from her age (19)"
+    }
+   }
+  },
+  {
+   "id": "denise",
+   "named_user": "denise",
+   "attrs": {
+    "age": {
+     "value": 42,
+     "basis": "stated",
+     "from": "age"
+    },
+    "youth": {
+     "value": false,
+     "basis": "assumed",
+     "reason": "from her age, 42"
+    },
+    "audiences": {
+     "value": [
+      "families"
+     ],
+     "basis": "stated",
+     "from": "role",
+     "quote": "Mother of two"
+    },
+    "primary_audience": {
+     "value": [
+      "families"
+     ],
+     "basis": "stated",
+     "from": "role",
+     "quote": "Mother of two"
+    }
+   }
+  },
+  {
+   "id": "robert",
+   "named_user": "robert",
+   "attrs": {
+    "age": {
+     "value": 58,
+     "basis": "stated",
+     "from": "age"
+    },
+    "youth": {
+     "value": false,
+     "basis": "assumed",
+     "reason": "from his age, 58"
+    },
+    "veteran": {
+     "value": true,
+     "basis": "stated",
+     "from": "role",
+     "quote": "Veteran"
+    },
+    "audiences": {
+     "value": [
+      "single-men",
+      "single-adults"
+     ],
+     "basis": "assumed",
+     "reason": "a man, from his name, and single — the brief says neither"
+    },
+    "primary_audience": {
+     "value": [
+      "single-men",
+      "single-adults"
+     ],
+     "basis": "assumed",
+     "reason": "a man, from his name, and single — the brief says neither"
+    },
+    "eligibilities": {
+     "value": [
+      "veteran"
+     ],
+     "basis": "stated",
+     "from": "role",
+     "quote": "Veteran"
+    }
+   }
+  }
+ ],
+ "intake": {
+  "steps": [
+   {
+    "id": "who",
+    "label": "Who needs a place tonight?",
+    "attr": "audiences",
+    "options": [
+     {
+      "label": "A man on his own",
+      "value": [
+       "single-men",
+       "single-adults"
+      ],
+      "attrs": {
+       "primary_audience": [
+        "single-men",
+        "single-adults"
+       ]
+      }
+     },
+     {
+      "label": "A woman on her own",
+      "value": [
+       "single-adults"
+      ],
+      "attrs": {
+       "primary_audience": [
+        "single-adults"
+       ]
+      }
+     },
+     {
+      "label": "A young person on their own (18–24)",
+      "value": [
+       "youth",
+       "single-adults"
+      ],
+      "attrs": {
+       "primary_audience": [
+        "youth"
+       ]
+      }
+     },
+     {
+      "label": "A parent with children",
+      "value": [
+       "families"
+      ],
+      "attrs": {
+       "primary_audience": [
+        "families"
+       ]
+      }
+     }
+    ]
+   },
+   {
+    "id": "age",
+    "label": "How old are you?",
+    "attr": "age",
+    "type": "number",
+    "min": 12,
+    "max": 110,
+    "derive": [
+     {
+      "attr": "youth",
+      "when_at_most": 24,
+      "why": "the youth beds in the data serve up to 24 (CrossRoads: servedAges 18-24)"
+     }
+    ]
+   },
+   {
+    "id": "need",
+    "label": "What do you need first?",
+    "sets": [
+     "beds",
+     "doors",
+     "programs",
+     "homes"
+    ],
+    "multi": true
+   },
+   {
+    "id": "known",
+    "label": "Anything else that decides where you can go?",
+    "attr": "conditions",
+    "multi": true,
+    "options": [
+     {
+      "label": "I'm in school or job training",
+      "value": "enrolled in postsecondary education or training"
+     },
+     {
+      "label": "I have a serious mental illness diagnosis",
+      "value": "serious mental illness"
+     },
+     {
+      "label": "None of these",
+      "value": []
+     }
+    ]
+   }
+  ],
+  "plan": [
+   {
+    "title": "Tonight",
+    "sets": [
+     "beds",
+     "doors"
+    ]
+   },
+   {
+    "title": "Next",
+    "sets": [
+     "programs"
+    ],
+    "documents": 3
+   },
+   {
+    "title": "Tomorrow",
+    "call": "doors",
+    "documents_days": true
+   }
+  ]
+ },
+ "checklist": {
+  "endpoint": "stabilization-docs",
+  "name_field": "docName",
+  "label": "Documents and benefits",
+  "fields": {
+   "category": "docCategory",
+   "unlocks": "gatesUnlocked",
+   "days": "processingDays",
+   "fee": "feeUsd",
+   "blockers": "knownBlockers",
+   "help": "supportResources",
+   "notes": "docNotes"
+  },
+  "unlock_keys": {
+   "state-id": {
+    "id": "doc-004",
+    "quote": "Kansas State ID"
+   },
+   "social-security-card": {
+    "id": "doc-003",
+    "quote": "Social Security Card"
+   },
+   "banking": {
+    "id": "doc-008",
+    "quote": "Bank Account"
+   }
+  },
+  "for_sets": {
+   "beds": [
+    "shelter-intake",
+    "shelter-access"
+   ],
+   "programs": [
+    "etv-funding",
+    "education-vouchers"
+   ],
+   "homes": [
+    "housing-application",
+    "rental-approval"
+   ],
+   "doors": [
+    "benefits-enrollment"
+   ]
+  }
+ },
+ "navigator": {
+  "set": "programs",
+  "label": "Youth transition navigator",
+  "window_field": "servedAges",
+  "lag_field": "intakeLagWeeks",
+  "free_fields": [
+   "slotsAvailable",
+   "activeEnrollment"
+  ]
+ },
+ "readiness": {
+  "set": "homes",
+  "label": "Housing readiness tracker",
+  "documents_for": "housing-application",
+  "barriers_field": "screeningBarriers",
+  "steps": [
+   {
+    "id": "voucher",
+    "label": "Do you have a housing voucher?",
+    "attr": "vouchers",
+    "options": [
+     {
+      "label": "Housing Choice Voucher (HCV)",
+      "value": [
+       "HCV"
+      ],
+      "attrs": {
+       "voucher_status": "program known"
+      }
+     },
+     {
+      "label": "VASH (veterans)",
+      "value": [
+       "VASH"
+      ],
+      "attrs": {
+       "voucher_status": "program known"
+      }
+     },
+     {
+      "label": "Rapid rehousing",
+      "value": [
+       "rapid-rehousing"
+      ],
+      "attrs": {
+       "voucher_status": "program known"
+      }
+     },
+     {
+      "label": "Yes, but not sure which program",
+      "value": [],
+      "attrs": {
+       "voucher_status": "program not known"
+      }
+     },
+     {
+      "label": "No voucher yet",
+      "value": [],
+      "attrs": {
+       "voucher_status": "none"
+      }
+     }
+    ]
+   },
+   {
+    "id": "deposit",
+    "label": "Can you pay a deposit now?",
+    "attr": "deposit_ready",
+    "options": [
+     {
+      "label": "Yes",
+      "value": true
+     },
+     {
+      "label": "Not yet",
+      "value": false
+     }
+    ]
+   },
+   {
+    "id": "veteran",
+    "label": "Are you a veteran?",
+    "attr": "eligibilities",
+    "options": [
+     {
+      "label": "Yes",
+      "value": [
+       "veteran"
+      ]
+     },
+     {
+      "label": "No",
+      "value": []
+     }
+    ]
+   }
+  ]
+ },
+ "registry": {
+  "_note": "BUILD B3 (P0.4, D1): the figures the Oracle's pages cite by name. Field classes and windows from tracker §7.4 (the data-model truth); the named entries from Appendix B. Validate: python -B naipc_engine.py validate <contract> <data>.",
+  "fields": {
+   "community-snapshot.shelteredAndUnshelteredTotal": {
+    "class": "stock",
+    "window": "the 2025 Point-in-Time night",
+    "cohort": "people homeless on one night, sheltered and unsheltered",
+    "unit": "people",
+    "label": "people homeless on the 2025 Point-in-Time night",
+    "fmt": "count",
+    "request": {
+     "cohort": "people homeless on the night of the count, sheltered and unsheltered"
+    }
+   },
+   "community-snapshot.shelteredOrTransitional": {
+    "class": "stock",
+    "window": "the 2025 Point-in-Time night",
+    "cohort": "people sheltered or in transitional housing that night",
+    "unit": "people",
+    "label": "people sheltered or in transitional housing on the Point-in-Time night",
+    "fmt": "count"
+   },
+   "community-snapshot.unshelteredHeadcount": {
+    "class": "stock",
+    "window": "the 2025 Point-in-Time night",
+    "cohort": "people unsheltered that night",
+    "unit": "people",
+    "label": "people unsheltered on the Point-in-Time night",
+    "fmt": "count"
+   },
+   "community-snapshot.yoyChangePct": {
+    "class": "rate",
+    "window": "the 2024 and 2025 Point-in-Time counts",
+    "cohort": "the Point-in-Time total",
+    "unit": "",
+    "label": "change in the Point-in-Time total, 2024 to 2025",
+    "fmt": "pct"
+   },
+   "community-snapshot.sheltered2024vs2025ChangePct": {
+    "class": "rate",
+    "window": "the 2024 and 2025 Point-in-Time counts",
+    "cohort": "people sheltered on the Point-in-Time night",
+    "unit": "",
+    "label": "change in people sheltered, 2024 to 2025",
+    "fmt": "pct"
+   },
+   "community-snapshot.permanentHousingCoalition": {
+    "class": "flow",
+    "window": "a year (the data does not say which)",
+    "cohort": "placements into permanent housing by the coalition (who is counted is not stated)",
+    "unit": "placements",
+    "label": "permanent-housing placements by the coalition in a year",
+    "fmt": "count"
+   },
+   "community-snapshot.permanentHousingCoalitionDelta": {
+    "class": "flow",
+    "window": "not stated",
+    "cohort": "a change in placements whose basis is not stated",
+    "unit": "placements",
+    "label": "a change in coalition placements (the data does not say against what)",
+    "fmt": "count"
+   },
+   "community-snapshot.firstTimeHomelessAnnual": {
+    "class": "flow",
+    "window": "FY Oct 2023 – Sep 2024",
+    "cohort": "people homeless for the first time",
+    "unit": "people",
+    "label": "people homeless for the first time in FY 2023–24",
+    "fmt": "count"
+   },
+   "community-snapshot.peopleServedAnnual": {
+    "class": "flow",
+    "window": "FY Oct 2023 – Sep 2024",
+    "cohort": "people the homeless-services system served",
+    "unit": "people",
+    "label": "people the system served in FY 2023–24",
+    "fmt": "count"
+   },
+   "community-snapshot.newlyHomelessShare": {
+    "class": "rate",
+    "window": "FY Oct 2023 – Sep 2024",
+    "cohort": "people served who were newly homeless",
+    "unit": "",
+    "label": "share of people served who were newly homeless",
+    "fmt": "pct"
+   },
+   "community-snapshot.housedWithinYearRate": {
+    "class": "rate",
+    "window": "FY Oct 2023 – Sep 2024",
+    "cohort": "people served who were housed within the year (the rate's denominator is not stated)",
+    "unit": "",
+    "label": "share housed within the year",
+    "fmt": "pct"
+   },
+   "community-snapshot.permanentRetention2yr": {
+    "class": "rate",
+    "window": "two years after placement",
+    "cohort": "people placed in permanent housing",
+    "unit": "",
+    "label": "share still housed two years after placement",
+    "fmt": "pct",
+    "request": {
+     "window": "the retention measure's own horizon after placement (its field name: permanentRetention2yr)",
+     "label": "share still housed at the retention measure's horizon after placement"
+    }
+   },
+   "community-snapshot.avgDaysToHousing": {
+    "class": "duration",
+    "window": "FY Oct 2023 – Sep 2024",
+    "cohort": "people housed",
+    "unit": "days",
+    "label": "average days to housing in Wichita",
+    "fmt": "count"
+   },
+   "community-snapshot.nationalDaysToHousing": {
+    "class": "duration",
+    "window": "the national figure the data cites",
+    "cohort": "people housed nationally",
+    "unit": "days",
+    "label": "average days to housing nationally",
+    "fmt": "count"
+   },
+   "community-snapshot.perCapitaRateLocal": {
+    "class": "rate",
+    "window": "the 2025 Point-in-Time night",
+    "cohort": "Wichita residents",
+    "unit": "per 10,000 residents",
+    "label": "people homeless per 10,000 residents in Wichita",
+    "fmt": "count",
+    "request": {
+     "label": "people homeless in Wichita, a rate"
+    }
+   },
+   "community-snapshot.perCapitaRateNational": {
+    "class": "rate",
+    "window": "the 2025 Point-in-Time night",
+    "cohort": "U.S. residents",
+    "unit": "per 10,000 residents",
+    "label": "people homeless per 10,000 residents nationally",
+    "fmt": "count",
+    "request": {
+     "label": "people homeless nationally, a rate"
+    }
+   },
+   "community-snapshot.totalEmergencyBeds": {
+    "class": "stock",
+    "window": "now (the snapshot's own count)",
+    "cohort": "emergency shelter beds",
+    "unit": "beds",
+    "label": "emergency shelter beds, by the snapshot",
+    "fmt": "count"
+   },
+   "community-snapshot.bedsAvailableNow": {
+    "class": "stock",
+    "window": "now (the snapshot's own count)",
+    "cohort": "emergency shelter beds available now",
+    "unit": "beds",
+    "label": "emergency beds available now, by the snapshot",
+    "fmt": "count"
+   },
+   "community-snapshot.vashPlacementsAnnual": {
+    "class": "flow",
+    "window": "a year",
+    "cohort": "VASH placements of veterans",
+    "unit": "placements",
+    "label": "VASH placements of veterans in a year",
+    "fmt": "count"
+   },
+   "community-snapshot.fosterHomelessnessAge17": {
+    "class": "rate",
+    "window": "by age 17",
+    "cohort": "youth in or leaving foster care",
+    "unit": "",
+    "label": "share of youth from foster care homeless by 17",
+    "fmt": "pct",
+    "request": {
+     "label": "share of youth from foster care homeless by age 17"
+    }
+   },
+   "community-snapshot.fosterHomelessnessAge19": {
+    "class": "rate",
+    "window": "by age 19",
+    "cohort": "youth in or leaving foster care",
+    "unit": "",
+    "label": "share of youth from foster care homeless by 19",
+    "fmt": "pct",
+    "request": {
+     "label": "share of youth from foster care homeless by age 19"
+    }
+   },
+   "community-snapshot.fosterHomelessnessAge21": {
+    "class": "rate",
+    "window": "by age 21",
+    "cohort": "youth in or leaving foster care",
+    "unit": "",
+    "label": "share of youth from foster care homeless by 21",
+    "fmt": "pct",
+    "request": {
+     "label": "share of youth from foster care homeless by age 21"
+    }
+   },
+   "community-snapshot.ftEmploymentAge17": {
+    "class": "rate",
+    "window": "at age 17",
+    "cohort": "youth from foster care",
+    "unit": "",
+    "label": "share of youth from foster care employed full time at 17",
+    "fmt": "pct",
+    "request": {
+     "label": "share of youth from foster care employed full time at age 17"
+    }
+   },
+   "community-snapshot.ftEmploymentAge21": {
+    "class": "rate",
+    "window": "at age 21",
+    "cohort": "youth from foster care",
+    "unit": "",
+    "label": "share of youth from foster care employed full time at 21",
+    "fmt": "pct",
+    "request": {
+     "label": "share of youth from foster care employed full time at age 21"
+    }
+   },
+   "community-snapshot.kansasYouthAgingOutAnnual": {
+    "class": "flow",
+    "window": "a year (statewide)",
+    "cohort": "Kansas youth aging out of foster care",
+    "unit": "youth",
+    "label": "Kansas youth aging out of foster care a year",
+    "fmt": "count"
+   },
+   "community-snapshot.coalitionMemberOrgs": {
+    "class": "stock",
+    "window": "now (the snapshot's own count)",
+    "cohort": "coalition member organizations",
+    "unit": "organizations",
+    "label": "coalition member organizations",
+    "fmt": "count"
+   }
+  },
+  "text_figures": [
+   {
+    "id": "status001-reachable",
+    "endpoint": "system-status",
+    "record": "status-001",
+    "quote": "Only 17 of 87 emergency shelter beds are actually reachable",
+    "value": 17,
+    "unit": "beds",
+    "class": "stock",
+    "window": "now (alert status-001's own count)",
+    "label": "reachable emergency beds, by alert status-001"
+   },
+   {
+    "id": "status001-total",
+    "endpoint": "system-status",
+    "record": "status-001",
+    "quote": "Only 17 of 87 emergency shelter beds are actually reachable",
+    "value": 87,
+    "unit": "beds",
+    "class": "stock",
+    "window": "now (alert status-001's own count)",
+    "label": "emergency shelter beds, by alert status-001"
+   },
+   {
+    "id": "open-door-contacts-low",
+    "endpoint": "shelter-inventory",
+    "record": "shelter-002",
+    "quote": [
+     "Reports 80-120 unique daily contacts",
+     "The highest-volume walk-in intake in the system (80-120 contacts/day)"
+    ],
+    "value": 80,
+    "unit": "contacts a day",
+    "class": "flow",
+    "window": "a day",
+    "label": "Open Door's daily contacts (low end)"
+   },
+   {
+    "id": "open-door-contacts-high",
+    "endpoint": "shelter-inventory",
+    "record": "shelter-002",
+    "quote": [
+     "Reports 80-120 unique daily contacts",
+     "The highest-volume walk-in intake in the system (80-120 contacts/day)"
+    ],
+    "value": 120,
+    "unit": "contacts a day",
+    "class": "flow",
+    "window": "a day",
+    "label": "Open Door's daily contacts (high end)"
+   },
+   {
+    "id": "storm-displaced",
+    "endpoint": "system-status",
+    "record": "status-010",
+    "quote": "roughly 60 displaced apartment residents",
+    "value": 60,
+    "unit": "people",
+    "class": "stock",
+    "window": "the storm night",
+    "label": "apartment residents displaced by the storm (roughly)",
+    "when": "curveball"
+   },
+   {
+    "id": "dcf-youth-disrupted",
+    "endpoint": "system-status",
+    "record": "status-012",
+    "quote": "DCF reports 4 transition-age foster youth",
+    "value": 4,
+    "unit": "youth",
+    "class": "stock",
+    "window": "the next 72 hours",
+    "label": "foster youth DCF expects to need shelter within 72 hours",
+    "when": "curveball",
+    "request": {
+     "window": "the window the status record states",
+     "label": "foster youth DCF expects to need shelter within the status record's window"
+    }
+   }
+  ],
+  "entries": [
+   {
+    "id": "es_free_beds",
+    "label": "free beds now in the four emergency-type shelters",
+    "unit": "beds",
+    "fmt": "count",
+    "class": "stock",
+    "window": "now (the facility records)",
+    "cohort": "free beds in emergency-type shelters",
+    "formula": {
+     "sum": {
+      "endpoint": "shelter-inventory",
+      "records": [
+       "shelter-001",
+       "shelter-003",
+       "shelter-005",
+       "shelter-006"
+      ],
+      "field": "bedsOnline",
+      "minus": "bedsInUse"
+     }
+    },
+    "assumption": "Emergency-type: a shelter whose own notes describe shelter for tonight — Union Rescue Mission, CrossRoads, St. Anthony and Family Promise. The others describe transitional living, permanent supportive housing or supportive housing, or have no beds on site. Family Promise's notes describe a rotation model without the word emergency: an inference (tracker §7.4).",
+    "quotes": {
+     "shelter-001": "Faith-based shelter averaging 170+ stays per day",
+     "shelter-003": "Community's only 24-hour low-barrier",
+     "shelter-005": [
+      "Emergency family shelter with a 90-day stay limit",
+      "90-day stay limit"
+     ],
+     "shelter-006": "scattered-site host-congregation and apartment model",
+     "shelter-002": "Daytime drop-in only; site has no overnight beds",
+     "shelter-004": "Apartment-style transitional living",
+     "shelter-007": "Transitional housing plus rapid-rehousing rental assistance",
+     "shelter-008": "Referral and resource hub, not a shelter",
+     "shelter-009": "Singles and families in permanent supportive housing units",
+     "shelter-010": [
+      "Supportive housing paired with wraparound psychiatric care",
+      "Adults with serious mental illness"
+     ]
+    },
+    "checks": [
+     "community-snapshot.bedsAvailableNow",
+     "status001-reachable"
+    ],
+    "request": {
+     "label": "free beds now in the emergency-type shelters"
+    }
+   },
+   {
+    "id": "free_beds_all",
+    "label": "free beds now across all ten facilities",
+    "unit": "beds",
+    "fmt": "count",
+    "class": "stock",
+    "window": "now (the facility records)",
+    "cohort": "free beds in every facility",
+    "formula": {
+     "sum": {
+      "endpoint": "shelter-inventory",
+      "records": "all",
+      "field": "bedsOnline",
+      "minus": "bedsInUse"
+     }
+    },
+    "assumption": "Every bed online that is not in use, whatever its gates: referral, audience, sobriety or waitlist rules can still keep a person out (the bottleneck dashboard shows them).",
+    "request": {
+     "label": "free beds now across every facility"
+    }
+   },
+   {
+    "id": "beds_online_all",
+    "label": "beds online across all ten facilities",
+    "unit": "beds",
+    "fmt": "count",
+    "class": "stock",
+    "window": "now (the facility records)",
+    "cohort": "beds online in every facility",
+    "formula": {
+     "sum": {
+      "endpoint": "shelter-inventory",
+      "records": "all",
+      "field": "bedsOnline"
+     }
+    },
+    "assumption": "Includes permanent supportive housing units, supportive beds and transitional beds (tracker §7.4).",
+    "request": {
+     "label": "beds online across every facility"
+    }
+   },
+   {
+    "id": "youth_bed_shortfall",
+    "label": "foster youth expected with no youth bed free",
+    "unit": "youth",
+    "fmt": "count",
+    "class": "stock",
+    "window": "the next 72 hours",
+    "cohort": "transition-age foster youth whose placements were disrupted",
+    "when": "curveball",
+    "formula": {
+     "op": "-",
+     "args": [
+      "dcf-youth-disrupted",
+      {
+       "sum": {
+        "endpoint": "shelter-inventory",
+        "records": [
+         "shelter-003",
+         "shelter-004"
+        ],
+        "field": "bedsOnline",
+        "minus": "bedsInUse"
+       }
+      }
+     ],
+     "units_equal": "one youth per bed"
+    },
+    "assumption": "CrossRoads and BRIDGES are the youth beds; each youth needs one bed (tracker §7.4: at least 3 foster youth with no youth bed).",
+    "request": {
+     "window": "the window the status record states"
+    }
+   },
+   {
+    "id": "housed_within_year",
+    "label": "people housed within the year",
+    "unit": "people",
+    "fmt": "count",
+    "class": "flow",
+    "window": "FY Oct 2023 – Sep 2024",
+    "cohort": "people the system served who were housed within the year",
+    "formula": {
+     "op": "*",
+     "args": [
+      "community-snapshot.housedWithinYearRate",
+      "community-snapshot.peopleServedAnnual"
+     ]
+    },
+    "assumption": "The rate's denominator is the people the system served in the year; the data does not define it (tracker Appendix B)."
+   },
+   {
+    "id": "state_id_days",
+    "label": "fewest days to a Kansas state ID from no documents",
+    "unit": "days",
+    "fmt": "count",
+    "class": "duration",
+    "window": "processing time",
+    "cohort": "a person with no documents",
+    "formula": {
+     "op": "+",
+     "args": [
+      "stabilization-docs.doc-002.processingDays",
+      "stabilization-docs.doc-003.processingDays",
+      "stabilization-docs.doc-004.processingDays"
+     ]
+    },
+    "assumption": "A birth certificate, then a Social Security card, then the state ID, one after another — each unlocks the next (doc-002 and doc-003 list state-id).",
+    "quotes": {
+     "doc-002": "Certified Birth Certificate",
+     "doc-003": "Social Security Card",
+     "doc-004": "Kansas State ID / Driver's License"
+    }
+   }
+  ]
+ }
+}

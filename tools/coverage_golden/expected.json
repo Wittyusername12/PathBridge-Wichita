@@ -1,0 +1,1506 @@
+{
+ "schema_version": 1,
+ "note": "P0.3 golden pages for T1'' (D12): small pages in the templates' block markup; expect = T1''s golden_view of naipc_requirements.coverage_check(contract, map, track, page, run_id) as recorded by the build under Python 3.11.9 (and re-derived under 3.11.17 and with BeautifulSoup). Regenerate with tests/build_golden_p03.py; never edit by hand. BUILD B1 (11/03): the three oracle cases gain the catalogue's two new rows (prioritization, use-of-funds), recorded as the check gives them on these pages (MISSING: the golden pages predate the blocks); nothing else changed. BUILD B2: the two Architect cases gain the catalogue's five Get Help rows (intake, plan, checklist, navigator, readiness) as MISSING — these P0.3 pages predate them; every other recorded value unchanged. BUILD B3 (D13): the three oracle cases gain the catalogue's nine new rows (integrity, rubric, bottlenecks, youth-handoffs, sensitivity-grid, kpi-framework, renewal-gates, honesty, registry) as the check gives them on these pages — the P0.3 pages predate the blocks; every other recorded value unchanged (b3_dev/golden_b3.py checks that before it writes).",
+ "contract": "kc-2026-03-28.json",
+ "map": "kc-2026-03-28.map.json",
+ "run_id": "GOLDEN-RUN",
+ "cases": [
+  {
+   "page": "oracle.html",
+   "label": "oracle, LF",
+   "track": "oracle",
+   "expect": {
+    "sections": {
+     "kpis": [
+      "OK",
+      61,
+      4,
+      1
+     ],
+     "summary": [
+      "OK",
+      264,
+      null,
+      1
+     ],
+     "cost-of-inaction": [
+      "THIN",
+      90,
+      null,
+      1
+     ],
+     "evidence": [
+      "OK",
+      313,
+      null,
+      1
+     ],
+     "operations": [
+      "OK",
+      268,
+      null,
+      1
+     ],
+     "prioritization": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "financials": [
+      "THIN",
+      74,
+      null,
+      1
+     ],
+     "use-of-funds": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "sroi": [
+      "OK",
+      238,
+      null,
+      1
+     ],
+     "simulator": [
+      "EMPTY",
+      17,
+      0,
+      1
+     ],
+     "sensitivity": [
+      "EMPTY",
+      0,
+      null,
+      1
+     ],
+     "plan": [
+      "OK",
+      250,
+      null,
+      1
+     ],
+     "risks": [
+      "OK",
+      294,
+      null,
+      1
+     ],
+     "renewal": [
+      "THIN",
+      61,
+      null,
+      1
+     ],
+     "data-sources": [
+      "OK",
+      255,
+      null,
+      1
+     ],
+     "methodology": [
+      "OK",
+      217,
+      null,
+      1
+     ],
+     "ai-process": [
+      "OK",
+      229,
+      null,
+      1
+     ],
+     "assumptions": [
+      "EMPTY",
+      30,
+      null,
+      1
+     ],
+     "integrity": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "rubric": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "bottlenecks": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "youth-handoffs": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "sensitivity-grid": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "kpi-framework": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "renewal-gates": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "honesty": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "registry": [
+      "MISSING",
+      0,
+      null,
+      0
+     ]
+    },
+    "items": {
+     "oracle-q1": [
+      "THIN",
+      "OK",
+      true
+     ],
+     "oracle-q2": [
+      "OK",
+      "OK",
+      true
+     ],
+     "oracle-q3": [
+      "OK",
+      "OK",
+      true
+     ],
+     "oracle-q4": [
+      "OK",
+      "OK",
+      true
+     ],
+     "oracle-m1": [
+      "THIN",
+      "OK",
+      true
+     ],
+     "oracle-m2": [
+      "OK",
+      "OK",
+      true
+     ],
+     "oracle-m3": [
+      "OK",
+      "NONE",
+      false
+     ]
+    },
+    "stale": 0,
+    "counts": {
+     "items": 7,
+     "ok": 5,
+     "thin": 2,
+     "fixed": 0,
+     "empty": 0,
+     "missing": 0,
+     "unmapped": 0,
+     "stale": 0,
+     "covered": 6,
+     "answers": 6
+    },
+    "rows": [
+     [
+      "oracle-q1",
+      "model",
+      44,
+      103,
+      18
+     ],
+     [
+      "oracle-q2",
+      "model",
+      28,
+      86,
+      30
+     ],
+     [
+      "oracle-q3",
+      "model",
+      37,
+      82,
+      33
+     ],
+     [
+      "oracle-q4",
+      "model",
+      37,
+      96,
+      10
+     ],
+     [
+      "oracle-m1",
+      "model",
+      29,
+      56,
+      18
+     ],
+     [
+      "oracle-m2",
+      "model",
+      23,
+      93,
+      16
+     ],
+     [
+      "oracle-m3",
+      "none",
+      38,
+      1,
+      41
+     ]
+    ],
+    "findings": {
+     "unknown_ids": [],
+     "dead_links": [],
+     "duplicate_ids": [],
+     "duplicate_blocks": [],
+     "foreign_blocks": []
+    }
+   }
+  },
+  {
+   "page": "oracle.crlf.html",
+   "label": "oracle, CRLF",
+   "track": "oracle",
+   "expect": {
+    "sections": {
+     "kpis": [
+      "OK",
+      61,
+      4,
+      1
+     ],
+     "summary": [
+      "OK",
+      264,
+      null,
+      1
+     ],
+     "cost-of-inaction": [
+      "THIN",
+      90,
+      null,
+      1
+     ],
+     "evidence": [
+      "OK",
+      313,
+      null,
+      1
+     ],
+     "operations": [
+      "OK",
+      268,
+      null,
+      1
+     ],
+     "prioritization": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "financials": [
+      "THIN",
+      74,
+      null,
+      1
+     ],
+     "use-of-funds": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "sroi": [
+      "OK",
+      238,
+      null,
+      1
+     ],
+     "simulator": [
+      "EMPTY",
+      17,
+      0,
+      1
+     ],
+     "sensitivity": [
+      "EMPTY",
+      0,
+      null,
+      1
+     ],
+     "plan": [
+      "OK",
+      250,
+      null,
+      1
+     ],
+     "risks": [
+      "OK",
+      294,
+      null,
+      1
+     ],
+     "renewal": [
+      "THIN",
+      61,
+      null,
+      1
+     ],
+     "data-sources": [
+      "OK",
+      255,
+      null,
+      1
+     ],
+     "methodology": [
+      "OK",
+      217,
+      null,
+      1
+     ],
+     "ai-process": [
+      "OK",
+      229,
+      null,
+      1
+     ],
+     "assumptions": [
+      "EMPTY",
+      30,
+      null,
+      1
+     ],
+     "integrity": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "rubric": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "bottlenecks": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "youth-handoffs": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "sensitivity-grid": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "kpi-framework": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "renewal-gates": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "honesty": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "registry": [
+      "MISSING",
+      0,
+      null,
+      0
+     ]
+    },
+    "items": {
+     "oracle-q1": [
+      "THIN",
+      "OK",
+      true
+     ],
+     "oracle-q2": [
+      "OK",
+      "OK",
+      true
+     ],
+     "oracle-q3": [
+      "OK",
+      "OK",
+      true
+     ],
+     "oracle-q4": [
+      "OK",
+      "OK",
+      true
+     ],
+     "oracle-m1": [
+      "THIN",
+      "OK",
+      true
+     ],
+     "oracle-m2": [
+      "OK",
+      "OK",
+      true
+     ],
+     "oracle-m3": [
+      "OK",
+      "NONE",
+      false
+     ]
+    },
+    "stale": 0,
+    "counts": {
+     "items": 7,
+     "ok": 5,
+     "thin": 2,
+     "fixed": 0,
+     "empty": 0,
+     "missing": 0,
+     "unmapped": 0,
+     "stale": 0,
+     "covered": 6,
+     "answers": 6
+    },
+    "rows": [
+     [
+      "oracle-q1",
+      "model",
+      44,
+      103,
+      18
+     ],
+     [
+      "oracle-q2",
+      "model",
+      28,
+      86,
+      30
+     ],
+     [
+      "oracle-q3",
+      "model",
+      37,
+      82,
+      33
+     ],
+     [
+      "oracle-q4",
+      "model",
+      37,
+      96,
+      10
+     ],
+     [
+      "oracle-m1",
+      "model",
+      29,
+      56,
+      18
+     ],
+     [
+      "oracle-m2",
+      "model",
+      23,
+      93,
+      16
+     ],
+     [
+      "oracle-m3",
+      "none",
+      38,
+      1,
+      41
+     ]
+    ],
+    "findings": {
+     "unknown_ids": [],
+     "dead_links": [],
+     "duplicate_ids": [],
+     "duplicate_blocks": [],
+     "foreign_blocks": []
+    }
+   }
+  },
+  {
+   "page": "architect.html",
+   "label": "architect, LF",
+   "track": "architect",
+   "expect": {
+    "sections": {
+     "dashboard": [
+      "OK",
+      9,
+      29,
+      1
+     ],
+     "how-built": [
+      "FIXED",
+      119,
+      null,
+      1
+     ],
+     "who-serves": [
+      "THIN",
+      108,
+      null,
+      1
+     ],
+     "finder": [
+      "OK",
+      18,
+      12,
+      1
+     ],
+     "data": [
+      "EMPTY",
+      0,
+      0,
+      1
+     ],
+     "intake": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "plan": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "checklist": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "navigator": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "readiness": [
+      "MISSING",
+      0,
+      null,
+      0
+     ]
+    },
+    "items": {
+     "architect-q1": [
+      "OK",
+      null,
+      true
+     ],
+     "architect-q2": [
+      "OK",
+      null,
+      true
+     ],
+     "architect-q3": [
+      "THIN",
+      null,
+      true
+     ],
+     "architect-q4": [
+      "FIXED",
+      null,
+      true
+     ]
+    },
+    "stale": 0,
+    "counts": {
+     "items": 4,
+     "ok": 2,
+     "thin": 1,
+     "fixed": 1,
+     "empty": 0,
+     "missing": 0,
+     "unmapped": 0,
+     "stale": 0,
+     "covered": 4,
+     "answers": null
+    },
+    "rows": [
+     [
+      "architect-q1",
+      "note",
+      39,
+      282,
+      18
+     ],
+     [
+      "architect-q2",
+      "note",
+      29,
+      261,
+      13
+     ],
+     [
+      "architect-q3",
+      "note",
+      36,
+      247,
+      15
+     ],
+     [
+      "architect-q4",
+      "note",
+      36,
+      295,
+      23
+     ]
+    ],
+    "findings": {
+     "unknown_ids": [],
+     "dead_links": [],
+     "duplicate_ids": [],
+     "duplicate_blocks": [],
+     "foreign_blocks": []
+    }
+   }
+  },
+  {
+   "page": "architect.crlf.html",
+   "label": "architect, CRLF",
+   "track": "architect",
+   "expect": {
+    "sections": {
+     "dashboard": [
+      "OK",
+      9,
+      29,
+      1
+     ],
+     "how-built": [
+      "FIXED",
+      119,
+      null,
+      1
+     ],
+     "who-serves": [
+      "THIN",
+      108,
+      null,
+      1
+     ],
+     "finder": [
+      "OK",
+      18,
+      12,
+      1
+     ],
+     "data": [
+      "EMPTY",
+      0,
+      0,
+      1
+     ],
+     "intake": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "plan": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "checklist": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "navigator": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "readiness": [
+      "MISSING",
+      0,
+      null,
+      0
+     ]
+    },
+    "items": {
+     "architect-q1": [
+      "OK",
+      null,
+      true
+     ],
+     "architect-q2": [
+      "OK",
+      null,
+      true
+     ],
+     "architect-q3": [
+      "THIN",
+      null,
+      true
+     ],
+     "architect-q4": [
+      "FIXED",
+      null,
+      true
+     ]
+    },
+    "stale": 0,
+    "counts": {
+     "items": 4,
+     "ok": 2,
+     "thin": 1,
+     "fixed": 1,
+     "empty": 0,
+     "missing": 0,
+     "unmapped": 0,
+     "stale": 0,
+     "covered": 4,
+     "answers": null
+    },
+    "rows": [
+     [
+      "architect-q1",
+      "note",
+      39,
+      282,
+      18
+     ],
+     [
+      "architect-q2",
+      "note",
+      29,
+      261,
+      13
+     ],
+     [
+      "architect-q3",
+      "note",
+      36,
+      247,
+      15
+     ],
+     [
+      "architect-q4",
+      "note",
+      36,
+      295,
+      23
+     ]
+    ],
+    "findings": {
+     "unknown_ids": [],
+     "dead_links": [],
+     "duplicate_ids": [],
+     "duplicate_blocks": [],
+     "foreign_blocks": []
+    }
+   }
+  },
+  {
+   "page": "muse.html",
+   "label": "muse, LF",
+   "track": "muse",
+   "expect": {
+    "sections": {
+     "hero": [
+      "OK",
+      256,
+      null,
+      1
+     ],
+     "audiences": [
+      "OK",
+      232,
+      null,
+      1
+     ],
+     "channels": [
+      "OK",
+      275,
+      null,
+      1
+     ],
+     "calendar": [
+      "OK",
+      236,
+      null,
+      1
+     ],
+     "creative": [
+      "OK",
+      226,
+      null,
+      1
+     ],
+     "flyer": [
+      "OK",
+      222,
+      null,
+      1
+     ],
+     "pitch": [
+      "OK",
+      246,
+      null,
+      1
+     ],
+     "kpis": [
+      "THIN",
+      63,
+      null,
+      1
+     ],
+     "calculator": [
+      "OK",
+      18,
+      4,
+      1
+     ],
+     "synergy": [
+      "FIXED",
+      94,
+      null,
+      1
+     ],
+     "how-built": [
+      "FIXED",
+      124,
+      null,
+      1
+     ],
+     "who-serves": [
+      "OK",
+      244,
+      null,
+      1
+     ]
+    },
+    "items": {
+     "muse-q1": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-q2": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-q3": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-q4": [
+      "FIXED",
+      "OK",
+      true
+     ],
+     "muse-m1": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-m2": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-m3": [
+      "OK",
+      "OK",
+      true
+     ]
+    },
+    "stale": 0,
+    "counts": {
+     "items": 7,
+     "ok": 6,
+     "thin": 0,
+     "fixed": 1,
+     "empty": 0,
+     "missing": 0,
+     "unmapped": 0,
+     "stale": 0,
+     "covered": 7,
+     "answers": 7
+    },
+    "rows": [
+     [
+      "muse-q1",
+      "model",
+      38,
+      74,
+      19
+     ],
+     [
+      "muse-q2",
+      "model",
+      47,
+      86,
+      19
+     ],
+     [
+      "muse-q3",
+      "model",
+      35,
+      75,
+      50
+     ],
+     [
+      "muse-q4",
+      "model",
+      42,
+      77,
+      27
+     ],
+     [
+      "muse-m1",
+      "model",
+      19,
+      52,
+      19
+     ],
+     [
+      "muse-m2",
+      "model",
+      22,
+      49,
+      39
+     ],
+     [
+      "muse-m3",
+      "model",
+      30,
+      57,
+      50
+     ]
+    ],
+    "findings": {
+     "unknown_ids": [],
+     "dead_links": [],
+     "duplicate_ids": [],
+     "duplicate_blocks": [],
+     "foreign_blocks": []
+    }
+   }
+  },
+  {
+   "page": "muse.crlf.html",
+   "label": "muse, CRLF",
+   "track": "muse",
+   "expect": {
+    "sections": {
+     "hero": [
+      "OK",
+      256,
+      null,
+      1
+     ],
+     "audiences": [
+      "OK",
+      232,
+      null,
+      1
+     ],
+     "channels": [
+      "OK",
+      275,
+      null,
+      1
+     ],
+     "calendar": [
+      "OK",
+      236,
+      null,
+      1
+     ],
+     "creative": [
+      "OK",
+      226,
+      null,
+      1
+     ],
+     "flyer": [
+      "OK",
+      222,
+      null,
+      1
+     ],
+     "pitch": [
+      "OK",
+      246,
+      null,
+      1
+     ],
+     "kpis": [
+      "THIN",
+      63,
+      null,
+      1
+     ],
+     "calculator": [
+      "OK",
+      18,
+      4,
+      1
+     ],
+     "synergy": [
+      "FIXED",
+      94,
+      null,
+      1
+     ],
+     "how-built": [
+      "FIXED",
+      124,
+      null,
+      1
+     ],
+     "who-serves": [
+      "OK",
+      244,
+      null,
+      1
+     ]
+    },
+    "items": {
+     "muse-q1": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-q2": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-q3": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-q4": [
+      "FIXED",
+      "OK",
+      true
+     ],
+     "muse-m1": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-m2": [
+      "OK",
+      "OK",
+      true
+     ],
+     "muse-m3": [
+      "OK",
+      "OK",
+      true
+     ]
+    },
+    "stale": 0,
+    "counts": {
+     "items": 7,
+     "ok": 6,
+     "thin": 0,
+     "fixed": 1,
+     "empty": 0,
+     "missing": 0,
+     "unmapped": 0,
+     "stale": 0,
+     "covered": 7,
+     "answers": 7
+    },
+    "rows": [
+     [
+      "muse-q1",
+      "model",
+      38,
+      74,
+      19
+     ],
+     [
+      "muse-q2",
+      "model",
+      47,
+      86,
+      19
+     ],
+     [
+      "muse-q3",
+      "model",
+      35,
+      75,
+      50
+     ],
+     [
+      "muse-q4",
+      "model",
+      42,
+      77,
+      27
+     ],
+     [
+      "muse-m1",
+      "model",
+      19,
+      52,
+      19
+     ],
+     [
+      "muse-m2",
+      "model",
+      22,
+      49,
+      39
+     ],
+     [
+      "muse-m3",
+      "model",
+      30,
+      57,
+      50
+     ]
+    ],
+    "findings": {
+     "unknown_ids": [],
+     "dead_links": [],
+     "duplicate_ids": [],
+     "duplicate_blocks": [],
+     "foreign_blocks": []
+    }
+   }
+  },
+  {
+   "page": "oracle-stale.html",
+   "label": "oracle, another challenge's metas",
+   "track": "oracle",
+   "expect": {
+    "sections": {
+     "kpis": [
+      "OK",
+      61,
+      4,
+      1
+     ],
+     "summary": [
+      "OK",
+      264,
+      null,
+      1
+     ],
+     "cost-of-inaction": [
+      "THIN",
+      90,
+      null,
+      1
+     ],
+     "evidence": [
+      "OK",
+      313,
+      null,
+      1
+     ],
+     "operations": [
+      "OK",
+      268,
+      null,
+      1
+     ],
+     "prioritization": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "financials": [
+      "THIN",
+      74,
+      null,
+      1
+     ],
+     "use-of-funds": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "sroi": [
+      "OK",
+      238,
+      null,
+      1
+     ],
+     "simulator": [
+      "EMPTY",
+      17,
+      0,
+      1
+     ],
+     "sensitivity": [
+      "EMPTY",
+      0,
+      null,
+      1
+     ],
+     "plan": [
+      "OK",
+      250,
+      null,
+      1
+     ],
+     "risks": [
+      "OK",
+      294,
+      null,
+      1
+     ],
+     "renewal": [
+      "THIN",
+      61,
+      null,
+      1
+     ],
+     "data-sources": [
+      "OK",
+      255,
+      null,
+      1
+     ],
+     "methodology": [
+      "OK",
+      217,
+      null,
+      1
+     ],
+     "ai-process": [
+      "OK",
+      229,
+      null,
+      1
+     ],
+     "assumptions": [
+      "EMPTY",
+      30,
+      null,
+      1
+     ],
+     "integrity": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "rubric": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "bottlenecks": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "youth-handoffs": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "sensitivity-grid": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "kpi-framework": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "renewal-gates": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "honesty": [
+      "MISSING",
+      0,
+      null,
+      0
+     ],
+     "registry": [
+      "MISSING",
+      0,
+      null,
+      0
+     ]
+    },
+    "items": {
+     "oracle-q1": [
+      "STALE",
+      "OK",
+      false
+     ],
+     "oracle-q2": [
+      "STALE",
+      "OK",
+      false
+     ],
+     "oracle-q3": [
+      "STALE",
+      "OK",
+      false
+     ],
+     "oracle-q4": [
+      "STALE",
+      "OK",
+      false
+     ],
+     "oracle-m1": [
+      "STALE",
+      "OK",
+      false
+     ],
+     "oracle-m2": [
+      "STALE",
+      "OK",
+      false
+     ],
+     "oracle-m3": [
+      "STALE",
+      "NONE",
+      false
+     ]
+    },
+    "stale": 1,
+    "counts": {
+     "items": 7,
+     "ok": 0,
+     "thin": 0,
+     "fixed": 0,
+     "empty": 0,
+     "missing": 0,
+     "unmapped": 0,
+     "stale": 7,
+     "covered": 0,
+     "answers": 6
+    },
+    "rows": [
+     [
+      "oracle-q1",
+      "model",
+      44,
+      103,
+      18
+     ],
+     [
+      "oracle-q2",
+      "model",
+      28,
+      86,
+      30
+     ],
+     [
+      "oracle-q3",
+      "model",
+      37,
+      82,
+      33
+     ],
+     [
+      "oracle-q4",
+      "model",
+      37,
+      96,
+      10
+     ],
+     [
+      "oracle-m1",
+      "model",
+      29,
+      56,
+      18
+     ],
+     [
+      "oracle-m2",
+      "model",
+      23,
+      93,
+      16
+     ],
+     [
+      "oracle-m3",
+      "none",
+      38,
+      1,
+      41
+     ]
+    ],
+    "findings": {
+     "unknown_ids": [],
+     "dead_links": [],
+     "duplicate_ids": [],
+     "duplicate_blocks": [],
+     "foreign_blocks": []
+    }
+   }
+  }
+ ]
+}

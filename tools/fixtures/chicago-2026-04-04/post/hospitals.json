@@ -1,0 +1,418 @@
+{
+  "source": "hospitals",
+  "count": 13,
+  "data": [
+    {
+      "id": "hosp-west-suburban",
+      "name": "West Suburban Medical Center",
+      "area": "Austin",
+      "areaCode": 25,
+      "address": "3 Erie Ct, Oak Park, IL 60302",
+      "lat": 41.8869,
+      "lng": -87.7834,
+      "beds": 172,
+      "status": "closed",
+      "closureDate": "2026-03-25",
+      "closureReason": "Revenue collapse due to billing system failure; parent company Pipeline Health bankruptcy",
+      "specialties": [
+        "emergency",
+        "cardiology",
+        "diabetes",
+        "obstetrics",
+        "behavioral-health",
+        "primary-care"
+      ],
+      "erCapacity": 28,
+      "annualErVisits": 4200,
+      "patientsDisplaced": 23000,
+      "payerMix": {
+        "medicaid": 0.52,
+        "medicare": 0.24,
+        "private": 0.18,
+        "uninsured": 0.06
+      },
+      "operatingMargin": -0.14,
+      "yearOpened": 1914
+    },
+    {
+      "id": "hosp-ascension-st-elizabeth",
+      "name": "Ascension Saint Elizabeth",
+      "area": "Brighton Park",
+      "areaCode": 58,
+      "address": "1431 N Claremont Ave, Chicago, IL 60622",
+      "lat": 41.9078,
+      "lng": -87.6864,
+      "beds": 112,
+      "status": "closed",
+      "closureDate": "2025-02-15",
+      "closureReason": "Ascension Health system consolidation; declining patient volumes",
+      "specialties": [
+        "emergency",
+        "primary-care",
+        "obstetrics",
+        "geriatrics"
+      ],
+      "erCapacity": 18,
+      "annualErVisits": 2800,
+      "patientsDisplaced": 14500,
+      "payerMix": {
+        "medicaid": 0.48,
+        "medicare": 0.22,
+        "private": 0.21,
+        "uninsured": 0.09
+      },
+      "operatingMargin": -0.08,
+      "yearOpened": 1886
+    },
+    {
+      "id": "hosp-weiss-memorial",
+      "name": "Weiss Memorial Hospital",
+      "area": "Uptown",
+      "areaCode": 3,
+      "address": "4646 N Marine Dr, Chicago, IL 60640",
+      "lat": 41.9656,
+      "lng": -87.6485,
+      "beds": 180,
+      "status": "closed",
+      "closureDate": "2025-08-01",
+      "closureReason": "Pipeline Health bankruptcy; failed sale attempts",
+      "specialties": [
+        "emergency",
+        "primary-care",
+        "behavioral-health",
+        "dialysis"
+      ],
+      "erCapacity": 24,
+      "annualErVisits": 3100,
+      "patientsDisplaced": 18200,
+      "payerMix": {
+        "medicaid": 0.44,
+        "medicare": 0.28,
+        "private": 0.22,
+        "uninsured": 0.06
+      },
+      "operatingMargin": -0.11,
+      "yearOpened": 1953
+    },
+    {
+      "id": "hosp-kindred-lakeshore",
+      "name": "Kindred Chicago Lakeshore",
+      "area": "Lakeview",
+      "areaCode": 6,
+      "address": "6130 N Sheridan Rd, Chicago, IL 60660",
+      "lat": 41.994,
+      "lng": -87.6589,
+      "beds": 170,
+      "status": "closed",
+      "closureDate": "2025-04-15",
+      "closureReason": "Kindred Healthcare restructuring; converted to non-acute use",
+      "specialties": [
+        "long-term-acute",
+        "pulmonary",
+        "wound-care"
+      ],
+      "erCapacity": 0,
+      "annualErVisits": 0,
+      "patientsDisplaced": 8800,
+      "payerMix": {
+        "medicaid": 0.38,
+        "medicare": 0.42,
+        "private": 0.16,
+        "uninsured": 0.04
+      },
+      "operatingMargin": -0.06,
+      "yearOpened": 1916
+    },
+    {
+      "id": "hosp-kindred-sycamore",
+      "name": "Kindred Sycamore",
+      "area": "Near West Side",
+      "areaCode": 28,
+      "address": "3515 S Michigan Ave, Chicago, IL 60653",
+      "lat": 41.8308,
+      "lng": -87.6232,
+      "beds": 136,
+      "status": "closed",
+      "closureDate": "2025-05-01",
+      "closureReason": "Kindred Healthcare restructuring; financial losses",
+      "specialties": [
+        "long-term-acute",
+        "rehabilitation"
+      ],
+      "erCapacity": 0,
+      "annualErVisits": 0,
+      "patientsDisplaced": 6400,
+      "payerMix": {
+        "medicaid": 0.51,
+        "medicare": 0.34,
+        "private": 0.11,
+        "uninsured": 0.04
+      },
+      "operatingMargin": -0.09,
+      "yearOpened": 1998
+    },
+    {
+      "id": "hosp-loretto",
+      "name": "Loretto Hospital",
+      "area": "Austin",
+      "areaCode": 25,
+      "address": "645 S Central Ave, Chicago, IL 60644",
+      "lat": 41.8723,
+      "lng": -87.7651,
+      "beds": 78,
+      "status": "at-risk",
+      "closureDate": null,
+      "closureReason": null,
+      "specialties": [
+        "emergency",
+        "primary-care",
+        "behavioral-health"
+      ],
+      "erCapacity": 14,
+      "annualErVisits": 2100,
+      "patientsDisplaced": 31000,
+      "payerMix": {
+        "medicaid": 0.61,
+        "medicare": 0.19,
+        "private": 0.12,
+        "uninsured": 0.08
+      },
+      "operatingMargin": -0.07,
+      "yearOpened": 1924,
+      "riskFactors": [
+        "High Medicaid payer mix",
+        "Operating margin negative 3 consecutive years",
+        "Absorbing West Suburban overflow without additional funding"
+      ]
+    },
+    {
+      "id": "hosp-south-shore",
+      "name": "South Shore Hospital",
+      "area": "South Shore",
+      "areaCode": 43,
+      "address": "8012 S Crandon Ave, Chicago, IL 60617",
+      "lat": 41.7489,
+      "lng": -87.5666,
+      "beds": 138,
+      "status": "at-risk",
+      "closureDate": null,
+      "closureReason": null,
+      "specialties": [
+        "emergency",
+        "primary-care",
+        "obstetrics",
+        "cardiology"
+      ],
+      "erCapacity": 20,
+      "annualErVisits": 3400,
+      "patientsDisplaced": 27000,
+      "payerMix": {
+        "medicaid": 0.58,
+        "medicare": 0.21,
+        "private": 0.14,
+        "uninsured": 0.07
+      },
+      "operatingMargin": -0.06,
+      "yearOpened": 1912,
+      "riskFactors": [
+        "Declining patient volumes",
+        "High Medicaid payer mix",
+        "Deferred capital maintenance"
+      ]
+    },
+    {
+      "id": "hosp-roseland",
+      "name": "Roseland Community Hospital",
+      "area": "Roseland",
+      "areaCode": 49,
+      "address": "45 W 111th St, Chicago, IL 60628",
+      "lat": 41.6926,
+      "lng": -87.6254,
+      "beds": 134,
+      "status": "at-risk",
+      "closureDate": null,
+      "closureReason": null,
+      "specialties": [
+        "emergency",
+        "primary-care",
+        "obstetrics"
+      ],
+      "erCapacity": 18,
+      "annualErVisits": 2600,
+      "patientsDisplaced": 22000,
+      "payerMix": {
+        "medicaid": 0.55,
+        "medicare": 0.23,
+        "private": 0.15,
+        "uninsured": 0.07
+      },
+      "operatingMargin": -0.05,
+      "yearOpened": 1924,
+      "riskFactors": [
+        "High Medicaid mix",
+        "Aging infrastructure",
+        "Staff retention issues"
+      ]
+    },
+    {
+      "id": "hosp-norwegian-american",
+      "name": "Norwegian American Hospital",
+      "area": "Humboldt Park",
+      "areaCode": 23,
+      "address": "1044 N Francisco Ave, Chicago, IL 60622",
+      "lat": 41.9006,
+      "lng": -87.6984,
+      "beds": 84,
+      "status": "open",
+      "closureDate": null,
+      "closureReason": null,
+      "specialties": [
+        "emergency",
+        "primary-care",
+        "behavioral-health"
+      ],
+      "erCapacity": 16,
+      "annualErVisits": 1900,
+      "patientsDisplaced": null,
+      "payerMix": {
+        "medicaid": 0.47,
+        "medicare": 0.2,
+        "private": 0.24,
+        "uninsured": 0.09
+      },
+      "operatingMargin": 0.01,
+      "yearOpened": 1894
+    },
+    {
+      "id": "hosp-mount-sinai",
+      "name": "Mount Sinai Hospital",
+      "area": "North Lawndale",
+      "areaCode": 29,
+      "address": "2750 W 15th St, Chicago, IL 60608",
+      "lat": 41.8612,
+      "lng": -87.6932,
+      "beds": 290,
+      "status": "open",
+      "closureDate": null,
+      "closureReason": null,
+      "specialties": [
+        "emergency",
+        "trauma-level-II",
+        "cardiology",
+        "obstetrics",
+        "pediatrics",
+        "oncology"
+      ],
+      "erCapacity": 42,
+      "annualErVisits": 5800,
+      "patientsDisplaced": null,
+      "payerMix": {
+        "medicaid": 0.41,
+        "medicare": 0.22,
+        "private": 0.3,
+        "uninsured": 0.07
+      },
+      "operatingMargin": 0.03,
+      "yearOpened": 1919
+    },
+    {
+      "id": "hosp-stroger",
+      "name": "John H. Stroger Jr. Hospital (Cook County)",
+      "area": "Near West Side",
+      "areaCode": 28,
+      "address": "1969 W Ogden Ave, Chicago, IL 60612",
+      "lat": 41.8748,
+      "lng": -87.6773,
+      "beds": 450,
+      "status": "open",
+      "closureDate": null,
+      "closureReason": null,
+      "specialties": [
+        "emergency",
+        "trauma-level-I",
+        "burn-center",
+        "primary-care",
+        "obstetrics",
+        "behavioral-health"
+      ],
+      "erCapacity": 68,
+      "annualErVisits": 9200,
+      "patientsDisplaced": null,
+      "payerMix": {
+        "medicaid": 0.52,
+        "medicare": 0.18,
+        "private": 0.14,
+        "uninsured": 0.16
+      },
+      "operatingMargin": -0.02,
+      "yearOpened": 2002,
+      "notes": "Safety-net hospital. County-funded. Currently at 94% ER capacity."
+    },
+    {
+      "id": "hosp-ui-health",
+      "name": "UI Health (University of Illinois Hospital)",
+      "area": "Near West Side",
+      "areaCode": 28,
+      "address": "1740 W Taylor St, Chicago, IL 60612",
+      "lat": 41.8695,
+      "lng": -87.6726,
+      "beds": 462,
+      "status": "open",
+      "closureDate": null,
+      "closureReason": null,
+      "specialties": [
+        "emergency",
+        "trauma-level-I",
+        "transplant",
+        "oncology",
+        "obstetrics",
+        "pediatrics"
+      ],
+      "erCapacity": 54,
+      "annualErVisits": 7400,
+      "patientsDisplaced": null,
+      "payerMix": {
+        "medicaid": 0.38,
+        "medicare": 0.22,
+        "private": 0.32,
+        "uninsured": 0.08
+      },
+      "operatingMargin": 0.04,
+      "yearOpened": 1982
+    },
+    {
+      "id": "hosp-rush",
+      "name": "Rush University Medical Center",
+      "area": "Near West Side",
+      "areaCode": 28,
+      "address": "1653 W Congress Pkwy, Chicago, IL 60612",
+      "lat": 41.8746,
+      "lng": -87.6699,
+      "beds": 664,
+      "status": "open",
+      "closureDate": null,
+      "closureReason": null,
+      "specialties": [
+        "emergency",
+        "trauma-level-I",
+        "cardiology",
+        "neurology",
+        "oncology",
+        "transplant",
+        "obstetrics"
+      ],
+      "erCapacity": 72,
+      "annualErVisits": 8100,
+      "patientsDisplaced": null,
+      "payerMix": {
+        "medicaid": 0.22,
+        "medicare": 0.26,
+        "private": 0.46,
+        "uninsured": 0.06
+      },
+      "operatingMargin": 0.08,
+      "yearOpened": 1837,
+      "notes": "Tertiary referral center. 4.2 miles from Austin — no direct bus route."
+    }
+  ]
+}

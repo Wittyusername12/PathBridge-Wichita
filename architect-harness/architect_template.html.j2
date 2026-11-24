@@ -1,0 +1,2048 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+{% set C = cov if (cov is defined and cov) else {} %}{% set CA = C.get('attrs', {}) %}
+<meta name="naipc-build" content="{{ naipc_build | e }}">
+{% if C.get('enabled') %}<meta name="naipc-challenge" content="{{ C.challenge | e }}">
+<meta name="naipc-run" content="{{ C.run_id | e }}">{% endif %}
+<title>{{ program_name | e }} — Civic Operations Dashboard</title>
+<meta property="og:title" content="{{ program_name | e }} — Civic Operations Dashboard">
+<meta name="description" content="{{ preview | e }}">
+<meta property="og:description" content="{{ preview | e }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="{{ preview | e }}">
+<!-- Inline SVG favicon (Excellence Report §9: "A blank tab icon screams unfinished") -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%238b5cf6'/><text x='16' y='22' text-anchor='middle' fill='white' font-size='18' font-family='system-ui'>◆</text></svg>"/>
+<!-- Chart.js 4.4.7 inlined from the harness's vendor folder (P0.6, D10, Rule 7: no WiFi needed); the CDN only when that file is missing -->
+{% if chartjs_inline %}<script>{{ chartjs_inline | built }}</script>{% else %}<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>{% endif %}
+<script>if(typeof Chart!=="undefined"){Chart.defaults.locale="en-US"}</script>{# BUILD IC (D7; review b F7): the charts format for the page, not the device #}
+<style>
+/* ══ Tokens ══ */
+:root{
+  --bg:#0a0a0f;--surface:rgba(255,255,255,0.03);--s2:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.06);--b2:rgba(255,255,255,0.12);
+  --text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.55);
+  --accent:{{ accent_hex|default('#8b5cf6') | py }};--good:#22c55e;--bad:#ef4444;--warn:#f59e0b;
+  --radius:16px;--shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:15px;line-height:1.5;color:var(--text);
+  background:radial-gradient(1200px 600px at 20% 10%,rgba(139,92,246,.15),transparent 60%),
+  radial-gradient(900px 500px at 80% 20%,rgba(34,197,94,.10),transparent 55%),
+  radial-gradient(600px 400px at 60% 80%,rgba(239,68,68,.06),transparent 50%),var(--bg);
+  background-size:200% 200%;background-attachment:fixed;
+  animation:bgDrift 20s ease infinite}
+@keyframes bgDrift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+/* ══ Floating Orbs ══ */
+.bg-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:-1;will-change:transform}
+.bg-orb-1{width:500px;height:400px;top:-80px;left:-100px;background:rgba(139,92,246,.12);filter:blur(120px);animation:orbFloat1 18s ease-in-out infinite}
+.bg-orb-2{width:420px;height:350px;bottom:-60px;right:-80px;background:rgba(34,197,94,.09);filter:blur(110px);animation:orbFloat2 22s ease-in-out infinite}
+@keyframes orbFloat1{0%,100%{transform:translate(0,0)}33%{transform:translate(30px,20px)}66%{transform:translate(-20px,-15px)}}
+@keyframes orbFloat2{0%,100%{transform:translate(0,0)}33%{transform:translate(-25px,-18px)}66%{transform:translate(20px,25px)}}
+/* Dashboard chart */
+.dash-chart-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:16px}
+.dash-chart-box h3{margin:0 0 10px;font-size:14px;font-weight:700}
+.dash-chart-box canvas{width:100%!important;max-height:280px}
+a{color:var(--accent);text-decoration:none}
+.wrap{max-width:1200px;margin:0 auto;padding:12px 16px 60px}
+.glass{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);overflow:hidden;position:relative}
+/* ══ Header ══ */
+.hdr{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.hdr h1{margin:0;font-size:20px;font-weight:800;letter-spacing:-.3px}
+.hdr .tag{color:var(--muted);font-size:13px}
+.pill{display:inline-block;font-size:11px;color:var(--muted);border:1px solid var(--border);border-radius:999px;padding:2px 10px}
+.pill.a{border-color:var(--accent);color:var(--accent)}
+/* ══ Tabs ══ */
+.tabs{display:flex;gap:4px;padding:0 18px 14px;border-bottom:1px solid var(--border)}
+.tab{padding:8px 18px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-radius:10px 10px 0 0;border:1px solid transparent;border-bottom:none;transition:all .2s}
+.tab:hover{color:var(--text);background:var(--surface)}
+.tab.active{color:var(--accent);border-color:var(--border);background:var(--s2)}
+/* Tab panels with fade transition (Excellence Report §2) */
+.tab-panel{visibility:hidden;opacity:0;position:absolute;width:100%;pointer-events:none;padding:18px;transition:opacity .2s ease,visibility 0s .2s}
+.tab-panel.active{visibility:visible;opacity:1;position:relative;pointer-events:auto;transition:opacity .2s ease,visibility 0s 0s}
+/* ══ KPIs ══ */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);border-radius:12px 12px 0 0}
+.kpi .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;overflow-wrap:anywhere}
+.kpi .val{font-size:28px;font-weight:800;color:var(--accent);margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:12px;color:var(--muted)}
+/* Per-KPI accent colors (Production-Grade doc §1: differentiate by meaning) */
+.kpi.red::before{background:var(--bad)} .kpi.red .val{color:var(--bad)}
+.kpi.green::before{background:var(--good)} .kpi.green .val{color:var(--good)}
+.kpi.amber::before{background:var(--warn)} .kpi.amber .val{color:var(--warn)}
+.kpi.purple::before{background:var(--accent)} .kpi.purple .val{color:var(--accent)}
+.kpi.blue::before{background:#06b6d4} .kpi.blue .val{color:#06b6d4}
+/* Hero crisis statement — upgraded for visual impact */
+.hero-crisis{font-size:clamp(1.15rem,2.5vw,1.5rem);font-weight:700;line-height:1.45;margin-bottom:16px;padding:22px 24px;text-align:center;
+  background:linear-gradient(135deg,rgba(239,68,68,.12),rgba(139,92,246,.08));
+  border:1px solid rgba(239,68,68,.18);border-radius:14px;border-left:4px solid var(--bad)}
+.hero-crisis span{text-shadow:0 0 14px currentColor}
+/* ══ Alert ══ */
+.alert{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;font-size:13px;display:flex;gap:8px;align-items:flex-start}
+.alert .ico{font-size:18px;flex-shrink:0}
+/* ══ ZIP Grid ══ */
+.zip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:16px}
+/* ZIP cards are CLICKABLE for cross-filtering (Excellence Report §2) */
+.zip-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;transition:all .2s}
+.zip-card.sev-high{border-left:3px solid var(--bad)}
+.zip-card.sev-med{border-left:3px solid var(--warn)}
+.zip-card.sev-low{border-left:3px solid var(--good)}
+.zip-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(139,92,246,.15)}
+.zip-card.sev-high:hover{border-color:rgba(239,68,68,.4);box-shadow:0 4px 16px rgba(239,68,68,.15)}
+.zip-card.sev-med:hover{border-color:rgba(245,158,11,.4);box-shadow:0 4px 16px rgba(245,158,11,.15)}
+.zip-card.sev-low:hover{border-color:rgba(34,197,94,.4);box-shadow:0 4px 16px rgba(34,197,94,.15)}
+.zip-card .zc{font-size:14px;font-weight:700;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.sev{font-size:10px;padding:2px 8px;border-radius:999px;font-weight:700}
+.sev.high{background:rgba(239,68,68,.15);color:var(--bad)}
+.sev.med{background:rgba(245,158,11,.15);color:var(--warn)}
+.sev.low{background:rgba(34,197,94,.15);color:var(--good)}
+.zip-card .st{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);padding:3px 0}
+.zip-card .st .sv{color:var(--text);font-weight:600}
+.zip-card .hint{font-size:11px;color:var(--accent);margin-top:6px;opacity:.7}
+/* ══ Charts ══ */
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+@media(max-width:900px){.chart-row{grid-template-columns:1fr}}
+.chart-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.chart-box h3{margin:0 0 10px;font-size:16px;font-weight:700}
+.chart-box canvas{width:100%!important;max-height:260px;cursor:pointer}
+.chart-hint{font-size:12px;color:var(--muted);text-align:center;margin-top:6px;opacity:.6}
+/* ══ Data Explorer Summary ══ */
+.data-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px}
+.data-stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:center}
+.data-stat .ds-val{font-size:26px;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+.data-stat .ds-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+/* ══ Sortable ZIP Table ══ */
+.zip-tbl-wrap{margin:16px 0}
+.zip-tbl{width:100%;border-collapse:collapse;font-size:15px;table-layout:fixed}
+/* Column alignment: text cols left, numeric cols right — applied to BOTH th and td (per W3C WAI guidelines) */
+.zip-tbl .text{text-align:left}
+.zip-tbl .num{text-align:right;font-variant-numeric:tabular-nums}
+.zip-tbl th{padding:9px 12px;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--b2);cursor:pointer;user-select:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .15s}
+.zip-tbl th:hover{color:var(--text)}
+.zip-tbl th.sorted{color:var(--accent)}
+.zip-tbl th .arr{font-size:9px;margin-left:3px;opacity:.5}
+.zip-tbl th.sorted .arr{opacity:1}
+.zip-tbl td{padding:8px 12px;border-bottom:1px solid var(--border);overflow:hidden;text-overflow:ellipsis}
+.zip-tbl td.num{font-weight:600}
+.zip-tbl tbody tr{cursor:pointer;transition:background .15s}
+.zip-tbl tbody tr:hover{background:var(--s2)}
+/* ══ Data Sources Table ══ */
+.ds-tbl{width:100%;border-collapse:collapse;font-size:15px;margin-top:6px}
+.ds-tbl th{text-align:left;padding:7px 10px;font-size:13px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border)}
+.ds-tbl td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.03)}
+.ds-tbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+.ai-tag{display:inline-block;font-size:9px;background:var(--accent);color:#fff;padding:1px 5px;border-radius:4px;margin-left:6px;vertical-align:middle;opacity:.7;letter-spacing:.3px}
+/* ══ Crisis Events ══ */
+.events{margin-bottom:16px}
+.event{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all .15s}
+.event:hover{border-color:var(--b2);background:var(--s2)}
+.event .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.event .dot.closure{background:var(--bad)} .event .dot.supply{background:var(--warn)} .event .dot.call{background:var(--accent)} .event .dot.sysalert{background:#f59e0b}
+.event .ev-body{flex:1} .event .ev-title{font-size:13px;font-weight:700} .event .ev-meta{font-size:12px;color:var(--muted)}
+/* ══ Foster Youth Timeline ══ */
+.youth-timeline{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:24px 8px;grid-column:1/-1}
+.youth-step{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 24px;text-align:center;min-width:120px;flex:0 1 160px}
+.yt-age{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.yt-stat{font-size:42px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.yt-label{font-size:11px;color:var(--muted);margin-top:4px}
+.yt-arrow{font-size:22px;color:var(--muted);padding:0 10px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.yt-delta{font-size:11px;color:var(--warn);font-weight:600}
+.yt-narrative{grid-column:1/-1;font-size:13px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.5;max-width:600px;margin-left:auto;margin-right:auto}
+@media(max-width:600px){.youth-timeline{flex-direction:column;gap:6px} .yt-arrow{transform:rotate(90deg);padding:4px 0}}
+/* ══ Finder ══ */
+.finder{display:grid;grid-template-columns:1fr .85fr;gap:12px;min-height:50vh}
+@media(max-width:900px){.finder{grid-template-columns:1fr} .detail{visibility:hidden;position:absolute;opacity:0} .detail.active{visibility:visible;position:relative;opacity:1}}
+.controls{padding:14px}
+.search-row{display:flex;gap:8px;margin-bottom:12px}
+.sinput{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:15px;outline:none;transition:border-color .2s}
+.sinput:focus{border-color:rgba(139,92,246,.5)} .sinput::placeholder{color:var(--muted)}
+.btn{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:8px 16px;color:var(--text);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.btn:hover{background:rgba(255,255,255,.08);border-color:var(--b2)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.pri{background:var(--accent);color:#fff;border-color:transparent}
+.fsec{margin-bottom:10px}
+.flbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:12px;padding:5px 11px;border:1px solid var(--border);border-radius:999px;cursor:pointer;color:var(--muted);transition:all .15s;user-select:none;min-height:28px}
+.chip:hover{border-color:rgba(255,255,255,.15);color:var(--text)}
+.chip.on{border-color:var(--accent);color:var(--accent);background:rgba(139,92,246,.1)}
+.chip input{display:none}
+.srow{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:10px;flex-wrap:wrap}
+.srow label{cursor:pointer} .srow input[type="radio"]{accent-color:var(--accent)}
+.sbar{display:flex;justify-content:space-between;padding:8px 14px;font-size:13px;color:var(--muted);border-top:1px solid var(--border)}
+.results{padding:8px;overflow-y:auto;max-height:55vh}
+/* Card entrance animation (Excellence Report §5) */
+@keyframes fadeSlide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:all .15s;animation:fadeSlide .3s ease both}
+.card:hover{background:var(--s2);border-color:var(--b2);transform:translateY(-1px)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card.sel{border-color:var(--accent);background:rgba(139,92,246,.06)}
+.card.closed{opacity:.5;border-color:rgba(239,68,68,.3)}
+.card .nm{font-weight:700;font-size:14px;display:flex;align-items:center;gap:6px}
+.card .mt{font-size:12px;color:var(--muted);margin-top:3px}
+.card .badges{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap}
+.bdg{font-size:10px;padding:2px 7px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+.bdg.cl{border-color:var(--bad);color:var(--bad)} .bdg.cat{border-color:var(--accent);color:var(--accent)}
+.bdg.risk{border-color:var(--warn);color:var(--warn)} .bdg.chg{border-color:#06b6d4;color:#06b6d4}
+.cb-block{background:rgba(6,182,212,.06);border:1px solid rgba(6,182,212,.3);border-radius:var(--radius);padding:12px 16px;margin-bottom:14px;font-size:13px}
+.cb-block ul{margin:6px 0 6px 18px;color:var(--muted);line-height:1.5} .cb-block p{margin:6px 0;line-height:1.5}
+.cb-block .cb-src{font-size:11px;color:var(--muted);font-style:italic} .cb-block .cb-nomatch{color:var(--warn)} .cb-block details{margin:6px 0}
+.kpi .asof{display:block;font-size:10px;color:var(--muted);font-style:italic;margin-top:2px}
+/* Detail panel */
+.detail{padding:18px;align-self:start}
+.detail h2{margin:0 0 4px;font-size:18px;font-weight:800}
+.detail .dsub{color:var(--muted);font-size:13px;margin-bottom:14px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px}
+.kv .k{color:var(--muted);text-align:right;white-space:nowrap} .kv .v{word-break:break-word}
+.dclosed{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.3);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:13px}
+/* Google Maps link (Excellence Report §5) */
+.directions{display:inline-block;margin-top:12px;padding:8px 16px;background:var(--accent);color:#fff;border-radius:10px;font-size:13px;font-weight:600;transition:opacity .15s}
+.directions:hover{opacity:.85}
+.state{padding:20px;text-align:center}
+.state .t{font-weight:700;margin-bottom:6px} .state .b{color:var(--muted);font-size:13px}
+/* ══ Cross-Track Links ══ */
+.xtrack{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:20px 0 8px}
+.xtrack-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:12px;
+  font-size:13px;font-weight:600;color:var(--text);text-decoration:none;
+  background:var(--surface);border:1px solid var(--border);transition:all .2s}
+.xtrack-btn:hover{border-color:var(--b2);background:var(--s2);transform:translateY(-1px)}
+.xtrack-btn .xt-icon{font-size:16px}
+.foot{text-align:center;font-size:12px;color:var(--muted);padding:20px;margin-top:16px}
+details{margin:10px 14px} details summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);padding:6px 0}
+details .inn{font-size:13px;color:var(--muted);padding:6px 0;line-height:1.6}
+.sec-title{margin:0 0 10px;font-size:15px;font-weight:700}
+@media print{body{background:#fff;color:#000} .glass{box-shadow:none;border:1px solid #ddd;background:#fff} .tabs,.btn,.alert,.foot,.chatbot,.chat-toggle,.chat-tip{display:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.bg-orb{display:none}}
+@keyframes pulseRed{0%{box-shadow:inset 3px 0 0 var(--bad)}50%{box-shadow:inset 3px 0 0 var(--bad),0 0 12px rgba(239,68,68,.3)}100%{box-shadow:inset 3px 0 0 var(--bad)}}
+.zip-card.curveball-hit{animation:pulseRed 1s ease-in-out 3}
+/* ══ Chatbot ══ */
+.chatbot{position:fixed;bottom:16px;right:16px;z-index:100;width:360px;max-height:480px;display:flex;flex-direction:column;
+  background:rgba(15,15,25,.92);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 12px 40px rgba(0,0,0,.6);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transition:all .3s ease;overflow:hidden}
+.chatbot .chat-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);cursor:pointer}
+.chatbot .chat-head h3{margin:0;font-size:14px;font-weight:700}
+.chatbot .chat-body{flex:1;overflow-y:auto;padding:12px;font-size:13px;min-height:200px}
+.chatbot .chat-msg{margin-bottom:10px;padding:8px 12px;border-radius:10px;line-height:1.5;max-width:90%}
+.chatbot .chat-msg.user{background:rgba(139,92,246,.15);margin-left:auto;border:1px solid rgba(139,92,246,.2)}
+.chatbot .chat-msg.ai{background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.chatbot .chat-input{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--border)}
+.chatbot .chat-input input{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none}
+.chatbot .chat-input button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer}
+.chat-toggle{position:fixed;bottom:24px;right:24px;z-index:99;width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;
+  border:2px solid rgba(255,255,255,.15);font-size:22px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(139,92,246,.5);transition:all .2s;
+  animation:chatPulse 2.5s ease-in-out infinite}
+.chat-toggle:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(139,92,246,.7)}
+@keyframes chatPulse{0%{box-shadow:0 4px 20px rgba(139,92,246,.4)}50%{box-shadow:0 4px 24px rgba(236,72,153,.55)}100%{box-shadow:0 4px 20px rgba(139,92,246,.4)}}
+.chat-tip{position:fixed;bottom:36px;right:90px;z-index:99;background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:8px 14px;font-size:12px;color:var(--text);white-space:nowrap;opacity:1;transition:opacity .5s;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.chat-tip.hide{opacity:0}
+/* QR code container — matches Oracle's working pattern */
+.qr-wrap{display:block;width:140px;height:140px;border-radius:10px;overflow:hidden;background:#fff;padding:6px;margin:12px auto 0}
+.qr-wrap svg{width:100%;height:100%;display:block}
+@media(max-width:600px){.chatbot{width:calc(100vw - 32px);right:16px}}
+/* ══ BUILD B2: the Get Help tab ══ */
+.gh-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.gh-muted{color:var(--muted);font-size:13px;margin:4px 0 10px}
+.gh-presets{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+.gh-preset{background:var(--s2);color:var(--text);border:1px solid var(--b2);border-radius:12px;padding:8px 12px;cursor:pointer;text-align:left;font:inherit;min-height:44px;max-width:100%}
+.gh-preset small{display:block;color:var(--muted);font-size:11px}
+.gh-preset[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.gh-person{font-size:13px;margin:0 0 12px;padding:10px 12px;border:1px dashed var(--b2);border-radius:10px}
+.gh-person ul{margin:6px 0 0 18px;padding:0}
+.gh-step{border:0;margin:0;padding:0;min-width:0}
+.gh-step legend{font-weight:700;margin-bottom:8px}
+.gh-step label{display:flex;gap:8px;align-items:center;padding:8px 10px;margin:4px 0;border:1px solid var(--border);border-radius:10px;cursor:pointer;min-height:44px}
+.gh-step input[type=number]{background:var(--s2);color:var(--text);border:1px solid var(--b2);border-radius:10px;padding:10px;font:inherit;width:9rem}
+.gh-err{display:block;color:var(--warn);font-size:13px;margin-top:6px}
+.gh-progress{font-size:12px;color:var(--muted);margin-bottom:8px}
+.gh-nav{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.gh-nav button,.gh-btn{background:var(--s2);color:var(--text);border:1px solid var(--b2);border-radius:10px;padding:8px 14px;font:inherit;cursor:pointer;min-height:44px}
+.gh-nav button:disabled{opacity:.45;cursor:default}
+.gh-nav .pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.gh-part{border-top:1px solid var(--border);padding-top:10px;margin-top:10px}
+.gh-part h4{margin:0 0 6px;font-size:15px}
+.gh-opt{padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin:6px 0;overflow-wrap:anywhere}
+.gh-score{float:right;font-weight:800;color:var(--accent);margin-left:8px}
+.gh-opt ul,.gh-homes ul{margin:6px 0 0 18px;padding:0;font-size:13px}
+.gh-opt details,.gh-homes details{font-size:12px;color:var(--muted);margin-top:6px}
+.gh-why{font-size:13px;border-left:3px solid var(--accent);padding:6px 10px;margin:6px 0;background:var(--s2)}
+.gh-conf{font-size:13px;color:var(--warn)}
+.gh-docs,.gh-progs,.gh-homes{padding-left:0;list-style:none}
+.gh-docs li,.gh-progs li,.gh-homes li{margin:8px 0;padding:8px 10px;border:1px solid var(--border);border-radius:10px;overflow-wrap:anywhere}
+.gh-docs li.gh-need{border-color:var(--accent)}
+.gh-tag{display:inline-block;font-size:11px;border:1px solid var(--accent);color:var(--accent);border-radius:999px;padding:0 8px;margin-left:6px}
+.gh-sub{font-size:13px;color:var(--muted)}
+.gh-live{font-size:13px;margin-top:4px}
+.gh-rsteps fieldset{border:0;padding:0;margin:0 0 10px;min-width:0}
+.gh-rsteps legend{font-weight:600;margin-bottom:4px}
+.gh-rsteps label{display:inline-flex;gap:6px;align-items:center;margin:2px 12px 2px 0;min-height:36px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+<div class="wrap">
+  <header class="glass hdr" role="banner">
+    <div><h1>{{ program_name | e }}</h1><span class="tag">{{ tagline | e }}</span></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      {% if domain_label_source | default('rules') == 'oracle' %}<span class="pill a" title="Domain label from the Oracle track's analysis of the same data (Claude)"><span style="font-size:9px;background:var(--accent);color:#fff;padding:1px 4px;border-radius:4px;margin-right:4px;vertical-align:middle">AI</span>{{ domain_label | e }}</span>{% else %}<span class="pill a" title="Domain label from keyword rules over the data">{{ domain_label | e }}</span>{% endif %}
+      <span class="pill" data-prov-block="{{ PB.python | e }}">{{ resource_count | py }} resources</span>
+    </div>
+  </header>
+  {% if curveball_alert %}<div class="alert" role="alert"><span class="ico">🚨</span><div>{{ curveball_alert | built }}</div></div>{% endif %}
+  {% if C.get('panel') %}
+  <style>/* BRIEF PANEL (P0.3): one row per block on a phone-width screen */@media (max-width:600px){ #brief table,#brief thead,#brief tbody,#brief tr,#brief td{display:block;width:auto!important;min-width:0!important}#brief thead{display:none}#brief tr{padding:10px 0;border-bottom:1px solid rgba(127,127,127,.25)}#brief td{padding:3px 0!important;border:0!important}}</style>
+  <details open class="glass" id="brief" data-brief-panel data-prov-block="{{ PB.python | e }}" style="margin:0 0 14px;padding:12px 16px">
+    <summary style="cursor:pointer;font-weight:700">How this answers the brief — {{ C.panel.track_title | e }}</summary>
+    <p style="color:var(--muted);font-size:13px;margin:8px 0 10px">{{ C.panel.mission | e }}</p>
+    <div style="overflow-x:auto">
+    <table class="ds-tbl" style="width:100%">
+      <thead><tr><th>The brief asks</th><th>Our answer</th><th>Where</th></tr></thead>
+      <tbody>
+      {% for r in C.panel.rows %}
+        <tr data-brief-row="{{ r.id | e }}" data-brief-answer="{{ r.answer_src | e }}">
+          <td data-brief-cell="q" style="vertical-align:top;font-weight:600;min-width:9rem">{{ r.text | e }}</td>
+          <td data-brief-cell="a" style="vertical-align:top">{{ r.answer | model }}</td>
+          <td data-brief-cell="l" style="vertical-align:top;min-width:8rem">{% for l in r.links %}<a href="#{{ l.anchor | e }}" data-brief-link="{{ l.name | e }}" style="color:var(--accent)">{{ l.label | e }}</a>{% if not loop.last %}<br>{% endif %}{% endfor %}{% if not r.links %}—{% endif %}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </details>
+  <script>
+  /* === BRIEF PANEL (P0.3): a panel link shows its tab first (switchToTab), opens a closed <details> around its target, then scrolls === */
+  (function(){
+    var panel=document.getElementById("brief");if(!panel)return;
+    if(window.matchMedia&&window.matchMedia("(max-width:600px)").matches)panel.open=false;  /* on a phone the tool comes first; the summary line stays visible */
+    panel.addEventListener("click",function(ev){
+      var a=ev.target.closest?ev.target.closest("a[data-brief-link]"):null;if(!a)return;
+      var t=document.getElementById((a.getAttribute("href")||"").slice(1));if(!t)return;
+      ev.preventDefault();ev.stopPropagation();
+      var tp=t.classList.contains("tab-panel")?t:(t.closest?t.closest(".tab-panel"):null);
+      if(tp&&!tp.classList.contains("active")&&typeof switchToTab==="function")switchToTab(tp.id.replace(/^panel-/,""));
+      for(var n=t;n&&n!==document.body;n=n.parentElement){if(n.tagName==="DETAILS"&&!n.open)n.open=true;}
+      setTimeout(function(){t.scrollIntoView({behavior:"smooth",block:"start"});},60);
+    });
+  })();
+  </script>
+  {% endif %}
+  <main class="glass" role="main">
+    <nav class="tabs" role="tablist" aria-label="Dashboard views">
+      {% if help %}<div class="tab active" data-tab="help" role="tab" tabindex="0">🧭 Get Help</div>{% endif %}
+      <div class="tab{% if not help %} active{% endif %}" data-tab="dashboard" role="tab" tabindex="0">📊 Dashboard</div>
+      <div class="tab" data-tab="finder" role="tab" tabindex="0">🔍 Find Resources</div>
+      <div class="tab" data-tab="data" role="tab" tabindex="0">📈 Data Explorer</div>
+    </nav>
+    {% if help %}{% set HB = help.bundle %}
+    <!-- ═══ TAB 0: GET HELP (BUILD B2) — the engine's intake, plan, checklist, navigator and readiness tracker ═══ -->
+    <div class="tab-panel active" id="panel-help">
+      <section class="gh-card" id="sec-intake" data-sec="intake" data-sec-items="{{ HB.intake.steps | length | py }}"{{ CA.get('intake', '') | built }}>
+        <h3 class="sec-title" style="margin-top:0">Get help: who needs it?</h3>
+        <p class="gh-muted">Pick a person from the brief, or answer the questions for someone else. A question left blank stays unknown: the plan lists what to confirm and never guesses.</p>
+        <div class="gh-presets" id="gh-presets" data-prov-block="{{ PB.org | e }}" role="group" aria-label="People">
+          {% for p in HB.presets %}<button type="button" class="gh-preset" data-preset="{{ loop.index0 | py }}" aria-pressed="false">{{ p.name | e }}<small>{% if p.illustrative %}Illustrative — not from the brief{% else %}{{ p.who | e }}{% endif %}</small></button>{% endfor %}
+          <button type="button" class="gh-preset" data-preset="custom" aria-pressed="false">Someone else<small>answer the questions below</small></button>
+        </div>
+        <div class="gh-person" id="gh-person" hidden></div>
+        <form class="gh-wizard" id="gh-wizard" data-prov-block="{{ PB.design | e }}" autocomplete="off" novalidate>
+          <div class="gh-progress" id="gh-progress" aria-live="polite" data-num-exempt="the wizard's place among its questions (a position)">Question 1 of {{ HB.intake.steps | length | py }}</div>
+          {% for st in HB.intake.steps %}{% set si = loop.index0 %}
+          <fieldset class="gh-step" data-step="{{ si | py }}"{% if not loop.first %} hidden{% endif %}>
+            <legend>{{ st.label | e }}</legend>
+            {% if st.kind == 'number' %}<input type="number" inputmode="numeric" step="1" id="gh-num-{{ si | py }}" aria-label="{{ st.label | e }}" min="{{ st.min | default(0) | e }}" max="{{ st.max | default(120) | e }}"><span class="gh-err" role="status"></span>
+            {% elif st.kind == 'sets' %}{% for sid in st.sets %}<label><input type="checkbox" name="gh-s{{ si | py }}" value="{{ loop.index0 | py }}"> {{ help.set_labels.get(sid, sid) | e }}</label>{% endfor %}
+            {% else %}{% for o in st.options %}<label><input type="{{ ('checkbox' if st.multi else 'radio') | py }}" name="gh-s{{ si | py }}" value="{{ loop.index0 | py }}"> {{ o.label | e }}</label>{% endfor %}{% endif %}
+          </fieldset>
+          {% endfor %}
+          <div class="gh-nav"><button type="button" id="gh-back">Back</button><button type="button" id="gh-next">Next</button><button type="button" class="pri" id="gh-go">See the plan</button><button type="button" id="gh-clear">Start over</button></div>
+        </form>
+      </section>
+      <section class="gh-card" id="sec-plan" data-prov-block="{{ PB.python | e }}" data-sec="plan" data-sec-items="{{ HB.intake.plan | length | py }}"{{ CA.get('plan', '') | built }} aria-live="polite">
+        <h3 class="sec-title" style="margin-top:0">Your Plan</h3>
+        <p class="gh-sub" id="gh-clock"></p>
+        <div id="gh-plan"><p class="gh-muted">Choose a person above, or answer the questions, to see the plan.</p></div>
+        {% if chatbot_enabled %}<button type="button" class="gh-btn" id="gh-ask" hidden>Ask the chat about this plan</button>{% endif %}
+        <p class="gh-sub">Ranked in this browser by the engine's published table: the gates first, then points out of 100; each option shows its breakdown and its trace. Every name, phone, hour and number comes from a record of the API or from that table.</p>
+        <details class="gh-sub" id="gh-table" data-prov-block="{{ PB.design | e }}"><summary>The published table — how each set is ranked</summary>
+          {% for st_ in HB.sets %}<div style="margin:8px 0"><strong>{{ st_.label | e }}</strong> ({{ st_.table.endpoint | e }}, {{ st_.table.records | e }} records)
+            <div>Gates: {% for g in st_.table.gates %}{{ g.label | e }} — {{ g.text | e }}{% if not loop.last %}; {% endif %}{% endfor %}.</div>
+            <ul>{% for f in st_.table.factors %}<li>{{ f.label | e }} ({{ f.max | e }} points): {{ f.formula | e }} — {{ f.why | e }}</li>{% endfor %}</ul>
+            <div>Ties: {{ st_.table.tie_breakers | join(', ') | e }}.</div></div>{% endfor %}
+        </details>
+      </section>
+      {% if HB.checklist %}<section class="gh-card" id="sec-checklist" data-sec="checklist"{{ CA.get('checklist', '') | built }}>
+        <h3 class="sec-title" style="margin-top:0">{{ HB.checklist.label | e }}</h3>
+        <p class="gh-sub">All {{ help.docs_n_h | built }} records of {{ HB.checklist.endpoint | e }}, in unlock order: a document comes before the ones it unlocks, ties by processing days. The plan marks the ones the person needs.</p>
+        <ol class="gh-docs" id="gh-docs">
+          {% for d in help.docs %}<li data-id="{{ d.id | e }}"><strong><span data-num-exempt="the list's own numbering (a position)">{{ loop.index | py }}.</span> {{ d.name | e }}</strong>{% if d.category %} <span class="gh-sub">· {{ d.category | e }}</span>{% endif %}{% if d.in_cycle %} <span class="gh-tag">in an unlock cycle</span>{% endif %}
+            <div class="gh-sub">{{ d.days_h | built }}{% if d.fee_s %} · fee {{ d.fee_h | built }}{% endif %}{% if d.needs_names %} · after {{ d.needs_names | join(', ') | e }}{% endif %}{% if d.opens_names %} · needed for {{ d.opens_names | join(', ') | e }}{% endif %}</div>
+            {% if d.unlocks_s %}<div class="gh-sub">Unlocks: {{ d.unlocks_s | e }}</div>{% endif %}
+            {% if d.blockers_l %}<div class="gh-sub">Known blockers: {{ d.blockers_h | built }}</div>{% endif %}
+            {% if d.help_l %}<div class="gh-sub">Who helps: {{ d.help_h | built }}</div>{% endif %}
+            {% if d.notes %}<div class="gh-sub">{{ d.notes_h | built }}</div>{% endif %}
+            {% if d.closed %}<div class="gh-conf">Named here but closed now: {{ d.closed | join('; ') | e }}</div>{% endif %}
+          </li>{% endfor %}
+        </ol>
+      </section>{% endif %}
+      {% if HB.navigator %}<section class="gh-card" id="sec-navigator" data-sec="navigator"{{ CA.get('navigator', '') | built }}>
+        <h3 class="sec-title" style="margin-top:0">{{ HB.navigator.label | e }}</h3>
+        <p class="gh-sub">All {{ help.progs_n_h | built }} programs ({{ help.set_endpoints.get(HB.navigator.set, '') | e }} records), with their age windows. With a person chosen, the programs they are inside come first, the one whose window ends soonest at the top (the youth cliff), with the years left and the person's gate result.</p>
+        <ol class="gh-progs" id="gh-progs">
+          {% for p in help.programs %}<li data-id="{{ p.id | e }}"><strong>{{ p.name | e }}</strong> <span class="gh-sub">· ages {{ p.window_h | built }} · intake lag {{ p.lag_h | built }} · {{ p.free_h | built }}</span>
+            {% if p.check %}<div class="gh-sub">Eligibility: {{ p.check | e }}</div>{% endif %}
+            <div class="gh-live" data-live></div></li>{% endfor %}
+        </ol>
+      </section>{% endif %}
+      {% if HB.readiness %}<section class="gh-card" id="sec-readiness" data-sec="readiness"{{ CA.get('readiness', '') | built }}>
+        <h3 class="sec-title" style="margin-top:0">{{ HB.readiness.label | e }}</h3>
+        <p class="gh-sub">Check the steps that are done. All {{ help.homes_n_h | built }} rental properties ({{ help.set_endpoints.get(HB.readiness.set, '') | e }} records) are ranked for these answers by the same engine; each shows its screening barriers in its own words and the steps still open.</p>
+        <div class="gh-rsteps" id="gh-rsteps">
+          {% for st in HB.readiness.steps %}{% set ri = loop.index0 %}<fieldset data-rstep="{{ ri | py }}"><legend>{{ st.label | e }}</legend>{% for o in st.options %}<label><input type="radio" name="gh-r{{ ri | py }}" value="{{ loop.index0 | py }}"> {{ o.label | e }}</label>{% endfor %}</fieldset>
+          {% endfor %}{% if HB.readiness.documents %}<fieldset data-rdocs><legend>Documents for an application (from the checklist)</legend>{% for d in HB.readiness.documents %}<label><input type="checkbox" name="gh-rdoc" value="{{ d | e }}"> {{ help.doc_names.get(d, d) | e }}</label>{% endfor %}</fieldset>{% endif %}
+          <button type="button" class="gh-btn" id="gh-rclear">Clear the checked steps</button>
+        </div>
+        <p class="gh-sub" id="gh-rsave">Only the steps checked here are kept, in this browser; nothing else about the person is stored, and nothing leaves this page.</p>
+        <ol class="gh-homes" id="gh-homes">
+          {% for hh in help.homes %}<li data-id="{{ hh.id | e }}"><strong>{{ hh.name | e }}</strong>{% for v_h in hh.facts_h %} <span class="gh-sub">· {{ v_h | built }}</span>{% endfor %}
+            {% if hh.barriers %}<div class="gh-sub">Screening, in the record's words: {{ hh.barriers_h | built }}</div>{% endif %}
+            <div class="gh-live" data-live></div></li>{% endfor %}
+        </ol>
+      </section>{% endif %}
+    </div>
+    {% endif %}
+    <!-- ═══ TAB 1: DASHBOARD ═══ -->
+    <div class="tab-panel{% if not help %} active{% endif %}" id="panel-dashboard" data-sec="dashboard" data-sec-items="{{ ((zip_stats | default([]) | length) + (crisis_count | default(0))) | py }}"{{ CA.get('dashboard', '') | built }}>
+      {% if cb_block %}<section class="cb-block" id="cb-block" data-prov-block="{{ PB.python | e }}" data-cov-skip aria-label="What changed at the curveball">
+        <h3 class="sec-title" style="margin-top:0">What changed at the curveball</h3>
+        <p><strong data-verbatim="the organizers' announcement">{{ cb_block.first_h | built }}</strong></p>
+        <details><summary>The announcement (full text)</summary><p data-verbatim="the organizers' announcement">{{ cb_block.announcement_h | built }}</p></details>
+        {% if cb_block.rows %}<ul>{% for r in cb_block.rows %}<li><strong>{{ r.endpoint | e }}</strong>: {% if r.status == 'changed' %}{% if r.added %}added {{ r.added | join(', ') | e }}{% endif %}{% if r.removed %}{% if r.added %}; {% endif %}removed {{ r.removed | join(', ') | e }}{% endif %}{% if r.changed %}{% if r.added or r.removed %}; {% endif %}changed {{ r.changed | join(', ') | e }}{% endif %}{% if not (r.added or r.removed or r.changed) %}no record changes{% endif %}{% if r.envelope %} · {{ r.envelope | e }}{% endif %}{% else %}{{ r.status | e }}{% if r.envelope %} — {{ r.envelope | e }}{% endif %}{% endif %}</li>{% endfor %}</ul>
+        {% elif cb_block.unchanged is none and cb_block.snapshot %}<p>No Block 1 snapshot was found, so the data could not be compared: the announcement is the only change known.</p>
+        {% elif cb_block.unchanged is none %}<p>No change list of this run was found, so the data could not be compared: the announcement is the only change known.</p>
+        {% else %}<p>No endpoint changed at the curveball: the data is as in Block 1.</p>{% endif %}
+        {% if cb_block.alerts %}<ul>{% for a in cb_block.alerts %}<li>Alert {{ a.kind | e }}: {{ a.id | e }}{% if a.title %} — {{ a.title | e }}{% endif %} ({{ a.endpoint | e }})</li>{% endfor %}</ul>{% endif %}
+        {% if cb_block.closures %}<p>Closed by the announcement: {{ cb_block.closures | join(', ') | e }} — shown closed in the finder.</p>{% endif %}
+        {% if cb_block.no_match %}<p class="cb-nomatch">The announcement describes a closure that matches no record in the data.</p>{% endif %}
+        {% if cb_block.unchanged %}<p class="cb-src">Unchanged at the curveball (their data is Block 1's): {{ cb_block.unchanged | join(', ') | e }}.</p>{% endif %}
+        {% if cb_block.unchanged is not none %}<p class="cb-src">Computed by Python from the API data: every endpoint compared record by record with Block 1's snapshot.</p>{% endif %}
+      </section>{% endif %}
+      <div class="hero-crisis" id="hero-crisis"></div>
+      <div id="sev-bar" style="margin-bottom:14px"></div>
+      <div class="kpis" id="kpi-bar"></div>
+      <div class="dash-chart-box" id="dash-chart-wrap" style="display:none">
+        <h3 id="dash-chart-title">Risk by Area</h3>
+        <canvas id="ch-dash" aria-label="Risk metric horizontal bar chart"></canvas>
+        <div class="chart-hint">Click a bar to explore that area's resources</div>
+      </div>
+      <h3 class="sec-title">Community Risk Profile<span class="ai-tag">⚡ ranked by tertile</span> — <em style="font-weight:400;color:var(--muted)">click a ZIP to explore resources</em></h3>
+      <div class="zip-grid" id="zip-grid"></div>
+      <h3 class="sec-title">Crisis Events &amp; Alerts<span class="ai-tag">⚡ from the data</span></h3>
+      <div class="events" id="events"></div>
+      <details><summary>About This Dashboard</summary><div class="inn"><p>Data from {{ data_inventory_h | built }}.</p><p style="margin-top:6px"><strong>{{ team_name | e }}</strong> · {{ competition_label | e }}</p></div></details>
+      <details open id="sec-how-built" data-sec="how-built" data-prov-block="{{ PB.python | e }}"{{ CA.get('how-built', '') | built }}><summary>🤖 How This Tool Was Built — AI Process</summary>
+        <div class="inn">
+          <p id="sec-who-serves" data-sec="who-serves"{{ CA.get('who-serves', '') | built }}><strong data-cov-skip>Who this serves:</strong> {{ domain_hints_persona | e }}</p>
+          {% if help and help.bundle.rationale %}<p>Built by a Python harness that runs fixed rules. The Get Help tab ranks in your browser with the engine's published table (its own copy of the engine's rules, the same rules as the Python engine, which the tests compare); {% if help.bundle.rationale.claude %}one Claude call at build time ({{ help.bundle.rationale.model | e }}) wrote the &ldquo;Why this order&rdquo; notes from the engine's figures; Python keeps a sentence only if its numbers are among that plan's figures and it names no option outside that plan, and an option no kept sentence names gets the engine's own line (its rank, score and points), marked as the engine's.{% else %}one Claude call at build time ({{ help.bundle.rationale.model | e }}) was asked for &ldquo;Why this order&rdquo; notes, and no sentence passed Python's check (its numbers among that plan's figures, no option outside that plan named): each note is the engine's own line (its rank, score and points), marked as the engine's.{% endif %} The engine decides the order, never the model. Claude helped write and test the harness and this template.</p>
+          {% elif help %}<p>Built by a Python harness that runs fixed rules; the Get Help tab ranks in your browser with the engine's published table (its own copy of the engine's rules, the same rules as the Python engine, which the tests compare); no model ranks the options or writes the plan. Claude helped write and test the harness and this template.</p>
+          {% else %}<p>Built by a Python harness that runs fixed rules — no AI model runs inside this tool. Claude helped write and test that harness and this template.</p>{% endif %}
+          <p><strong><span data-num-exempt="the list's own numbering (a position)">1.</span> Data Ingestion</strong> — {{ endpoints_fetched | default(data_sources | default([]) | length) | py }} challenge API endpoint{{ ('' if (endpoints_fetched | default(data_sources | default([]) | length)) == 1 else 's') | py }} fetched at run time: records with a name or an address form one resource index, alert lists become events, endpoints this harness knows by name feed the dashboard&rsquo;s figures and events, and any other endpoint is counted; field names are matched by keyword rules.</p>
+          <p><strong><span data-num-exempt="the list's own numbering (a position)">2.</span> Domain Label</strong> — {% if domain_label_source | default('rules') == 'oracle' %}&ldquo;{{ domain_label | e }}&rdquo; is the Oracle track's (Claude's) reading of the same data; this harness's keyword rules choose the charted indicators.{% else %}&ldquo;{{ domain_label | e }}&rdquo; comes from keyword rules over the endpoint names and resource categories, which also choose the charted indicators.{% endif %}</p>
+          <p><strong><span data-num-exempt="the list's own numbering (a position)">3.</span> Severity</strong> — {% if zip_stats | default([]) %}each {{ area_label | default('ZIP') | e }} is ranked HIGH, MED or LOW by tertiles of the data's own primary metric.{% else %}this data has no per-area figures, so the dashboard shows its system-wide figures as given.{% endif %}</p>
+          <p><strong><span data-num-exempt="the list's own numbering (a position)">4.</span> Rendering</strong> — one HTML page with the data embedded as JSON, charts drawn by Chart.js{% if chartjs_inline %} (inlined, so they need no network){% endif %}, and views that filter each other.</p>
+          <p><strong><span data-num-exempt="the list's own numbering (a position)">5.</span> Curveball</strong> — {% if curveball_text %}this page is Block 2: {% if cb_block and cb_block.unchanged is not none %}Python compared every endpoint with Block 1's snapshot (listed under &ldquo;What changed at the curveball&rdquo;){% elif cb_block and cb_block.snapshot %}no Block 1 snapshot was found, so the data was not compared{% else %}no change list of this run was found, so the data was not compared{% endif %}; a resource the announcement names as closed in the same sentence is marked closed by the announcement; a record whose own status reads closed is marked closed by the data.{% else %}at the curveball this harness reads the change list Python computes (every endpoint compared with this run's snapshot), marks a resource closed when the announcement names it as closed in the same sentence, and lists what changed; a record whose own status reads closed is marked closed by the data in both blocks.{% endif %}</p>
+          {% if chatbot_enabled %}<p><strong><span data-num-exempt="the list's own numbering (a position)">6.</span> Ask AI</strong> — the chat panel sends your question and this page's data summary to Claude through a server-side proxy; no key is on the page. Try: &ldquo;{{ domain_hints_chatbot | e }}&rdquo;</p>{% endif %}
+        </div>
+      </details>
+      {% if oracle_url|default('') or muse_url|default('') %}
+      <div class="xtrack">
+        {% if oracle_url|default('') %}<a class="xtrack-btn" href="{{ oracle_url | e }}" target="_blank" rel="noopener"><span class="xt-icon">📊</span> See the Business Case → Oracle</a>{% endif %}
+        {% if muse_url|default('') %}<a class="xtrack-btn" href="{{ muse_url | e }}" target="_blank" rel="noopener"><span class="xt-icon">🎨</span> See the Outreach Campaign → Muse</a>{% endif %}
+      </div>
+      {% endif %}
+    </div>
+    <!-- ═══ TAB 2: FIND RESOURCES ═══ -->
+    <div class="tab-panel" id="panel-finder" data-sec="finder" data-sec-items="{{ open_count | default(0) | py }}"{{ CA.get('finder', '') | built }}>
+      <div class="finder">
+        <section aria-label="Search and filter">
+          <div class="controls">
+            <div class="search-row">
+              <input class="sinput" id="q" type="text" placeholder="{{ domain_hints_search | e }}" autocomplete="off" aria-label="Search resources"/>
+              <button class="btn pri" id="btn-search" type="button">Search</button>
+            </div>
+            <div class="fsec"><div class="flbl">Categories</div><div class="chips" id="cat-chips"></div></div>
+            <div id="dyn-filters"></div>
+            <div class="srow"><span>Sort:</span>
+              <label><input type="radio" name="sort" value="smart" checked/> Smart</label>
+              <label><input type="radio" name="sort" value="distance"/> Distance</label>
+              <label><input type="radio" name="sort" value="name"/> A–Z</label>
+              {% if any_closed %}<label style="margin-left:auto"><input type="checkbox" id="show-closed"/> Show closed</label>{% endif %}
+            </div>
+          </div>
+          <div class="sbar"><span id="st-text">Loading…</span><span id="st-hint"></span></div>
+          <div class="results" id="results" tabindex="0" aria-label="Search results"></div>
+        </section>
+        <aside class="glass detail" id="det" aria-label="Resource details">
+          <h2 id="d-title">Select a resource</h2>
+          <div class="dsub" id="d-sub">Click a result card to see details, hours, and directions.</div>
+          <div id="d-closed"></div>
+          <div id="d-actions"></div>
+          <div class="kv" id="d-kv"></div>
+        </aside>
+      </div>
+    </div>
+    <!-- ═══ TAB 3: DATA EXPLORER ═══ -->
+    <div class="tab-panel" id="panel-data" data-prov-block="{{ PB.python | e }}" data-sec="data" data-sec-items="{{ data_sources | default([]) | selectattr('records') | list | length | py }}"{{ CA.get('data', '') | built }}>
+      <!-- Summary stats banner -->
+      <div class="data-summary">
+        <div class="data-stat"><div class="ds-val">{{ ep_total_h | built }}</div><div class="ds-label">API Endpoints</div></div>
+        <div class="data-stat"><div class="ds-val">{{ records_total_h | built }}</div><div class="ds-label">Total Records</div></div>
+        <div class="data-stat"><div class="ds-val">{{ resource_count | py }}</div><div class="ds-label">Resources</div></div>
+        <div class="data-stat"><div class="ds-val">{{ zip_stats|length | py }}</div><div class="ds-label">Areas Monitored</div></div>
+      </div>
+      <div class="chart-row" id="dynamic-charts-row1"></div>
+      <div class="chart-row">
+        <div class="chart-box" id="dynamic-chart-extra"></div>
+        <div class="chart-box"><h3>Resource Distribution</h3><canvas id="ch-cats" aria-label="Resource category distribution"></canvas></div>
+      </div>
+      <!-- Sortable ZIP stats table (populated by JS) -->
+      <div class="zip-tbl-wrap" id="zip-tbl-wrap" style="display:none"></div>
+      <details open><summary>Data Sources</summary>
+        <div class="inn">
+          <table class="ds-tbl" data-zone="provenance" data-zone-name="data-sources">
+            <thead><tr><th>Endpoint</th><th class="num">Records</th></tr></thead>
+            <tbody>
+            {% for ds in data_sources %}
+              <tr><td>{{ ds.endpoint | e }}</td><td class="num">{{ ds.records_h | built }}</td></tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+    <!--naipc:sd-notes-->
+    <style>.sd-ref{font-size:inherit;vertical-align:baseline;line-height:inherit;white-space:nowrap;color:inherit;text-decoration:underline dotted}.sd-notes{margin:28px 0 12px;font-size:.92em;line-height:1.55}.sd-notes h2{font-size:1.05em;margin:0 0 8px}.sd-notes ol{margin:0 0 0 1.4em;padding:0}.sd-notes li{margin:4px 0}.sd-notes .sd-back{margin-left:6px;white-space:nowrap;color:inherit}</style>
+    <div class="integrity-line" data-integrity-line data-num-exempt="the integrity line's own counts"><!--naipc:integrity-line--></div>
+  </main>
+
+  <div class="foot">
+    {{ team_name | e }} · Architect Track · {{ competition_label | default("NAIPC") | e }}
+    {% if qr_svg %}
+    <div class="qr-wrap" title="Scan to open on mobile">{{ qr_svg | built }}</div>
+    <div style="margin-top:4px;font-size:11px">Scan to open on mobile</div>
+    {% elif deploy_url %}
+    <div style="margin-top:8px;font-size:11px"><a href="{{ deploy_url | e }}" target="_blank">{{ deploy_url | e }}</a></div>
+    {% endif %}
+  </div>
+
+  {% if chatbot_enabled %}
+  <!-- Ask AI Chatbot (AI Mastery feature — optional, graceful if offline) -->
+  <button class="chat-toggle" id="chat-toggle" title="Ask AI about this data">💬</button>
+  <div class="chat-tip" id="chat-tip">Ask about resources, data, or the crisis</div>
+  <div class="chatbot" id="chatbot" style="display:none">
+    <div class="chat-head" id="chat-head">
+      <h3>💬 Atlas AI</h3>
+      <span style="color:var(--muted);font-size:12px">Powered by Claude · Ask about this data</span>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-msg ai">I can answer questions about the resources, demographics, and crisis events in this dashboard. Try: "{{ domain_hints_chatbot | e }}"</div>
+    </div>
+    <div class="chat-msg error" id="chatUnavailable" hidden>Chat is unavailable right now. The quick answers below cover the common questions.</div>
+    <details class="chat-faq" id="chatFaq" data-prov-block="{{ PB.python | e }}" style="padding:6px 12px;font-size:12px"><summary style="cursor:pointer;font-weight:600">Quick answers (no AI)</summary>{% for item in chat_faq %}<p style="margin:6px 0"><strong>{{ item.q | e }}</strong><br>{{ item.a | e }}</p>{% endfor %}</details>
+    <div class="chat-input">
+      <input id="chat-q" placeholder="Ask about the data…" autocomplete="off"/>
+      <button id="chat-send">Send</button>
+    </div>
+  </div>
+<script>window.CHAT={"proxy":{{ chat_proxy_url | tojson | built }},"track":{{ chat_track | tojson | built }},"context_id":{{ chat_context_id | tojson | built }},"tags":{{ chat_tags | tojson | built }}};</script>
+  {% endif %}
+</div>
+<!-- ═══ Embedded Data ═══ -->
+<script id="app-data" type="application/json">{{ app_data | tojson | built }}</script>
+{% raw %}
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// Civic Operations Dashboard v3
+// Architecture: State store + render() + event delegation + cross-filtering
+// Fixes: cross-filter, ZIP limit, event cap, sort, maps, KPIs, fade, favicon
+// ═══════════════════════════════════════════════════════════════════════════
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+// BUILD IC-5 (D2 g): text escaped for markup's text and for a quoted attribute alike — & < > " ' as entities. The textContent →
+// innerHTML serialisation it replaces escapes & < > only, so a quote in a value it filled closed the attribute (data-zip, value, …).
+const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+// Reduced-motion preference (cached once; Perplexity §1d, Gemini §2.4)
+const _rmq=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+// ── State store ──────────────────────────────────────────────────────────
+const S={status:"loading",resources:[],zips:{},hints:{},zipStats:[],crisisEvents:[],
+  chartFields:[],areaLabel:"ZIP",domainHints:{},
+  q:"",cats:new Set(),sortMode:"smart",selId:null,showClosed:false,
+  boolToggles:{},enumSel:{},geoCenter:null,snapshotAsof:"",derivedTiles:[]};
+
+function upd(p){Object.assign(S,p);renderFinder()}
+
+// ── Geo: haversine distance (miles) ──────────────────────────────────────
+function hav(a1,o1,a2,o2){
+  const R=3958.8,d=Math.PI/180,da=(a2-a1)*d,dl=(o2-o1)*d;
+  const a=Math.sin(da/2)**2+Math.cos(a1*d)*Math.cos(a2*d)*Math.sin(dl/2)**2;
+  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+}
+
+// FIX #4: Compute geographic center of all ZIP centroids so distance sort
+// works even without a user-entered ZIP (Audit 4 finding)
+function computeGeoCenter(zips){
+  const coords=Object.values(zips);
+  if(!coords.length)return null;
+  const lat=coords.reduce((s,c)=>s+c[0],0)/coords.length;
+  const lng=coords.reduce((s,c)=>s+c[1],0)/coords.length;
+  return[lat,lng];
+}
+
+function getDist(refPoint,r){
+  if(!refPoint)return null;
+  const l=r?.location;if(!l)return null;
+  if(l.lat!=null&&l.lng!=null)return hav(refPoint[0],refPoint[1],l.lat,l.lng);
+  const rc=S.zips[l.zip];return rc?hav(refPoint[0],refPoint[1],rc[0],rc[1]):null;
+}
+
+function relScore(q,r){
+  if(!q)return 0;
+  const t=q.toLowerCase().split(/\s+/).filter(Boolean),h=r.search_text||"";
+  let s=0;for(const w of t)if(h.includes(w))s++;
+  if(r.name?.toLowerCase().includes(q.toLowerCase()))s+=3;
+  return s;
+}
+
+// ── Filter + Sort (FIX #4: distance without ZIP uses geoCenter) ──────────
+function filtered(){
+  const q=S.q.trim(),isZ=/^\d{5}$/.test(q),uz=isZ?q:null;
+  // Reference point: user ZIP centroid if available, else geographic center
+  const refPoint=uz?S.zips[uz]:
+    (S.sortMode==="distance"?S.geoCenter:null);
+
+  let f=S.resources.filter(r=>{
+    if(r.status==="closed"&&!S.showClosed)return false;
+    if(S.cats.size>0&&!S.cats.has(r.category))return false;
+    for(const[k,v]of Object.entries(S.boolToggles)){if(!v)continue;if(r.attrs?.[k]!==true)return false}
+    for(const[k,sel]of Object.entries(S.enumSel)){if(!sel||!sel.size)continue;
+      const rv=r.attrs?.[k];const vs=Array.isArray(rv)?rv.map(String):[String(rv??"")];
+      let ok=false;for(const s of sel)if(vs.includes(s))ok=true;if(!ok)return false}
+    if(q&&!isZ&&relScore(q,r)===0)return false;
+    return true;
+  });
+
+  const sc=f.map(r=>({r,rel:isZ?0:relScore(q,r),d:refPoint?getDist(refPoint,r):null}));
+  const m=S.sortMode;
+  sc.sort((a,b)=>{
+    if(m==="name")return(a.r.name||"").localeCompare(b.r.name||"");
+    if(m==="distance")return(a.d??1e9)-(b.d??1e9)||(a.r.name||"").localeCompare(b.r.name||"");
+    // Smart: ZIP → distance; keyword → relevance; empty → alphabetical
+    if(isZ)return(a.d??1e9)-(b.d??1e9)||(a.r.name||"").localeCompare(b.r.name||"");
+    if(q)return(b.rel-a.rel)||(a.r.name||"").localeCompare(b.r.name||"");
+    return(a.r.name||"").localeCompare(b.r.name||"");
+  });
+  return{isZ,uz,refPoint,items:sc};
+}
+
+// ── Render: Finder ───────────────────────────────────────────────────────
+function renderFinder(){
+  const st=$("#st-text"),sh=$("#st-hint"),re=$("#results");
+  if(S.status!=="ready"){st.textContent=S.status==="error"?"Error":"Loading…";return}
+  const{isZ,uz,refPoint,items}=filtered(),c=items.length,
+    tot=S.resources.filter(r=>r.status!=="closed"||S.showClosed).length;
+  st.textContent=`${c} of ${tot} resources`;
+  sh.textContent=isZ?`Sorted by distance from ${uz}`:
+    (S.sortMode==="distance"?"Sorted by distance from center":
+    (S.q?"By relevance":"Alphabetical"));
+  if(!c){re.innerHTML=`<div class="state"><div class="t">No resources match</div><div class="b">${S.q?"Try different terms. ":""}${S.cats.size?"Remove filters. ":""}</div></div>`;return}
+  const fg=document.createDocumentFragment(),lim=Math.min(c,50);
+  for(let i=0;i<lim;i++){const{r,d:dd}=items[i];const cd=document.createElement("div");
+    cd.className="card"+(r.id===S.selId?" sel":"")+(r.status==="closed"?" closed":"");
+    cd.dataset.id=r.id;cd.tabIndex=0;cd.setAttribute("role","button");
+    cd.style.animationDelay=`${i*30}ms`; // Staggered fade-in
+    const ds=dd!=null?`${dd.toFixed(1)} mi`:"";
+    /* P0.7 (D6, D7): who closed it (the data or the announcement), the data's "at risk", a record the curveball added or changed */
+    const cb=r.status==="closed"?`<span class="bdg cl" title="${r.closed_by==="announcement"?"Closed by the curveball announcement":"Closed per the data's own status"}">CLOSED</span>`:"";
+    const xb=(r.at_risk?'<span class="bdg risk">At risk</span>':"")+(r.changed_at_curveball?'<span class="bdg chg">Changed at the curveball</span>':"");
+    cd.innerHTML=`<div class="nm">${esc(r.name)} ${cb}</div><div class="mt">${esc(r.category)}${r.location?.address?" · "+esc(r.location.address):""}${ds?" · "+ds:""}</div><div class="badges"><span class="bdg cat">${esc(r.category)}</span>${xb}</div>`;
+    fg.appendChild(cd)}
+  if(c>lim){const m=document.createElement("div");m.className="state";m.innerHTML=`<div class="b">${c-lim} more — refine your search</div>`;fg.appendChild(m)}
+  re.innerHTML="";re.appendChild(fg);
+}
+
+// ── Render: Detail panel (FIX #5: Google Maps directions) ────────────────
+function renderDetail(r){
+  $("#d-title").textContent=r.name;
+  $("#d-sub").textContent=r.category+(r.location?.zip?" · ZIP "+r.location.zip:"");
+  const cl=$("#d-closed");
+  cl.innerHTML=r.status==="closed"?`<div class="dclosed"><strong>⚠ CLOSED</strong> — ${r.closed_by==="announcement"?"by the curveball announcement: ":""}${esc(r.closed_reason||"This resource has been marked as closed.")}</div>`:(r.at_risk?`<div class="dclosed" style="border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.08)"><strong>At risk</strong> — per the data's own status</div>`:"")+(r.status!=="closed"&&r.status_note?`<div class="dclosed" style="border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.08)"><strong>To confirm</strong> — ${esc(r.status_note)}</div>`:"");
+  const kv=$("#d-kv");let h="";
+  // Priority order per Excellence Report §5: critical → barrier → operational
+  if(r.location?.address)h+=`<div class="k">Address</div><div class="v">${esc(r.location.address)}</div>`;
+  if(r.location?.zip)h+=`<div class="k">ZIP</div><div class="v">${esc(r.location.zip)}</div>`;
+  // Show barrier-relevant attrs first (hours, phone, language, ID)
+  const priority=['Hours','Open Hours','Phone','Language','Languages','Id Required','Accepts'];
+  const shown=new Set();
+  // Helper: format attr values (Root Cause 5: zero → "None" for time fields; Root Cause 6: skip internal IDs)
+  const _skipAttrs=new Set(['area code','areacode']);
+  const _timeKeys=new Set(['wait weeks','wait days','wait time']);
+  const _fmtVal=(k,v)=>{
+    if(Array.isArray(v))return v.join(", ");
+    if(typeof v==="boolean")return v?"Yes":"No";
+    if(v===0&&_timeKeys.has(k.toLowerCase()))return "None";
+    return String(v);
+  };
+  // Color-coded wait times: red >4wk, amber 2-4wk, green ≤2wk or "None"
+  const _waitColor=(k,v)=>{
+    if(!_timeKeys.has(k.toLowerCase()))return "";
+    if(v===0||v==="None")return "#22c55e";  // green — no wait
+    if(typeof v==="number"&&v<=2)return "#22c55e"; // green
+    if(typeof v==="number"&&v<=4)return "var(--warn)"; // amber
+    if(typeof v==="number"&&v>4)return "var(--bad)";   // red
+    return "";
+  };
+  for(const pk of priority){
+    for(const[k,v]of Object.entries(r.attrs||{})){
+      if(_skipAttrs.has(k.toLowerCase().replace(/\s/g,'')))continue;
+      if(k.toLowerCase().replace(/\s/g,'')===pk.toLowerCase().replace(/\s/g,'')&&!shown.has(k)){
+        shown.add(k);const wc=_waitColor(k,v);
+        h+=`<div class="k">${esc(k)}</div><div class="v"${wc?' style="color:'+wc+';font-weight:700"':''}>${esc(_fmtVal(k,v))}</div>`}}}
+  // Then remaining attrs
+  for(const[k,v]of Object.entries(r.attrs||{})){
+    if(shown.has(k))continue;
+    if(_skipAttrs.has(k.toLowerCase().replace(/\s/g,'')))continue;
+    const wc=_waitColor(k,v);
+    h+=`<div class="k">${esc(k)}</div><div class="v"${wc?' style="color:'+wc+';font-weight:700"':''}>${esc(_fmtVal(k,v))}</div>`;}
+  kv.innerHTML=h;
+  // Google Maps directions link + nearest alternatives — now ABOVE attrs
+  const acts=$("#d-actions");
+  let actHtml="";
+  if(r.location?.address){
+    const addr=encodeURIComponent(r.location.address);
+    actHtml+=`<a class="directions" href="https://www.google.com/maps/dir/?api=1&destination=${addr}" target="_blank" rel="noopener">📍 Get Directions</a>`;
+  }
+  // Filter-aware nearest alternatives: apply active filters so count reflects user's search intent
+  if(r.location?.lat&&r.location?.lng){
+    // Helper: does resource match active category/bool/enum filters?
+    const _matchesFilters=o=>{
+      if(o.status==="closed"&&!S.showClosed)return false;
+      if(S.cats.size>0&&!S.cats.has(o.category))return false;
+      for(const[k,v]of Object.entries(S.boolToggles)){if(!v)continue;if(o.attrs?.[k]!==true)return false}
+      for(const[k,sel]of Object.entries(S.enumSel)){if(!sel||!sel.size)continue;
+        const rv=o.attrs?.[k];const vs=Array.isArray(rv)?rv.map(String):[String(rv??"")];
+        let ok=false;for(const s of sel)if(vs.includes(s))ok=true;if(!ok)return false}
+      return true;
+    };
+    const allNearby=S.resources.filter(o=>o.id!==r.id&&o.location?.lat&&o.location?.lng&&hav(r.location.lat,r.location.lng,o.location.lat,o.location.lng)<=5);
+    const filteredNearby=allNearby.filter(_matchesFilters);
+    const hasActiveFilters=S.cats.size>0||Object.values(S.boolToggles).some(v=>v)||Object.values(S.enumSel).some(s=>s&&s.size>0);
+    if(allNearby.length>0){
+      const cats=[...new Set(filteredNearby.map(n=>n.category))].slice(0,3).join(", ");
+      if(hasActiveFilters&&filteredNearby.length!==allNearby.length){
+        actHtml+=`<div style="margin-top:8px;font-size:12px;color:var(--muted)">📊 <strong>${filteredNearby.length}</strong> matching nearby · ${allNearby.length} total within 5 miles${cats?' ('+esc(cats)+')':''}</div>`;
+      }else{
+        const catList=[...new Set(allNearby.filter(n=>n.status!=="closed").map(n=>n.category))].slice(0,3).join(", ");
+        actHtml+=`<div style="margin-top:8px;font-size:12px;color:var(--muted)">📊 <strong>${allNearby.filter(n=>n.status!=="closed").length}</strong> other resource${allNearby.filter(n=>n.status!=="closed").length>1?"s":""} within 5 miles${catList?' ('+esc(catList)+')':''}</div>`;
+      }
+    }
+  }
+  if(actHtml)actHtml=`<div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border)">${actHtml}</div>`;
+  acts.innerHTML=actHtml;
+  $("#det").classList.add("active");
+}
+
+// ── FIX #1: Cross-filtering (Excellence Report §2) ──────────────────────
+let chartsRendered=false;
+function switchToTab(tabName){
+  $$(".tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===tabName));
+  $$(".tab-panel").forEach(p=>p.classList.toggle("active",p.id==="panel-"+tabName));
+  // Scroll to top on tab switch (Perplexity §1e: simultaneous with transition)
+  try{window.scrollTo({top:0,left:0,behavior:_rmq.matches?'auto':'smooth'})}catch(e){window.scrollTo(0,0)}
+  // Lazy render charts when Data Explorer tab is first shown
+  if(tabName==="data"&&!chartsRendered){chartsRendered=true;setTimeout(renderCharts,50)}
+}
+function crossFilterZip(zip){
+  // Set search to this ZIP, switch to Finder tab, trigger search
+  const input=$("#q");input.value=zip;
+  switchToTab("finder");
+  upd({q:zip});
+  input.focus();
+}
+
+// P0.7 (D5): an alert from the data, whatever its endpoint is named — its title and id, then its severity, date, detail, places and
+// groups (the caller escapes both strings)
+function alertText(e){
+  const title=`⚠ ${e.name||"Alert"}${e.id?" ("+e.id+")":""}`;
+  const parts=[];if(e.severity)parts.push(e.severity);if(e.date)parts.push(e.date);
+  if(e.detail)parts.push(e.detail.length>120?e.detail.slice(0,117)+"…":e.detail);
+  if(e.places&&e.places.length)parts.push("Places: "+e.places.join(", "));
+  if(e.category)parts.push("Affects: "+e.category);
+  return[title,parts.join(" · ")]}
+
+// ── Render: Dashboard (fully domain-adaptive) ───────────────────────────
+function renderDashboard(){
+  // ══ SYSTEM-SNAPSHOT MODE — capacity-focused dashboard for aggregate system data ══
+  // Activates when community-snapshot endpoint provides system-wide metrics
+  // (e.g., Wichita homelessness data: PIT counts, bed totals, foster youth rates)
+  const snap=S.systemSnapshot||{};
+  /* P0.6 (D11): this mode runs only when every field it draws is a number, and draws each as given (no stand-in values) */
+  const SNAP_FIELDS=["shelteredAndUnshelteredTotal","totalEmergencyBeds","bedsAvailableNow","shelteredOrTransitional","unshelteredHeadcount",
+    "avgDaysToHousing","nationalDaysToHousing","fosterHomelessnessAge17","fosterHomelessnessAge19","fosterHomelessnessAge21"];
+  if(SNAP_FIELDS.every(k=>typeof snap[k]==="number")){
+    // BUILD IC-5 (D2 g): numbers by the guard above; Number() says so where each is read (the sink test reads no guard)
+    const totalHomeless=Number(snap.shelteredAndUnshelteredTotal);
+    const beds=Number(snap.totalEmergencyBeds);
+    const avail=Number(snap.bedsAvailableNow);
+    const sheltered=Number(snap.shelteredOrTransitional);
+    const unsheltered=Number(snap.unshelteredHeadcount);
+    const daysToHousing=Number(snap.avgDaysToHousing);
+    const nationalDays=Number(snap.nationalDaysToHousing);
+    const fosterAge17=Math.round(snap.fosterHomelessnessAge17*100);
+    const fosterAge19=Math.round(snap.fosterHomelessnessAge19*100);
+    const fosterAge21=Math.round(snap.fosterHomelessnessAge21*100);
+    const blocked=beds-avail;
+    const blockedPct=beds>0?Math.round(blocked/beds*100):0;
+
+    // ── Hero banner ── P0.7 (D4): in Block 2, when this endpoint did not change at the curveball, its figures say "as of Block 1"
+    const asof=S.snapshotAsof?` <span class="asof" style="font-size:11px;color:var(--muted);font-style:italic">(${esc(S.snapshotAsof)})</span>`:"";
+    const hero=$("#hero-crisis");
+    hero.innerHTML=`<span style="color:var(--bad)">${totalHomeless.toLocaleString("en-US")} People</span> Experiencing Homelessness · Only <span style="color:var(--warn)">${avail} of ${beds}</span> Beds Available · <span style="color:var(--bad)">${fosterAge21}%</span> of Foster Youth Face Homelessness by 21${asof}`;
+
+    // ── KPI cards ──
+    const kpis=[
+      {label:"People Homeless",num:totalHomeless,fmt:n=>n.toLocaleString("en-US"),sub:`${sheltered.toLocaleString("en-US")} sheltered · ${unsheltered.toLocaleString("en-US")} unsheltered`,cls:"red"},
+      {label:"Beds Available",num:avail,fmt:n=>n+" / "+beds,sub:`${blockedPct}% of beds not available in the data`,cls:"amber"},
+      {label:"Days to Housing",num:daysToHousing,fmt:n=>n+" days",sub:`${nationalDays-daysToHousing} days faster than national avg (${nationalDays})`,cls:"green"},
+      {label:"Foster Youth at Risk",num:fosterAge21,fmt:n=>n+"%",sub:`${fosterAge17}% at 17 → ${fosterAge19}% at 19 → ${fosterAge21}% by 21`,cls:"red"},
+    ];
+    if(S.snapshotAsof)kpis.forEach(k=>{k.sub+=`<span class="asof">${esc(S.snapshotAsof)}</span>`});
+    // P0.7 (D4): each figure the Oracle derived from the records, in its OWN tile beside the aggregate — its value, its base, its records;
+    // nothing moves from one tile to the other and no ratio mixes them
+    for(const t of S.derivedTiles){
+      const base=t.base!=null?" of "+t.base:"";const recs=Array.isArray(t.records)?t.records.join(", "):"all records";
+      kpis.push({label:esc(t.label),num:Number(t.value),fmt:n=>n+base,cls:"blue",
+        sub:`Block 1: ${esc(String(t.block1))}${t.base1!=null?" of "+esc(String(t.base1)):""} · ${esc(String(t.field))}${t.minus?" − "+esc(String(t.minus)):""} over ${Number(t.n)} record(s) of ${esc(String(t.endpoint))} (${esc(recs)})<span class="asof">records selected by the Oracle's analysis; summed by Python</span>`})}
+    // P0.7 (D6): the curveball KPI counts only the announcement's closures; a closure in the data is the data's
+    const annClosed=S.resources.filter(r=>r.status==="closed"&&r.closed_by==="announcement");
+    if(annClosed.length>0){const names=[...new Set(annClosed.map(r=>r.name))].slice(0,2).join(", ");kpis.push({label:"⚠ Curveball Impact",num:annClosed.length,fmt:n=>String(n),sub:esc(names)||"Resources closed by the announcement",cls:"red"})}
+    $("#kpi-bar").innerHTML=kpis.map((k,i)=>`<div class="kpi ${k.cls}"><div class="label">${k.label}</div><div class="val" data-target="${k.num}" data-idx="${i}">0</div><div class="sub">${k.sub}</div></div>`).join("");
+    setTimeout(()=>{$$(".kpi .val[data-target]").forEach(el=>{
+      const target=parseInt(el.dataset.target)||0;const idx=parseInt(el.dataset.idx)||0;
+      const fmt=kpis[idx]?.fmt||(n=>String(n));
+      if(target===0){el.textContent=fmt(0);return}
+      const dur=600;const t0=performance.now();
+      function step(t){const p=Math.min(1,(t-t0)/dur);const ease=1-Math.pow(1-p,3);
+        el.textContent=fmt(Math.round(target*ease));
+        if(p<1)requestAnimationFrame(step)}
+      requestAnimationFrame(step)})},50);
+
+    // ── Bed accessibility bar (replaces severity distribution) ──
+    const sevBar=$("#sev-bar");
+    const accessPct=beds>0?Math.round(avail/beds*100):0;
+    sevBar.innerHTML=`<div style="display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted)"><div style="flex:1;height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--border)"><div style="width:${accessPct}%;background:#10b981" title="${avail} accessible beds"></div><div style="width:${100-accessPct}%;background:var(--bad)" title="${blocked} blocked by barriers"></div></div><span><strong style="color:#10b981">${avail}</strong> accessible · <strong style="color:var(--bad)">${blocked}</strong> blocked · ${beds} total emergency beds${asof}</span></div>`;
+
+    // ── Shelter utilization chart — horizontal bars sorted by utilization % ──
+    // Filter to resources that have bed data (shelter-inventory records)
+    const shelters=S.resources.filter(r=>{const bo=r.attrs?.["Beds Online"];return typeof bo==="number"&&bo>0});
+    if(typeof Chart!=="undefined"&&shelters.length&&!window._dashChartDone){
+      const wrap=$("#dash-chart-wrap");const cvs=document.getElementById("ch-dash");
+      if(wrap&&cvs){
+        wrap.style.display="block";
+        shelters.sort((a,b)=>(b.attrs?.["Utilization Rate"]||0)-(a.attrs?.["Utilization Rate"]||0));
+        const labels=shelters.map(s=>s.name);
+        const data=shelters.map(s=>Math.round((s.attrs?.["Utilization Rate"]||0)*100));
+        const colorForUtil=u=>u>=95?"#ef4444":u>=85?"#f59e0b":u>=70?"#06b6d4":"#10b981";
+        const bgColors=data.map(u=>colorForUtil(u)+"88");
+        const bdColors=data.map(u=>colorForUtil(u));
+        // Height on WRAPPER, not canvas — Chart.js responsive mode sizes canvas to container
+        wrap.style.height=Math.max(300,shelters.length*48)+"px";
+        wrap.style.overflowY="auto";
+        $("#dash-chart-title").textContent="Shelter Utilization — Sorted by Capacity Pressure";
+        new Chart(cvs,{type:"bar",
+          data:{labels,datasets:[{label:"Utilization %",data,backgroundColor:bgColors,borderColor:bdColors,borderWidth:1,borderRadius:4,barThickness:20}]},
+          options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+            onClick:function(e,elements,chart){
+              if(!elements.length)return;
+              const name=chart.data.labels[elements[0].index];
+              const q=name.split(" ").slice(0,3).join(" ");
+              switchToTab("finder");const si=document.getElementById("q");if(si){si.value=q;upd({q})}
+            },
+            plugins:{legend:{display:false},
+              tooltip:{backgroundColor:"rgba(0,0,0,.85)",titleColor:"#fff",bodyColor:"#ddd",borderColor:"rgba(255,255,255,.1)",borderWidth:1,
+                callbacks:{label:function(ctx){
+                  const idx=ctx.dataIndex;const s=shelters[idx];
+                  const bo=s.attrs?.["Beds Online"]||0;const bu=s.attrs?.["Beds In Use"]||0;
+                  const lb=s.attrs?.["Low Barrier Access"];
+                  return[`Utilization: ${ctx.formattedValue}%`,`Beds: ${bu} / ${bo}`,lb===true?"✓ Low barrier access":lb===false?"✗ Restricted access":""].filter(Boolean)}}}},
+            scales:{
+              x:{beginAtZero:true,max:100,ticks:{color:"rgba(255,255,255,.5)",padding:8,font:{size:11},callback:v=>v+"%"},grid:{color:"rgba(255,255,255,.05)"}},
+              y:{ticks:{color:"rgba(255,255,255,.7)",padding:6,font:{size:11}},grid:{display:false}}
+            }
+          }
+        });
+        window._dashChartDone=true;
+      }
+    }
+
+    // ── Foster youth trajectory — HTML/CSS stepped timeline ──
+    // B2: the title of the block this redraws (#zip-grid's), not the page's first .sec-title — that was the curveball block's heading in
+    // Block 2 (P0.7 put it first) and is the Get Help tab's now
+    const _zgp=$("#zip-grid")&&$("#zip-grid").previousElementSibling;
+    const secTitle=_zgp&&_zgp.classList.contains("sec-title")?_zgp:null;
+    if(secTitle)secTitle.innerHTML='Foster Youth Homelessness Trajectory<span class="ai-tag">⚡ Data-driven</span> — <em style="font-weight:400;color:var(--muted)">risk escalates after aging out of care</em>';
+    const zg=$("#zip-grid");
+    zg.innerHTML=`<div class="youth-timeline"><div class="youth-step"><div class="yt-age">Age 17</div><div class="yt-stat" style="color:#f59e0b">${fosterAge17}%</div><div class="yt-label">In foster care</div></div><div class="yt-arrow">→ <span class="yt-delta">+${fosterAge19-fosterAge17}pp</span></div><div class="youth-step"><div class="yt-age">Age 19</div><div class="yt-stat" style="color:#ef8c44">${fosterAge19}%</div><div class="yt-label">After partial exits</div></div><div class="yt-arrow">→ <span class="yt-delta">+${fosterAge21-fosterAge19}pp</span></div><div class="youth-step"><div class="yt-age">Age 21</div><div class="yt-stat" style="color:#ef4444">${fosterAge21}%</div><div class="yt-label">Post aging-out</div></div></div><div class="yt-narrative">Youth aging out of foster care face sharply rising homelessness risk. Without intervention, ${fosterAge21}% are homeless by 21.${typeof snap.kansasYouthAgingOutAnnual==="number"?` Kansas discharges <strong>${snap.kansasYouthAgingOutAnnual.toLocaleString("en-US")}</strong> youth from care annually.`:""}</div>`;
+
+    // ── Crisis events (with system-alert support) ──
+    const ev=$("#events");
+    if(S.crisisEvents.length){
+      const sorted=[...S.crisisEvents].sort((a,b)=>{
+        const to={closure:0,alert:1,"system-alert":1,displacement:2,"er-overcrowding":3,supply:4,"311":5};
+        return(to[a.type]??6)-(to[b.type]??6)||(b.count||b.impact||0)-(a.count||a.impact||0)});
+      const top6=sorted.slice(0,6);
+      const _pv=s=>typeof s==="string"&&s.includes("_")?s.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase()):s;
+      const renderEvt=e=>{const t=e.type||"alert";
+        const dot=t==="closure"?"closure":(t==="system-alert"||t==="alert")?"sysalert":t==="supply"?"supply":t==="displacement"?"closure":"call";
+        let title="",meta="";
+        if(t==="alert"){[title,meta]=alertText(e)}
+        else if(t==="system-alert"){title=`⚠ ${e.name||"System Alert"}`;const parts=[];if(e.date)parts.push(e.date);if(e.detail)parts.push(e.detail.length>120?e.detail.slice(0,117)+"…":e.detail);if(e.category)parts.push("Affects: "+e.category);meta=parts.join(" · ")}
+        else if(t==="closure"){title=`Closure: ${e.name||"?"}`;const parts=[];if(e.zip)parts.push(`ZIP ${e.zip}`);if(e.date)parts.push(e.date);if(e.impact)parts.push(e.impact.toLocaleString("en-US")+" residents affected");meta=parts.join(" · ")}
+        else if(t==="displacement"){title=`Displacement: ${_pv(e.name||"?")}`;meta=`${(e.count||0).toLocaleString("en-US")} patients · ${_pv(e.category)||""}`}
+        else{title=_pv(e.name||e.type||"Event");meta=e.detail||e.description||""}
+        return`<div class="event"><div class="dot ${dot}"></div><div class="ev-body"><div class="ev-title">${esc(title)}</div><div class="ev-meta">${esc(meta)}</div></div></div>`};
+      ev.innerHTML=top6.map(renderEvt).join("");
+    }else{ev.innerHTML='<div class="state"><div class="b">No crisis events detected</div></div>'}
+
+    return; // Skip geographic-severity dashboard below
+  }
+
+  // ══ GEOGRAPHIC-SEVERITY MODE — per-ZIP demographic dashboard (KC, Chicago) ══
+  const open=S.resources.filter(r=>r.status!=="closed").length;
+  const closedN=S.resources.filter(r=>r.status==="closed").length;
+  const nClosures=S.crisisEvents.filter(e=>e.type==="closure").length;
+  const displaced=S.crisisEvents.filter(e=>e.type==="closure").reduce((s,e)=>s+(Number(e.impact)||0),0);   // IC-5 (D2 g): a count
+
+  // Primary metric for severity scoring (values already pre-converted by harness)
+  const pf=S.chartFields[0]?.key||null;
+  const _prim=z=>pf?(z[pf]||0):0;
+
+  // Relative severity: sort by primary metric, top 1/3 = HIGH, mid = MED, bottom = LOW
+  let sevThreshHigh=35, sevThreshMed=25;
+  if(pf&&S.zipStats.length>=3){
+    const vals=[...S.zipStats].map(z=>_prim(z)).sort((a,b)=>b-a);
+    sevThreshHigh=vals[Math.floor(vals.length*0.33)]||vals[0]*0.8;
+    sevThreshMed=vals[Math.floor(vals.length*0.66)]||vals[0]*0.5;
+  }
+  const _sev=v=>v>sevThreshHigh?"high":v>sevThreshMed?"med":"low";
+
+  const highZips=S.zipStats.filter(z=>_sev(_prim(z))==="high").length;
+  const worstZip=S.zipStats.length?[...S.zipStats].sort((a,b)=>_prim(b)-_prim(a))[0]:null;
+  const worstVal=worstZip?Math.round(_prim(worstZip)*10)/10:0;
+  const worstCode=worstZip?(worstZip.zip||worstZip.Zip||"?"):"?";
+  const pfLabel=S.chartFields[0]?.label||"Risk";
+  const pfUnit=S.chartFields[0]?.unit||"";
+  // Suppress unit when label already contains it (prevents "No Vehicle % (%)" redundancy)
+  const pfUnitDisplay=pfUnit&&!pfLabel.includes(pfUnit)?pfUnit:"";
+  const crisisNoun=S.domainHints?.crisis_noun||"closures";
+  const unitsCap=String(S.domainHints?.units||"residents").replace(/\b\w/g,c=>c.toUpperCase());   // BUILD B3 (D13, §9): the brief's unit
+  const al=S.areaLabel||"ZIP";
+
+  // Hero crisis statement — P0.7 (D6): only the announcement's closures are the curveball's; a closure in the data is named as the data's
+  const hero=$("#hero-crisis");
+  const closedNames=S.resources.filter(r=>r.status==="closed"&&r.closed_by==="announcement").map(r=>r.name);
+  const dataClosedN=S.resources.filter(r=>r.status==="closed"&&r.closed_by!=="announcement").length;
+  let heroExtra="";
+  if(closedNames.length>0){heroExtra=` <span style="color:var(--warn)">⚡ +${closedNames.length} resource${closedNames.length>1?"s":""} closed by curveball</span>`}
+  if(dataClosedN>0){heroExtra+=` <span style="color:var(--muted)">· ${dataClosedN} closed per the data</span>`}
+  if(displaced>0){
+    hero.innerHTML=`<span style="color:var(--bad)">${nClosures} ${esc(crisisNoun.replace(/\b\w/g,c=>c.toUpperCase()))}</span> ${nClosures!==1?"Have":"Has"} Displaced <span style="color:var(--bad)">${displaced.toLocaleString("en-US")} ${esc(unitsCap)}</span> — ${esc(al)} ${esc(worstCode)} Faces <span style="color:var(--bad)">${worstVal}${esc(pfUnitDisplay)}</span> ${esc(pfLabel)}${heroExtra}`;
+  }else if(S.resources.length>0){
+    hero.innerHTML=`<span style="color:var(--accent)">${S.resources.length} resources</span> across <span style="color:var(--accent)">${Object.keys(S.zips).length} ${esc(al)} codes</span> — ${highZips} areas at elevated risk${heroExtra}`;
+  }else{hero.style.display="none"}
+
+  // KPIs with domain-adaptive text — P0.6 (D7): the signal kinds are the ones this data holds, never a fixed list
+  const sigWords={"closure":crisisNoun,"alert":"alerts","system-alert":"alerts","supply":"alerts","311":"311 calls","displacement":"displacement records","er-overcrowding":"ER overcrowding"};
+  const sigKinds=[...new Set(S.crisisEvents.map(e=>sigWords[e.type]||String(e.type||"events")))];
+  const sigSub=sigKinds.length?esc(sigKinds.join(", ").replace(/^\w/,c=>c.toUpperCase())):"No signals in the data";
+  const kpis=[
+    {label:`Displaced ${esc(unitsCap)}`,num:displaced,fmt:n=>n.toLocaleString("en-US"),sub:`${nClosures} ${esc(crisisNoun)} detected`,cls:"red"},
+    {label:"Resources Available",num:open,fmt:n=>String(n),sub:`${S.resources.length} total${closedN?` (${[dataClosedN?dataClosedN+" closed per the data":"",closedNames.length?closedNames.length+" closed by the curveball":""].filter(Boolean).join(", ")})`:""}`,cls:"green"},
+    {label:`High-Need ${esc(al)}s`,num:highZips,fmt:n=>String(n),sub:`${esc(pfLabel)} elevated · Worst: ${esc(worstCode)} (${worstVal}${esc(pfUnitDisplay)})`,cls:"amber"},
+    {label:"Crisis Signals",num:S.crisisEvents.length,fmt:n=>String(n),sub:sigSub,cls:"purple"},  // P0.6 (D7): the exact count; the kinds the data holds
+  ];
+  if(closedNames.length>0){const un=[...new Set(closedNames)];const names=un.slice(0,2).join(", ")+(un.length>2?" +more":"");kpis.push({label:"⚠ Curveball Impact",num:closedNames.length,fmt:n=>String(n),sub:esc(names)||"Resources closed by the announcement",cls:"red"})}
+  
+  $("#kpi-bar").innerHTML=kpis.map((k,i)=>`<div class="kpi ${k.cls}"><div class="label">${k.label}</div><div class="val" data-target="${k.num}" data-idx="${i}">0</div><div class="sub">${k.sub}</div></div>`).join("");
+  setTimeout(()=>{$$(".kpi .val[data-target]").forEach(el=>{
+    const target=parseInt(el.dataset.target)||0;const idx=parseInt(el.dataset.idx)||0;
+    const fmt=kpis[idx]?.fmt||(n=>String(n));
+    if(target===0){el.textContent=fmt(0);return}
+    const dur=600;const t0=performance.now();
+    function step(t){const p=Math.min(1,(t-t0)/dur);const ease=1-Math.pow(1-p,3);
+      el.textContent=fmt(Math.round(target*ease));
+      if(p<1)requestAnimationFrame(step)}
+    requestAnimationFrame(step)})},50);
+
+  // Severity distribution bar
+  const sevBar=$("#sev-bar");
+  if(S.zipStats.length){
+    const hi=S.zipStats.filter(z=>_sev(_prim(z))==="high").length;
+    const med=S.zipStats.filter(z=>_sev(_prim(z))==="med").length;
+    const lo=S.zipStats.length-hi-med;
+    const totalPop=S.zipStats.reduce((s,z)=>s+_getNum(z,['population','Population']),0);
+    const tot=S.zipStats.length;
+    sevBar.innerHTML=`<div style="display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted)"><div style="flex:1;height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--border)">${hi?`<div style="width:${(hi/tot*100).toFixed(0)}%;background:var(--bad)" title="${hi} HIGH severity"></div>`:""}${med?`<div style="width:${(med/tot*100).toFixed(0)}%;background:var(--warn)" title="${med} MED severity"></div>`:""}${lo?`<div style="width:${(lo/tot*100).toFixed(0)}%;background:#22c55e" title="${lo} LOW severity"></div>`:""}</div><span><strong style="color:var(--bad)">${hi}</strong> HIGH · <strong style="color:var(--warn)">${med}</strong> MED · <strong style="color:#22c55e">${lo}</strong> LOW · ${totalPop.toLocaleString("en-US")} residents</span></div>`;
+  }
+
+  // Dashboard horizontal bar chart — primary metric by area, color-coded by severity
+  if(typeof Chart!=="undefined"&&S.zipStats.length&&pf&&!window._dashChartDone){
+    const wrap=$("#dash-chart-wrap");
+    const cvs=document.getElementById("ch-dash");
+    if(wrap&&cvs){
+      wrap.style.display="block";
+      const sorted=[...S.zipStats].sort((a,b)=>_prim(b)-_prim(a));
+      const labels=sorted.map(z=>al+" "+(z.zip||z.Zip||"?"));
+      const data=sorted.map(z=>Math.round(_prim(z)*10)/10);
+      const bgColors=sorted.map(z=>{
+        const s=_sev(_prim(z));
+        return s==="high"?"rgba(239,68,68,.55)":s==="med"?"rgba(245,158,11,.55)":"rgba(34,197,94,.55)";
+      });
+      const bdColors=sorted.map(z=>{
+        const s=_sev(_prim(z));
+        return s==="high"?"#ef4444":s==="med"?"#f59e0b":"#22c55e";
+      });
+      const unitSuffix=S.chartFields[0]?.unit&&!pfLabel.includes(S.chartFields[0].unit)?" ("+S.chartFields[0].unit+")":"";
+      $("#dash-chart-title").textContent=pfLabel+unitSuffix+" by "+al;
+      new Chart(cvs,{type:"bar",
+        data:{labels,datasets:[{label:pfLabel,data,backgroundColor:bgColors,borderColor:bdColors,borderWidth:1,borderRadius:4}]},
+        options:{indexAxis:"y",responsive:true,maintainAspectRatio:false,
+          onClick:function(e,elements,chart){
+            if(!elements.length)return;
+            const raw=chart.data.labels[elements[0].index];
+            const zip=raw.replace(/^[A-Za-z]+\s*/,"");
+            if(zip)crossFilterZip(zip);
+          },
+          plugins:{legend:{display:false},
+            tooltip:{backgroundColor:"rgba(0,0,0,.85)",titleColor:"#fff",bodyColor:"#ddd",borderColor:"rgba(255,255,255,.1)",borderWidth:1,
+              callbacks:{label:function(ctx){return ctx.dataset.label+": "+ctx.formattedValue+(S.chartFields[0]?.unit||"")}}}},
+          scales:{
+            x:{beginAtZero:true,ticks:{color:"rgba(255,255,255,.5)",padding:8,font:{size:11}},grid:{color:"rgba(255,255,255,.05)"}},
+            y:{ticks:{color:"rgba(255,255,255,.7)",padding:6,font:{size:11}},grid:{display:false}}
+          }
+        }
+      });
+      window._dashChartDone=true;
+    }
+  }
+
+  // ZIP grid — dynamic stats from whatever fields exist
+  const zg=$("#zip-grid");
+  if(S.zipStats.length){
+    const sorted=[...S.zipStats].sort((a,b)=>_prim(b)-_prim(a));
+    const maxPrim=Math.max(_prim(sorted[0])||1,0.1); // guard against zero
+    zg.innerHTML=sorted.map((z,i)=>{
+      const zip=z.zip||z.Zip||"?";
+      const sev=_sev(_prim(z));
+      const pop=_getNum(z,['population','Population']);
+      const sevColor=sev==='high'?'var(--bad)':sev==='med'?'var(--warn)':'var(--good)';
+      let stats="";
+      // Show chart fields dynamically
+      for(const cf of S.chartFields){
+        let val=z[cf.key]||0;
+        if(typeof val==="number")val=Math.round(val*10)/10; // round for display
+        if(val)stats+=`<div class="st"><span>${esc(cf.label)}</span><span class="sv" style="color:${sev==='high'?'var(--bad)':sev==='med'?'var(--warn)':'var(--text)'}">${esc(val)}${esc(cf.unit)}</span></div>`;
+      }
+      if(pop)stats+=`<div class="st"><span>Population</span><span class="sv">${pop.toLocaleString("en-US")}</span></div>`;
+      // Progress bar — width proportional to primary metric vs dataset max
+      const pct=pf?Math.round((_prim(z)/maxPrim)*100):0;
+      const bar=pct?`<div style="height:4px;border-radius:2px;background:var(--border);margin:8px 0 4px;overflow:hidden"><div style="width:${pct}%;height:100%;border-radius:2px;background:${sevColor};transition:width .4s ease"></div></div>`:"";
+      return`<div class="zip-card sev-${sev}" data-zip="${esc(zip)}" style="animation:fadeSlide .3s ease both;animation-delay:${i*40}ms"><div class="zc">${esc(al)} ${esc(zip)} <span class="sev ${sev}">${sev.toUpperCase()}</span></div>${stats}${bar}<div class="hint">Click to find resources →</div></div>`;
+    }).join("")}
+  else{zg.innerHTML='<div class="state"><div class="b">No demographic data available</div></div>'}
+  // Fix 9: Pulse curveball-affected ZIP cards — P0.7 (D6): the announcement's closures only
+  const closedZips=new Set(S.resources.filter(r=>r.status==="closed"&&r.closed_by==="announcement").map(r=>r.location?.zip).filter(Boolean));
+  if(closedZips.size>0){zg.querySelectorAll(".zip-card").forEach(c=>{if(closedZips.has(c.dataset.zip))c.classList.add("curveball-hit")})}
+
+  // Crisis events — capped, priority sorted
+  const ev=$("#events");
+  if(S.crisisEvents.length){
+    const sorted=[...S.crisisEvents].sort((a,b)=>{
+      const to={closure:0,alert:1,displacement:2,"er-overcrowding":3,supply:4,"311":5};
+      return(to[a.type]??6)-(to[b.type]??6)||(b.count||b.impact||0)-(a.count||a.impact||0)});
+    const top6=sorted.slice(0,6);
+    const _pv=s=>typeof s==="string"&&s.includes("_")?s.replace(/_/g," ").replace(/\b\w/g,c=>c.toUpperCase()):s;
+    const al=S.areaLabel||"ZIP";
+    const renderEvt=e=>{const t=e.type||"alert";const dot=t==="closure"?"closure":t==="alert"?"sysalert":t==="supply"?"supply":t==="displacement"?"closure":t==="er-overcrowding"?"closure":"call";
+      let title="",meta="";
+      if(t==="alert"){[title,meta]=alertText(e)}
+      else if(t==="closure"){title=`Closure: ${e.name||"?"}`;const parts=[];if(e.zip)parts.push(`${al} ${e.zip}`);if(e.date)parts.push(e.date);if(e.impact)parts.push(e.impact.toLocaleString("en-US")+" residents affected");meta=parts.join(" · ")}
+      else if(t==="displacement"){title=`Displacement: ${_pv(e.name||"?")}`;meta=`${(e.count||0).toLocaleString("en-US")} patients · ${_pv(e.category)||""}`}
+      else if(t==="er-overcrowding"){title=`ER Overcrowding: ${_pv(e.name||"?")}`;meta=`${al} ${e.zip||"?"} · ${_pv(e.category)||""}`}
+      else if(t==="311"){title=`311 Distress: ${al} ${e.zip||"?"}`;meta=`${e.count||0} calls · ${_pv(e.category)||""}`}
+      else if(t==="supply"){title=`Supply Alert: ${e.severity||""}`;meta=`${e.description||""}`}
+      else{title=_pv(e.type||"Event");meta=""}
+      return`<div class="event" data-zip="${esc(e.zip||"")}"><div class="dot ${dot}"></div><div class="ev-body"><div class="ev-title">${esc(title)}</div><div class="ev-meta">${esc(meta)}</div></div></div>`};
+    ev.innerHTML=top6.map(renderEvt).join("");
+    if(sorted.length>6){
+      const rest=sorted.slice(6);
+      const moreId="ev-more-"+Date.now();
+      ev.innerHTML+=`<div id="${moreId}" style="display:none">${rest.map(renderEvt).join("")}</div>`;
+      ev.innerHTML+=`<div style="text-align:center;padding:8px"><button onclick="const m=document.getElementById('${moreId}');const b=this;if(m.style.display==='none'){m.style.display='block';b.textContent='Show fewer'}else{m.style.display='none';b.textContent='Show all ${sorted.length-6} remaining events'}" style="background:none;border:1px solid var(--border);color:var(--accent);padding:6px 16px;border-radius:8px;cursor:pointer;font-size:12px">Show all ${sorted.length-6} remaining events</button></div>`}}
+  else{ev.innerHTML='<div class="state"><div class="b">No crisis events detected</div></div>'}
+}
+
+// Helper: get numeric value from ZIP stat by trying multiple key names
+function _getNum(obj,keys){for(const k of keys){const v=obj[k];if(typeof v==="number")return v}return 0}
+
+// ── Render: Charts (Excellence Report §4: dark-theme config) ─────────────
+function renderCharts(){
+  if(typeof Chart==="undefined"){$$(".chart-box").forEach(b=>{b.innerHTML="<p style='color:var(--muted);font-size:13px;padding:20px'>Charts unavailable — Chart.js didn't load.</p>"});return}
+  const zs=S.zipStats;
+  const pf=S.chartFields[0]?.key||null;
+  const al=S.areaLabel||"ZIP";
+
+  // ── ZipStats-dependent charts (only render if demographics data exists) ──
+  if(zs.length){
+  const sorted=pf?[...zs].sort((a,b)=>(b[pf]||0)-(a[pf]||0)):[...zs];
+  const labels=sorted.map(z=>z.zip||z.Zip||"?");
+
+  // Dark-theme chart config with cross-filtering
+  const darkOpts=(label,unit)=>({responsive:true,maintainAspectRatio:false,
+    layout:{padding:{left:8,top:4}},
+    onClick:(e,elements,chart)=>{
+      if(!elements.length)return;
+      const zip=chart.data.labels[elements[0].index];
+      if(zip)crossFilterZip(zip);
+    },
+    plugins:{legend:{display:false},
+      tooltip:{backgroundColor:"rgba(0,0,0,.85)",titleColor:"#fff",bodyColor:"#ddd",borderColor:"rgba(255,255,255,.1)",borderWidth:1,
+        callbacks:{label:ctx=>ctx.dataset.label+": "+ctx.formattedValue+(unit||"")}}},
+    scales:{y:{beginAtZero:true,ticks:{color:"rgba(255,255,255,.5)",padding:8,font:{size:11}},grid:{color:"rgba(255,255,255,.05)"}},
+      x:{ticks:{color:"rgba(255,255,255,.5)",padding:6,font:{size:11},maxRotation:45},grid:{display:false}}}});
+
+  // Dynamic bar charts from chartFields (values pre-converted by harness)
+  const barColors=["#ef4444","#f59e0b","#8b5cf6","#06b6d4","#22c55e"];
+  const row1=document.getElementById("dynamic-charts-row1");
+  const extraBox=document.getElementById("dynamic-chart-extra");
+  const fields=S.chartFields.slice(0,3);
+  fields.forEach((cf,i)=>{
+    const container=i<2?row1:extraBox;
+    if(!container)return;
+    const box=document.createElement("div");
+    if(i<2)box.className="chart-box";
+    const canvasId="ch-dyn-"+i;
+    const unitSuffix=cf.unit&&!cf.label.includes(cf.unit)?' ('+esc(cf.unit)+')':'';
+    box.innerHTML=`<h3>${esc(cf.label)}${unitSuffix}</h3><canvas id="${canvasId}" aria-label="${esc(cf.label)} bar chart"></canvas><div class="chart-hint">Click a bar to explore that ${esc(al)}</div>`;
+    container.appendChild(box);
+    const ctx=document.getElementById(canvasId);
+    if(!ctx)return;
+    const data=sorted.map(z=>z[cf.key]||0);
+    new Chart(ctx,{type:"bar",data:{labels,datasets:[{label:cf.label,data,backgroundColor:barColors[i%barColors.length]+"55",borderColor:barColors[i%barColors.length],borderWidth:1,borderRadius:4,hoverBackgroundColor:barColors[i%barColors.length]+"99"}]},options:darkOpts(cf.label,cf.unit)});
+  });
+  // If no chart fields, show message
+  if(!fields.length&&row1){row1.innerHTML='<div class="chart-box"><p style="color:var(--muted);padding:20px">No numeric demographic fields found for chart visualization.</p></div>'}
+  } else {
+    // No zipStats — render system metrics reference table from community-snapshot data
+    const row1=document.getElementById("dynamic-charts-row1");
+    const snap=S.systemSnapshot||{};
+    if(row1&&snap.shelteredAndUnshelteredTotal){
+      // Curated metric definitions grouped by category
+      const groups=[
+        {name:"Population",items:[
+          {label:"Total Experiencing Homelessness",key:"shelteredAndUnshelteredTotal",fmt:"int"},
+          {label:"Currently Sheltered / Transitional",key:"shelteredOrTransitional",fmt:"int"},
+          {label:"Currently Unsheltered",key:"unshelteredHeadcount",fmt:"int"},
+          {label:"First-Time Homeless (Annual)",key:"firstTimeHomelessAnnual",fmt:"int"},
+          {label:"People Served Annually",key:"peopleServedAnnual",fmt:"int"},
+        ]},
+        {name:"System Capacity",items:[
+          {label:"Emergency Shelter Beds",key:"totalEmergencyBeds",fmt:"int"},
+          {label:"Beds Available",key:"bedsAvailableNow",fmt:"int"},
+          {label:"Per Capita Rate",key:"perCapitaRateLocal",fmt:"int",cmp:"perCapitaRateNational",cmpLabel:"national"},
+        ]},
+        {name:"Foster Youth",items:[
+          {label:"Homelessness Rate — Age 17",key:"fosterHomelessnessAge17",fmt:"pct"},
+          {label:"Homelessness Rate — Age 19",key:"fosterHomelessnessAge19",fmt:"pct"},
+          {label:"Homelessness Rate — Age 21",key:"fosterHomelessnessAge21",fmt:"pct"},
+          {label:"Kansas Youth Aging Out Annually",key:"kansasYouthAgingOutAnnual",fmt:"int"},
+        ]},
+        {name:"Performance",items:[
+          {label:"Average Days to Housing",key:"avgDaysToHousing",fmt:"days",cmp:"nationalDaysToHousing",cmpLabel:"national avg"},
+          {label:"Housed Within One Year",key:"housedWithinYearRate",fmt:"pct"},
+          {label:"2-Year Permanent Housing Retention",key:"permanentRetention2yr",fmt:"pct"},
+          {label:"VASH Placements (Annual)",key:"vashPlacementsAnnual",fmt:"int"},
+        ]},
+        {name:"System Scale",items:[
+          {label:"Coalition Member Organizations",key:"coalitionMemberOrgs",fmt:"int"},
+          {label:"Newly Homeless Share of Served",key:"newlyHomelessShare",fmt:"pct"},
+        ]},
+      ];
+      // Format a value based on type
+      const fmtVal=(v,fmt)=>{
+        if(v===undefined||v===null)return"—";
+        if(fmt==="pct")return Math.round(v*100)+"%";
+        if(fmt==="days")return v+" days";
+        if(fmt==="int")return typeof v==="number"?v.toLocaleString("en-US"):String(v);
+        return String(v);
+      };
+      let h='<div class="chart-box" style="grid-column:1/-1"><h3>System Metrics — Community Snapshot</h3>'+(S.snapshotAsof?`<p style="font-size:11px;color:var(--muted);font-style:italic;margin:-4px 0 8px">${esc(S.snapshotAsof)}</p>`:"");
+      h+='<table class="ds-tbl" style="font-variant-numeric:tabular-nums">';
+      for(const g of groups){
+        // Section header row
+        h+=`<tr><td colspan="2" style="padding:14px 10px 5px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid rgba(255,255,255,0.07)">${esc(g.name)}</td></tr>`;
+        for(const m of g.items){
+          const v=snap[m.key];
+          const displayed=fmtVal(v,m.fmt);
+          // Inline comparison annotation if defined
+          let annotation="";
+          if(m.cmp&&snap[m.cmp]!==undefined){
+            const cmpVal=fmtVal(snap[m.cmp],m.fmt);
+            annotation=` <span style="font-size:0.78em;color:rgba(255,255,255,0.4);margin-left:6px">vs ${esc(cmpVal)} ${m.cmpLabel||""}</span>`;
+          }
+          h+=`<tr><td style="padding:7px 10px;color:rgba(255,255,255,0.65)">${esc(m.label)}</td><td style="padding:7px 10px;text-align:right;color:rgba(255,255,255,0.92);font-weight:600">${esc(displayed)}${annotation}</td></tr>`;
+        }
+      }
+      h+='</table></div>';
+      row1.innerHTML=h;
+    } else if(row1){
+      row1.innerHTML='<div class="chart-box"><p style="color:var(--muted);padding:20px">This dataset uses system-level aggregate metrics rather than per-area demographics. See the Dashboard tab for system capacity analysis.</p></div>';
+    }
+  }
+  
+  // Priority 2: Doughnut center text plugin — shows total in the hole
+  const centerTextPlugin={id:"centerText",
+    beforeDatasetsDraw(chart){
+      const{ctx}=chart;
+      const meta=chart.getDatasetMeta(0);if(!meta.data.length)return;
+      const x=meta.data[0].x,y=meta.data[0].y;
+      const total=chart.data.datasets[0].data.reduce((a,b)=>a+b,0);
+      ctx.save();
+      ctx.font="bold 30px system-ui";ctx.fillStyle="rgba(255,255,255,.88)";
+      ctx.textAlign="center";ctx.textBaseline="middle";
+      ctx.fillText(total,x,y-8);
+      ctx.font="13px system-ui";ctx.fillStyle="rgba(255,255,255,.45)";
+      ctx.fillText("resources",x,y+14);
+      ctx.restore()}};
+
+  const cc={};S.resources.forEach(r=>{const c=r.category||"Other";cc[c]=(cc[c]||0)+1});
+  const cl=Object.keys(cc),cv=Object.values(cc);
+  const cols=["#8b5cf6","#22c55e","#ef4444","#f59e0b","#06b6d4","#ec4899","#84cc16"];
+  const cctx=document.getElementById("ch-cats");
+  if(cctx){new Chart(cctx,{type:"doughnut",
+    data:{labels:cl,datasets:[{data:cv,backgroundColor:cols.slice(0,cl.length),hoverOffset:8}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:"62%",
+      // Priority 3: Tooltip showing count + percentage
+      plugins:{legend:{position:"bottom",labels:{color:"rgba(255,255,255,.7)",font:{size:13},padding:12}},
+        tooltip:{backgroundColor:"rgba(0,0,0,.85)",titleColor:"#fff",bodyColor:"#ddd",
+          callbacks:{label:ctx=>{
+            const total=ctx.dataset.data.reduce((a,b)=>a+b,0);
+            const pct=((ctx.parsed/total)*100).toFixed(0);
+            return ctx.parsed+" resource"+(ctx.parsed!==1?"s":"")+" ("+pct+"%)"}}}}},
+    plugins:[centerTextPlugin]})}
+
+  // ── Access Barriers Panel — fills empty left box when system-snapshot mode ──
+  if(!zs.length&&S.resources.length){
+    const extraBox=document.getElementById("dynamic-chart-extra");
+    if(extraBox){
+      // Filter to shelter resources that have bed data
+      const shelters=S.resources.filter(r=>{const bo=r.attrs?.["Beds Online"];return typeof bo==="number"});
+      const shelterCount=shelters.length;
+      if(shelterCount>0){
+        const lowBarrier=shelters.filter(r=>r.attrs?.["Low Barrier Access"]===true).length;
+        const referralReq=shelters.filter(r=>r.attrs?.["Requires Referral"]===true).length;
+        // Count by service audience
+        const audiences={};
+        shelters.forEach(r=>{const sa=r.attrs?.["Service Audience"]||"Unknown";audiences[sa]=(audiences[sa]||0)+1});
+        const audienceLines=Object.entries(audiences).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<tr><td style="padding:5px 10px;color:rgba(255,255,255,0.65)">${esc(k)}</td><td style="padding:5px 10px;text-align:right;color:rgba(255,255,255,0.92);font-weight:600">${Number(v)}</td></tr>`).join("");
+        let bp='<h3>Access Profile — Shelters</h3>';
+        bp+='<table class="ds-tbl" style="font-variant-numeric:tabular-nums">';
+        bp+=`<tr><td colspan="2" style="padding:12px 10px 5px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid rgba(255,255,255,0.07)">Accessibility</td></tr>`;
+        bp+=`<tr><td style="padding:7px 10px;color:rgba(255,255,255,0.65)">Low-barrier access</td><td style="padding:7px 10px;text-align:right;color:rgba(255,255,255,0.92);font-weight:600">${lowBarrier} of ${shelterCount}</td></tr>`;
+        bp+=`<tr><td style="padding:7px 10px;color:rgba(255,255,255,0.65)">Referral required</td><td style="padding:7px 10px;text-align:right;color:rgba(255,255,255,0.92);font-weight:600">${referralReq} of ${shelterCount}</td></tr>`;
+        bp+=`<tr><td style="padding:7px 10px;color:rgba(255,255,255,0.65)">Walk-in / self-referral</td><td style="padding:7px 10px;text-align:right;color:rgba(255,255,255,0.92);font-weight:600">${shelterCount-referralReq} of ${shelterCount}</td></tr>`;
+        bp+=`<tr><td colspan="2" style="padding:12px 10px 5px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.08em;border-bottom:1px solid rgba(255,255,255,0.07)">Population Served</td></tr>`;
+        bp+=audienceLines;
+        bp+='</table>';
+        extraBox.innerHTML=bp;
+      }
+    }
+  }
+
+  // Render the sortable table (separate function to avoid chart duplication on sort)
+  renderZipTable();
+
+  // ── Resource inventory table — when no zipStats but resources exist ──
+  if(!zs.length&&S.resources.length){renderResourceInventory()}
+}
+
+// ── Sortable ZIP stats table (standalone — called from renderCharts and sort handlers) ──
+function renderZipTable(){
+  const ztWrap=document.getElementById("zip-tbl-wrap");
+  const zs=S.zipStats;
+  const al=S.areaLabel||"ZIP";
+  if(!ztWrap||!zs.length||!S.chartFields.length)return;
+  ztWrap.style.display="block";
+  // Sort state (persists across re-renders)
+  if(!window._ztSort){window._ztSort={col:S.chartFields[0]?.key||"",asc:false}}
+  const st=window._ztSort;
+  // Build columns: ZIP + chartFields + Population
+  const cols=[{key:"_zip",label:al,unit:"",isNum:false}];
+  for(const cf of S.chartFields)cols.push({key:cf.key,label:cf.label,unit:cf.unit||"",isNum:true});
+  cols.push({key:"_pop",label:"Population",unit:"",isNum:true});
+  // Sort data
+  const rows=[...zs].sort((a,b)=>{
+    let av,bv;
+    if(st.col==="_zip"){av=a.zip||a.Zip||"";bv=b.zip||b.Zip||""}
+    else if(st.col==="_pop"){av=_getNum(a,["population","Population"]);bv=_getNum(b,["population","Population"])}
+    else{av=a[st.col]||0;bv=b[st.col]||0}
+    if(typeof av==="number"&&typeof bv==="number")return st.asc?av-bv:bv-av;
+    return st.asc?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
+  });
+  // Column widths: ZIP gets 16%, numeric columns split the remaining 84% equally
+  const numCols=cols.length-1; // all columns except ZIP
+  const numPct=(84/numCols).toFixed(1);
+  // Render — includes <colgroup> for explicit width control (per CSS 2.1 fixed table algorithm)
+  let h='<h3 style="font-size:14px;font-weight:700;margin:0 0 8px">Area Statistics</h3>';
+  h+='<div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="zip-tbl">';
+  // colgroup — explicit widths prevent equal-distribution fallback
+  h+='<colgroup><col style="width:16%">';
+  for(let i=0;i<numCols;i++)h+=`<col style="width:${numPct}%">`;
+  h+='</colgroup>';
+  // thead — headers get .text/.num classes matching their data cells
+  h+='<thead><tr>';
+  for(const c of cols){
+    const isSorted=st.col===c.key;
+    const arrow=isSorted?(st.asc?"▲":"▼"):"▼";
+    const cls=(c.isNum?"num":"text")+(isSorted?" sorted":"");
+    h+=`<th class="${cls}" scope="col" data-zt-col="${esc(c.key)}">${esc(c.label)}${c.unit&&!c.label.includes(c.unit)?" ("+esc(c.unit)+")":""}<span class="arr">${arrow}</span></th>`;
+  }
+  h+='</tr></thead><tbody>';
+  // tbody — ZIP cells get .text, numeric cells get .num
+  for(const z of rows){
+    const zip=z.zip||z.Zip||"?";
+    const pop=_getNum(z,["population","Population"]);
+    h+=`<tr data-zt-zip="${esc(zip)}"><td class="text">${esc(al)} ${esc(zip)}</td>`;
+    for(const cf of S.chartFields){
+      let v=z[cf.key]||0;if(typeof v==="number")v=Math.round(v*10)/10;
+      h+=`<td class="num">${esc(v)}${esc(cf.unit||"")}</td>`;
+    }
+    h+=`<td class="num">${pop?pop.toLocaleString("en-US"):"—"}</td></tr>`;
+  }
+  h+='</tbody></table></div>';
+  h+='<div style="font-size:11px;color:var(--muted);text-align:center;margin-top:6px;opacity:.6">Click a column header to sort · Click a row to explore that area</div>';
+  ztWrap.innerHTML=h;
+  // Attach sort handlers — calls renderZipTable() NOT renderCharts()
+  ztWrap.querySelectorAll("th[data-zt-col]").forEach(th=>{
+    th.addEventListener("click",function(){
+      const col=this.dataset.ztCol;
+      if(st.col===col){st.asc=!st.asc}else{st.col=col;st.asc=false}
+      renderZipTable();
+    });
+  });
+  // Attach row click handlers
+  ztWrap.querySelectorAll("tr[data-zt-zip]").forEach(tr=>{
+    tr.addEventListener("click",function(){crossFilterZip(this.dataset.ztZip)});
+  });
+}
+
+// ── Resource Inventory table (standalone — for sort handler re-renders) ──
+function renderResourceInventory(){
+  const ztWrap=document.getElementById("zip-tbl-wrap");
+  if(!ztWrap||!S.resources.length)return;
+  ztWrap.style.display="block";
+  if(!window._riSort)window._riSort={col:"name",asc:true};
+  const rst=window._riSort;
+  // Category badge colors (per research: distinct hues for visual grouping)
+  const catColors={"Shelter Inventory":"#3b82f6","Intake Center":"#06b6d4","Hotline":"#8b5cf6",
+    "Outreach":"#ec4899","Rehousing Options":"#f59e0b","Shelter Intake":"#10b981"};
+  const catColor=c=>catColors[c]||"#8b5cf6";
+  // Extract key detail per resource category
+  const keyDetail=r=>{
+    const a=r.attrs||{};
+    const bo=a["Beds Online"],bu=a["Beds In Use"],ut=a["Utilization Rate"];
+    if(typeof bo==="number"&&bo>0)return`${bu||0}/${bo} beds · ${Math.round((ut||0)*100)}%`;
+    const hrs=a["Open Hours"]||a["Operating Hours"];
+    if(hrs)return String(hrs);
+    const units=a["Unit Count"];
+    if(typeof units==="number")return`${units} units`;
+    return r.category||"—";
+  };
+  // Sort resources
+  const sorted=[...S.resources].sort((a,b)=>{
+    let av,bv;
+    if(rst.col==="name"){av=a.name||"";bv=b.name||""}
+    else if(rst.col==="category"){av=a.category||"";bv=b.category||""}
+    else{av=a.name||"";bv=b.name||""}
+    return rst.asc?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
+  });
+  let h='<h3 style="font-size:14px;font-weight:700;margin:0 0 8px">Resource Inventory</h3>';
+  h+='<div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="zip-tbl">';
+  h+='<colgroup><col style="width:45%"><col style="width:22%"><col style="width:33%"></colgroup>';
+  const mkTh=(col,label,cls)=>{
+    const active=rst.col===col;
+    const arrow=active?(rst.asc?"▲":"▼"):"▼";
+    return`<th class="${cls}${active?" sorted":""}" scope="col" data-ri-col="${col}">${label}<span class="arr">${arrow}</span></th>`;
+  };
+  h+='<thead><tr>';
+  h+=mkTh("name","Resource","text");
+  h+=mkTh("category","Category","text");
+  h+='<th class="num" scope="col">Key Detail</th>';
+  h+='</tr></thead><tbody>';
+  for(const r of sorted){
+    const cc=catColor(r.category);
+    const badge=`<span style="display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;background:${cc}22;color:${cc};border:1px solid ${cc}44">${esc(r.category||"Other")}</span>`;
+    h+=`<tr data-ri-name="${esc(r.name)}" style="cursor:pointer"><td class="text">${esc(r.name)}</td><td class="text">${badge}</td><td class="num" style="font-size:14px;color:rgba(255,255,255,0.7)">${esc(keyDetail(r))}</td></tr>`;
+  }
+  h+='</tbody></table></div>';
+  h+='<div style="font-size:11px;color:var(--muted);text-align:center;margin-top:6px;opacity:.6">Click a row to explore that resource · Click a column header to sort</div>';
+  ztWrap.innerHTML=h;
+  // Sort handlers — calls renderResourceInventory() NOT renderCharts()
+  ztWrap.querySelectorAll("th[data-ri-col]").forEach(th=>{
+    th.addEventListener("click",function(){
+      const col=this.dataset.riCol;
+      if(rst.col===col){rst.asc=!rst.asc}else{rst.col=col;rst.asc=true}
+      renderResourceInventory();
+    });
+  });
+  // Row click → cross-filter to Finder
+  ztWrap.querySelectorAll("tr[data-ri-name]").forEach(tr=>{
+    tr.addEventListener("click",function(){
+      const name=this.dataset.riName;
+      const q=name.split(" ").slice(0,3).join(" ");
+      switchToTab("finder");
+      const si=document.getElementById("q");
+      if(si){si.value=q;upd({q})}
+    });
+  });
+}
+// Clean category names: "Behavioral-Health" → "Behavioral Health", "Fqhc" → "FQHC"
+function _cleanCat(s){
+  const abbrs={"fqhc":"FQHC","er":"ER","icu":"ICU","ob":"OB"};
+  if(abbrs[s.toLowerCase()])return abbrs[s.toLowerCase()];
+  return s.replace(/-/g," ").replace(/\b\w/g,c=>c.toUpperCase());
+}
+
+function buildCatFilters(){const h=S.hints;if(!h?.categories?.length)return;const c=$("#cat-chips");c.innerHTML="";
+  for(const cat of h.categories){const ch=document.createElement("label");ch.className="chip";
+    ch.innerHTML=`<input type="checkbox" value="${esc(cat)}"/>${esc(_cleanCat(cat))}`;c.appendChild(ch)}}
+
+function buildDynFilters(){const h=S.hints,c=$("#dyn-filters");if(!h)return;let html="";
+  if(h.bool_filters?.length){html+='<div class="fsec"><div class="flbl">Requirements</div><div class="chips">';
+    for(const bf of h.bool_filters)html+=`<label class="chip"><input type="checkbox" data-bf="${esc(bf)}"/>${esc(bf)}</label>`;html+='</div></div>'}
+  for(const ek of Object.keys(h.enum_filters||{}).slice(0,3)){const vals=h.enum_filters[ek];
+    html+=`<div class="fsec"><div class="flbl">${esc(ek)}</div><div class="chips">`;
+    for(const v of vals)html+=`<label class="chip"><input type="checkbox" data-ef="${esc(ek)}" value="${esc(v)}"/>${esc(v)}</label>`;
+    html+='</div></div>'}
+  c.innerHTML=html}
+
+// ── Wire all events ──────────────────────────────────────────────────────
+function wire(){
+  // Tab switching
+  $$(".tab").forEach(t=>t.addEventListener("click",()=>switchToTab(t.dataset.tab)));
+  // Search
+  const doS=()=>upd({q:$("#q").value});
+  $("#btn-search").addEventListener("click",doS);
+  $("#q").addEventListener("keydown",e=>{if(e.key==="Enter")doS()});
+  let deb;$("#q").addEventListener("input",()=>{clearTimeout(deb);deb=setTimeout(doS,150)});
+  // Category chips
+  $("#cat-chips").addEventListener("change",e=>{const cb=e.target;if(!(cb instanceof HTMLInputElement))return;
+    if(cb.checked)S.cats.add(cb.value);else S.cats.delete(cb.value);cb.closest(".chip").classList.toggle("on",cb.checked);renderFinder()});
+  // Dynamic filters (bool + enum) — event delegation on container
+  $("#dyn-filters").addEventListener("change",e=>{const cb=e.target;if(!(cb instanceof HTMLInputElement))return;
+    if(cb.dataset.bf){S.boolToggles[cb.dataset.bf]=cb.checked;cb.closest(".chip").classList.toggle("on",cb.checked);renderFinder()}
+    if(cb.dataset.ef){const key=cb.dataset.ef;if(!S.enumSel[key])S.enumSel[key]=new Set();
+      if(cb.checked)S.enumSel[key].add(cb.value);else S.enumSel[key].delete(cb.value);
+      cb.closest(".chip").classList.toggle("on",cb.checked);renderFinder()}});
+  // Sort
+  document.addEventListener("change",e=>{const t=e.target;if(t instanceof HTMLInputElement&&t.name==="sort")upd({sortMode:t.value})});
+  // Show closed toggle
+  const sc=$("#show-closed");if(sc)sc.addEventListener("change",()=>upd({showClosed:sc.checked}));
+  // Card clicks
+  $("#results").addEventListener("click",e=>{const c=e.target.closest(".card");if(!c)return;upd({selId:c.dataset.id});
+    const f=S.resources.find(x=>x.id===c.dataset.id);if(f)renderDetail(f)});
+  $("#results").addEventListener("keydown",e=>{if(e.key!=="Enter")return;const c=e.target.closest(".card");if(!c)return;
+    upd({selId:c.dataset.id});const f=S.resources.find(x=>x.id===c.dataset.id);if(f)renderDetail(f)});
+  // FIX #1: Cross-filtering — ZIP card clicks switch to Finder tab
+  $("#zip-grid").addEventListener("click",e=>{
+    const card=e.target.closest(".zip-card");
+    if(!card||!card.dataset.zip)return;
+    crossFilterZip(card.dataset.zip);
+  });
+  // Cross-filtering — crisis event clicks (if they have a ZIP)
+  $("#events").addEventListener("click",e=>{
+    const ev=e.target.closest(".event");
+    if(!ev||!ev.dataset.zip)return;
+    crossFilterZip(ev.dataset.zip);
+  });
+  // Priority 6: Keyboard shortcuts (1/2/3 for tabs, / for search)
+  document.addEventListener("keydown",e=>{
+    if(e.target.tagName==="INPUT"||e.target.tagName==="TEXTAREA")return;
+    if(e.key==="1")switchToTab("dashboard");
+    else if(e.key==="2"){switchToTab("finder");e.preventDefault()}
+    else if(e.key==="3")switchToTab("data");
+    else if(e.key==="/"){e.preventDefault();switchToTab("finder");setTimeout(()=>$("#q").focus(),50)}
+  });
+}
+
+/* === CHAT READER (P0.11b) — byte-identical in the Oracle, Architect and Muse pages === */
+(function () {
+  var C = window.CHAT;
+  if (!C || !C.proxy || !C.context_id) return;
+  function $(id) { return document.getElementById(id); }
+  var box = $("chatMessages") || $("chat-body"), input = $("chatInput") || $("chat-q"), send = $("chatSend") || $("chat-send");
+  var fab = $("chatFab"), panel = $("chatPanel") || $("chatbot"), closeBtn = $("chatClose"), toggle = $("chat-toggle"), head = $("chat-head"), tip = $("chat-tip");
+  var note = $("chatUnavailable"), faq = $("chatFaq");
+  if (!box || !input || !send || !panel) return;
+  var RELOAD = "That message couldn't be sent. Please reload the page and try again.";
+  var CUT = "The answer was interrupted. Please try again.";
+  var DATA = "This page's chat data didn't load. Please reload the page.";
+  var NOTHERE = "Chat isn't available on this copy of the page.";
+  var MSG = {
+    chat_disabled: "Chat is switched off right now. The quick answers below cover the common questions.",
+    chat_budget_unavailable: "Chat has reached its usage limit for now. The quick answers below cover the common questions.",
+    chat_configuration_error: "Chat isn't available right now. The quick answers below cover the common questions.",
+    chat_busy: "Chat is busy right now.",
+    chat_upstream_unavailable: "The AI service is temporarily unavailable.",
+    chat_timeout: "The answer took too long. Please try again.",
+    client_identity_unavailable: "Chat isn't available right now.",
+    origin_not_allowed: NOTHERE, preflight_denied: NOTHERE, method_not_allowed: NOTHERE, not_found: NOTHERE,
+    context_unavailable: DATA, context_invalid: DATA, context_too_large: DATA,
+    empty_message: "Type a question first.",
+    message_too_long: "That question is too long (2,000 characters at most).",
+    conversation_too_long: "This conversation is too long. Reload the page to start a new one.",
+    body_too_large: "This conversation is too long. Reload the page to start a new one.",
+    invalid_json: RELOAD, empty_body: RELOAD, json_required: RELOAD, invalid_request: RELOAD, invalid_context_id: RELOAD,
+    invalid_message_count: RELOAD, invalid_message: RELOAD, invalid_turn_order: RELOAD,
+    incomplete_stream: CUT, interrupted_stream: CUT, upstream_stream_error: CUT, invalid_upstream_stream: CUT,
+    _http: "Chat isn't available right now.",
+    _unreachable: "Chat is busy or unreachable. Please try again in a moment.",
+    _cut: "The answer was cut off. Try asking a narrower question.",
+    _refusal: "I can't help with that one. Try a question about the data on this page.",
+    _empty: "No answer came back. Please try again."
+  };
+  var OFF = { chat_disabled: 1, chat_budget_unavailable: 1, chat_configuration_error: 1 };
+  var history = [], busy = false;
+  function openPanel() {
+    if (fab) panel.classList.add("open"); else { panel.style.display = "flex"; if (toggle) toggle.style.display = "none"; }
+    if (tip && tip.parentNode) tip.parentNode.removeChild(tip);
+    input.focus();
+  }
+  function closePanel() {
+    if (fab) panel.classList.remove("open"); else { panel.style.display = "none"; if (toggle) toggle.style.display = "flex"; }
+  }
+  if (fab) fab.addEventListener("click", openPanel);
+  if (closeBtn) closeBtn.addEventListener("click", closePanel);
+  if (toggle) toggle.addEventListener("click", openPanel);
+  if (head && !fab) head.addEventListener("click", closePanel);
+  if (tip) setTimeout(function () { tip.classList.add("hide"); setTimeout(function () { if (tip.parentNode) tip.parentNode.removeChild(tip); }, 600); }, 6000);
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  /* BUILD IC-5 (D11): a tag form the pages' rule reads becomes the page's words (the table: window.CHAT.tags, from the registry) —
+     on the answer's own text, before md() escapes it (D11b: the pages' order, REG.out_text's; md stays esc(t)'s markup) */
+  var TT = C.tags || null, TAG = null, TAGP = null, TAGO = null, CONF = null;
+  try {
+    if (TT && TT.any) {
+      TAG = new RegExp(TT.any, "gi"); TAGP = new RegExp("\\(\\s*(?:" + TT.any + ")\\s*\\)", "gi");
+      TAGO = new RegExp("\\(\\s*(?:" + TT.any + ")", "gi"); CONF = new RegExp(TT.confidence, "i");
+    }
+  } catch (e) { TAG = null; }
+  function tagWords(g) {
+    var w = g.w || g.wb, c = String((g.w ? g.c : g.cb) || "").trim().replace(/^[:\uff1a,\-\u2013\u2014]+/, "").trim();
+    var k = String(w || "").toLowerCase().replace(/[\s_-]+/g, ""); k = (TT.kinds && TT.kinds[k]) || k;
+    if (k === "data") {
+      var n = c.split(/[,;]/).map(function (x) { return x.trim(); }).filter(function (x) { return x; });
+      return n.length ? "data: " + n.join(", ") : "data";
+    }
+    if (k === "estimate") {
+      var m = CONF ? c.match(CONF) : null;
+      return m ? "estimate, " + m[1].toLowerCase() + (m[2] ? "\u2013" + m[2].toLowerCase() : "") + " confidence" : "estimate";
+    }
+    return c ? k + ": " + c : k;
+  }
+  function untag(s) {
+    if (!TAG) return s;
+    function one(open, close) { return function () { var a = arguments, g = a[a.length - 1]; return open + tagWords(g) + close; }; }
+    return s.replace(TAGP, one("(", ")")).replace(TAGO, one("(", "")).replace(TAG, one("(", ")"));
+  }
+  /* while streaming, the words after an unclosed bracket wait for its close, or for TT.hold characters (no tag is shown half-written) */
+  var HOLD = new RegExp("[\\[\u3010\uff3b][^\\]\u3011\uff3d]{0," + ((TT && TT.hold ? TT.hold : 60) - 1) + "}$");
+  function held(t) { var m = HOLD.exec(t); return m ? t.slice(0, m.index) : t; }
+  function md(t) {
+    return esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/^- (.+)$/gm, "\u2022 $1").replace(/\n/g, "<br>");
+  }
+  /* BUILD IC-5 (D2 g): a bubble's first words are set as text — the user's question, or the reply's "" or "\u2026" — never as markup */
+  function add(role, text) {
+    var d = document.createElement("div");
+    d.className = "chat-msg " + role;
+    d.textContent = text;
+    box.appendChild(d); box.scrollTop = box.scrollHeight;
+    return d;
+  }
+  function showError(bubble, text, partial) {
+    bubble.className = "chat-msg error";
+    bubble.innerHTML = (partial ? md(untag(partial)) + "<br>" : "") + esc(text);
+  }
+  /* The proxy accepts 1, 3 or 5 messages that start and end with a user turn: trim whole pairs from the front. */
+  function trimHistory() { while (history.length > 5) history.splice(0, 2); }
+  function ask(q) {
+    q = String(q == null ? "" : q).trim();
+    if (!q || busy) return Promise.resolve(false);
+    if (q.length > 2000) { showError(add("ai", ""), MSG.message_too_long); return Promise.resolve(false); }
+    busy = true; send.disabled = true;
+    add("user", q); input.value = "";
+    history.push({ role: "user", content: q }); trimHistory();
+    var bubble = add("ai", "\u2026"), text = "", stop = null, state = "open", code = "";
+    function end(ok) {
+      if (!ok && history.length && history[history.length - 1].role === "user") history.pop();   /* never leave an unanswered turn */
+      busy = false; send.disabled = false;
+      return ok;
+    }
+    return fetch(String(C.proxy).replace(/\/+$/, "") + "/chat", {
+      method: "POST", credentials: "omit", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ context_id: C.context_id, messages: history })
+    }).then(function (r) {
+      if (!r.ok) {
+        var ra = r.headers.get("Retry-After");
+        return r.json().catch(function () { return null; }).then(function (j) {
+          var c = j && j.error && j.error.code ? String(j.error.code) : "";
+          if (OFF[c]) { if (note) note.hidden = false; if (faq) faq.open = true; }
+          showError(bubble, (MSG[c] || MSG._http) + (ra && /^\d+$/.test(ra) ? " Try again in " + ra + " s." : ""));
+          return end(false);
+        });
+      }
+      var rd = r.body.getReader(), dec = new TextDecoder("utf-8"), buf = "";
+      function frame(f) {
+        var ev = "", data = [], lines = f.split("\n");
+        for (var i = 0; i < lines.length; i++) {
+          if (lines[i].indexOf("event:") === 0) ev = lines[i].slice(6).trim();
+          else if (lines[i].indexOf("data:") === 0) data.push(lines[i].slice(5).replace(/^ /, ""));
+        }
+        if (!data.length) return;
+        var o;
+        try { o = JSON.parse(data.join("\n")); } catch (e) { return; }
+        var t = o && o.type;
+        if (ev === "error" || t === "error") { state = "error"; code = o && o.error && o.error.code ? String(o.error.code) : ""; return; }
+        if (t === "content_block_delta" && o.delta && o.delta.type === "text_delta" && typeof o.delta.text === "string") {
+          text += o.delta.text; bubble.innerHTML = md(untag(held(text))); box.scrollTop = box.scrollHeight;
+        } else if (t === "message_delta" && o.delta && o.delta.stop_reason) {
+          stop = o.delta.stop_reason;
+        } else if (t === "message_stop") {
+          state = "stopped";
+        }
+      }
+      /* Frames end at a blank line; lines end with LF, CRLF or CR. A trailing lone CR waits for the next chunk. */
+      function drain(final) {
+        var keep = !final && buf.charAt(buf.length - 1) === "\r";
+        var s = (keep ? buf.slice(0, -1) : buf).replace(/\r\n?/g, "\n");
+        var parts = s.split("\n\n"), rest = parts.pop();
+        buf = rest + (keep ? "\r" : "");
+        for (var i = 0; i < parts.length && state === "open"; i++) frame(parts[i]);
+        if (final && state === "open" && rest.trim()) frame(rest);
+      }
+      function finish() {
+        if (state === "stopped" && stop === "end_turn") {
+          if (!text.trim()) { showError(bubble, MSG._empty); return end(false); }
+          bubble.innerHTML = md(untag(text));             /* BUILD IC-5 (D11): the whole answer, a held tail included */
+          history.push({ role: "assistant", content: text }); trimHistory();
+          busy = false; send.disabled = false;
+          return true;
+        }
+        if (state === "stopped" && stop === "max_tokens") { showError(bubble, MSG._cut, text); return end(false); }
+        if (state === "stopped" && stop === "refusal") {
+          bubble.className = "chat-msg ai"; bubble.innerHTML = esc(MSG._refusal);
+          history = []; busy = false; send.disabled = false;
+          return false;
+        }
+        showError(bubble, MSG[code] || CUT, text);
+        return end(false);
+      }
+      function pump() {
+        return rd.read().then(function (res) {
+          if (res.done) { buf += dec.decode(); drain(true); return finish(); }
+          buf += dec.decode(res.value, { stream: true }); drain(false);
+          if (state !== "open") { rd.cancel().catch(function () {}); return finish(); }
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function () { showError(bubble, MSG._unreachable, text); return end(false); });
+  }
+  send.addEventListener("click", function () { ask(input.value); });
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
+  var chips = document.querySelectorAll(".chat-chip[data-q]");
+  for (var i = 0; i < chips.length; i++) chips[i].addEventListener("click", function () {
+    var q = this.getAttribute("data-q");
+    if (q) { ask(q); if (this.parentElement) this.parentElement.style.display = "none"; }
+  });
+  window.openChatbot = function (q) { openPanel(); return ask(q); };
+  var asks = document.querySelectorAll(".ask-ai-btn[data-ask]");
+  for (var k = 0; k < asks.length; k++) asks[k].addEventListener("click", function () {
+    var t = this.getAttribute("data-ask");
+    if (t) window.openChatbot("What evidence supports the finding: " + t + "? Cite the specific data sources and explain.");
+  });
+  window.ChatReader = { ask: ask, history: function () { return history.slice(); }, codes: function () { return Object.keys(MSG); } };
+})();
+/* === END CHAT READER === */
+
+// ── Boot ─────────────────────────────────────────────────────────────────
+(function(){try{
+  const raw=document.getElementById("app-data").textContent;
+  const d=JSON.parse(raw);
+  const geoCenter=computeGeoCenter(d.zip_centroids||{});
+  Object.assign(S,{status:"ready",resources:d.resources||[],zips:d.zip_centroids||{},
+    hints:d.filter_hints||{},zipStats:d.zip_stats||[],crisisEvents:d.crisis_events||[],
+    chartFields:d.chart_fields||[],areaLabel:d.area_label||"ZIP",domainHints:d.domain_hints||{},
+    systemSnapshot:d.system_snapshot||{},geoCenter,snapshotAsof:d.snapshot_asof||"",derivedTiles:d.derived_tiles||[]});
+  buildCatFilters();buildDynFilters();wire();
+  renderDashboard();renderFinder();
+  // Charts deferred until Data Explorer tab is first shown (canvas needs visible container)
+  // URL deep linking: ?tab=finder&q=66101 or hash fallback #?tab=finder&q=66101
+  try{const _sp=new URLSearchParams(window.location.search);
+    const _hp=window.location.hash.startsWith('#?')?new URLSearchParams(window.location.hash.slice(2)):null;
+    const _dq=_sp.get('q')||(_hp&&_hp.get('q'))||'';
+    const _dt=_sp.get('tab')||(_hp&&_hp.get('tab'))||'';
+    if(_dq){$("#q").value=_dq;upd({q:_dq})}
+    if(_dt&&['help','dashboard','finder','data'].includes(_dt)&&document.getElementById('panel-'+_dt)){switchToTab(_dt)}
+    else if(_dq&&!_dt){switchToTab('finder')}
+  }catch(e){/* deep link parse failed — page loads normally */}
+}catch(err){S.status="error";S.error=String(err?.message||err);renderFinder()}})();
+</script>
+{% endraw %}
+{% if help %}<script id="gh-bundle" type="application/json">{{ help.bundle | tojson | built }}</script>
+<script>{{ help.engine_js | built }}</script>
+{% raw %}<script>
+/* === GET HELP (BUILD B2): the intake, the plan, the checklist, the navigator and the readiness tracker. Ranked here by naipc_engine.js
+   from the bundle Python wrote (#gh-bundle); every name, phone, hour and number comes from that bundle. A failure here leaves the
+   rest of the page as it was. === */
+(function(){
+  "use strict";
+  var el=document.getElementById("gh-bundle"), ENG=window.NaipcEngine;
+  if(!el||!ENG||!document.getElementById("panel-help"))return;
+  var B;try{B=JSON.parse(el.textContent)}catch(e){console.warn("Get Help: the bundle is not readable —",e);return}
+  function q(s,r){return (r||document).querySelector(s)}
+  function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+  function h(s){return esc(String(s==null?"":s))}
+  function ha(s){return h(s).replace(/"/g,"&quot;").replace(/'/g,"&#39;")}   /* an attribute value: esc() leaves quotes as they are */
+  var SETS={};(B.sets||[]).forEach(function(s){SETS[s.id]=s});
+  var STEPS=B.intake.steps, PLAN=B.intake.plan;
+  var CK=B.checklist, NV=B.navigator, RD=B.readiness;
+  var DOCS={};if(CK)CK.items.forEach(function(it,i){DOCS[it.id]=it;it._i=i});
+  var H={preset:null,attrs:{},name:"the person",need:[],step:0,shown:false};
+  function now(){
+    var f=B.clock&&B.clock.fixed;
+    if(f){var p=f.split(/[-T:]/).map(Number);return new Date(p[0],p[1]-1,p[2],p[3],p[4])}
+    return new Date();
+  }
+  function stamp(d){return ENG.DAY_NAMES[(d.getDay()+6)%7]+" "+d.toLocaleDateString("en-US",{day:"numeric",month:"short"})+", "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
+  function rec(sid,id){var s=SETS[sid];if(!s)return null;for(var i=0;i<s.records.length;i++)if(s.records[i].id===id)return s.records[i];return null}
+  function byId(sel,id){return q(sel+' [data-id="'+(window.CSS&&CSS.escape?CSS.escape(id):String(id).replace(/"/g,'\\"'))+'"]')}
+
+  /* ── the wizard ── */
+  function showStep(i){
+    H.step=Math.max(0,Math.min(STEPS.length-1,i));
+    qa("#gh-wizard .gh-step").forEach(function(f){f.hidden=(+f.getAttribute("data-step"))!==H.step});
+    q("#gh-progress").textContent="Question "+(H.step+1)+" of "+STEPS.length;
+    q("#gh-back").disabled=H.step===0;q("#gh-next").disabled=H.step===STEPS.length-1;
+  }
+  function readWizard(){
+    var a={},need=[],ok=true;
+    STEPS.forEach(function(st,i){
+      var fs=q('#gh-wizard .gh-step[data-step="'+i+'"]');if(!fs)return;
+      if(st.kind==="number"){
+        var inp=q("input",fs),er=q(".gh-err",fs),raw=(inp.value||"").trim(),mn=(st.min!=null?st.min:0),mx=(st.max!=null?st.max:120);er.textContent="";
+        if(raw===""){if(inp.validity&&inp.validity.badInput){er.textContent="Type the number in digits, or leave it blank.";ok=false}return}
+        var n=Number(raw);
+        if(!Number.isInteger(n)||n<mn||n>mx){er.textContent="A whole number from "+mn+" to "+mx+", or leave it blank (then it stays unknown).";ok=false;return}
+        a[st.attr]={value:n,basis:"stated"};
+        (st.derive||[]).forEach(function(d){
+          var v=(d.when_at_most!=null?n<=d.when_at_most:true)&&(d.when_at_least!=null?n>=d.when_at_least:true);
+          a[d.attr]={value:v,basis:"assumed",reason:d.why};
+        });
+      }else if(st.kind==="sets"){
+        qa("input:checked",fs).forEach(function(x){var sid=st.sets[+x.value];if(sid&&need.indexOf(sid)<0)need.push(sid)});
+      }else{
+        var picked=qa("input:checked",fs).map(function(x){return st.options[+x.value]}).filter(Boolean);
+        if(!picked.length)return;
+        if(st.multi){var vals=[];picked.forEach(function(o){(Array.isArray(o.value)?o.value:[o.value]).forEach(function(v){if(vals.indexOf(v)<0)vals.push(v)})});a[st.attr]={value:vals,basis:"stated"}}
+        else a[st.attr]={value:picked[0].value,basis:"stated"};
+        picked.forEach(function(o){Object.keys(o.attrs||{}).forEach(function(k){a[k]={value:o.attrs[k],basis:"stated"}})});
+      }
+    });
+    return {attrs:a,need:need,ok:ok};
+  }
+  function clearWizard(){
+    var f=q("#gh-wizard");if(f)f.reset();qa("#gh-wizard .gh-err").forEach(function(e){e.textContent=""});showStep(0);
+  }
+  function pressed(which){qa("#gh-presets .gh-preset").forEach(function(b){b.setAttribute("aria-pressed",b.getAttribute("data-preset")===which?"true":"false")})}
+  function personBox(p){
+    var box=q("#gh-person");
+    if(!p){box.hidden=true;box.innerHTML="";return}
+    box.innerHTML="<strong>"+h(p.name)+"</strong>"+(p.who&&p.who!==p.name?" — "+h(p.who):"")+(p.illustrative?' <span class="gh-tag">Illustrative — not from the brief</span>':"")
+      +(p.quote?'<div class="gh-sub">&ldquo;'+h(p.quote)+'&rdquo;</div>':"")
+      +"<ul>"+(p.attrs||[]).map(function(x){return "<li>"+h(x.name)+": "+h(x.value)+' <span class="gh-sub">('+h(x.source)+")</span></li>"}).join("")+"</ul>";
+    box.hidden=false;
+  }
+  function loadPreset(i){
+    var p=B.presets[i];if(!p)return;
+    clearWizard();H.preset=p.id;H.attrs=p.person||{};H.name=p.name;H.need=[];H.sel=null;
+    pressed(String(i));personBox(p);switchRS(true);render();
+  }
+  function custom(){               /* "Someone else" and "Start over": a new person — no answers, no readiness steps carried over */
+    clearWizard();H.preset=null;H.attrs={};H.name="the person";H.need=[];H.sel=null;pressed("custom");personBox(null);
+    if(RD){ALL.someone={steps:{},docs:{}};switchRS(true)}
+    q("#gh-plan").innerHTML='<p class="gh-muted">Answer the questions above, then press &ldquo;See the plan&rdquo;.</p>';H.shown=false;LAST=null;update();
+    var f=q('#gh-wizard .gh-step[data-step="0"] input');if(f)f.focus();
+  }
+  function fromWizard(){
+    var w=readWizard();
+    if(w.ok&&H.preset&&!Object.keys(w.attrs).length&&!w.need.length){render();return}   /* a preset and no answers typed: its plan stays */
+    if(!w.ok){               /* an answer that cannot be read: no plan for it (a stale one would mislead), the question shown */
+      var bad=qa("#gh-wizard .gh-err").filter(function(e){return e.textContent})[0],fs=bad&&bad.closest(".gh-step");
+      if(fs)showStep(+fs.getAttribute("data-step"));H.shown=false;LAST=null;
+      if(H.preset){H.preset=null;H.attrs={};H.name="the person";H.need=[];pressed("custom");personBox(null);switchRS(true)}   /* typed answers: someone new */
+      q("#gh-plan").innerHTML='<p class="gh-conf">One answer needs fixing: see the question above.</p>';update();return;
+    }
+    var was=!!H.preset;
+    H.preset=null;H.attrs=w.attrs;H.name="the person";H.need=w.need;H.sel=null;pressed("custom");
+    if(was)switchRS(true);         /* answers typed after a preset: someone else — the preset's steps stay the preset's */
+    /* D2: the answers as the plan reads them; a derived one says "assumed: <why>", as the presets do */
+    personBox({name:"The person",who:"",attrs:Object.keys(w.attrs).map(function(k){var a=w.attrs[k];
+      return {name:k.split("_").join(" "),value:ENG.show(a.value),source:a.basis==="assumed"?"assumed: "+a.reason:"your answer"}})});
+    render();
+  }
+
+  /* ── the plan ── */
+  function comps(x){return "<ul>"+x.components.map(function(c){      /* each component names what its value reads (the engine's c.reads) */
+    return "<li>"+h(c.label)+": "+h(c.points)+" ("+(c.reads?h(c.reads)+": ":"")+h(c.value)+(c.note?"; "+h(c.note):"")+")</li>"}).join("")+"</ul>"}
+  function trace(x){return '<details><summary>Trace — every check, in order</summary><ol>'+x.trace.map(function(t){return "<li>"+h(t)+"</li>"}).join("")+"</ol></details>"}
+  function contact(r){
+    if(!r||!r.contact)return "";var c=r.contact,o=[];
+    if(c.phone){var ps=String(c.phone),m=ps.match(/\+?\d[\d\s().-]{5,}\d/)||ps.trim().match(/^\+?\d[\d\s().-]*\d$/);
+      /* the first number of seven characters or more ("x204", "24/7" or a second number never dials); else the whole field when it is
+         only a short code — 211 Kansas's "211" dials (review: the seven-character rule alone left it without a link) */
+      o.push(m?'📞 <a href="tel:'+ha(m[0].replace(/[^0-9+]/g,""))+'">'+h(c.phone)+"</a>":"📞 "+h(c.phone))}
+    if(c.hours)o.push("🕒 "+h(c.hours));if(c.address)o.push("📍 "+h(c.address));
+    return o.length?'<div class="gh-sub">'+o.join(" · ")+"</div>":"";
+  }
+  function why(sid,r){
+    var R=B.rationale;if(!H.preset||!R||!R.by||!R.by[H.preset]||!R.by[H.preset][sid])return "";
+    var w=R.by[H.preset][sid],live=r.ranked.slice(0,3).map(function(x){return x.id}),k=w.counts||{};
+    if(!w.top.length||live.join("|")!==w.top.join("|")||["eligible","full","closed","other","confirm"].some(function(n){return k[n]!==r.counts[n]}))return "";
+    /* D6: only while the live order — and the counts the note may cite — are the ones it was written for */
+    /* P4.4 (p44a): each line under its writer's name — Claude's sentences, then the engine's own lines (engine_at: their places) */
+    var ea=w.engine_at||(w.engine?w.sentences.map(function(_,i){return i}):[]);
+    var mine=w.sentences.filter(function(_,i){return ea.indexOf(i)<0}),eng=w.sentences.filter(function(_,i){return ea.indexOf(i)>=0});
+    var out='<div class="gh-why" data-why="'+ha(sid)+'">';
+    if(mine.length)out+='<strong>Why this order</strong> — written by Claude from the engine&rsquo;s trace; the engine decided the order.<br>'+mine.map(function(s){return h(s)+((w.flags||[]).indexOf(s)>=0?' <span class="gh-flag" style="font-size:.8em;color:var(--warn,#b45309)">(it names an option outside your plan by part of its name &mdash; check it)</span>':"")}).join(" ");
+    if(eng.length)out+=(mine.length?'<br><span class="gh-eng" data-writer="engine"><strong>The engine&rsquo;s own line'+(eng.length>1?"s":"")+'</strong> — for the option'+(eng.length>1?"s":"")+' Claude&rsquo;s note does not name:</span> ':'<strong>Why this order</strong> — <span class="gh-eng" data-writer="engine">the engine&rsquo;s own line'+(eng.length>1?"s":"")+' (rank, score and points); no sentence of Claude&rsquo;s explains this set; the engine decided the order.</span><br>')+eng.map(h).join(" ");
+    return out+"</div>";
+  }
+  function setBlock(sid,r){
+    var s=SETS[sid];if(!s||!r)return "";
+    var out='<div class="gh-set" data-set="'+ha(sid)+'"><div class="gh-sub">'+h(s.label)+"</div>";
+    if(r.ranked.length){
+      var x=r.ranked[0],rr=rec(sid,x.id);
+      out+='<div class="gh-opt" data-opt="'+ha(x.id)+'"><span class="gh-score">'+h(x.score)+'</span><strong>'+h(x.name)+"</strong>"+contact(rr)
+        +(x.check?'<div class="gh-sub">To check: '+h(x.check)+"</div>":"")+comps(x)+trace(x)+"</div>"+why(sid,r);
+      if(r.ranked.length>1)out+='<div class="gh-sub">Also: '+r.ranked.slice(1,B.top_n||3).map(function(y){return h(y.name)+" ("+h(y.score)+")"}).join(", ")+"</div>";
+    }else{
+      var k=r.counts;
+      out+='<div class="gh-opt gh-none"><strong>Nothing here fits now.</strong> <span class="gh-sub">Of '+h(k.records)+": "+h(k.full)+" full, "+h(k.closed)+" closed or not open now, "+h(k.other)+" not for this person, "+h(k.confirm)+" to confirm.</span></div>";
+    }
+    if(r.confirm.length)out+='<div class="gh-conf">To confirm: '+r.confirm.slice(0,4).map(function(y){return h(y.name)+" — "+h(y.detail)}).join("; ")+"</div>";
+    return out+"</div>";
+  }
+  function tokens(){                /* the sets the person asked for, else the plan's sets where something fits or is to confirm */
+    var by=LAST&&LAST.by,sets=H.need.length?H.need.slice():[];
+    if(!sets.length)PLAN.forEach(function(p){(p.sets||[]).forEach(function(s){var r=by&&by[s];
+      if(sets.indexOf(s)<0&&(!by||(r&&(r.ranked.length||r.confirm.length))))sets.push(s)})});
+    var t=[];sets.forEach(function(s){((CK&&CK.for_sets[s])||[]).forEach(function(x){if(t.indexOf(x)<0)t.push(x)})});return t;
+  }
+  function docsFor(){            /* D4: the documents whose unlocks match what the person needs, with what they need first */
+    if(!CK)return [];var t=tokens(),pick={};
+    CK.items.forEach(function(it){if((it.unlocks||[]).some(function(u){return t.indexOf(u)>=0}))pick[it.id]=1});
+    var todo=Object.keys(pick);while(todo.length){var id=todo.pop();(DOCS[id].needs||[]).forEach(function(n){if(!pick[n]){pick[n]=1;todo.push(n)}})}
+    return CK.items.filter(function(it){return pick[it.id]});
+  }
+  function docsBlock(n){
+    var d=docsFor().slice(0,n);if(!d.length)return "";var t=tokens();
+    return '<div class="gh-sub">Documents to start, in unlock order:</div><ol>'+d.map(function(it){
+      var f=(it.unlocks||[]).filter(function(u){return t.indexOf(u)>=0});
+      var af=(it.needs||[]).filter(function(n){return d.some(function(z){return z.id===n})}).map(function(n){return DOCS[n]?DOCS[n].name:n});
+      return "<li><strong>"+h(it.name)+"</strong>"+(f.length?' <span class="gh-sub">for '+h(f.join(", "))+"</span>":(it.opens&&it.opens.length?' <span class="gh-sub">needed first for '+h(it.opens.map(function(o){return DOCS[o]?DOCS[o].name:o}).join(", "))+"</span>":""))
+        +(af.length?' <span class="gh-sub">(after '+h(af.join(", "))+")</span>":"")+"</li>"}).join("")+"</ol>";
+  }
+  function nextOpen(sid,rr,t){      /* the next opening in the week, from the parsed hours of the set's open-now gate */
+    var g=((SETS[sid]||{spec:{}}).spec.gates||[]).filter(function(x){return x.rule==="open_now"})[0],hv=g&&rr.hours&&rr.hours[g.field];
+    if(!hv||hv.kind!=="rules")return null;
+    var wd=(t.getDay()+6)%7,m=t.getHours()*60+t.getMinutes(),best=null;
+    for(var d=0;d<=7;d++)hv.rules.forEach(function(rl){var day=(wd+d)%7;if(rl[0].indexOf(day)<0||(d===0&&rl[1]<=m))return;
+      var k=d*1440+rl[1];if(!best||k<best.k)best={k:k,d:d,day:day,a:rl[1]}});
+    return best;
+  }
+  function callBlock(sid,r){
+    if(!r)return "";var out=[],seen={},t=LAST?LAST.t:now();
+    function add(x,note){var rr=rec(sid,x.id);if(seen[x.id]||!rr||!rr.contact||!rr.contact.phone||out.length>=4)return;seen[x.id]=1;
+      out.push("<li><strong>"+h(x.name)+'</strong> <span class="gh-sub">'+note+"</span>"+contact(rr)+"</li>")}
+    r.ranked.slice(0,2).forEach(function(x){add(x,"open now")});
+    r.confirm.forEach(function(x){add(x,"to confirm first — "+h(x.detail))});
+    r.excluded.filter(function(x){return x.klass==="closed"&&!x.closure&&x.trace.filter(function(z){return / → fail$/.test(z)}).length===1})
+      .map(function(x){var rr=rec(sid,x.id);return {x:x,n:rr?nextOpen(sid,rr,t):null}}).filter(function(o){return o.n})
+      .sort(function(a,b){return a.n.k-b.n.k}).forEach(function(o){var n=o.n;
+        add(o.x,"opens "+(n.d===0?"today":n.d===1?"tomorrow ("+h(ENG.DAY_NAMES[n.day])+")":h(ENG.DAY_NAMES[n.day]))+" at "+("0"+Math.floor(n.a/60)).slice(-2)+":"+("0"+n.a%60).slice(-2))});
+    return out.length?'<div class="gh-sub">Who to call:</div><ul class="gh-calls">'+out.join("")+"</ul>":'<div class="gh-sub">No door with a phone in the data serves this person.</div>';
+  }
+  function daysBlock(){         /* the documents the Next part starts (its count), with their processing days */
+    var n=0;PLAN.forEach(function(p){if(p.documents)n=Math.max(n,p.documents)});
+    var d=docsFor().slice(0,n||undefined);if(!d.length)return "";
+    return '<div class="gh-sub">Processing days: '+d.map(function(it){return h(it.name)+" "+(typeof it.days==="number"?h(ENG.show(it.days))+" day"+(it.days===1?"":"s"):"not given")}).join(" · ")+"</div>";
+  }
+  var LAST=null;
+  function render(){
+    var t=now(),res=ENG.rankAll(B,H.attrs,t,H.name),by={};res.forEach(function(r){by[r.set]=r});LAST={by:by,t:t};
+    q("#gh-clock").textContent="Open now is read at "+stamp(t)+(B.clock&&B.clock.fixed?" (fixed for this page)":" (this device's clock)")+".";
+    var html="";
+    PLAN.forEach(function(p){
+      html+='<div class="gh-part"><h4>'+h(p.title)+"</h4>";
+      (p.sets||[]).forEach(function(sid){html+=setBlock(sid,by[sid])});
+      if(p.documents)html+=docsBlock(p.documents);
+      if(p.call)html+=callBlock(p.call,by[p.call]);
+      if(p.documents_days)html+=daysBlock();
+      html+="</div>";
+    });
+    q("#gh-plan").innerHTML=html;H.shown=true;update();
+  }
+  function update(){
+    var by=H.shown&&LAST?LAST.by:null;
+    if(CK){var need={};if(by)docsFor().forEach(function(it){need[it.id]=1});
+      qa("#gh-docs li").forEach(function(li){var on=!!need[li.getAttribute("data-id")];li.classList.toggle("gh-need",on);
+        var tg=q(".gh-tag.gh-mine",li);if(on&&!tg){li.insertAdjacentHTML("beforeend",'<span class="gh-tag gh-mine">for this plan</span>')}else if(!on&&tg)tg.remove()})}
+    if(NV)navigator_(by);
+    if(RD)readiness(by);
+    var ask=q("#gh-ask");if(ask)ask.hidden=!by;
+  }
+
+  /* ── the navigator (D5) ── */
+  function navigator_(by){
+    var r=by&&by[NV.set],age=H.attrs.age&&typeof H.attrs.age.value==="number"?H.attrs.age.value:null,rows=[];
+    NV.rows.forEach(function(p,i){
+      var li=byId("#gh-progs",p.id);if(!li)return;var live=q("[data-live]",li),b=ENG.ageBounds(p.window),left=null,inside=false;
+      if(b&&age!==null){left=Math.min(b[1],120)-age;inside=b[0]<=age&&age<=b[1]}
+      var txt="";
+      if(r){
+        var x=r.ranked.filter(function(y){return y.id===p.id})[0],e=r.excluded.filter(function(y){return y.id===p.id})[0],c=r.confirm.filter(function(y){return y.id===p.id})[0];
+        txt=(left!==null?(inside?"<strong>"+h(left)+" year"+(left===1?"":"s")+" left</strong> before the limit · ":"outside this window · "):"")
+          +(x?"fits: "+h(x.score)+" points (#"+(r.ranked.indexOf(x)+1)+")":e?"not now — "+h(e.gate)+": "+h(e.detail):c?'<span class="gh-conf">to confirm — '+h(c.detail)+"</span>":"");
+      }
+      live.innerHTML=txt;rows.push({li:li,i:i,inside:inside,left:left});
+    });
+    var ol=q("#gh-progs");
+    rows.sort(function(a,b){if(a.inside!==b.inside)return a.inside?-1:1;if(a.inside&&a.left!==b.left)return a.left-b.left;return a.i-b.i})
+      .forEach(function(x){ol.appendChild(x.li)});
+  }
+
+  /* ── the readiness tracker (D9) ── */
+  var RS={steps:{},docs:{}},STORE="unknown",ALL={},CUR=null;   /* ALL: each person's checked steps (a preset's id, or "someone") */
+  function isO(v){return v!==null&&typeof v==="object"&&!Array.isArray(v)}
+  function who(){return H.preset||"someone"}
+  function load(){                 /* stored: {v:2, challenge, current, people: {person: {steps, docs}}} — nothing else; anything else: fresh */
+    if(!RD)return;var raw=null;
+    try{raw=window.localStorage.getItem(RD.storage_key);STORE="ok"}catch(e){STORE="blocked";return}
+    if(!raw)return;
+    try{var o=JSON.parse(raw);
+      if(!isO(o)||o.v!==2||o.challenge!==B.challenge||!isO(o.people))return;
+      Object.keys(o.people).forEach(function(k){var e=o.people[k];if(!isO(e)||(k!=="someone"&&!B.presets.some(function(p){return p.id===k})))return;
+        var st={},dc={};
+        Object.keys(isO(e.steps)?e.steps:{}).forEach(function(i){var v=e.steps[i];if(RD.steps[+i]&&Number.isInteger(v)&&RD.steps[+i].options[v])st[+i]=v});
+        Object.keys(isO(e.docs)?e.docs:{}).forEach(function(d){if(RD.documents.indexOf(d)>=0&&e.docs[d]===true)dc[d]=true});
+        ALL[k]={steps:st,docs:dc}});
+      if(typeof o.current==="string"&&B.presets.some(function(p){return p.id===o.current}))CUR=o.current;
+    }catch(e){ALL={}}
+  }
+  function switchRS(store,to){     /* the tracker shows this person's steps; store: remember who is shown (for a reload) */
+    if(!RD)return;RS=ALL[to||who()]||{steps:{},docs:{}};ALL[to||who()]=RS;paintSteps();if(store)save();
+  }
+  function save(){
+    if(!RD)return;var m=q("#gh-rsave");ALL[who()]=RS;
+    try{window.localStorage.setItem(RD.storage_key,JSON.stringify({v:2,challenge:B.challenge,current:H.preset,people:ALL}));STORE="ok"}catch(e){STORE="blocked"}
+    if(m)m.setAttribute("data-store",STORE);
+    var s=q("#gh-rstore");if(s)s.textContent=STORE==="ok"?"Saved in this browser.":"Not saved: this browser does not allow storage here (the tracker still works on this page).";
+  }
+  function paintSteps(){
+    qa("#gh-rsteps [data-rstep]").forEach(function(fs){var i=+fs.getAttribute("data-rstep");qa("input",fs).forEach(function(x){x.checked=RS.steps[i]===+x.value})});
+    qa('#gh-rsteps input[name="gh-rdoc"]').forEach(function(x){x.checked=!!RS.docs[x.value]});
+  }
+  function readyAttrs(){
+    var a={};Object.keys(H.attrs).forEach(function(k){a[k]=H.attrs[k]});
+    Object.keys(RS.steps).forEach(function(k){var st=RD.steps[+k],o=st&&st.options[RS.steps[k]];if(!o)return;
+      a[st.attr]={value:o.value,basis:"stated"};Object.keys(o.attrs||{}).forEach(function(x){a[x]={value:o.attrs[x],basis:"stated"}})});
+    return a;
+  }
+  function readiness(){
+    var s=SETS[RD.set];if(!s)return;
+    var r=ENG.runCase(s,readyAttrs(),now(),H.name),ol=q("#gh-homes"),order=[];
+    var stepOf={};RD.steps.forEach(function(st,i){stepOf[st.attr]=i;(st.options||[]).forEach(function(o){Object.keys(o.attrs||{}).forEach(function(k){stepOf[k]=i})})});
+    var openDocs=RD.documents.filter(function(d){return !RS.docs[d]}).map(function(d){return DOCS[d]?DOCS[d].name:d});
+    function open(detail){
+      var o=[];RD.steps.forEach(function(st,i){if(RS.steps[i]!==undefined)return;
+        var keys=[st.attr].concat([].concat.apply([],(st.options||[]).map(function(op){return Object.keys(op.attrs||{})})));
+        if(keys.some(function(k){return detail.indexOf("("+k.split("_").join(" ")+")")>=0}))o.push(st.label)});
+      return o;
+    }
+    r.ranked.forEach(function(x,i){order.push({id:x.id,html:'<span class="gh-score">#'+(i+1)+" · "+h(x.score)+"</span> fits these answers"+comps(x)+trace(x),docs:true})});
+    r.confirm.forEach(function(x){var o=open(x.detail);order.push({id:x.id,html:'<span class="gh-conf">to confirm — '+h(x.detail)+"</span>"+(o.length?'<div class="gh-sub">Answer above: '+h(o.join("; "))+"</div>":"")+trace(x),docs:true})});
+    r.excluded.forEach(function(x){order.push({id:x.id,html:"not for these answers — "+h(x.gate)+": "+h(x.detail)+trace(x),docs:false})});
+    order.forEach(function(o){var li=byId("#gh-homes",o.id);if(!li)return;
+      q("[data-live]",li).innerHTML=o.html+(o.docs&&openDocs.length?'<div class="gh-sub">Documents for a housing application not checked yet (the checklist\'s): '+h(openDocs.join(", "))+"</div>":"");ol.appendChild(li)});
+  }
+
+  /* ── the chat button (D6): the plan's top options and the answers, into the chat input (≤ 2,000 characters) ── */
+  function askText(){
+    var by=LAST&&LAST.by;if(!by)return "";
+    var who=H.preset?H.name:"a person",facts=Object.keys(H.attrs).map(function(k){var v=H.attrs[k].value;return k.split("_").join(" ")+": "+ENG.show(v)});
+    var parts=PLAN.map(function(p){var o=(p.sets||[]).map(function(sid){var r=by[sid];if(!r)return "";var s=SETS[sid];
+      return s.label+": "+(r.ranked.length?r.ranked.slice(0,2).map(function(x){return x.name+" ("+x.score+")"}).join(", "):"none fits now")}).filter(Boolean);
+      if(p.documents)o.push("documents: "+docsFor().slice(0,p.documents).map(function(it){return it.name}).join(", "));
+      return p.title+" — "+o.join("; ")});
+    var t="The Get Help plan for "+who+" ("+(facts.join("; ")||"no answers")+"), at "+stamp(LAST.t)+". "+parts.join(". ")+". What should happen first, and what should be confirmed?";
+    return t.length>1990?t.slice(0,1987)+"...":t;
+  }
+
+  /* ── wiring ── */
+  try{
+    qa("#gh-presets .gh-preset").forEach(function(b){b.addEventListener("click",function(){var v=b.getAttribute("data-preset");if(v==="custom")custom();else loadPreset(+v)})});
+    q("#gh-back").addEventListener("click",function(){showStep(H.step-1)});
+    q("#gh-next").addEventListener("click",function(){showStep(H.step+1)});
+    q("#gh-go").addEventListener("click",fromWizard);
+    q("#gh-clear").addEventListener("click",custom);
+    q("#gh-wizard").addEventListener("submit",function(e){e.preventDefault();fromWizard()});
+    q("#gh-wizard").addEventListener("change",function(e){var x=e.target;if(!(x instanceof HTMLInputElement)||x.type!=="checkbox"||!x.checked)return;
+      var fs=x.closest(".gh-step"),st=fs&&STEPS[+fs.getAttribute("data-step")];if(!st||!st.options)return;
+      var o=st.options[+x.value],none=o&&Array.isArray(o.value)&&!o.value.length;     /* "None of these" excludes the others, and they it */
+      qa("input[type=checkbox]",fs).forEach(function(y){if(y===x)return;var oy=st.options[+y.value],ny=oy&&Array.isArray(oy.value)&&!oy.value.length;if(none||ny)y.checked=false})});
+    var ask=q("#gh-ask");
+    if(ask)ask.addEventListener("click",function(){var t=askText();if(!t)return;var tg=document.getElementById("chat-toggle"),inp=document.getElementById("chat-q");
+      if(tg&&tg.style.display!=="none"&&document.getElementById("chatbot").style.display==="none")tg.click();if(inp){inp.value=t;inp.focus()}});
+    if(RD){load();if(CUR){var ci=B.presets.map(function(p){return p.id}).indexOf(CUR);if(ci>=0){loadPreset(ci)}}else switchRS(false);
+      q("#gh-rsteps").addEventListener("change",function(e){var x=e.target;if(!(x instanceof HTMLInputElement))return;
+        if(x.name==="gh-rdoc"){if(x.checked)RS.docs[x.value]=true;else delete RS.docs[x.value]}
+        else{var fs=x.closest("[data-rstep]");if(fs)RS.steps[+fs.getAttribute("data-rstep")]=+x.value}
+        save();readiness()});
+      q("#gh-rclear").addEventListener("click",function(){RS={steps:{},docs:{}};ALL[who()]=RS;save();paintSteps();readiness()});
+      var s=q("#gh-rsave");if(s)s.insertAdjacentHTML("afterend",'<p class="gh-sub" id="gh-rstore">'+(STORE==="blocked"?"Not saved: this browser does not allow storage here (the tracker still works on this page).":"")+"</p>");
+    }
+    showStep(0);update();
+    console.info("Get Help: "+STEPS.length+" questions, "+B.presets.length+" presets, "+B.sets.length+" option sets; open now read at "+stamp(now()));
+  }catch(e){console.warn("Get Help: not wired —",e)}
+  window.GetHelp={state:function(){return {preset:H.preset,attrs:H.attrs,need:H.need,shown:H.shown,store:STORE,rs:RS,people:Object.keys(ALL)}},render:render,askText:askText};
+})();
+</script>
+{% endraw %}{% endif %}
+</body>
+</html>

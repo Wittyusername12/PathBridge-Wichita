@@ -1,0 +1,89 @@
+{
+  "source": "harvest",
+  "count": 8,
+  "data": [
+    {
+      "zip": "64130",
+      "priority": "critical",
+      "reason": "Highest food insecurity rate (18.2%), Price Chopper closure, 38% poverty",
+      "weeklyLbs": 12000,
+      "agencies": [
+        "Harvesters",
+        "Bishop Sullivan"
+      ],
+      "lastDelivery": "2026-03-21"
+    },
+    {
+      "zip": "64127",
+      "priority": "critical",
+      "reason": "41% poverty rate, Save-A-Lot closure, large Hispanic population needing bilingual services",
+      "weeklyLbs": 8500,
+      "agencies": [
+        "Guadalupe Centers",
+        "Della Lamb"
+      ],
+      "lastDelivery": "2026-03-22"
+    },
+    {
+      "zip": "66101",
+      "priority": "critical",
+      "reason": "Highest poverty rate (44.6%), 63% Hispanic, lowest vehicle access (48%)",
+      "weeklyLbs": 15000,
+      "agencies": [
+        "Crosslines",
+        "El Centro"
+      ],
+      "lastDelivery": "2026-03-20"
+    },
+    {
+      "zip": "66105",
+      "priority": "high",
+      "reason": "71% Hispanic, 40% poverty, limited transit options",
+      "weeklyLbs": 9000,
+      "agencies": [
+        "Crosslines"
+      ],
+      "lastDelivery": "2026-03-19"
+    },
+    {
+      "zip": "64132",
+      "priority": "high",
+      "reason": "33% poverty, 39% no vehicle, food desert designation",
+      "weeklyLbs": 6500,
+      "agencies": [
+        "Community Assistance Council"
+      ],
+      "lastDelivery": "2026-03-21"
+    },
+    {
+      "zip": "64128",
+      "priority": "high",
+      "reason": "Dollar General Market closure, 42% no vehicle",
+      "weeklyLbs": 5000,
+      "agencies": [
+        "Reconciliation Services"
+      ],
+      "lastDelivery": "2026-03-22"
+    },
+    {
+      "zip": "64108",
+      "priority": "medium",
+      "reason": "48% Hispanic, 32% poverty, Westside underserved",
+      "weeklyLbs": 4000,
+      "agencies": [
+        "Guadalupe Centers"
+      ],
+      "lastDelivery": "2026-03-18"
+    },
+    {
+      "zip": "64134",
+      "priority": "medium",
+      "reason": "Growing need, 27% poverty, suburban food desert",
+      "weeklyLbs": 3500,
+      "agencies": [
+        "Community Assistance Council"
+      ],
+      "lastDelivery": "2026-03-20"
+    }
+  ]
+}

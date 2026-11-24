@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>KC Food Navigator</title>
+<meta name="naipc-challenge" content="kc-2026-03-28">
+<meta name="naipc-run" content="GOLDEN-RUN">
+<style>.tab-panel{display:none}.tab-panel.active{display:block}</style></head>
+<body>
+<header><h1>KC Food Navigator</h1><p>Find food help near you, today.</p></header>
+<details open id="brief" class="brief" data-brief-panel>
+  <summary>How this answers the brief</summary>
+  <style>@media (max-width:600px){ #brief td{display:block} }</style>
+  <table class="matrix-table">
+    <thead><tr><th scope="col">The brief asks</th><th scope="col">Our answer</th><th scope="col">Where on this page</th></tr></thead>
+    <tbody>
+      <tr data-brief-row="architect-q1" data-brief-answer="note">
+        <td data-brief-cell="q" style="vertical-align:top">Does it actually work? Can you demo it?</td>
+        <td data-brief-cell="a" style="vertical-align:top">Yes: in Find Resources, search the resources loaded from the challenge API by ZIP or keyword, filter them by category, language, cold storage or ID requirement, sort them, and click a card for its details; the Dashboard and Data Explorer tabs draw the same data live in the browser.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#panel-finder" data-brief-link="finder">Find Resources tab</a></td>
+      </tr>
+      <tr data-brief-row="architect-q2" data-brief-answer="note">
+        <td data-brief-cell="q" style="vertical-align:top">Is it solving a real problem?</td>
+        <td data-brief-cell="a" style="vertical-align:top">The Dashboard ranks every ZIP code HIGH, MED or LOW by the data&#x27;s own primary need metric and lists the crisis events in the data (the store closures and the 311 distress calls), so the hardest-hit areas and the resources still open near them sit on one screen.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#panel-dashboard" data-brief-link="dashboard">Dashboard tab</a></td>
+      </tr>
+      <tr data-brief-row="architect-q3" data-brief-answer="note">
+        <td data-brief-cell="q" style="vertical-align:top">Would real people actually use this?</td>
+        <td data-brief-cell="a" style="vertical-align:top">It is made for the people named under &quot;Who this serves&quot;: one search box that takes a ZIP or a plain word, filters for what a family needs to know (language, ID required, cold storage), a detail view per site, and a single-column layout on a phone.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#sec-who-serves" data-brief-link="who-serves">Who this serves</a></td>
+      </tr>
+      <tr data-brief-row="architect-q4" data-brief-answer="note">
+        <td data-brief-cell="q" style="vertical-align:top">How well did you use AI to build it?</td>
+        <td data-brief-cell="a" style="vertical-align:top">No AI model runs inside this tool: its Python harness turns the challenge API&#x27;s data into this page with fixed rules, and the browser draws it. Claude wrote and tested that harness and template with us, and the page&#x27;s chat answers questions about this data through a server-side proxy to Claude.</td>
+        <td data-brief-cell="l" style="vertical-align:top"><a href="#sec-how-built" data-brief-link="how-built">How this tool was built</a></td>
+      </tr>
+    </tbody>
+  </table>
+</details>
+<nav class="tabs"><button class="tab active" data-tab="dashboard">Dashboard</button><button class="tab" data-tab="finder">Finder</button><button class="tab" data-tab="data">Data</button></nav>
+<div id="panel-dashboard" class="tab-panel active" data-sec="dashboard" data-req="architect-q2" data-sec-items="29">
+  <div class="stat-row"><div class="stat"><span class="v" id="stTotal"></span><span class="l">resources</span></div></div>
+  <div id="zipCards"></div><canvas id="needChart"></canvas>
+</div>
+<div id="panel-finder" class="tab-panel" data-sec="finder" data-req="architect-q1" data-sec-items="12">
+  <input type="search" id="q" placeholder="ZIP or name" autocomplete="off">
+  <select id="cat"><option value="">All types<option value="pantry">Pantry<option value="hub">Hub</select>
+  <div id="results"></div>
+</div>
+<div id="panel-data" class="tab-panel" data-sec="data" data-sec-items="0">
+  <table id="dataTbl"><thead><tr><th>Endpoint</th><th>Records</th></tr></thead><tbody></tbody></table>
+</div>
+<details id="sec-how-built" data-sec="how-built" data-req="architect-q4">
+  <summary>How this was built</summary>
+  <p>Deterministic code ranks every resource by need and distance; the page is generated from the challenge&#x27;s own endpoints.</p>
+  <p id="sec-who-serves" data-sec="who-serves" data-req="architect-q3"><strong data-cov-skip>Who this serves:</strong> residents of 66101 and 66105 who need food this week, pantry coordinators, and city staff tracking coverage.</p>
+</details>
+<script>function switchToTab(n){document.querySelectorAll(".tab-panel").forEach(function(p){p.classList.toggle("active", p.id === "panel-" + n);});}</script>
+</body></html>

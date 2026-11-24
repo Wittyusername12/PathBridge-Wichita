@@ -1,0 +1,555 @@
+{
+  "stage": "master_analysis",
+  "ts": "2026-11-16T23:57:42.239921+00:00",
+  "data": {
+    "domain": "Homelessness and housing-transition services in Wichita–Sedgwick County, Kansas. Nearly every record is about a handoff between agencies: youth leaving foster care, families looping through 211, and adults blocked at shelter doors, document offices and rental screening. Confidence HIGH; it rests on the shelter, intake, program, document and rehousing records.",
+    "program_name": "Steady Path Wichita",
+    "brand_html": "Steady <em>Path</em> Wichita",
+    "city_name": "Wichita",
+    "badge_text": "Homelessness transitions · [[pilot_days]]-day pilot · [[budget]] contract",
+    "hero_title": "Wichita houses people fast once they are matched; the losses happen between its doors",
+    "hero_lead": "Wichita reaches housing in <strong>[[community-snapshot.avgDaysToHousing]] days</strong>, against <strong>[[community-snapshot.nationalDaysToHousing]] days</strong> nationally. Even so, only <strong>[[status001-reachable]] of [[status001-total]] emergency beds</strong> are reachable tonight, and youth leave care into a documents-and-benefits maze [CHALLENGE_DATA: community-snapshot, system-status]. Steady Path puts a named navigator and a shared handoff board on top of the assets Wichita already runs.",
+    "summary_title": "Only [[status001-reachable]] emergency beds are reachable tonight; the fix is the handoff, not another front door",
+    "bluf_text": "Wichita's system is fast once a person is matched, but it loses people at the transfers between agencies. The evidence:<ul><li><strong>[[community-snapshot.avgDaysToHousing]] days</strong> to housing against <strong>[[community-snapshot.nationalDaysToHousing]] days</strong> nationally [CHALLENGE_DATA: community-snapshot].</li><li>Only <strong>[[status001-reachable]] of [[status001-total]] emergency beds</strong> are reachable now [CHALLENGE_DATA: system-status].</li><li><strong>[[transition-programs.prog-006.transitionDropoutRate]]</strong> of CrossRoads exits have no confirmed next placement [CHALLENGE_DATA: transition-programs].</li></ul>Steady Path spends [[budget]] on navigators who carry each person across those transfers. It adds a bottleneck dashboard layered on Second Light coordinated entry, and uses the brief's [[reserve]] reserve to win landlord and youth trust. It targets <strong>[[beneficiaries_y1]] people</strong> in Year 1 at <strong>[[cpb_y1]]</strong> per person. Without it, valued outcomes estimated at <strong>[[coi_3yr]]</strong> would not happen over [[plan.years]] years [ESTIMATE].",
+    "decision_text": "Approve a [[pilot_days]]-day pilot inside the [[budget]] contract, with renewal tied to the gate in the renewal case.<ul><li>Python's estimate of valued outcomes forgone without the program is [[coi_3yr]] over [[plan.years]] years.</li><li>That figure excludes housing placements. The data holds no local cost of a shelter night, so housing is reported as a count, not a dollar value.</li></ul>",
+    "crisis_title": "[[community-snapshot.shelteredAndUnshelteredTotal]] people were homeless on the count night, and most failures happen between agencies",
+    "crisis_body": "On the Point-in-Time night, <strong>[[community-snapshot.shelteredAndUnshelteredTotal]] people</strong> were homeless, <strong>[[community-snapshot.unshelteredHeadcount]] of them unsheltered</strong>. That total was <strong>[[community-snapshot.yoyChangePct]] higher</strong> than in 2024 [CHALLENGE_DATA: community-snapshot]. Speed is not the problem: housing takes <strong>[[community-snapshot.avgDaysToHousing]] days</strong> against <strong>[[community-snapshot.nationalDaysToHousing]] days</strong> nationally, and the local rate of <strong>[[community-snapshot.perCapitaRateLocal]]</strong> sits below the national <strong>[[community-snapshot.perCapitaRateNational]]</strong>. Reach is the problem.<ul><li>Only <strong>[[status001-reachable]] of [[status001-total]] emergency beds</strong> are reachable now [CHALLENGE_DATA: system-status].</li><li>Of <strong>[[beds_online_all]] beds online</strong>, <strong>[[free_beds_all]]</strong> sit free, but entry rules screen most people out [CHALLENGE_DATA: shelter-inventory].</li><li>Youth face the steepest cliff. Homelessness among youth from foster care reaches <strong>[[community-snapshot.fosterHomelessnessAge21]] by age 21</strong>, above the national <strong>[[ext.us_poverty_rate_2023]] poverty rate</strong>. These are different measures, so the comparison shows scale only (LOW confidence as like-for-like).</li><li>The KanCare extension loses <strong>[[transition-programs.prog-003.transitionDropoutRate]]</strong> of enrollees, above the national <strong>[[ext.us_uninsured_rate_2023]] uninsured rate</strong>. This is again a different measure (MEDIUM confidence) [CHALLENGE_DATA: transition-programs].</li></ul>",
+    "crisis_human": "Maya, [[q.4f218]], has a CrossRoads bed this week but no birth certificate, so a Kansas state ID is at least <strong>[[state_id_days]] days</strong> away [CHALLENGE_DATA: stabilization-docs]. <ul><li>Income poverty: entry jobs pay <strong>[[q.43a8c]]</strong>.</li><li>Transportation poverty: a bus pass costs <strong>[[q.c9ad8]]</strong> a month on buses with <strong>[[q.2bfae]]-minute headways</strong>, so every trip to DCF, SSA or City Hall costs her a shift.</li><li>Language barriers: H.O.T., CrossRoads Youth Intake, Second Light Coordinated Entry and the Family Promise Intake Line list English only [CHALLENGE_DATA: intake-network]. Spanish-speaking households like those Denise navigates beside lose doors entirely.</li><li>The age cliff makes each barrier worse: DCF IL ends the day she turns [[q.cc62b]], and every move that finds her a bed sends KanCare notices to an old address.</li></ul> That is how the extension loses <strong>[[transition-programs.prog-003.transitionDropoutRate]]</strong> of enrollees [CHALLENGE_DATA: transition-programs].",
+    "crisis_sources": "[CHALLENGE_DATA: community-snapshot, system-status, shelter-inventory, intake-network, transition-programs, stabilization-docs]. National benchmarks: Census Bureau P60-283 (poverty) and Health Insurance Coverage in the United States: 2023. The data holds no neighborhood-level income, poverty or coverage rates, so the personas cite system-level figures only.",
+    "solution_title": "A named navigator carries each transition for [[beneficiaries_y1]] people in the first year",
+    "solution_body": "Steady Path assigns <strong>[[model:3|navigators]] navigators</strong> who own each handoff from first contact to keys in hand. A shared bottleneck dashboard sits on top of Second Light coordinated entry, where HMIS bed-matching is not yet live [CHALLENGE_DATA: system-status]. The pilot has five working parts:<ul><li><strong>Warm handoffs.</strong> Every CrossRoads exit, every 211 Kansas after-hours loop and every H.O.T. contact gets a logged transfer. Today about <strong>[[q.08402]]</strong> 211 callers loop back [CHALLENGE_DATA: intake-network].</li><li><strong>Document fast-lane.</strong> City ID through Breakthrough Wichita attestation, then birth certificate, Social Security card and state ID in parallel. Open Door shelter-address letters solve the residency step [CHALLENGE_DATA: stabilization-docs].</li><li><strong>Benefits guard.</strong> Navigators file the KanCare address change and flag expedited <strong>[[q.f7827]]-day SNAP</strong>.</li><li><strong>Youth pathways.</strong> DCF IL, ETV and SOUL Family enrollment for aging-out youth. <strong>[[programs.free]] of [[programs.listed]]</strong> transition-program slots are free [CHALLENGE_DATA: transition-programs].</li><li><strong>Housing pathways.</strong> Landlords like Luis get a single contact through NEXTenant, feeding rapid rehousing and the HumanKind Housing First pathway [CHALLENGE_DATA: rehousing-options].</li></ul>",
+    "solution_population": "The program targets <strong>[[beneficiaries_y1]]</strong> people in Year 1, scaling to [[beneficiaries_y3]] by Year 3. They come from a larger pool:<ul><li>The homeless-services system served <strong>[[community-snapshot.peopleServedAnnual]]</strong> people in FY 2023–24, of whom <strong>[[community-snapshot.firstTimeHomelessAnnual]]</strong> were homeless for the first time.</li><li><strong>[[community-snapshot.shelteredAndUnshelteredTotal]]</strong> people were homeless on the Point-in-Time night [CHALLENGE_DATA: community-snapshot].</li></ul>The data lists facilities, not neighborhoods or ZIP-level areas, so this proposal states no count of monitored areas. Year-1 reach rests on caseload: [[model:3|navigators]] navigators at [[model:80|people per navigator per year]] people each, on episodes the length of the [[pilot_days]]-day pilot [ESTIMATE].",
+    "cost_of_inaction": "Python computes the yearly cost of inaction from the valued outcomes: KanCare-protected ER visits avoided, expedited SNAP secured, and ETV education funding unlocked. Each year's figure is those outcomes for that year's people served, less deadweight of [[deadweight]].<ul><li>Year 1: [[coi_y1]]</li><li>Year 2: [[coi_y2]]</li><li>Year 3: [[coi_y3]]</li><li>Cumulative over [[plan.years]] years: [[coi_3yr]]</li></ul>Stable housing placement is material but not valued, because the data gives no local cost of a shelter night or a return to homelessness. The figure therefore understates what is lost. The SROI uses the same outcome list but goes further: it also nets out attribution, displacement and drop-off, and discounts over [[sroi_horizon_years]] years. That is why the SROI's [[sroi_pv_benefits]] is smaller per person than the cost-of-inaction figure [ESTIMATE].",
+    "comparison_rows": [
+      {
+        "dimension": "Bed matching",
+        "today": "Second Light refers by phone; HMIS bed-matching is not live, and only [[status001-reachable]] of [[status001-total]] emergency beds are reachable [CHALLENGE_DATA: system-status].",
+        "proposed": "Navigators update a shared board of reachable beds, with each site's own entry conditions, before every referral."
+      },
+      {
+        "dimension": "After-hours handoff",
+        "today": "H.O.T. works weekdays until 3:30 PM, and Open Door re-routes anyone arriving after 4 PM [CHALLENGE_DATA: intake-network, shelter-inventory].",
+        "proposed": "211 Kansas and CrossRoads Youth Intake log the open case; a navigator picks it up the next business morning by name."
+      },
+      {
+        "dimension": "Youth exits",
+        "today": "[[transition-programs.prog-006.transitionDropoutRate]] of CrossRoads exits have no confirmed next placement; BRIDGES has [[q.ed5fc]] units [CHALLENGE_DATA: transition-programs].",
+        "proposed": "Every exit gets a written next step 14 days ahead: BRIDGES, rapid rehousing, NEXTenant unit or SOUL Family match."
+      },
+      {
+        "dimension": "Documents and benefits",
+        "today": "From zero documents, a state ID takes at least [[state_id_days]] days, and each KanCare address change triggers disenrollment [CHALLENGE_DATA: stabilization-docs].",
+        "proposed": "A document fast-lane with Breakthrough Wichita, plus navigator-filed KanCare address updates and expedited SNAP flags."
+      },
+      {
+        "dimension": "Landlord relationship",
+        "today": "Private stock such as Maple Ridge and Central Park Towers screens out voucher holders entirely [CHALLENGE_DATA: rehousing-options].",
+        "proposed": "Luis and other NEXTenant landlords get a single named contact and a response window promised in writing."
+      }
+    ],
+    "evidence_title": "[[transition-programs.prog-006.transitionDropoutRate]] of CrossRoads youth exits leave without a confirmed next placement",
+    "evidence_cards": [
+      {
+        "title": "Beds exist but cannot be reached",
+        "stat_value": "[[status001-reachable]]",
+        "stat_class": "bad",
+        "stat_label": "emergency beds reachable now",
+        "body": "Alert status-001 counts [[status001-reachable]] reachable beds of [[status001-total]], or [[calc:pct_of|status001-reachable|status001-total]]. Referral rules, sobriety screening and household restrictions block the rest. Union Rescue Mission's breathalyzer gate alone filters out [[q.1f31c]] of would-be intakes. This pattern mirrors a mechanism documented in national shelter research: conditional entry rules leave beds empty while unsheltered people with active substance use or mixed households are turned away within minutes of arriving at the door.",
+        "source": "[CHALLENGE_DATA: system-status, shelter-inventory]"
+      },
+      {
+        "title": "Youth shelter exits fall into a gap",
+        "stat_value": "[[transition-programs.prog-006.transitionDropoutRate]]",
+        "stat_class": "bad",
+        "stat_label": "of CrossRoads exits with no confirmed next placement",
+        "body": "CrossRoads is the only round-the-clock low-barrier youth shelter. BRIDGES downstream has [[q.ed5fc]] units, a [[q.536a6]]-week wait and [[q.60225]] realistic admits. DCF IL loses [[q.84d8e]] participants within [[q.4a2ab]] days of exit. This pattern mirrors the age-out cliff described nationally for foster youth: support ends on an administrative date rather than when housing is stable, and housing loss follows within months of that exit.",
+        "source": "[CHALLENGE_DATA: transition-programs, shelter-inventory]"
+      },
+      {
+        "title": "Health coverage is lost to paperwork, not eligibility",
+        "stat_value": "[[transition-programs.prog-003.transitionDropoutRate]]",
+        "stat_class": "warn",
+        "stat_label": "dropout from the KanCare extension for former foster youth",
+        "body": "The extension has no income test and [[transition-programs.prog-003.activeEnrollment]] active enrollees. Coverage is lost mainly when recertification notices go to old addresses, and re-enrollment requires an in-person DCF visit with a [[q.501c0]]-hour wait. This pattern mirrors the administrative-churn mechanism documented in national Medicaid research: eligible people lose coverage within weeks of a move because mail no longer reaches them.",
+        "source": "[CHALLENGE_DATA: transition-programs, stabilization-docs]"
+      },
+      {
+        "title": "Matched people are housed fast",
+        "stat_value": "[[community-snapshot.avgDaysToHousing]]",
+        "stat_class": "good",
+        "stat_label": "average days to housing in Wichita",
+        "body": "The national figure is [[community-snapshot.nationalDaysToHousing]] days, [[calc:times|community-snapshot.nationalDaysToHousing|community-snapshot.avgDaysToHousing]] the local time. Retention after placement is [[community-snapshot.permanentRetention2yr]]. The system's back end works, which points the money at the front-end handoffs. This pattern mirrors the Housing First evidence documented nationally, where people placed without preconditions mostly stay housed within the years after move-in.",
+        "source": "[CHALLENGE_DATA: community-snapshot]"
+      }
+    ],
+    "operations_title": "A shared handoff board joins [[intake-network.count]] separate front doors into a tracked path",
+    "operations_description": "Steady Path runs as a thin coordination layer, not a new front door. It has four moving parts:<ul><li><strong>Intake.</strong> People arrive through the existing doors: 211 Kansas, H.O.T., Open Door, CrossRoads Youth Intake, Second Light Coordinated Entry and the DCF Wichita Service Center [CHALLENGE_DATA: intake-network]. Partner staff open a case on the shared board. A navigator triages it the same business day using the published prioritization table: a bed tonight, a transition program, or a door to walk into.</li><li><strong>Bottleneck dashboard.</strong> It shows reachable beds by entry condition and free transition slots ([[programs.free]] of [[programs.listed]]). It also shows wait clocks: HumanKind [[q.db126]] weeks, BRIDGES [[q.536a6]] weeks, Family Promise [[q.970ad]] weeks, and a COMCARE assessment of [[q.83dac]] weeks [CHALLENGE_DATA: shelter-inventory, transition-programs].</li><li><strong>Parallel tracks.</strong> Navigators run three at once:<ul><li>documents: City ID, birth certificate, Social Security card, state ID;</li><li>benefits: KanCare address update, expedited SNAP, ETV;</li><li>housing: NEXTenant partners, rapid rehousing through Salvation Army and Hilltop Village, the HumanKind Housing First waitlist, and VASH for veterans like Robert.</li></ul></li><li><strong>Follow-through.</strong> Every case closes only after a check-in at the end of its episode.</li></ul>",
+    "plan_title": "A [[pilot_days]]-day pilot that ends at a written renewal gate",
+    "financial_title": "Year-one cost per person served: [[cpb_y1]]",
+    "sensitivity_text": "Python's stress case reaches [[stress_beneficiaries_y1]] people, [[calc:pct_less|stress_beneficiaries_y1|beneficiaries_y1]] fewer than planned, on the same Year-1 expenses of [[total_exp_y1]]. Cost per person then rises to [[stress_cpb_y1]], against the base case's [[cpb_y1]]. The pilot's main exposure is therefore reach, not spending: if navigators cannot reach enough people, cost per person climbs. That is why the dashboard tracks new cases weekly from launch.",
+    "renewal_label": "Renewal gate at the end of the [[pilot_days]]-day pilot",
+    "renewal_text": "Renew only if the pilot shows that handoffs, not new capacity, move people. The gate has four tests:<ul><li>[[model:80%|target share of CrossRoads exits with a confirmed next placement]] of CrossRoads exits leave with a confirmed next placement, against [[transition-programs.prog-006.transitionDropoutRate]] leaving without one today.</li><li>[[model:85%|target share of enrolled former foster youth whose KanCare extension remains active at pilot end]] of enrolled youth keep KanCare coverage active at pilot end.</li><li>The median time from zero documents to a state ID is at or below [[model:35|days, target median from no documents to state ID]] days, against a processing floor of [[state_id_days]] days.</li><li>[[model:75%|target share of referrals completed as logged warm handoffs]] of referrals are logged as warm handoffs.</li></ul>On the base case, Year 3 cost per person is [[cpb_y3]]. The SROI is [[sroi]], and it is partial because housing is not valued.",
+    "appendix_title": "Every figure traces to [[data.record_count]] records fetched at run time",
+    "methodology": "<ul><li><strong>Cross-referencing.</strong> We matched each shelter's entry conditions against the reachable-bed alert, each youth program's age cap and dropout rate against the document chain, and each rehousing option's screening against voucher acceptance.</li><li><strong>Where the records agree.</strong> The shelter, intake and program records all point to the same place: failures cluster at transfers between agencies (after-hours, at shelter exit and at address changes), not at the housing match itself. Wichita's own days-to-housing and retention figures confirm a strong back end (HIGH confidence).</li><li><strong>Benchmarks.</strong> National benchmarks (Census poverty and uninsured rates, the AHRQ ER visit cost, BLS wages) are used for context and valuation only. Where a benchmark measures something different from the local figure, we say so (LOW to MEDIUM confidence for those comparisons).</li><li><strong>Caveats.</strong> Rates whose denominators the data does not state, such as the share housed within the year, are cited as the data writes them.</li></ul>",
+    "ai_process": "<ul><li>Every endpoint of the challenge API was fetched at run time and passed to claude-opus-5-5 (effort high) as raw JSON. That call wrote this narrative, the financial assumptions and the brief answers.</li><li>Python computes the financial model, cost per person, SROI and cost of inaction from those assumptions. It also writes the workflow diagram's Mermaid code and tooltips from the registry.</li><li>A further claude-opus-5-5 call (effort medium) writes the KPI framework, failure modes, renewal gate, thesis and judge questions. Python checks every id, fund line, risk and day in that output.</li><li>Every quantity on the page is a registry token, and a checker counts how many trace to it.</li><li>The page's chat answers from a context file through a server-side proxy.</li></ul>",
+    "assumptions": [
+      "Year-1 reach: [[model:3|navigators]] navigators at [[model:80|people per navigator per year]] people each, using episodes sized to the [[pilot_days]]-day pilot, gives [[beneficiaries_y1]] people [ESTIMATE].",
+      "Outcome rates apply to people served, not to the [[community-snapshot.shelteredAndUnshelteredTotal]] counted on the Point-in-Time night: [[model:30%|share of people served avoiding an ER visit through kept KanCare coverage]] avoid an ER visit, [[model:25%|share of people served securing expedited SNAP]] secure expedited SNAP, and [[model:5%|share of people served unlocking ETV funding]] unlock ETV funding.",
+      "Deadweight is [[deadweight]], and attribution to partners is [[model:30%|share of outcomes attributed to partner agencies]]. Many outcomes would partly happen through Open Door and Center of Hope benefits navigators anyway.",
+      "Program Director oversight is provided in kind by the coalition (United Way of the Plains). The personnel cap of [[cap.personnel_y1]] funds frontline navigators instead.",
+      "Indirect costs use the de minimis rate of [[ext.indirect_deminimis_rate]] of modified total direct costs.",
+      "The HMIS bed-matching layer at Second Light is not live during the pilot. The shared board is a lightweight layer that partners update by hand [CHALLENGE_DATA: system-status].",
+      "Growth: [[model:20%|growth in people served, Year 2]] in Year 2 and [[model:15%|growth in people served, Year 3]] in Year 3, limited by navigator hiring rather than demand."
+    ],
+    "contract_value": 500000,
+    "domain_label": "Homelessness transition services",
+    "contract_years": 3,
+    "target_beneficiaries_y1": 240,
+    "growth_rate_y2": 0.2,
+    "growth_rate_y3": 0.15,
+    "staff_roles": [
+      {
+        "role": "Lead Transition Navigator",
+        "salary": 51000,
+        "count": 1,
+        "benefits_pct": 0.25,
+        "salary_ref": "ext.wage_chw_median"
+      },
+      {
+        "role": "Transition Navigator",
+        "salary": 50000,
+        "count": 2,
+        "benefits_pct": 0.25,
+        "salary_ref": "ext.wage_chw_median"
+      }
+    ],
+    "ops_cost_y1": 60000,
+    "tech_cost_y1": 30000,
+    "outreach_cost_y1": 100000,
+    "supplemental_grants_y2": 40000,
+    "supplemental_grants_y3": 60000,
+    "earned_revenue_y3": 0,
+    "indirect_rate": 0.15,
+    "sroi_outcomes": [
+      {
+        "category": "Emergency department visits avoided by keeping KanCare coverage through moves",
+        "core": "",
+        "material": true,
+        "why": "",
+        "unit_value_ref": "ext.er_visit_cost",
+        "unit_value": null,
+        "rate": 0.3,
+        "duration_years": 1,
+        "source": "AHRQ HCUP Statistical Brief #311: average treat-and-release ED visit cost"
+      },
+      {
+        "category": "Food assistance secured through expedited SNAP for homeless applicants",
+        "core": "",
+        "material": true,
+        "why": "",
+        "unit_value_ref": "",
+        "unit_value": 1404,
+        "rate": 0.25,
+        "duration_years": 1,
+        "source": "stabilization-docs doc-006: single-adult benefit of [[q.e0e70]], held until recertification, which falls [[q.96a46]] months [ESTIMATE]"
+      },
+      {
+        "category": "Education funding unlocked through ETV for enrolled former foster youth",
+        "core": "",
+        "material": true,
+        "why": "",
+        "unit_value_ref": "",
+        "unit_value": 2500,
+        "rate": 0.05,
+        "duration_years": 1,
+        "source": "transition-programs prog-002: ETV funds [[q.ee29d]]; valued at [[model:50%|share of the ETV cap used as the proxy]] of that cap [ESTIMATE]"
+      },
+      {
+        "category": "Stable housing placement through NEXTenant, rapid rehousing or Housing First",
+        "core": "",
+        "material": true,
+        "why": "The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.",
+        "unit_value_ref": "",
+        "unit_value": null,
+        "rate": 0.25,
+        "duration_years": 2,
+        "source": "rehousing-options; community-snapshot retention rate"
+      },
+      {
+        "category": "CrossRoads youth exits with a confirmed next placement",
+        "core": "",
+        "material": true,
+        "why": "This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.",
+        "unit_value_ref": "",
+        "unit_value": null,
+        "rate": 0.1,
+        "duration_years": 1,
+        "source": "transition-programs prog-006"
+      },
+      {
+        "category": "Identity documents obtained",
+        "core": "",
+        "material": false,
+        "why": "Documents are an input to the benefits, housing and work outcomes already listed. Counting them separately would overstate value by counting the same benefit again.",
+        "unit_value_ref": "",
+        "unit_value": null,
+        "rate": 0.4,
+        "duration_years": 1,
+        "source": "stabilization-docs"
+      }
+    ],
+    "deadweight": 0.25,
+    "attribution": 0.3,
+    "displacement": 0.05,
+    "drop_off_rate": 0.2,
+    "discount_rate": 0.035,
+    "mermaid_code": "",
+    "phases": [
+      {
+        "summary": "Stand up: hire, sign data agreements, build the board",
+        "content": "<ul><li>Hire the navigators.</li><li>Sign case-sharing agreements with Second Light, CrossRoads, Open Door, 211 Kansas, H.O.T. and the DCF Wichita Service Center [CHALLENGE_DATA: intake-network].</li><li>Configure the bottleneck dashboard: reachable beds by entry condition, free transition slots, wait clocks and the document pipeline.</li><li>Open landlord conversations through NEXTenant.</li><li>Train partner intake staff to flag expedited SNAP and KanCare address changes.</li><li>Start the youth peer-ambassador and landlord outreach lines from the marketing reserve.</li></ul>",
+        "timeline_label": "June 1 – June 30, 2026",
+        "timeline_suffix": "of the pilot",
+        "meter_pct": 33
+      },
+      {
+        "summary": "Run live handoffs across youth, family and adult paths",
+        "content": "<ul><li>Take every CrossRoads exit, every 211 Kansas after-hours loop and every H.O.T. contact onto the board.</li><li>Run the document fast-lane with Breakthrough Wichita: City ID, then birth certificate, Social Security card and state ID [CHALLENGE_DATA: stabilization-docs].</li><li>Enroll eligible youth in DCF IL, ETV and SOUL Family.</li><li>Route families to rapid rehousing at Salvation Army and Hilltop Village, adults to the HumanKind Housing First waitlist, and veterans to VASH.</li><li>Review bottlenecks weekly with partners.</li></ul>",
+        "timeline_label": "July 1 – July 31, 2026",
+        "timeline_suffix": "of the pilot",
+        "meter_pct": 67
+      },
+      {
+        "summary": "Measure, follow up and decide renewal",
+        "content": "<ul><li>Complete follow-up check-ins for every open case.</li><li>Report against the renewal gate: confirmed placements at CrossRoads exit, KanCare coverage kept, days from zero documents to state ID, and the warm-handoff share.</li><li>Publish the dashboard to the coalition's [[community-snapshot.coalitionMemberOrgs]] member organizations.</li><li>Deliver a written renewal recommendation to the City with the base-case cost per person.</li></ul>",
+        "timeline_label": "August 1 – August 29, 2026",
+        "timeline_suffix": "of the pilot",
+        "meter_pct": 100
+      }
+    ],
+    "risks": [
+      {
+        "risk": "Downstream capacity stays saturated. BRIDGES has [[q.ed5fc]] units and HumanKind's waitlist runs [[q.db126]] weeks, so navigators confirm next steps that cannot be filled.",
+        "likelihood": "High",
+        "impact": "High",
+        "mitigation": "Count a confirmed rapid-rehousing or NEXTenant unit as a valid next placement. Report unmet demand by program on the dashboard so the City sees where capacity, not coordination, is the limit."
+      },
+      {
+        "risk": "Partners do not update the shared board, because HMIS bed-matching at Second Light is not live.",
+        "likelihood": "Medium",
+        "impact": "High",
+        "mitigation": "Navigators do the updating themselves at daily partner calls. Board entry is part of each partner agreement, and the partner-adoption marketing line funds staff training."
+      },
+      {
+        "risk": "Landlords withdraw after a single bad tenancy, as Luis's demand for reduced risk suggests.",
+        "likelihood": "Medium",
+        "impact": "Medium",
+        "mitigation": "Give every landlord a single named contact with a written response window. Escalate tenant issues to case managers before eviction, building on the Prairie Wind practice [CHALLENGE_DATA: rehousing-options]."
+      },
+      {
+        "risk": "Youth disengage after enrollment, as with DCF IL's loss of [[q.84d8e]] participants after exit.",
+        "likelihood": "High",
+        "impact": "Medium",
+        "mitigation": "Pair each youth with a peer ambassador and a SOUL Family referral. Use text-based check-ins, and file KanCare address updates at every move."
+      }
+    ],
+    "fund_lines": [
+      {
+        "line": "personnel",
+        "owner": "Lead Transition Navigator, under the coalition's in-kind director",
+        "release_cadence": "Monthly payroll after hires are confirmed",
+        "leading_indicator": "Navigators on staff by the end of Phase 1, and cases opened per navigator each week"
+      },
+      {
+        "line": "operations",
+        "owner": "Lead Transition Navigator with Breakthrough Wichita and Center of Hope",
+        "release_cadence": "Monthly draws against logged document, fee and bus-pass needs",
+        "leading_indicator": "Documents started and bus passes issued per case in the first month"
+      },
+      {
+        "line": "technology",
+        "owner": "Second Light coordinated-entry lead with the coalition data team",
+        "release_cadence": "Setup tranche in Phase 1, then monthly hosting",
+        "leading_indicator": "Share of open cases with a board update in the last 48 hours"
+      },
+      {
+        "line": "outreach",
+        "owner": "Coalition communications lead with NEXTenant and CrossRoads",
+        "release_cadence": "Released per line item at phase start",
+        "leading_indicator": "Landlord sign-ups, youth self-referrals and partner staff trained"
+      },
+      {
+        "line": "indirect",
+        "owner": "Fiscal agent finance office",
+        "release_cadence": "Quarterly, at the de minimis rate on modified direct costs",
+        "leading_indicator": "On-time monthly financial reports to the City"
+      },
+      {
+        "line": "contingency",
+        "owner": "City of Wichita contract manager",
+        "release_cadence": "Held; released only by written change order",
+        "leading_indicator": "Unspent balance at pilot end, reported with the renewal recommendation"
+      }
+    ],
+    "marketing_allocation": [
+      {
+        "item": "Landlord engagement: single-contact packets, landlord sessions, risk-mitigation guide",
+        "amount_usd": 25000,
+        "audience": "NEXTenant partners and private Wichita landlords",
+        "leading_indicator": "New landlords pledging units, and the number of tenant issues resolved before eviction"
+      },
+      {
+        "item": "Youth peer ambassadors with lived foster-care experience",
+        "amount_usd": 25000,
+        "audience": "Youth at CrossRoads, DCF IL, TRAIL and EmberHope",
+        "leading_indicator": "Youth self-referrals, and the share of CrossRoads exits with a navigator met before exit"
+      },
+      {
+        "item": "Partner adoption: training and co-branded intake scripts",
+        "amount_usd": 20000,
+        "audience": "Staff at 211 Kansas, H.O.T., Open Door, Second Light and DCF",
+        "leading_indicator": "Partner staff trained, and the share of referrals logged as warm handoffs"
+      },
+      {
+        "item": "Plain-language and Spanish materials on the N Market corridor and transit",
+        "amount_usd": 20000,
+        "audience": "Families like Denise's and Spanish-speaking residents",
+        "leading_indicator": "Calls citing the materials, and Spanish-language cases opened"
+      },
+      {
+        "item": "Trust feedback: listening sessions and participant stipends",
+        "amount_usd": 10000,
+        "audience": "Program participants and outreach responders",
+        "leading_indicator": "Sessions held and changes made to the process from feedback"
+      }
+    ],
+    "inputs_given": [
+      "attribution",
+      "contract_years",
+      "deadweight",
+      "displacement",
+      "drop_off_rate",
+      "earned_revenue_y3",
+      "growth_rate_y2",
+      "growth_rate_y3",
+      "indirect_rate",
+      "ops_cost_y1",
+      "outreach_cost_y1",
+      "supplemental_grants_y2",
+      "supplemental_grants_y3",
+      "target_beneficiaries_y1",
+      "tech_cost_y1"
+    ],
+    "inputs_notes": {},
+    "diagram": {
+      "nodes": [
+        {
+          "id": "calls",
+          "label": "Calls and Outreach",
+          "class": "input",
+          "tooltip_ref": "[[intake-network.count]] [[community-snapshot.unshelteredHeadcount]]"
+        },
+        {
+          "id": "youth",
+          "label": "Youth Exits",
+          "class": "input",
+          "tooltip_ref": "[[transition-programs.prog-006.transitionDropoutRate]] [[community-snapshot.kansasYouthAgingOutAnnual]]"
+        },
+        {
+          "id": "board",
+          "label": "Handoff Board",
+          "class": "hub",
+          "tooltip_ref": "[[status001-reachable]] [[status001-total]] [[programs.free]]"
+        },
+        {
+          "id": "triage",
+          "label": "Same-Day Triage",
+          "class": "decision",
+          "tooltip_ref": "[[free_beds_all]] [[beds_online_all]]"
+        },
+        {
+          "id": "bed",
+          "label": "Bed Tonight",
+          "class": "service",
+          "tooltip_ref": "[[es_free_beds]]"
+        },
+        {
+          "id": "docs",
+          "label": "Document Fast-Lane",
+          "class": "service",
+          "tooltip_ref": "[[state_id_days]] [[stabilization-docs.count]]"
+        },
+        {
+          "id": "benefits",
+          "label": "KanCare and SNAP",
+          "class": "service",
+          "tooltip_ref": "[[transition-programs.prog-003.activeEnrollment]] [[transition-programs.prog-003.transitionDropoutRate]]"
+        },
+        {
+          "id": "housing",
+          "label": "NEXTenant and Rehousing",
+          "class": "service",
+          "tooltip_ref": "[[rehousing-options.count]] [[community-snapshot.vashPlacementsAnnual]]"
+        },
+        {
+          "id": "housed",
+          "label": "Housed and Retained",
+          "class": "outcome",
+          "tooltip_ref": "[[community-snapshot.permanentRetention2yr]] [[community-snapshot.avgDaysToHousing]]"
+        },
+        {
+          "id": "covered",
+          "label": "Coverage Kept",
+          "class": "outcome",
+          "tooltip_ref": "[[ext.er_visit_cost]]"
+        },
+        {
+          "id": "followup",
+          "label": "Follow-Up Check-In",
+          "class": "outcome",
+          "tooltip_ref": "[[pilot_days]]"
+        }
+      ],
+      "edges": [
+        {
+          "from": "calls",
+          "to": "board",
+          "label": "case opened"
+        },
+        {
+          "from": "youth",
+          "to": "board",
+          "label": "exit flagged early"
+        },
+        {
+          "from": "board",
+          "to": "triage",
+          "label": "navigator assigned"
+        },
+        {
+          "from": "triage",
+          "to": "bed",
+          "label": "needs a bed tonight"
+        },
+        {
+          "from": "triage",
+          "to": "docs",
+          "label": "missing documents"
+        },
+        {
+          "from": "triage",
+          "to": "housing",
+          "label": "ready to rent"
+        },
+        {
+          "from": "docs",
+          "to": "benefits",
+          "label": "ID in hand"
+        },
+        {
+          "from": "bed",
+          "to": "housing",
+          "label": "next step"
+        },
+        {
+          "from": "benefits",
+          "to": "covered",
+          "label": ""
+        },
+        {
+          "from": "housing",
+          "to": "housed",
+          "label": ""
+        },
+        {
+          "from": "housed",
+          "to": "followup",
+          "label": ""
+        },
+        {
+          "from": "covered",
+          "to": "followup",
+          "label": ""
+        }
+      ]
+    },
+    "sroi_data_values": {},
+    "item_ids": {
+      "risks": [
+        "risk.1",
+        "risk.2",
+        "risk.3",
+        "risk.4"
+      ],
+      "phases": [
+        "phase.1",
+        "phase.2",
+        "phase.3"
+      ],
+      "evidence_cards": [
+        "card.1",
+        "card.2",
+        "card.3",
+        "card.4"
+      ],
+      "comparison_rows": [
+        "row.1",
+        "row.2",
+        "row.3",
+        "row.4",
+        "row.5"
+      ],
+      "sroi_outcomes": [
+        "outcome.1",
+        "outcome.2",
+        "outcome.3",
+        "outcome.4",
+        "outcome.5",
+        "outcome.6"
+      ],
+      "staff_roles": [
+        "role.1",
+        "role.2"
+      ],
+      "_tombstones": []
+    },
+    "brief_answers": [
+      {
+        "id": "bottleneck-dashboard",
+        "answer": "The dashboard shows four things: reachable beds against listed beds, free transition-program slots, the wait clock at each downstream program, and each person's position in the document chain. Today that means [[status001-reachable]] of [[status001-total]] emergency beds reachable, and [[free_beds_all]] free of [[beds_online_all]] beds online across facilities. It also means [[programs.free]] of [[programs.listed]] transition slots free, HumanKind waits of [[q.db126]] weeks, BRIDGES waits of [[q.536a6]] weeks, and Family Promise queues of [[q.970ad]] weeks. Navigators update it by hand until Second Light's HMIS bed-matching goes live."
+      },
+      {
+        "id": "use-of-funds",
+        "answer": "Year 1 splits as follows: [[personnel_y1]] for navigators, [[ops_y1]] for document fees, bus passes and partner costs, and [[tech_y1]] for the shared board. It also covers [[outreach_y1]] for the brief's marketing reserve and [[indirect_y1]] in indirect costs at the de minimis rate, leaving [[contingency_y1]] held in contingency. Director oversight comes in kind from the coalition, so the personnel cap of [[cap.personnel_y1]] buys frontline navigators."
+      },
+      {
+        "id": "prioritization-model",
+        "answer": "The page ranks options with a published Python table, not a model call. Beds are gated on being open, serving the household and age, meeting the site's own condition, and having a bed free. They are then weighted by fit for the group ([[prio.beds.built-for]]), free beds ([[prio.beds.free-beds]]), no referral needed ([[prio.beds.no-referral]]) and low-barrier entry ([[prio.beds.low-barrier]]). Transition programs weigh years before the age limit, weeks to start, participant retention and free slots ([[prio.programs.runway]] each). Doors weigh warm handoff ([[prio.doors.live-transfer]]), fit ([[prio.doors.built-for]]) and languages served ([[prio.doors.languages]]), because a door that cannot hand someone off or speak their language does not get them anywhere."
+      },
+      {
+        "id": "youth-handoff-failures",
+        "answer": "Youth handoffs fail at three points. At shelter exit, [[transition-programs.prog-006.transitionDropoutRate]] of CrossRoads exits have no confirmed next placement, because BRIDGES has [[q.ed5fc]] units and [[q.60225]] realistic admits. At the age cliff, DCF IL ends at [[q.cc62b]] and loses [[q.84d8e]] participants within [[q.4a2ab]] days of exit. At paperwork, the KanCare extension loses [[transition-programs.prog-003.transitionDropoutRate]] of enrollees to notices sent to old addresses, and a state ID takes at least [[state_id_days]] days from zero documents."
+      },
+      {
+        "id": "cost-of-instability",
+        "answer": "Python values what instability destroys: ER visits that kept coverage would avoid at [[ext.er_visit_cost]] each, expedited SNAP of [[q.e0e70]] left unclaimed, and ETV education funding left unused. The cost of inaction is [[coi_y1]] in Year 1, [[coi_y2]] in Year 2 and [[coi_y3]] in Year 3, totalling [[coi_3yr]] over [[plan.years]] years after deadweight of [[deadweight]]. Housing placement is material but not valued, because the data holds no local cost of a shelter night, so these figures understate the cost."
+      },
+      {
+        "id": "pilot-kpi-framework",
+        "answer": "The pilot tracks four leading indicators weekly on the dashboard. The first is the share of CrossRoads exits with a confirmed next placement (target [[model:80%|target share of CrossRoads exits with a confirmed next placement]]). The second is the share of enrolled youth still covered by KanCare at pilot end (target [[model:85%|target share of enrolled former foster youth whose KanCare extension remains active at pilot end]]). The third is median days from zero documents to a state ID (target [[model:35|days, target median from no documents to state ID]]). The fourth is the share of referrals logged as warm handoffs (target [[model:75%|target share of referrals completed as logged warm handoffs]]). Volume is tracked against the Year-1 target of [[beneficiaries_y1]] people."
+      },
+      {
+        "id": "renewal-case",
+        "answer": "Renewal is earned if, at the end of the [[pilot_days]]-day pilot, the four KPI targets are met or trending toward them, and landlords and partners are still using the board. The base case projects Year 3 cost per person at [[cpb_y3]] and an SROI of [[sroi]]. The SROI is partial because housing is not valued. If the dashboard shows that downstream capacity, not coordination, is the limit, the renewal case says so plainly."
+      },
+      {
+        "id": "oracle-m1",
+        "answer": "The pilot runs from June 1 to August 29, 2026, in three phases. June stands up the navigators, the partner case-sharing agreements and the bottleneck dashboard. July runs live handoffs for every CrossRoads exit, 211 Kansas after-hours loop and H.O.T. contact, with the document fast-lane and housing routing through NEXTenant, rapid rehousing, Housing First and VASH. August completes follow-ups and delivers the renewal recommendation against the KPI gate."
+      },
+      {
+        "id": "oracle-m2",
+        "answer": "The [[reserve]] reserve is spent on trust and adoption across five lines. The two largest are landlord engagement through NEXTenant, with a single named contact and a risk-mitigation guide, and youth peer ambassadors with lived foster-care experience. The others are partner-staff training for warm handoffs, plain-language and Spanish materials on the N Market corridor, and participant listening sessions. Each line reports its own early signal: landlord pledges, youth self-referrals, staff trained, Spanish-language cases opened and process changes made from feedback."
+      }
+    ]
+  }
+}

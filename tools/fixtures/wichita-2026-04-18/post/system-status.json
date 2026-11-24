@@ -1,0 +1,50 @@
+{
+  "status": "emergency",
+  "lastUpdated": "2026-04-18T13:00:00-05:00",
+  "alerts": [
+    {
+      "id": "status-001",
+      "severity": "warning",
+      "headline": "Effective Bed Availability Under 20%",
+      "date": "2026-04-18",
+      "summary": "Only 17 of 87 emergency shelter beds are actually reachable for the unsheltered population right now.",
+      "affectedGroups": [
+        "single-men",
+        "families",
+        "youth"
+      ]
+    },
+    {
+      "id": "status-010",
+      "severity": "critical",
+      "headline": "BREAKING: Overnight Tornado — Red Cross Activation",
+      "date": "2026-04-18",
+      "summary": "A severe-weather cell tracked through eastern Sedgwick County overnight. Red Cross has activated an emergency shelter at Century II for roughly 60 displaced apartment residents. 211 Kansas is triaging overflow toward the existing shelter network, compressing already-tight intake queues at Open Door and Center of Hope.",
+      "affectedGroups": [
+        "all",
+        "families"
+      ]
+    },
+    {
+      "id": "status-011",
+      "severity": "critical",
+      "headline": "BREAKING: Open Door Closed for Emergency Roof Repair",
+      "date": "2026-04-18",
+      "summary": "Storm damage forced United Methodist Open Door to close its daytime hub for 48-72 hours. Daytime services are being absorbed by Center of Hope at reduced hours. The highest-volume walk-in intake in the system (80-120 contacts/day) is offline during the exact window the curveball surge is hitting.",
+      "affectedGroups": [
+        "all"
+      ]
+    },
+    {
+      "id": "status-012",
+      "severity": "critical",
+      "headline": "BREAKING: CrossRoads Near Capacity as DCF Flags Aging-Out Surge",
+      "date": "2026-04-18",
+      "summary": "CrossRoads at Youthville is down to 1 of 12 beds available after accepting 3 youth displaced by the overnight storm. DCF reports 4 transition-age foster youth whose planned placements were disrupted by the same weather event and who are expected to present for shelter within 72 hours. BRIDGES has no vacancy.",
+      "affectedGroups": [
+        "youth",
+        "foster-youth"
+      ]
+    }
+  ]
+}

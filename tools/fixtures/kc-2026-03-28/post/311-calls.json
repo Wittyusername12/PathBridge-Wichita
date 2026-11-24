@@ -1,0 +1,110 @@
+{
+  "source": "311-calls",
+  "count": 13,
+  "data": [
+    {
+      "zip": "64110",
+      "category": "housing_distress",
+      "count": 342,
+      "period": "2025-Q3-Q4",
+      "topIssue": "utility_shutoff",
+      "pctChange": 18
+    },
+    {
+      "zip": "64109",
+      "category": "housing_distress",
+      "count": 287,
+      "period": "2025-Q3-Q4",
+      "topIssue": "code_violation",
+      "pctChange": 12
+    },
+    {
+      "zip": "64130",
+      "category": "housing_distress",
+      "count": 412,
+      "period": "2025-Q3-Q4",
+      "topIssue": "utility_shutoff",
+      "pctChange": 24
+    },
+    {
+      "zip": "64128",
+      "category": "housing_distress",
+      "count": 298,
+      "period": "2025-Q3-Q4",
+      "topIssue": "vacancy_complaint",
+      "pctChange": 15
+    },
+    {
+      "zip": "64127",
+      "category": "housing_distress",
+      "count": 356,
+      "period": "2025-Q3-Q4",
+      "topIssue": "utility_shutoff",
+      "pctChange": 21
+    },
+    {
+      "zip": "64126",
+      "category": "housing_distress",
+      "count": 189,
+      "period": "2025-Q3-Q4",
+      "topIssue": "code_violation",
+      "pctChange": 8
+    },
+    {
+      "zip": "64134",
+      "category": "housing_distress",
+      "count": 267,
+      "period": "2025-Q3-Q4",
+      "topIssue": "utility_shutoff",
+      "pctChange": 19
+    },
+    {
+      "zip": "64106",
+      "category": "housing_distress",
+      "count": 198,
+      "period": "2025-Q3-Q4",
+      "topIssue": "vacancy_complaint",
+      "pctChange": 11
+    },
+    {
+      "zip": "64108",
+      "category": "housing_distress",
+      "count": 231,
+      "period": "2025-Q3-Q4",
+      "topIssue": "utility_shutoff",
+      "pctChange": 16
+    },
+    {
+      "zip": "64111",
+      "category": "housing_distress",
+      "count": 156,
+      "period": "2025-Q3-Q4",
+      "topIssue": "code_violation",
+      "pctChange": 7
+    },
+    {
+      "zip": "64132",
+      "category": "housing_distress",
+      "count": 301,
+      "period": "2025-Q3-Q4",
+      "topIssue": "utility_shutoff",
+      "pctChange": 22
+    },
+    {
+      "zip": "66101",
+      "category": "housing_distress",
+      "count": 445,
+      "period": "2025-Q3-Q4",
+      "topIssue": "utility_shutoff",
+      "pctChange": 28
+    },
+    {
+      "zip": "66105",
+      "category": "housing_distress",
+      "count": 378,
+      "period": "2025-Q3-Q4",
+      "topIssue": "vacancy_complaint",
+      "pctChange": 20
+    }
+  ]
+}

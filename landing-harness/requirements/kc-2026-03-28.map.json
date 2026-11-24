@@ -1,0 +1,134 @@
+{
+ "schema_version": 1,
+ "_note": "KC coverage map (P0.3 build, 2026-10-29): the 10/20 hand count of the 12 scorecard items plus the six mission items. Architect notes say only what the code does. BUILD B1 (11/03): oracle-m1 → financials, use-of-funds. BUILD B3 (11/09, D13): the deliverables' own sections — oracle-q1 → financials, sensitivity-grid; oracle-m3 → renewal, sroi, renewal-gates.",
+ "challenge": "kc-2026-03-28",
+ "tracks": {
+  "oracle": {
+   "oracle-q1": {
+    "sections": [
+     "financials",
+     "sensitivity-grid"
+    ],
+    "note": null
+   },
+   "oracle-q2": {
+    "sections": [
+     "evidence",
+     "data-sources"
+    ],
+    "note": null
+   },
+   "oracle-q3": {
+    "sections": [
+     "sroi",
+     "cost-of-inaction"
+    ],
+    "note": null
+   },
+   "oracle-q4": {
+    "sections": [
+     "ai-process"
+    ],
+    "note": null
+   },
+   "oracle-m1": {
+    "sections": [
+     "financials",
+     "use-of-funds"
+    ],
+    "note": null
+   },
+   "oracle-m2": {
+    "sections": [
+     "plan"
+    ],
+    "note": null
+   },
+   "oracle-m3": {
+    "sections": [
+     "renewal",
+     "sroi",
+     "renewal-gates"
+    ],
+    "note": null
+   }
+  },
+  "architect": {
+   "architect-q1": {
+    "sections": [
+     "finder"
+    ],
+    "note": "Yes: in Find Resources, search the resources loaded from the challenge API by ZIP or keyword, filter them by category, language, cold storage or ID requirement, sort them, and click a card for its details; the Dashboard and Data Explorer tabs draw the same data in the browser when the page opens."
+   },
+   "architect-q2": {
+    "sections": [
+     "dashboard"
+    ],
+    "note": "The Dashboard ranks every ZIP code HIGH, MED or LOW by the data's own primary need metric and lists the crisis events in the data (the store closures and the 311 distress calls), so the hardest-hit areas and the resources still open near them sit on one screen."
+   },
+   "architect-q3": {
+    "sections": [
+     "who-serves"
+    ],
+    "note": "It is made for the people named under \"Who this serves\": one search box that takes a ZIP or a plain word, filters for what a family needs to know (language, ID required, cold storage), a detail view per site, and a single-column layout on a phone."
+   },
+   "architect-q4": {
+    "sections": [
+     "how-built"
+    ],
+    "note": "No AI model runs inside this tool: its Python harness turns the challenge API's data into this page with fixed rules, and the browser draws it; when the Oracle track named the domain, the domain label is that analysis's (Claude's) reading of the same data. Claude wrote and tested that harness and template with us, and the page's chat answers questions about this data through a server-side proxy to Claude."
+   }
+  },
+  "muse": {
+   "muse-q1": {
+    "sections": [
+     "audiences"
+    ],
+    "note": null
+   },
+   "muse-q2": {
+    "sections": [
+     "channels"
+    ],
+    "note": null
+   },
+   "muse-q3": {
+    "sections": [
+     "creative",
+     "flyer",
+     "pitch"
+    ],
+    "note": null
+   },
+   "muse-q4": {
+    "sections": [
+     "how-built"
+    ],
+    "note": null
+   },
+   "muse-m1": {
+    "sections": [
+     "audiences"
+    ],
+    "note": null
+   },
+   "muse-m2": {
+    "sections": [
+     "channels",
+     "calendar"
+    ],
+    "note": null
+   },
+   "muse-m3": {
+    "sections": [
+     "creative",
+     "flyer",
+     "pitch"
+    ],
+    "note": null
+   }
+  }
+ },
+ "users": {},
+ "winning": {}
+}

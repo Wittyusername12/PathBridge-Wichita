@@ -1,0 +1,1099 @@
+{
+  "stage": "data_loading",
+  "ts": "2026-11-16T23:53:01.188757+00:00",
+  "data": {
+    "raw": {
+      "community-snapshot": {
+        "shelteredAndUnshelteredTotal": 736,
+        "shelteredOrTransitional": 541,
+        "unshelteredHeadcount": 195,
+        "yoyChangePct": 0.0611,
+        "sheltered2024vs2025ChangePct": 0.0756,
+        "permanentHousingCoalition": 1407,
+        "permanentHousingCoalitionDelta": 41,
+        "firstTimeHomelessAnnual": 2252,
+        "peopleServedAnnual": 3257,
+        "newlyHomelessShare": 0.69,
+        "housedWithinYearRate": 0.38,
+        "permanentRetention2yr": 0.8,
+        "avgDaysToHousing": 45,
+        "nationalDaysToHousing": 176,
+        "perCapitaRateLocal": 14,
+        "perCapitaRateNational": 23,
+        "totalEmergencyBeds": 87,
+        "bedsAvailableNow": 17,
+        "vashPlacementsAnnual": 52,
+        "fosterHomelessnessAge17": 0.17,
+        "fosterHomelessnessAge19": 0.29,
+        "fosterHomelessnessAge21": 0.42,
+        "ftEmploymentAge17": 0.003,
+        "ftEmploymentAge21": 0.44,
+        "kansasYouthAgingOutAnnual": 583,
+        "coalitionMemberOrgs": 170,
+        "lastUpdated": "2026-04-18T09:00:00-05:00",
+        "source": "United Way of the Plains Coalition / 2025 Wichita-Sedgwick County Point-in-Time Count (FY Oct 2023 - Sept 2024 service data)"
+      },
+      "shelter-inventory": {
+        "source": "shelter-inventory",
+        "count": 10,
+        "data": [
+          {
+            "id": "shelter-001",
+            "providerName": "Union Rescue Mission",
+            "serviceAudience": "single-men",
+            "servedAges": "18+",
+            "householdPolicy": "Adult men only; no minors, no women, no couples.",
+            "requiresReferral": false,
+            "lowBarrierAccess": false,
+            "bedsOnline": 120,
+            "bedsInUse": 110,
+            "utilizationPct": 0.92,
+            "address": "200 N Market St, Wichita, KS 67202",
+            "lat": 37.693,
+            "lng": -97.3386,
+            "operatorNotes": "Faith-based shelter averaging 170+ stays per day across shelter plus transitional beds. Intake gate includes breathalyzer screening at the door and chapel attendance expected during stay — in practice this filters out roughly a third of would-be intakes with active substance use. Beds show available but are not accessible for the unsheltered population who fail the entry conditions."
+          },
+          {
+            "id": "shelter-002",
+            "providerName": "United Methodist Open Door",
+            "serviceAudience": "all",
+            "servedAges": "18+",
+            "householdPolicy": "Daytime drop-in only; site has no overnight beds.",
+            "requiresReferral": false,
+            "lowBarrierAccess": true,
+            "bedsOnline": 0,
+            "bedsInUse": 0,
+            "utilizationPct": 0,
+            "address": "402 E 2nd St N, Wichita, KS 67202",
+            "lat": 37.6943,
+            "lng": -97.3375,
+            "operatorNotes": "Primary daytime hub on the near-downtown shelter corridor. Walk-in welcome: meals, showers, laundry, mail service, case management, and VI-SPDAT on-site. Reports 80-120 unique daily contacts. Has no overnight capacity, so anyone who walks in after 4 PM is re-routed — a recurring failure point in the current referral chain."
+          },
+          {
+            "id": "shelter-003",
+            "providerName": "CrossRoads at Youthville (Wichita Children's Home)",
+            "serviceAudience": "youth",
+            "servedAges": "18-24",
+            "householdPolicy": "Unaccompanied youth only; Drop-In Center serves anyone age 24 or younger.",
+            "requiresReferral": false,
+            "lowBarrierAccess": true,
+            "bedsOnline": 12,
+            "bedsInUse": 10,
+            "utilizationPct": 0.83,
+            "address": "1110 N Emporia St, Wichita, KS 67214",
+            "lat": 37.702,
+            "lng": -97.3372,
+            "operatorNotes": "Community's only 24-hour low-barrier emergency shelter for youth. Accepts self-referral, law-enforcement drop-off, and agency referral. 30+ day program with case management toward housing, education, and employment goals. Co-located Drop-In Center offers food, hygiene, WiFi, transit to behavioral-health appointments. Roughly one in three exits lack a confirmed next placement because transitional-housing slots downstream are saturated."
+          },
+          {
+            "id": "shelter-004",
+            "providerName": "BRIDGES (Wichita Children's Home)",
+            "serviceAudience": "youth",
+            "servedAges": "16-22",
+            "householdPolicy": "Unaccompanied youth; parenting youth with one child accepted.",
+            "requiresReferral": true,
+            "lowBarrierAccess": false,
+            "bedsOnline": 8,
+            "bedsInUse": 7,
+            "utilizationPct": 0.88,
+            "address": "1110 N Emporia St, Wichita, KS 67214",
+            "lat": 37.7022,
+            "lng": -97.337,
+            "operatorNotes": "Apartment-style transitional living for youth aging out of foster care or escaping homelessness. Up to 18 months. Active case plan participation is a condition of stay. Only eight units exist in the entire market — waiting list averages six weeks and realistic admits run 1-2 per quarter."
+          },
+          {
+            "id": "shelter-005",
+            "providerName": "St. Anthony Family Shelter (Catholic Charities)",
+            "serviceAudience": "families",
+            "servedAges": "all",
+            "householdPolicy": "Families with at least one minor child; no single adults.",
+            "requiresReferral": true,
+            "lowBarrierAccess": false,
+            "bedsOnline": 30,
+            "bedsInUse": 27,
+            "utilizationPct": 0.9,
+            "address": "353 N Market St, Wichita, KS 67202",
+            "lat": 37.6938,
+            "lng": -97.3378,
+            "operatorNotes": "Emergency family shelter with a 90-day stay limit. Entry only through 211 coordinated screening or a partner-agency referral. Background check is blocking: any adult with a recent felony conviction bounces the whole family back into the queue, which can loop families through 211 for weeks."
+          },
+          {
+            "id": "shelter-006",
+            "providerName": "Family Promise of Greater Wichita",
+            "serviceAudience": "families",
+            "servedAges": "all",
+            "householdPolicy": "Families with children; scattered-site host-congregation and apartment model.",
+            "requiresReferral": true,
+            "lowBarrierAccess": false,
+            "bedsOnline": 14,
+            "bedsInUse": 12,
+            "utilizationPct": 0.86,
+            "address": "829 N Market St, Wichita, KS 67214",
+            "lat": 37.6978,
+            "lng": -97.3388,
+            "operatorNotes": "Capacity is counted in families rather than beds. Uses host-congregation rotations plus standalone apartments. Case management tilts hard toward employment and savings milestones. Average stay 60-90 days. In practice the model works best for families with at least one employable adult — harder match for medically fragile or multi-child single-parent households."
+          },
+          {
+            "id": "shelter-007",
+            "providerName": "The Salvation Army - Wichita",
+            "serviceAudience": "all",
+            "servedAges": "18+",
+            "householdPolicy": "Singles and families served through parallel programs, not combined.",
+            "requiresReferral": true,
+            "lowBarrierAccess": false,
+            "bedsOnline": 24,
+            "bedsInUse": 20,
+            "utilizationPct": 0.83,
+            "address": "350 N Market St, Wichita, KS 67202",
+            "lat": 37.6927,
+            "lng": -97.3385,
+            "operatorNotes": "Transitional housing plus rapid-rehousing rental assistance. Referrals flow through coordinated entry. Also operates a separate emergency-financial-assistance program for rent/utilities that is often the last stop before an eviction notice turns into a PIT-count tally."
+          },
+          {
+            "id": "shelter-008",
+            "providerName": "Second Light (formerly Multi-Agency Center)",
+            "serviceAudience": "all",
+            "servedAges": "18+",
+            "householdPolicy": "Referral and resource hub, not a shelter — no beds on site.",
+            "requiresReferral": false,
+            "lowBarrierAccess": true,
+            "bedsOnline": 0,
+            "bedsInUse": 0,
+            "utilizationPct": 0,
+            "address": "245 N Hillside St, Wichita, KS 67214",
+            "lat": 37.6916,
+            "lng": -97.3156,
+            "operatorNotes": "One-stop hub co-located with adjacent emergency shelters, renamed from 'Multi-Agency Center' on 2025-05-20. Operates as the community's intended coordinated-entry front door. Real-time HMIS bed matching is still coming online; most handoffs today are phone-based between on-site partner staff and shelter intake teams."
+          },
+          {
+            "id": "shelter-009",
+            "providerName": "HumanKind Studios and Villas",
+            "serviceAudience": "all",
+            "servedAges": "18+",
+            "householdPolicy": "Singles and families in permanent supportive housing units.",
+            "requiresReferral": true,
+            "lowBarrierAccess": true,
+            "bedsOnline": 155,
+            "bedsInUse": 124,
+            "utilizationPct": 0.8,
+            "address": "829 N Market St, Wichita, KS 67214",
+            "lat": 37.6971,
+            "lng": -97.3392,
+            "operatorNotes": "HumanKind Ministries' permanent supportive-housing campus. Housing First — no sobriety condition, no treatment compliance requirement. Rent scaled to 30% of income, which is often zero at move-in. On-site clinical case management and behavioral-health services. Waitlist runs 8-12 weeks and is the dominant bottleneck on the permanent-housing side of the system."
+          },
+          {
+            "id": "shelter-010",
+            "providerName": "Mental Health Association of South Central Kansas",
+            "serviceAudience": "all",
+            "servedAges": "18+",
+            "householdPolicy": "Adults with serious mental illness; singles only.",
+            "requiresReferral": true,
+            "lowBarrierAccess": false,
+            "bedsOnline": 18,
+            "bedsInUse": 16,
+            "utilizationPct": 0.89,
+            "address": "555 N Woodlawn Blvd, Wichita, KS 67208",
+            "lat": 37.695,
+            "lng": -97.2829,
+            "operatorNotes": "Supportive housing paired with wraparound psychiatric care. Admission requires a COMCARE clinical assessment, which adds 2-4 weeks to any intake timeline. Works well for the population it serves; is mis-used as an 'anywhere that will take them' referral for anyone visibly in crisis, which creates a steady stream of declined referrals."
+          }
+        ]
+      },
+      "intake-network": {
+        "source": "intake-network",
+        "count": 8,
+        "data": [
+          {
+            "id": "intake-001",
+            "siteName": "211 Kansas / United Way",
+            "siteType": "hotline",
+            "operatingAgency": "United Way of the Plains",
+            "openHours": "24/7",
+            "contactPhone": "211",
+            "address": "245 N Water St, Wichita, KS 67202",
+            "lat": 37.6914,
+            "lng": -97.3376,
+            "intakeMode": "phone",
+            "liveTransferSupported": true,
+            "supportedLanguages": [
+              "en",
+              "es"
+            ],
+            "youthAccess": true,
+            "operatorNotes": "Primary front door for any housing or social-services request in Sedgwick County. Phone-based VI-SPDAT screening routes callers to coordinated entry, shelters, and crisis response. Interpreter line provides 150+ language support. Roughly every third caller ends up in a loop because downstream beds or case managers are unavailable and there is no way to hold a live warm-handoff across agencies after hours."
+          },
+          {
+            "id": "intake-002",
+            "siteName": "H.O.T. Team (Homeless Outreach Team)",
+            "siteType": "outreach",
+            "operatingAgency": "City of Wichita",
+            "openHours": "Mon-Fri 7:00 AM - 3:30 PM",
+            "contactPhone": "316-268-4531",
+            "address": "455 N Main St, Wichita, KS 67202",
+            "lat": 37.6928,
+            "lng": -97.3398,
+            "intakeMode": "walk-in",
+            "liveTransferSupported": true,
+            "supportedLanguages": [
+              "en"
+            ],
+            "youthAccess": true,
+            "operatorNotes": "City-funded street outreach that engages unsheltered people in encampments, under bridges, and in public spaces. Can transport to shelters and medical care. Weekday-only coverage is a known gap — evenings, weekends, and severe-weather periods rely on 211 plus Police HOT referrals, which drop off substantially."
+          },
+          {
+            "id": "intake-003",
+            "siteName": "United Methodist Open Door",
+            "siteType": "intake-center",
+            "operatingAgency": "United Methodist Open Door Inc.",
+            "openHours": "Mon-Fri 8:00 AM - 4:00 PM",
+            "contactPhone": "316-265-9371",
+            "address": "402 E 2nd St N, Wichita, KS 67202",
+            "lat": 37.6943,
+            "lng": -97.3375,
+            "intakeMode": "walk-in",
+            "liveTransferSupported": true,
+            "supportedLanguages": [
+              "en",
+              "es"
+            ],
+            "youthAccess": true,
+            "operatorNotes": "Highest-volume walk-in intake site in the system — 80 to 120 unique contacts per weekday. Runs VI-SPDAT on site, connects to ID assistance, employment services, and shelter referrals. Most contacts who show up in the afternoon have already cycled through at least one other partner that day."
+          },
+          {
+            "id": "intake-004",
+            "siteName": "CrossRoads Youth Intake",
+            "siteType": "shelter-intake",
+            "operatingAgency": "Wichita Children's Home",
+            "openHours": "24/7",
+            "contactPhone": "316-684-6581",
+            "address": "1110 N Emporia St, Wichita, KS 67214",
+            "lat": 37.702,
+            "lng": -97.3372,
+            "intakeMode": "walk-in",
+            "liveTransferSupported": true,
+            "supportedLanguages": [
+              "en"
+            ],
+            "youthAccess": true,
+            "operatorNotes": "Only round-the-clock youth-specific intake point. Accepts self-referral, law-enforcement drop-offs, and agency referrals. Immediate safety assessment followed by a bed assignment when one exists. When CrossRoads is full the default fallback is adult shelters, which youth frequently refuse."
+          },
+          {
+            "id": "intake-005",
+            "siteName": "Second Light Coordinated Entry",
+            "siteType": "intake-center",
+            "operatingAgency": "United Way of the Plains Coalition",
+            "openHours": "Mon-Fri 9:00 AM - 5:00 PM",
+            "contactPhone": "316-267-1321",
+            "address": "245 N Hillside St, Wichita, KS 67214",
+            "lat": 37.6916,
+            "lng": -97.3156,
+            "intakeMode": "walk-in",
+            "liveTransferSupported": false,
+            "supportedLanguages": [
+              "en"
+            ],
+            "youthAccess": true,
+            "operatorNotes": "Newly rebranded (from Multi-Agency Center) on 2025-05-20. Intended as the single community front door for coordinated entry. Today it handles intake and VI-SPDAT assessments; the automated bed-matching layer and HMIS integration are still being stood up, so referrals to shelters continue to be done by phone between partner staff."
+          },
+          {
+            "id": "intake-006",
+            "siteName": "Family Promise Intake Line",
+            "siteType": "hotline",
+            "operatingAgency": "Family Promise of Greater Wichita",
+            "openHours": "Mon-Fri 9:00 AM - 4:00 PM",
+            "contactPhone": "316-264-7225",
+            "address": "829 N Market St, Wichita, KS 67214",
+            "lat": 37.6978,
+            "lng": -97.3388,
+            "intakeMode": "phone",
+            "liveTransferSupported": false,
+            "supportedLanguages": [
+              "en"
+            ],
+            "youthAccess": false,
+            "operatorNotes": "Serves families with children only; no unaccompanied youth and no single adults. Phone screening is followed by an in-person interview, with employment readiness evaluated as part of eligibility. Current intake queue typically runs 2-4 weeks, long enough to be effectively blocked for crisis families."
+          },
+          {
+            "id": "intake-007",
+            "siteName": "DCF Wichita Service Center",
+            "siteType": "intake-center",
+            "operatingAgency": "Kansas Dept. for Children and Families",
+            "openHours": "Mon-Fri 8:00 AM - 5:00 PM",
+            "contactPhone": "316-337-6100",
+            "address": "230 E William St, Wichita, KS 67202",
+            "lat": 37.6853,
+            "lng": -97.3347,
+            "intakeMode": "walk-in",
+            "liveTransferSupported": false,
+            "supportedLanguages": [
+              "en",
+              "es"
+            ],
+            "youthAccess": true,
+            "operatorNotes": "State benefits office for SNAP, TANF, KanCare, and child-welfare intake. Also runs Independent Living enrollment for aging-out foster youth. Weekday-only hours, typical wait 2-4 hours. No warm handoff — once a case manager leaves the counter, the client's next step depends entirely on the client retaining and carrying paperwork between offices."
+          },
+          {
+            "id": "intake-008",
+            "siteName": "Center of Hope",
+            "siteType": "intake-center",
+            "operatingAgency": "Center of Hope Inc.",
+            "openHours": "Mon-Fri 9:00 AM - 3:00 PM",
+            "contactPhone": "316-267-0222",
+            "address": "310 N Market St, Wichita, KS 67202",
+            "lat": 37.6934,
+            "lng": -97.3381,
+            "intakeMode": "walk-in",
+            "liveTransferSupported": true,
+            "supportedLanguages": [
+              "en",
+              "es"
+            ],
+            "youthAccess": true,
+            "operatorNotes": "Emergency rent, utility, and basic-needs financial assistance. Walk-in triage can issue same-day funds for qualifying cases. Also connects to employment and housing resources. Short weekday window (6 hours) means many arrivals cannot be seen the same day and are queued for return visits."
+          }
+        ]
+      },
+      "transition-programs": {
+        "source": "transition-programs",
+        "count": 8,
+        "data": [
+          {
+            "id": "prog-001",
+            "programName": "DCF Independent Living Program",
+            "operatingAgency": "Kansas Dept. for Children and Families",
+            "programType": "case-management",
+            "eligibilityCriteria": "Current or former foster youth whose case was open after age 16",
+            "servedAges": "16-21",
+            "stayCapMonths": 60,
+            "activeEnrollment": 34,
+            "slotsAvailable": 50,
+            "transitionDropoutRate": 0.38,
+            "intakeLagWeeks": 0,
+            "programNotes": "State-run independent living services: life-skills coaching, financial literacy, housing search support, monthly stipend. Benefits stop the day the youth turns 21, regardless of whether housing or income is stable. Close to 4 in 10 participants lose contact with the program within the first 90 days post-exit."
+          },
+          {
+            "id": "prog-002",
+            "programName": "Education & Training Voucher (ETV)",
+            "operatingAgency": "Kansas Dept. for Children and Families",
+            "programType": "education",
+            "eligibilityCriteria": "Foster youth actively enrolled in postsecondary education or vocational training",
+            "servedAges": "16-23",
+            "stayCapMonths": 48,
+            "activeEnrollment": 18,
+            "slotsAvailable": 40,
+            "transitionDropoutRate": 0.25,
+            "intakeLagWeeks": 4,
+            "programNotes": "Funds up to $5,000 per year for tuition, books, and education-related expenses. Enrollment verification required every semester. Underutilized by eligible youth because the application is not widely advertised and the paperwork burden scales poorly with housing instability."
+          },
+          {
+            "id": "prog-003",
+            "programName": "Aged-Out Medical (KanCare Extension)",
+            "operatingAgency": "Kansas Medicaid / KanCare",
+            "programType": "healthcare",
+            "eligibilityCriteria": "Former foster youth who aged out of care while in Kansas custody",
+            "servedAges": "18-26",
+            "stayCapMonths": 96,
+            "activeEnrollment": 142,
+            "slotsAvailable": 999,
+            "transitionDropoutRate": 0.42,
+            "intakeLagWeeks": 2,
+            "programNotes": "Medicaid coverage extended to age 26 for former Kansas foster youth with no income test. Loss of coverage is overwhelmingly driven by missed recertification notices that got sent to old addresses. Re-enrollment requires an in-person DCF visit, which is the step where most disenrolled youth give up."
+          },
+          {
+            "id": "prog-004",
+            "programName": "SOUL Family",
+            "operatingAgency": "SOUL Family Inc.",
+            "programType": "belonging",
+            "eligibilityCriteria": "Youth aging out of foster care or formerly in foster care seeking permanent connections",
+            "servedAges": "16-26",
+            "stayCapMonths": 120,
+            "activeEnrollment": 22,
+            "slotsAvailable": 35,
+            "transitionDropoutRate": 0.12,
+            "intakeLagWeeks": 1,
+            "programNotes": "Permanency and belonging model — matches youth with trained volunteer family mentors for multi-year relationships. Not housing. The lowest dropout in the system because the relationship is not age-capped or funding-capped. Biggest constraint is mentor recruitment, not program design."
+          },
+          {
+            "id": "prog-005",
+            "programName": "TRAIL (Transitioning Resources for Advancing Independent Living)",
+            "operatingAgency": "Pathway Family Services",
+            "programType": "case-management",
+            "eligibilityCriteria": "Foster youth preparing for independence or recently aged out",
+            "servedAges": "16-21",
+            "stayCapMonths": 36,
+            "activeEnrollment": 15,
+            "slotsAvailable": 25,
+            "transitionDropoutRate": 0.3,
+            "intakeLagWeeks": 3,
+            "programNotes": "Independent-living skill building — budgeting, cooking, lease negotiation, interview prep — through weekly group sessions plus individual coaching. Operates parallel to DCF IL and frequently serves youth who have fallen off DCF rolls. Still age-capped at 21."
+          },
+          {
+            "id": "prog-006",
+            "programName": "CrossRoads Emergency Youth Shelter",
+            "operatingAgency": "Wichita Children's Home",
+            "programType": "housing",
+            "eligibilityCriteria": "Homeless or at-risk youth, including foster youth in acute crisis",
+            "servedAges": "18-24",
+            "stayCapMonths": 3,
+            "activeEnrollment": 10,
+            "slotsAvailable": 12,
+            "transitionDropoutRate": 0.35,
+            "intakeLagWeeks": 0,
+            "programNotes": "Community's only 24-hour low-barrier youth shelter. Immediate intake; case management toward housing, education, employment. About 35% of exits occur without a confirmed next placement because BRIDGES and apartment-based options downstream are saturated."
+          },
+          {
+            "id": "prog-007",
+            "programName": "BRIDGES Transitional Housing",
+            "operatingAgency": "Wichita Children's Home",
+            "programType": "housing",
+            "eligibilityCriteria": "Youth aging out of foster care or homeless youth with an active case plan",
+            "servedAges": "16-22",
+            "stayCapMonths": 18,
+            "activeEnrollment": 7,
+            "slotsAvailable": 8,
+            "transitionDropoutRate": 0.22,
+            "intakeLagWeeks": 6,
+            "programNotes": "Apartment-style transitional housing on the CrossRoads campus. Youth hold a case plan and work toward permanent housing. Parenting youth with one child accepted. Only eight units exist — demand eclipses supply by an order of magnitude."
+          },
+          {
+            "id": "prog-008",
+            "programName": "EmberHope Connections",
+            "operatingAgency": "EmberHope (formerly Youthville)",
+            "programType": "case-management",
+            "eligibilityCriteria": "Foster youth, at-risk youth, and families in active crisis",
+            "servedAges": "12-21",
+            "stayCapMonths": 24,
+            "activeEnrollment": 28,
+            "slotsAvailable": 40,
+            "transitionDropoutRate": 0.28,
+            "intakeLagWeeks": 2,
+            "programNotes": "Therapeutic foster-care support and independent-living prep. Trauma-informed counseling, educational advocacy, placement-stability work. Serves a younger entry point than most transition programs, which means some youth roll into TRAIL or DCF IL after aging through EmberHope."
+          }
+        ]
+      },
+      "stabilization-docs": {
+        "source": "stabilization-docs",
+        "count": 10,
+        "data": [
+          {
+            "id": "doc-001",
+            "docName": "Wichita City ID",
+            "docCategory": "identity",
+            "gatesUnlocked": [
+              "shelter-intake",
+              "employment",
+              "banking",
+              "library-services"
+            ],
+            "processingDays": 1,
+            "knownBlockers": [
+              "In-person visit to City Hall required weekdays 8-5",
+              "Applicant must prove Wichita residency, which unsheltered residents rarely can document",
+              "Photo captured on site, no remote option"
+            ],
+            "supportResources": "Breakthrough Wichita provides ID-application coaching and accompaniment to City Hall",
+            "feeUsd": 0,
+            "docNotes": "Free municipal ID recognized by many local service providers. Not a state ID and not Real-ID compliant. Breakthrough Wichita can attest to identity in the absence of primary documents, which is how most aging-out foster youth actually obtain one."
+          },
+          {
+            "id": "doc-002",
+            "docName": "Certified Birth Certificate",
+            "docCategory": "identity",
+            "gatesUnlocked": [
+              "state-id",
+              "social-security-card",
+              "employment",
+              "housing-application"
+            ],
+            "processingDays": 14,
+            "knownBlockers": [
+              "Requires knowing county and state of birth",
+              "Out-of-state orders mailed back with 2-4 week processing",
+              "Foster-care records sometimes carry name or DOB discrepancies that invalidate requests"
+            ],
+            "supportResources": "DCF can order on behalf of current foster youth; Breakthrough Wichita assists former foster youth",
+            "feeUsd": 15,
+            "docNotes": "Kansas vital records charges $15 per copy; out-of-state runs $10-30. DCF is supposed to hand the youth a certified copy at age 18, but field data shows this happens inconsistently — many aged-out youth report never receiving one."
+          },
+          {
+            "id": "doc-003",
+            "docName": "Social Security Card",
+            "docCategory": "identity",
+            "gatesUnlocked": [
+              "employment",
+              "state-id",
+              "banking",
+              "benefits-enrollment"
+            ],
+            "processingDays": 10,
+            "knownBlockers": [
+              "Replacement request requires a birth certificate or other primary identity document",
+              "Typical SSA office wait 2-3 hours",
+              "SSA office hours limited to weekdays 9-3"
+            ],
+            "supportResources": "Breakthrough Wichita provides accompaniment and document prep for SSA visits",
+            "feeUsd": 0,
+            "docNotes": "Replacement is free. Local SSA office is downtown at 401 N Market St. Hard caps apply: 3 replacements per year, 10 in a lifetime. Aging-out foster youth who moved frequently often exhaust those quotas before they stabilize."
+          },
+          {
+            "id": "doc-004",
+            "docName": "Kansas State ID / Driver's License",
+            "docCategory": "identity",
+            "gatesUnlocked": [
+              "employment",
+              "housing-application",
+              "banking",
+              "air-travel",
+              "voting"
+            ],
+            "processingDays": 7,
+            "knownBlockers": [
+              "Requires a birth certificate plus Social Security card plus proof of residency",
+              "Residency requirement is the core circular barrier for anyone unsheltered",
+              "DMV wait 1-3 hours",
+              "Fee: $22 for ID, $23 for license"
+            ],
+            "supportResources": "Breakthrough Wichita and Center of Hope issue residency attestation letters and can cover fees",
+            "feeUsd": 22,
+            "docNotes": "Kansas Real-ID compliant when issued with full documentation. The shelter-address letter is the workaround commonly used to satisfy residency, issued by Open Door or a similar intake-center partner. Some aging-out youth enter the process with zero primary documents and have to restart from the birth-certificate step."
+          },
+          {
+            "id": "doc-005",
+            "docName": "KanCare (Medicaid) Enrollment",
+            "docCategory": "benefit",
+            "gatesUnlocked": [
+              "healthcare",
+              "mental-health-services",
+              "substance-use-treatment",
+              "prescription-medications"
+            ],
+            "processingDays": 21,
+            "knownBlockers": [
+              "Application requires SSN, primary identity document, and income documentation",
+              "Online portal has recurring mobile-browser stability issues",
+              "In-person at DCF runs 2-4 hours of wait",
+              "Any address change triggers automatic disenrollment requiring re-application"
+            ],
+            "supportResources": "Open Door and Center of Hope staff benefits navigators who handle applications start to finish",
+            "feeUsd": 0,
+            "docNotes": "Aged-out foster youth qualify for KanCare extension through age 26 with no income test; general adults have income thresholds. Address instability is the leading cause of coverage loss because each move triggers re-verification and the notices go to the prior address."
+          },
+          {
+            "id": "doc-006",
+            "docName": "SNAP (Food Assistance) Enrollment",
+            "docCategory": "benefit",
+            "gatesUnlocked": [
+              "food-security"
+            ],
+            "processingDays": 30,
+            "knownBlockers": [
+              "Identity and income documentation required",
+              "A phone interview is mandatory — unreliable phone access stalls applications",
+              "Homeless applicants qualify for 7-day expedited processing but are frequently not told"
+            ],
+            "supportResources": "Open Door and the Kansas Food Bank operate on-site SNAP application assistance",
+            "feeUsd": 0,
+            "docNotes": "Expedited 7-day processing exists for homeless applicants and is consistently underused because front-line intake staff do not flag eligibility. Average single-adult benefit is roughly $234/month. Recertification falls every 6 months and is another common drop-off point."
+          },
+          {
+            "id": "doc-007",
+            "docName": "Wichita Transit Bus Pass",
+            "docCategory": "transport",
+            "gatesUnlocked": [
+              "employment-access",
+              "medical-appointments",
+              "benefits-offices",
+              "shelter-access"
+            ],
+            "processingDays": 1,
+            "knownBlockers": [
+              "Monthly pass costs $50 which is prohibitive for a zero-income client",
+              "Purchase channels limited to the transit center or online",
+              "Reduced fare requires a separate application and supporting documentation"
+            ],
+            "supportResources": "Center of Hope, Salvation Army, and Open Door distribute limited monthly pass allotments",
+            "feeUsd": 50,
+            "docNotes": "Wichita Transit runs 30-60 minute headways and no Sunday service. Shelter and intake sites cluster along the N Market corridor, but the employment and affordable-housing stock is spread across the metro — making transit the dominant constraint on stabilization for anyone without a car."
+          },
+          {
+            "id": "doc-008",
+            "docName": "Bank Account Opening",
+            "docCategory": "housing",
+            "gatesUnlocked": [
+              "direct-deposit-employment",
+              "housing-rent-payments",
+              "benefits-direct-deposit"
+            ],
+            "processingDays": 1,
+            "knownBlockers": [
+              "A state-issued ID or two alternate IDs are required",
+              "Prior overdraft history in ChexSystems blocks mainstream bank accounts",
+              "Some banks enforce minimum-balance requirements"
+            ],
+            "supportResources": "Breakthrough Wichita partners with credit unions offering second-chance accounts that skip ChexSystems",
+            "feeUsd": 0,
+            "docNotes": "Second-chance banking exists through Intrust Bank and KANZA Cooperative programs for people exiting homelessness. Without any account, the alternative is check-cashing storefronts that cut 2-5% off every paycheck and disbursement."
+          },
+          {
+            "id": "doc-009",
+            "docName": "Employment Verification Letter",
+            "docCategory": "housing",
+            "gatesUnlocked": [
+              "housing-application",
+              "rental-approval",
+              "transitional-housing-intake"
+            ],
+            "processingDays": 5,
+            "knownBlockers": [
+              "Most landlords require 30+ days of current employment",
+              "Gig work and day labor do not generate standard verification letters",
+              "Some employers delay or refuse the request"
+            ],
+            "supportResources": "Breakthrough Wichita provides employment-readiness support and mediates employer communication",
+            "feeUsd": 0,
+            "docNotes": "Most private Wichita landlords use a 3x-rent income rule. Kansas minimum wage is $7.25/hr and typical entry-level positions run $12-15/hr. Qualifying for a market-rate 1-bedroom ($750-900/mo) requires documented income close to the top of that range, which is the inflection point where most stabilization plans stall."
+          },
+          {
+            "id": "doc-010",
+            "docName": "School Enrollment / GED Registration",
+            "docCategory": "identity",
+            "gatesUnlocked": [
+              "education-vouchers",
+              "etv-funding",
+              "employment-advancement"
+            ],
+            "processingDays": 7,
+            "knownBlockers": [
+              "GED test runs $120 per attempt",
+              "Identity documents required for enrollment",
+              "Testing-center scheduling is limited",
+              "Unstable housing disrupts study time and test prep"
+            ],
+            "supportResources": "ETV covers GED costs for eligible foster youth; Wichita Adult Education Center runs free GED prep",
+            "feeUsd": 120,
+            "docNotes": "McKinney-Vento protects K-12 enrollment for homeless youth without typical documentation. That protection does not extend to GED or postsecondary enrollment. ETV covers up to $5,000/year but only with proof of active enrollment, which is the specific thing unstable housing makes hard to sustain."
+          }
+        ]
+      },
+      "rehousing-options": {
+        "source": "rehousing-options",
+        "count": 10,
+        "data": [
+          {
+            "id": "unit-001",
+            "propertyName": "HumanKind Villas",
+            "ownerOrManager": "HumanKind Ministries",
+            "unitCount": 155,
+            "acceptsVouchers": true,
+            "voucherProgramsAccepted": [
+              "HCV",
+              "VASH",
+              "project-based"
+            ],
+            "screeningBarriers": [
+              "Waitlist runs 8-12 weeks",
+              "Coordinated-entry referral required",
+              "VI-SPDAT vulnerability score threshold applied"
+            ],
+            "medianRent1bd": 0,
+            "depositRequired": false,
+            "distanceToTransitMi": 0.3,
+            "lat": 37.6971,
+            "lng": -97.3392,
+            "neighborhoodRating": "low-risk",
+            "propertyNotes": "Permanent supportive housing operated on the Housing First model. No sobriety, income, or treatment prerequisites. Rent calculated at 30% of income, which is often $0 at move-in. Wraparound services on site. The limiting factor is the waitlist, not eligibility."
+          },
+          {
+            "id": "unit-002",
+            "propertyName": "NEXTenant Partner - Riverside Commons",
+            "ownerOrManager": "Riverside Property Group (via NEXTenant)",
+            "unitCount": 24,
+            "acceptsVouchers": true,
+            "voucherProgramsAccepted": [
+              "HCV",
+              "rapid-rehousing"
+            ],
+            "screeningBarriers": [
+              "Background check — felony within 5 years disqualifies",
+              "Income verification required (voucher amount counts)"
+            ],
+            "medianRent1bd": 725,
+            "depositRequired": true,
+            "distanceToTransitMi": 0.8,
+            "lat": 37.7017,
+            "lng": -97.3462,
+            "neighborhoodRating": "low-risk",
+            "propertyNotes": "Matched through NEXTenant's landlord-partnership program. Has accepted vouchers and agreed to flexible screening for homeless-to-housed transitions. Deposit assistance runs through the NEXTenant side. Short walk to a Wichita Transit stop on Route 11."
+          },
+          {
+            "id": "unit-003",
+            "propertyName": "NEXTenant Partner - Prairie Wind Apartments",
+            "ownerOrManager": "McConnell Properties LLC (via NEXTenant)",
+            "unitCount": 16,
+            "acceptsVouchers": true,
+            "voucherProgramsAccepted": [
+              "HCV",
+              "rapid-rehousing",
+              "VASH"
+            ],
+            "screeningBarriers": [
+              "Credit score minimum 500",
+              "No eviction on record within 3 years"
+            ],
+            "medianRent1bd": 695,
+            "depositRequired": true,
+            "distanceToTransitMi": 1.2,
+            "lat": 37.6847,
+            "lng": -97.3516,
+            "neighborhoodRating": "moderate-risk",
+            "propertyNotes": "NEXTenant-matched. Landlord commits to working with case managers on tenant-level issues before escalating to eviction. Typically 1-2 of the 16 units turn over each month. Reputationally the landlord is considered flexible on formerly homeless tenants."
+          },
+          {
+            "id": "unit-004",
+            "propertyName": "NEXTenant Partner - Douglas Avenue Flats",
+            "ownerOrManager": "Heartland Housing Partners (via NEXTenant)",
+            "unitCount": 32,
+            "acceptsVouchers": true,
+            "voucherProgramsAccepted": [
+              "HCV",
+              "rapid-rehousing"
+            ],
+            "screeningBarriers": [
+              "Violent-felony conviction within 7 years disqualifies",
+              "Income verification at 2x rent",
+              "Application fee $35"
+            ],
+            "medianRent1bd": 775,
+            "depositRequired": true,
+            "distanceToTransitMi": 0.4,
+            "lat": 37.6873,
+            "lng": -97.336,
+            "neighborhoodRating": "low-risk",
+            "propertyNotes": "Downtown-adjacent property near the full stack of intake services. NEXTenant contributes deposit assistance and landlord mediation. Rent is above the voucher fair-market value, but walkability to Open Door and Center of Hope offsets the cost for case-managed clients."
+          },
+          {
+            "id": "unit-005",
+            "propertyName": "VASH Housing - Wichita VA",
+            "ownerOrManager": "Various private landlords (VA-coordinated)",
+            "unitCount": 45,
+            "acceptsVouchers": true,
+            "voucherProgramsAccepted": [
+              "VASH"
+            ],
+            "screeningBarriers": [
+              "Veteran status required",
+              "VA referral required",
+              "Chronic-homelessness or high vulnerability score required"
+            ],
+            "medianRent1bd": 0,
+            "depositRequired": false,
+            "distanceToTransitMi": 1.5,
+            "lat": 37.6955,
+            "lng": -97.3208,
+            "neighborhoodRating": "low-risk",
+            "propertyNotes": "HUD-VASH vouchers for homeless veterans. VA provides clinical case management alongside housing. Scattered-site model across Wichita. 52 veteran placements recorded in 2025. Operates more smoothly than most general-population pipelines, in part because the case-manager-to-client ratio is significantly lower."
+          },
+          {
+            "id": "unit-006",
+            "propertyName": "Maple Ridge Apartments",
+            "ownerOrManager": "Wichita Rental Holdings LLC",
+            "unitCount": 48,
+            "acceptsVouchers": false,
+            "voucherProgramsAccepted": [],
+            "screeningBarriers": [
+              "No voucher participation",
+              "Credit score minimum 600",
+              "Income 3x rent",
+              "No felony history",
+              "No eviction history",
+              "Application fee $50"
+            ],
+            "medianRent1bd": 825,
+            "depositRequired": true,
+            "distanceToTransitMi": 2.1,
+            "lat": 37.711,
+            "lng": -97.2905,
+            "neighborhoodRating": "low-risk",
+            "propertyNotes": "Mid-market Wichita apartment that represents the baseline private-rental stock. Functionally inaccessible to almost anyone exiting homelessness because the combined credit, income, and background thresholds move in lockstep. Included in the dataset as the reference point for the mainstream market."
+          },
+          {
+            "id": "unit-007",
+            "propertyName": "Sunflower Court",
+            "ownerOrManager": "KS Property Management",
+            "unitCount": 36,
+            "acceptsVouchers": false,
+            "voucherProgramsAccepted": [],
+            "screeningBarriers": [
+              "No voucher participation",
+              "First month + last month + deposit due at move-in",
+              "Income 3x rent",
+              "Two years of documented rental history"
+            ],
+            "medianRent1bd": 750,
+            "depositRequired": true,
+            "distanceToTransitMi": 3.4,
+            "lat": 37.7255,
+            "lng": -97.3687,
+            "neighborhoodRating": "moderate-risk",
+            "propertyNotes": "Northside property. Rent is below market but transit access is poor — the closest bus stop is 1.8 miles away. Does not accept vouchers. The two-year rental-history requirement is the blocker most clients exiting homelessness cannot clear."
+          },
+          {
+            "id": "unit-008",
+            "propertyName": "Pawnee Crossing Duplexes",
+            "ownerOrManager": "Individual owner (name withheld)",
+            "unitCount": 8,
+            "acceptsVouchers": true,
+            "voucherProgramsAccepted": [
+              "HCV"
+            ],
+            "screeningBarriers": [
+              "Drug-related felony within 3 years disqualifies",
+              "Income verification",
+              "Deposit equal to one month rent"
+            ],
+            "medianRent1bd": 650,
+            "depositRequired": true,
+            "distanceToTransitMi": 4.2,
+            "lat": 37.6557,
+            "lng": -97.3717,
+            "neighborhoodRating": "higher-risk",
+            "propertyNotes": "Small private landlord accepting HCV. Lowest rent in the dataset but sits in a south-Wichita submarket with limited transit, higher crime indicators, and distance from intake services. A clean illustration of the affordability-vs-access tradeoff — cheaper rent pushes clients away from the supports they still need."
+          },
+          {
+            "id": "unit-009",
+            "propertyName": "Central Park Towers",
+            "ownerOrManager": "Central Wichita Ventures",
+            "unitCount": 64,
+            "acceptsVouchers": false,
+            "voucherProgramsAccepted": [],
+            "screeningBarriers": [
+              "No voucher participation",
+              "Credit score minimum 650",
+              "Income 3x rent",
+              "No criminal history of any kind",
+              "Application fee $60"
+            ],
+            "medianRent1bd": 950,
+            "depositRequired": true,
+            "distanceToTransitMi": 0.2,
+            "lat": 37.6884,
+            "lng": -97.3365,
+            "neighborhoodRating": "low-risk",
+            "propertyNotes": "Downtown luxury stock. Transit and service access is the best in the city, yet the screening and rent combination makes the property inaccessible to anyone exiting homelessness. Included to show the flavor of growth currently displacing older affordable inventory downtown."
+          },
+          {
+            "id": "unit-010",
+            "propertyName": "Hilltop Village",
+            "ownerOrManager": "Midwest Affordable Housing Corp",
+            "unitCount": 40,
+            "acceptsVouchers": true,
+            "voucherProgramsAccepted": [
+              "HCV",
+              "rapid-rehousing",
+              "project-based"
+            ],
+            "screeningBarriers": [
+              "Income verification (voucher counts)",
+              "Sex-offense registry disqualifies"
+            ],
+            "medianRent1bd": 575,
+            "depositRequired": false,
+            "distanceToTransitMi": 1.8,
+            "lat": 37.7019,
+            "lng": -97.3555,
+            "neighborhoodRating": "moderate-risk",
+            "propertyNotes": "Affordable-housing development with project-based vouchers assigned to the property. No move-in deposit. Screening is lighter than the private market. Typical waitlist runs 4-6 weeks. Strong option for families pairing rapid rehousing assistance with project-based subsidy."
+          }
+        ]
+      },
+      "system-status": {
+        "status": "strained",
+        "lastUpdated": "2026-04-18T09:00:00-05:00",
+        "alerts": [
+          {
+            "id": "status-001",
+            "severity": "warning",
+            "headline": "Effective Bed Availability Under 20%",
+            "date": "2026-04-18",
+            "summary": "Only 17 of 87 emergency shelter beds are actually reachable for the unsheltered population right now; the remainder are blocked by referral rules, sobriety conditions, or population-specific restrictions.",
+            "affectedGroups": [
+              "single-men",
+              "families",
+              "youth"
+            ]
+          },
+          {
+            "id": "status-002",
+            "severity": "info",
+            "headline": "Second Light Automated Bed-Matching Still Coming Online",
+            "date": "2026-04-18",
+            "summary": "Second Light's HMIS-integrated real-time bed-matching layer is not yet live. Intake and VI-SPDAT run on site; downstream shelter referrals are still placed by phone between partner staff.",
+            "affectedGroups": [
+              "all"
+            ]
+          }
+        ]
+      }
+    },
+    "summary": [
+      {
+        "endpoint": "community-snapshot",
+        "source": "community-snapshot",
+        "count": 1,
+        "fields": [
+          "shelteredAndUnshelteredTotal",
+          "shelteredOrTransitional",
+          "unshelteredHeadcount",
+          "yoyChangePct",
+          "sheltered2024vs2025ChangePct",
+          "permanentHousingCoalition",
+          "permanentHousingCoalitionDelta",
+          "firstTimeHomelessAnnual",
+          "peopleServedAnnual",
+          "newlyHomelessShare",
+          "housedWithinYearRate",
+          "permanentRetention2yr",
+          "avgDaysToHousing",
+          "nationalDaysToHousing",
+          "perCapitaRateLocal",
+          "perCapitaRateNational",
+          "totalEmergencyBeds",
+          "bedsAvailableNow",
+          "vashPlacementsAnnual",
+          "fosterHomelessnessAge17",
+          "fosterHomelessnessAge19",
+          "fosterHomelessnessAge21",
+          "ftEmploymentAge17",
+          "ftEmploymentAge21",
+          "kansasYouthAgingOutAnnual",
+          "coalitionMemberOrgs",
+          "lastUpdated",
+          "source"
+        ],
+        "url": "http://127.0.0.1:8765/community-snapshot"
+      },
+      {
+        "endpoint": "shelter-inventory",
+        "source": "shelter-inventory",
+        "count": 10,
+        "fields": [
+          "id",
+          "providerName",
+          "serviceAudience",
+          "servedAges",
+          "householdPolicy",
+          "requiresReferral",
+          "lowBarrierAccess",
+          "bedsOnline",
+          "bedsInUse",
+          "utilizationPct",
+          "address",
+          "lat",
+          "lng",
+          "operatorNotes"
+        ],
+        "url": "http://127.0.0.1:8765/shelter-inventory"
+      },
+      {
+        "endpoint": "intake-network",
+        "source": "intake-network",
+        "count": 8,
+        "fields": [
+          "id",
+          "siteName",
+          "siteType",
+          "operatingAgency",
+          "openHours",
+          "contactPhone",
+          "address",
+          "lat",
+          "lng",
+          "intakeMode",
+          "liveTransferSupported",
+          "supportedLanguages",
+          "youthAccess",
+          "operatorNotes"
+        ],
+        "url": "http://127.0.0.1:8765/intake-network"
+      },
+      {
+        "endpoint": "transition-programs",
+        "source": "transition-programs",
+        "count": 8,
+        "fields": [
+          "id",
+          "programName",
+          "operatingAgency",
+          "programType",
+          "eligibilityCriteria",
+          "servedAges",
+          "stayCapMonths",
+          "activeEnrollment",
+          "slotsAvailable",
+          "transitionDropoutRate",
+          "intakeLagWeeks",
+          "programNotes"
+        ],
+        "url": "http://127.0.0.1:8765/transition-programs"
+      },
+      {
+        "endpoint": "stabilization-docs",
+        "source": "stabilization-docs",
+        "count": 10,
+        "fields": [
+          "id",
+          "docName",
+          "docCategory",
+          "gatesUnlocked",
+          "processingDays",
+          "knownBlockers",
+          "supportResources",
+          "feeUsd",
+          "docNotes"
+        ],
+        "url": "http://127.0.0.1:8765/stabilization-docs"
+      },
+      {
+        "endpoint": "rehousing-options",
+        "source": "rehousing-options",
+        "count": 10,
+        "fields": [
+          "id",
+          "propertyName",
+          "ownerOrManager",
+          "unitCount",
+          "acceptsVouchers",
+          "voucherProgramsAccepted",
+          "screeningBarriers",
+          "medianRent1bd",
+          "depositRequired",
+          "distanceToTransitMi",
+          "lat",
+          "lng",
+          "neighborhoodRating",
+          "propertyNotes"
+        ],
+        "url": "http://127.0.0.1:8765/rehousing-options"
+      },
+      {
+        "endpoint": "system-status",
+        "source": "system-status",
+        "count": 2,
+        "fields": [
+          "id",
+          "severity",
+          "headline",
+          "date",
+          "summary",
+          "affectedGroups"
+        ],
+        "url": "http://127.0.0.1:8765/system-status"
+      }
+    ],
+    "report": {
+      "violation": 0,
+      "suspicion": 3,
+      "cannot be checked": 0
+    }
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "_note": "Template (questions). Fill every <TODO> from the brief in its own words; use null where the brief states nothing; save as <challenge-id>.json; then: python -B naipc_requirements.py validate <challenge-id>.json",
+  "challenge": {
+    "id": "kc-dr1",
+    "event": "naipc-nationals-2026",
+    "day": 1,
+    "date": "March 28, 2026",
+    "city": "Kansas City",
+    "venue": "KC Digital Drive",
+    "title": "Kansas City Has a Food Access Problem. You're Going to Fix It.",
+    "tagline": "$500,000 city contract. $150,000 in operating costs. 60 days to prove it works. Build your solution.",
+    "mission": "Kansas City has a food access problem. Two grocery stores closed last year in neighborhoods that were already struggling. The city's main food bank lost 3 million pounds of food from federal cuts. 1 in 7 Kansas Citians are food insecure — a 10-year high.\n\nThe city just put $500,000 on the table for a company that can fix this. They want a solution that coordinates food distribution, reaches the families who need help, and proves it can sustain itself.\n\nYou are that company.\n\nYou have $500,000 in contract revenue, $150,000 in operating costs, and 60 days to show the city this works. Build your solution."
+  },
+  "constraints": {
+    "contract_usd": {
+      "value": 500000,
+      "quote": "$500,000 city contract."
+    },
+    "opex_usd": {
+      "value": 150000,
+      "quote": "$150,000 in operating costs."
+    },
+    "reserved_marketing_usd": null,
+    "pilot_days": {
+      "value": 60,
+      "quote": "60 days to prove it works."
+    },
+    "beneficiary_unit": {
+      "value": "families",
+      "quote": "They want a solution that coordinates food distribution, reaches the families who need help, and proves it can sustain itself."
+    },
+    "required_assets": null
+  },
+  "named_users": [],
+  "tracks": {
+    "oracle": {
+      "kind": "questions",
+      "title": "The Oracle",
+      "mission": "Build the business plan and financial model for this company. How does the $500K get spent? What's the 60-day plan? How do you convince the city to renew?",
+      "items": [
+        {
+          "id": "oracle-q1",
+          "text": "Does the math work? Revenue, costs, margins?"
+        },
+        {
+          "id": "oracle-q2",
+          "text": "Is the strategy data-driven?"
+        },
+        {
+          "id": "oracle-q3",
+          "text": "Does it show city ROI on their $500K?"
+        },
+        {
+          "id": "oracle-q4",
+          "text": "How well did you use AI for analysis?"
+        }
+      ],
+      "_note": "one item per judging question, verbatim; delete unused items"
+    },
+    "architect": {
+      "kind": "questions",
+      "title": "The Architect",
+      "mission": "Build a working tool that helps solve KC's food access problem. A dashboard, a logistics app, an alert system, a pantry finder — whatever you think solves the problem best.",
+      "items": [
+        {
+          "id": "architect-q1",
+          "text": "Does it actually work? Can you demo it?"
+        },
+        {
+          "id": "architect-q2",
+          "text": "Is it solving a real problem?"
+        },
+        {
+          "id": "architect-q3",
+          "text": "Would real people actually use this?"
+        },
+        {
+          "id": "architect-q4",
+          "text": "How well did you use AI to build it?"
+        }
+      ],
+      "_note": "one item per judging question, verbatim; delete unused items"
+    },
+    "muse": {
+      "kind": "questions",
+      "title": "The Muse",
+      "mission": "Build the go-to-market strategy that gets families and partners using the service. Who's the audience? How do you reach them? What materials do you produce?",
+      "items": [
+        {
+          "id": "muse-q1",
+          "text": "Do you understand who you're reaching?"
+        },
+        {
+          "id": "muse-q2",
+          "text": "Are channel choices realistic for the audience?"
+        },
+        {
+          "id": "muse-q3",
+          "text": "Did you actually produce materials?"
+        },
+        {
+          "id": "muse-q4",
+          "text": "How well did you use AI for creative work?"
+        }
+      ],
+      "_note": "one item per judging question, verbatim; delete unused items"
+    }
+  },
+  "winning_looks_like": [],
+  "scoring": {
+    "dimensions": [
+      "Problem Understanding",
+      "Solution Quality",
+      "Presentation & Polish",
+      "Adaptability",
+      "AI Mastery"
+    ],
+    "descriptors": {
+      "Problem Understanding": "Did they actually understand the problem? Do they know who the users/customers are and what they need? Or did they build something generic?",
+      "Solution Quality": "Is the solution good? Is the business plan sound? Is the product useful? Is the marketing strategy smart? Would this actually work?",
+      "Presentation & Polish": "Is it well-built and clearly presented? Can you interact with the dashboard? Does the plan read well? Are materials production-ready?",
+      "Adaptability": "How did they respond to the curveball? Did they rethink their approach or just bolt something on? (Score after Block 2)",
+      "AI Mastery": "How effectively did they use AI? Did they direct it or just accept first outputs? Evidence of iteration, challenging AI, using it creatively?"
+    },
+    "scale": "circle one 1-5 per dimension per judge; TOTAL / 25 × 4 = / 100",
+    "scale_legend": {
+      "1": "Didn't address",
+      "2": "Significant gaps",
+      "3": "Adequate",
+      "4": "Strong work",
+      "5": "Exceptional"
+    },
+    "notes": "Adaptability is scored after Block 2; each judge adds 'What stood out? (one sentence)'; the panel is three industry experts and one non-human (AI) judge",
+    "source": "Kansas_City_scorecard.png (KC Regional 2026 judge scorecard, March 28, 2026), read 2026-09-29; the same five dimensions appear on every 2026 brief"
+  },
+  "api": {
+    "base_url": "https://aipromptchamp.com",
+    "prefix": "/api/challenge",
+    "endpoints": [
+      {
+        "name": "311-calls",
+        "description": "Housing/utility distress by ZIP (13 ZIPs)",
+        "records_expected": 13,
+        "curveball_updates": false
+      },
+      {
+        "name": "pantries",
+        "description": "12 pantry locations, hours, language, ID req, cold storage, routes",
+        "records_expected": 12,
+        "curveball_updates": false
+      },
+      {
+        "name": "food-atlas",
+        "description": "USDA food desert status by census tract",
+        "records_expected": null,
+        "curveball_updates": false
+      },
+      {
+        "name": "store-closures",
+        "description": "4 grocery store closures (2024–2025)",
+        "records_expected": 4,
+        "curveball_updates": false
+      },
+      {
+        "name": "transit",
+        "description": "8 bus stops near food resources",
+        "records_expected": 8,
+        "curveball_updates": false
+      },
+      {
+        "name": "demographics",
+        "description": "Census: poverty, Hispanic%, no vehicle (12 ZIPs)",
+        "records_expected": 12,
+        "curveball_updates": false
+      },
+      {
+        "name": "supply-alerts",
+        "description": "Federal supply status — ⚡ updates at curveball",
+        "records_expected": null,
+        "curveball_updates": true
+      },
+      {
+        "name": "harvest",
+        "description": "After the Harvest KC priority ZIPs (8 areas)",
+        "records_expected": 8,
+        "curveball_updates": false
+      }
+    ],
+    "_note": "one entry per row of the brief's API table; name = the path's last segment"
+  },
+  "schedule": {
+    "go_live": "10:00 AM",
+    "curveball": "1:00 PM",
+    "submissions_due": "2:30 PM"
+  },
+  "submission": {
+    "form_url": "https://aipromptchamp.com/regional/kansascity-2026/challenge",
+    "deadline": "2:30 PM sharp",
+    "event_code": null
+  },
+  "team": {
+    "program_name": null,
+    "brand_html": null
+  },
+  "curveball": null,
+  "provenance": {
+    "brief_files": [
+      "kansas city competition info.png",
+      "KC Challenge Data Brief.png"
+    ],
+    "transcription": "transcribed by Claude from the two brief images, 2026-10-29 (DR#1); to be checked by Shane",
+    "modeled_fields": []
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "source": "patient-displacement",
+  "count": 13,
+  "data": [
+    {
+      "hospital": "hosp-west-suburban",
+      "conditionGroup": "ER / Acute Care",
+      "patients": 4200,
+      "urgency": "critical",
+      "nearestAlt": "Loretto Hospital",
+      "altDistance": 2.1,
+      "altCapacityPct": 0.89,
+      "barrier": "Loretto at-risk; Rush 4.2mi with no direct bus",
+      "annualized": true
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "conditionGroup": "Diabetes Management",
+      "patients": 3800,
+      "urgency": "high",
+      "nearestAlt": "PCC Austin FQHC",
+      "altDistance": 1.8,
+      "altCapacityPct": 0.92,
+      "barrier": "3-4 week wait. No endocrinologist on staff.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "conditionGroup": "Prenatal / OB-GYN",
+      "patients": 1400,
+      "urgency": "high",
+      "nearestAlt": "Rush University Medical Center",
+      "altDistance": 4.2,
+      "altCapacityPct": 0.78,
+      "barrier": "No direct transit. Medicaid acceptance varies by provider.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "conditionGroup": "Behavioral Health",
+      "patients": 2100,
+      "urgency": "high",
+      "nearestAlt": "Bobby Wright / Loretto",
+      "altDistance": 2.1,
+      "altCapacityPct": 0.95,
+      "barrier": "Both over capacity. 6-8 week wait for intake.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "conditionGroup": "Pediatric Asthma",
+      "patients": 1600,
+      "urgency": "moderate",
+      "nearestAlt": "PCC Austin / Stroger",
+      "altDistance": 1.8,
+      "altCapacityPct": 0.88,
+      "barrier": "No pediatric pulmonologist within 3 miles.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "conditionGroup": "Cardiac / Hypertension",
+      "patients": 3200,
+      "urgency": "moderate",
+      "nearestAlt": "Rush / UI Health",
+      "altDistance": 4.2,
+      "altCapacityPct": 0.82,
+      "barrier": "Patients on managed regimens need continuity of care.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "conditionGroup": "General Primary Care",
+      "patients": 6700,
+      "urgency": "standard",
+      "nearestAlt": "PCC Austin / Erie Humboldt",
+      "altDistance": 1.8,
+      "altCapacityPct": 0.92,
+      "barrier": "FQHCs at capacity. Accepting new patients slowly.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-ascension-st-elizabeth",
+      "conditionGroup": "ER / Acute Care",
+      "patients": 2800,
+      "urgency": "critical",
+      "nearestAlt": "Norwegian American Hospital",
+      "altDistance": 1.6,
+      "altCapacityPct": 0.84,
+      "barrier": "Small ER (16 capacity). Already near max.",
+      "annualized": true
+    },
+    {
+      "hospital": "hosp-ascension-st-elizabeth",
+      "conditionGroup": "Prenatal / OB-GYN",
+      "patients": 900,
+      "urgency": "high",
+      "nearestAlt": "Mount Sinai Hospital",
+      "altDistance": 3.1,
+      "altCapacityPct": 0.76,
+      "barrier": "Nearest OB program. 2 bus transfers from Brighton Park.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-ascension-st-elizabeth",
+      "conditionGroup": "General Primary Care",
+      "patients": 5200,
+      "urgency": "standard",
+      "nearestAlt": "Erie Humboldt / Heartland",
+      "altDistance": 2.8,
+      "altCapacityPct": 0.85,
+      "barrier": "Spanish-speaking patients need bilingual providers.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-weiss-memorial",
+      "conditionGroup": "ER / Acute Care",
+      "patients": 3100,
+      "urgency": "critical",
+      "nearestAlt": "Swedish Hospital (Advocate)",
+      "altDistance": 1.9,
+      "altCapacityPct": 0.82,
+      "barrier": "Uptown's diverse population needs multilingual ER staff.",
+      "annualized": true
+    },
+    {
+      "hospital": "hosp-weiss-memorial",
+      "conditionGroup": "Behavioral Health",
+      "patients": 1800,
+      "urgency": "high",
+      "nearestAlt": "Thresholds / Heartland Alliance",
+      "altDistance": 2.4,
+      "altCapacityPct": 0.91,
+      "barrier": "Wait times 4-6 weeks. Many patients lost to follow-up.",
+      "annualized": false
+    },
+    {
+      "hospital": "hosp-weiss-memorial",
+      "conditionGroup": "Dialysis",
+      "patients": 420,
+      "urgency": "critical",
+      "nearestAlt": "DaVita Uptown / Fresenius",
+      "altDistance": 1.2,
+      "altCapacityPct": 0.96,
+      "barrier": "Dialysis is time-critical. Transport disruption is life-threatening.",
+      "annualized": false
+    }
+  ]
+}

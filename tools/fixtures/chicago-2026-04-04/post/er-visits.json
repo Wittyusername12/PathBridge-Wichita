@@ -1,0 +1,342 @@
+{
+  "source": "er-visits",
+  "count": 24,
+  "data": [
+    {
+      "hospital": "hosp-west-suburban",
+      "area": "Austin",
+      "month": "2025-04",
+      "visits": 362,
+      "avgWaitMin": 38,
+      "capacityPct": 0.81,
+      "topConditions": [
+        "chest-pain",
+        "diabetes-emergency",
+        "asthma-attack",
+        "mental-health-crisis"
+      ]
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "area": "Austin",
+      "month": "2025-07",
+      "visits": 398,
+      "avgWaitMin": 44,
+      "capacityPct": 0.87,
+      "topConditions": [
+        "heat-related",
+        "chest-pain",
+        "diabetes-emergency",
+        "pediatric-asthma"
+      ]
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "area": "Austin",
+      "month": "2025-10",
+      "visits": 371,
+      "avgWaitMin": 41,
+      "capacityPct": 0.84,
+      "topConditions": [
+        "chest-pain",
+        "flu-respiratory",
+        "diabetes-emergency",
+        "fall-injury"
+      ]
+    },
+    {
+      "hospital": "hosp-west-suburban",
+      "area": "Austin",
+      "month": "2026-01",
+      "visits": 410,
+      "avgWaitMin": 52,
+      "capacityPct": 0.91,
+      "topConditions": [
+        "flu-respiratory",
+        "chest-pain",
+        "mental-health-crisis",
+        "hypothermia"
+      ]
+    },
+    {
+      "hospital": "hosp-loretto",
+      "area": "Austin",
+      "month": "2025-04",
+      "visits": 168,
+      "avgWaitMin": 42,
+      "capacityPct": 0.78,
+      "topConditions": [
+        "chest-pain",
+        "mental-health-crisis",
+        "substance-overdose",
+        "diabetes-emergency"
+      ]
+    },
+    {
+      "hospital": "hosp-loretto",
+      "area": "Austin",
+      "month": "2025-07",
+      "visits": 182,
+      "avgWaitMin": 48,
+      "capacityPct": 0.84,
+      "topConditions": [
+        "heat-related",
+        "chest-pain",
+        "substance-overdose",
+        "mental-health-crisis"
+      ]
+    },
+    {
+      "hospital": "hosp-loretto",
+      "area": "Austin",
+      "month": "2025-10",
+      "visits": 175,
+      "avgWaitMin": 45,
+      "capacityPct": 0.81,
+      "topConditions": [
+        "chest-pain",
+        "mental-health-crisis",
+        "flu-respiratory",
+        "fall-injury"
+      ]
+    },
+    {
+      "hospital": "hosp-loretto",
+      "area": "Austin",
+      "month": "2026-01",
+      "visits": 196,
+      "avgWaitMin": 56,
+      "capacityPct": 0.88,
+      "topConditions": [
+        "flu-respiratory",
+        "mental-health-crisis",
+        "chest-pain",
+        "substance-overdose"
+      ]
+    },
+    {
+      "hospital": "hosp-loretto",
+      "area": "Austin",
+      "month": "2026-03",
+      "visits": 284,
+      "avgWaitMin": 78,
+      "capacityPct": 0.97,
+      "topConditions": [
+        "all-west-suburban-overflow",
+        "chest-pain",
+        "diabetes-emergency",
+        "mental-health-crisis"
+      ]
+    },
+    {
+      "hospital": "hosp-stroger",
+      "area": "Near West Side",
+      "month": "2025-04",
+      "visits": 762,
+      "avgWaitMin": 68,
+      "capacityPct": 0.88,
+      "topConditions": [
+        "trauma",
+        "chest-pain",
+        "mental-health-crisis",
+        "gunshot-wound"
+      ]
+    },
+    {
+      "hospital": "hosp-stroger",
+      "area": "Near West Side",
+      "month": "2025-10",
+      "visits": 801,
+      "avgWaitMin": 72,
+      "capacityPct": 0.91,
+      "topConditions": [
+        "trauma",
+        "chest-pain",
+        "flu-respiratory",
+        "mental-health-crisis"
+      ]
+    },
+    {
+      "hospital": "hosp-stroger",
+      "area": "Near West Side",
+      "month": "2026-01",
+      "visits": 842,
+      "avgWaitMin": 81,
+      "capacityPct": 0.94,
+      "topConditions": [
+        "flu-respiratory",
+        "trauma",
+        "chest-pain",
+        "hypothermia"
+      ]
+    },
+    {
+      "hospital": "hosp-stroger",
+      "area": "Near West Side",
+      "month": "2026-03",
+      "visits": 891,
+      "avgWaitMin": 94,
+      "capacityPct": 0.97,
+      "topConditions": [
+        "trauma",
+        "west-suburban-overflow",
+        "chest-pain",
+        "flu-respiratory"
+      ]
+    },
+    {
+      "hospital": "hosp-rush",
+      "area": "Near West Side",
+      "month": "2025-04",
+      "visits": 672,
+      "avgWaitMin": 34,
+      "capacityPct": 0.76,
+      "topConditions": [
+        "chest-pain",
+        "stroke",
+        "cardiac-arrest",
+        "trauma"
+      ]
+    },
+    {
+      "hospital": "hosp-rush",
+      "area": "Near West Side",
+      "month": "2026-01",
+      "visits": 718,
+      "avgWaitMin": 38,
+      "capacityPct": 0.81,
+      "topConditions": [
+        "flu-respiratory",
+        "chest-pain",
+        "stroke",
+        "cardiac-arrest"
+      ]
+    },
+    {
+      "hospital": "hosp-rush",
+      "area": "Near West Side",
+      "month": "2026-03",
+      "visits": 764,
+      "avgWaitMin": 46,
+      "capacityPct": 0.86,
+      "topConditions": [
+        "chest-pain",
+        "west-suburban-overflow",
+        "stroke",
+        "flu-respiratory"
+      ]
+    },
+    {
+      "hospital": "hosp-south-shore",
+      "area": "South Shore",
+      "month": "2025-04",
+      "visits": 281,
+      "avgWaitMin": 52,
+      "capacityPct": 0.82,
+      "topConditions": [
+        "chest-pain",
+        "diabetes-emergency",
+        "asthma-attack",
+        "mental-health-crisis"
+      ]
+    },
+    {
+      "hospital": "hosp-south-shore",
+      "area": "South Shore",
+      "month": "2025-10",
+      "visits": 298,
+      "avgWaitMin": 58,
+      "capacityPct": 0.86,
+      "topConditions": [
+        "chest-pain",
+        "flu-respiratory",
+        "fall-injury",
+        "mental-health-crisis"
+      ]
+    },
+    {
+      "hospital": "hosp-south-shore",
+      "area": "South Shore",
+      "month": "2026-01",
+      "visits": 312,
+      "avgWaitMin": 64,
+      "capacityPct": 0.91,
+      "topConditions": [
+        "flu-respiratory",
+        "chest-pain",
+        "diabetes-emergency",
+        "mental-health-crisis"
+      ]
+    },
+    {
+      "hospital": "hosp-roseland",
+      "area": "Roseland",
+      "month": "2025-04",
+      "visits": 218,
+      "avgWaitMin": 48,
+      "capacityPct": 0.79,
+      "topConditions": [
+        "chest-pain",
+        "diabetes-emergency",
+        "pediatric-asthma",
+        "fall-injury"
+      ]
+    },
+    {
+      "hospital": "hosp-roseland",
+      "area": "Roseland",
+      "month": "2026-01",
+      "visits": 241,
+      "avgWaitMin": 56,
+      "capacityPct": 0.86,
+      "topConditions": [
+        "flu-respiratory",
+        "chest-pain",
+        "diabetes-emergency",
+        "mental-health-crisis"
+      ]
+    },
+    {
+      "hospital": "hosp-mount-sinai",
+      "area": "North Lawndale",
+      "month": "2025-04",
+      "visits": 482,
+      "avgWaitMin": 44,
+      "capacityPct": 0.78,
+      "topConditions": [
+        "chest-pain",
+        "trauma",
+        "diabetes-emergency",
+        "obstetric-emergency"
+      ]
+    },
+    {
+      "hospital": "hosp-mount-sinai",
+      "area": "North Lawndale",
+      "month": "2026-01",
+      "visits": 518,
+      "avgWaitMin": 48,
+      "capacityPct": 0.82,
+      "topConditions": [
+        "flu-respiratory",
+        "chest-pain",
+        "trauma",
+        "obstetric-emergency"
+      ]
+    },
+    {
+      "hospital": "hosp-mount-sinai",
+      "area": "North Lawndale",
+      "month": "2026-03",
+      "visits": 536,
+      "avgWaitMin": 52,
+      "capacityPct": 0.85,
+      "topConditions": [
+        "chest-pain",
+        "flu-respiratory",
+        "st-elizabeth-overflow",
+        "trauma"
+      ]
+    }
+  ]
+}

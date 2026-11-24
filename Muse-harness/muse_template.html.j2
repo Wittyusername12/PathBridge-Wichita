@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>{{ program_name | model }} — Community Outreach Campaign</title>
+<meta property="og:title" content="{{ program_name | model }} — Launch Campaign"/>
+<meta name="description" content="{{ preview | e }}">
+<meta property="og:description" content="{{ preview | e }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="{{ preview | e }}">
+{% set C = cov if (cov is defined and cov) else {} %}{% set CA = C.get('attrs', {}) %}
+<meta name="naipc-build" content="{{ naipc_build | e }}">
+{% if C.get('enabled') %}<meta name="naipc-challenge" content="{{ C.challenge | py }}">
+<meta name="naipc-run" content="{{ C.run_id | py }}">{% endif %}
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ═══ Design System — Glassmorphism (matches Oracle + Architect) ═══ */
+:root{
+  --bg:#0a0a1a;--bg-alt:#12122a;
+  --text:#f0f0f5;--text-sec:#a0a0b8;--muted:#6b6b80;
+  --accent:{{ accent_hex | py }};
+  --accent-soft:color-mix(in srgb,var(--accent) 15%,transparent);
+  --surface:rgba(255,255,255,0.05);--border:rgba(255,255,255,0.10);
+  --glass-blur:12px;--radius:16px;
+  --bad:#ef4444;--warn:#f59e0b;--good:#22c55e;
+  --font:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;
+  background-image:radial-gradient(ellipse at 20% 50%,color-mix(in srgb,var(--accent) 8%,transparent) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 20%,rgba(236,72,153,.06) 0%,transparent 50%)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Glass card */
+.glass{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  backdrop-filter:blur(var(--glass-blur)) saturate(150%);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(150%);
+  box-shadow:0 8px 32px rgba(0,0,0,.35);position:relative;overflow:hidden}
+@supports not (backdrop-filter:blur(1px)){.glass{background:rgba(18,18,42,.92)}}
+
+/* Layout */
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+section{margin-bottom:40px}
+.sec-label{text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--accent);margin-bottom:8px}
+.sec-title{font-size:28px;font-weight:800;margin-bottom:16px;line-height:1.2}
+
+/* ═══ Header ═══ */
+header{padding:28px 0 20px;border-bottom:1px solid var(--border);margin-bottom:32px}
+header .inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+header h1{font-size:22px;font-weight:800}
+header h1 em{font-style:normal;color:var(--accent)}
+.badge{background:var(--accent-soft);color:var(--accent);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+
+/* ═══ Hero ═══ */
+.hero{padding:48px 32px;text-align:center;margin-bottom:32px}
+.hero h2{font-size:36px;font-weight:800;line-height:1.15;max-width:800px;margin:0 auto 16px}
+.hero h2 em{font-style:normal;color:var(--accent)}
+.hero .lead{font-size:16px;color:var(--text-sec);max-width:640px;margin:0 auto 24px}
+.hero .stats{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.hero .stat{text-align:center}
+.hero .stat .n{font-size:28px;font-weight:800;color:var(--accent)}
+.hero .stat .l{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* ═══ Persona Cards ═══ */
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.persona{border-left:4px solid var(--accent);padding:20px}
+.persona .icon{font-size:2.5rem;margin-bottom:8px}
+.persona h3{font-size:18px;font-weight:700;margin-bottom:2px}
+.persona .subtitle{color:var(--text-sec);font-size:13px;margin-bottom:12px}
+.persona .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.persona .pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:600}
+.persona .pill.barrier{background:rgba(239,68,68,.15);color:#fca5a5}
+.persona .pill.channel{background:var(--accent-soft);color:var(--accent)}
+.persona blockquote{border-left:none;padding:0;margin:10px 0 0;font-style:italic;color:var(--text-sec);font-size:13px;position:relative;padding-left:20px}
+.persona blockquote::before{content:'\201C';position:absolute;left:0;top:-6px;font-size:2rem;color:var(--accent);opacity:.3;font-style:normal}
+/* Persona data evidence */
+.persona-evidence{margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)}
+.persona-evidence .ev-title{text-transform:uppercase;letter-spacing:.5px;font-weight:700;font-size:10px;margin-bottom:6px;color:var(--text-sec)}
+.persona-evidence .ev-row{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.persona-evidence .ev-label{color:var(--text-sec)}
+.persona-evidence .ev-stat{font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.persona-evidence .ev-src{font-size:10px;color:var(--muted);opacity:.7}
+
+/* ═══ Channel Matrix ═══ */
+.matrix-table{width:100%;border-collapse:collapse;font-size:13px}
+.matrix-table thead{position:sticky;top:0}
+.matrix-table th{background:rgba(255,255,255,.08);padding:10px 12px;text-align:left;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.matrix-table td{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.matrix-table tbody tr:nth-child(even){background:rgba(255,255,255,.03)}
+.matrix-table th[scope="col"]{border-bottom:2px solid var(--accent)}
+
+/* ═══ Accordion Timeline ═══ */
+/* Single outer glass container — prevents backdrop-filter seam artifacts (research: all 3 sources) */
+.timeline{border:1px solid var(--border);border-radius:16px;overflow:hidden;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.04);box-shadow:0 18px 40px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.04)}
+.phase+.phase{border-top:1px solid rgba(255,255,255,.06)}
+/* Phase header: <button> inside <h3> — WAI-ARIA accordion pattern */
+.phase-heading{margin:0}
+.phase-trigger{width:100%;border:0;background:transparent;color:var(--text);
+  padding:14px 16px;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;
+  align-items:center;gap:12px;text-align:left;cursor:pointer;font-family:var(--font);
+  transition:background-color .2s ease}
+.phase-trigger:hover{background:rgba(255,255,255,.04)}
+.phase-trigger:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.phase.is-open .phase-trigger{background:rgba(255,255,255,.07);box-shadow:inset 3px 0 0 var(--accent)}
+/* Badge circle */
+.phase-badge{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+  font-weight:700;font-size:14px;color:#fff;flex-shrink:0;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 88%,white),var(--accent));
+  box-shadow:0 4px 14px rgba(139,92,246,.3)}
+/* Title + month group */
+.phase-copy{min-width:0;display:grid;gap:2px}
+.phase-title{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.phase-month{font-size:13px;color:var(--muted)}
+/* Milestone count pill */
+.phase-count{white-space:nowrap;padding:4px 10px;border-radius:999px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);font-size:12px;font-weight:600;flex-shrink:0}
+/* CSS chevron — border-right + border-bottom rotated */
+.phase-chevron{width:10px;height:10px;flex-shrink:0;
+  border-right:2px solid rgba(255,255,255,.6);border-bottom:2px solid rgba(255,255,255,.6);
+  transform:rotate(45deg);transition:transform .28s cubic-bezier(.33,1,.68,1)}
+.phase.is-open .phase-chevron{transform:rotate(225deg)}
+/* Panel: CSS Grid 0fr→1fr for smooth height transition (research: best technique for Chrome 146+) */
+.phase-panel{display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .34s cubic-bezier(.33,1,.68,1)}
+.phase.is-open .phase-panel{grid-template-rows:1fr}
+/* Inner wrapper: min-height:0 is CRITICAL (all 3 sources emphasize this) */
+.phase-panel-inner{min-height:0;overflow:hidden}
+/* Padding on inner content, NOT on the grid child (prevents collapsed gap) */
+.phase-milestones{padding:0 16px 14px 60px;opacity:0;transform:translateY(-4px);
+  transition:opacity .16s ease,transform .22s ease}
+.phase.is-open .phase-milestones{opacity:1;transform:translateY(0);transition-delay:.04s}
+.phase-milestones ul{list-style:none;padding:0;margin:0;display:grid;gap:6px}
+.phase-milestones li{padding:3px 0 3px 22px;position:relative;font-size:13px;color:var(--text-sec);line-height:1.45}
+.phase-milestones li::before{content:'✓';position:absolute;left:0;color:color-mix(in srgb,var(--accent) 70%,white);font-weight:700}
+.deliverables{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+.deliverables li::before{content:'📄';color:var(--accent)}
+@media(max-width:640px){
+  .phase-trigger{grid-template-columns:auto minmax(0,1fr) auto}
+  .phase-count{display:none}
+}
+
+/* ═══ Social Media Mockups ═══ */
+.social-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+/* Photo-sharing (Instagram-like) */
+.social-card{border-radius:12px;overflow:hidden;max-width:480px}
+.social-card.photo{background:#fff;color:#1a1a1a;border:1px solid #dbdbdb}
+.social-card.micro{background:#fff;color:#0f1419;border:1px solid #e1e8ed;border-radius:16px}
+.social-card.feed{background:#fff;color:#1c1e21;border:1px solid #e4e6eb;border-top:3px solid #1877f2}
+.sc-head{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.sc-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#ec4899);flex-shrink:0}
+.sc-name{font-weight:700;font-size:14px}
+.sc-meta{font-size:12px;color:#8e8e8e}
+.sc-dots{margin-left:auto;color:#8e8e8e;font-size:18px}
+/* Base media area — shared layout for all card types */
+.sc-media{height:200px;display:flex;align-items:flex-end;padding:14px;position:relative;overflow:hidden;
+  border-top:1px solid rgba(0,0,0,.05);border-bottom:1px solid rgba(0,0,0,.05)}
+/* Instagram hero card — gradient campaign graphic (most authentic for photo-sharing platforms) */
+.sc-media.media--hero{
+  background:
+    radial-gradient(circle at 16% 18%,rgba(255,255,255,.16) 0 9%,transparent 10% 100%),
+    radial-gradient(circle at 86% 16%,rgba(255,255,255,.12) 0 10%,transparent 11% 100%),
+    radial-gradient(circle at 72% 76%,rgba(255,255,255,.12) 0 14%,transparent 15% 100%),
+    linear-gradient(135deg,hsl(278 83% 68%) 0%,hsl(262 90% 60%) 38%,hsl(232 90% 62%) 72%,hsl(198 82% 54%) 100%);
+  align-items:center;justify-content:center}
+.sc-media.media--hero::before{content:"";position:absolute;inset:-12% -8% auto auto;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%);
+  filter:blur(18px);mix-blend-mode:screen;opacity:.55;pointer-events:none}
+/* Facebook stat card — dark data tile with accent stripe (authentic for community feeds) */
+.sc-media.media--stat{
+  background:
+    linear-gradient(180deg,rgba(16,18,34,.92),rgba(11,16,32,.98)),
+    radial-gradient(circle at 85% 18%,rgba(139,92,246,.35),transparent 30%),
+    radial-gradient(circle at 20% 100%,rgba(56,189,248,.18),transparent 32%);
+  flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:18px}
+.sc-media.media--stat::before{content:"";position:absolute;left:0;top:0;width:6px;height:100%;
+  background:linear-gradient(180deg,hsl(272 88% 74%),hsl(222 92% 66%))}
+.sc-media-stat-value{font-size:40px;font-weight:900;color:#fff;letter-spacing:-.04em;line-height:.9;margin-bottom:6px}
+.sc-media-stat-label{font-size:12px;font-weight:600;color:rgba(255,255,255,.78);text-transform:uppercase;letter-spacing:.04em}
+.sc-media-text{background:rgba(0,0,0,.55);border-radius:10px;padding:10px;color:#fff;width:100%;font-size:13px}
+.sc-media-text strong{display:block;margin-bottom:4px}
+.sc-body{padding:10px 14px;font-size:14px;line-height:1.5}
+.sc-tags{color:#00376b;margin-top:6px;font-size:13px}
+.social-card.micro .sc-tags{color:#1d9bf0}
+.social-card.feed .sc-tags{color:#1877f2}
+.sc-actions{padding:8px 14px;display:flex;gap:20px;font-size:14px;color:#8e8e8e;border-top:1px solid rgba(0,0,0,.08)}
+.sc-metrics{padding:6px 14px 12px;font-size:12px;color:#8e8e8e;display:flex;gap:16px}
+.sc-label{display:block;text-align:center;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+
+/* ═══ Phone Mockup Frames ═══ */
+.social-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.phone-frame{background:#111;border:3px solid #222;border-radius:36px;padding:10px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);position:relative;max-width:380px;margin:0 auto}
+.phone-screen{position:relative;border-radius:26px;overflow:hidden;background:#1a1a1a;min-height:420px}
+.phone-screen::before{content:'';position:absolute;top:6px;left:50%;transform:translateX(-50%);
+  width:80px;height:22px;background:#111;border-radius:12px;z-index:5}
+.phone-screen-inner{padding-top:32px}
+.phone-frame .social-card{border-radius:0;max-width:none;border-left:0;border-right:0}
+.phone-frame .social-card:last-child{border-bottom:0}
+.phone-frame .sc-label{color:var(--text-sec);margin-bottom:0;padding:6px 0 2px;background:var(--surface)}
+
+/* ═══ Bilingual Flyer ═══ */
+.flyer-section{background:#fff;color:#111;border-radius:var(--radius);padding:28px;max-width:700px;margin:0 auto}
+.flyer-header{border-bottom:3px solid var(--accent);padding-bottom:14px;margin-bottom:16px;text-align:center}
+.flyer-brand{font-size:24px;font-weight:800;color:#111}
+.flyer-tagline{color:#444;margin-top:4px;font-size:14px}
+.flyer-cta{text-align:center;margin:16px 0;padding:16px;background:color-mix(in srgb,var(--accent) 10%,#fff);border-radius:12px}
+.flyer-cta h3{font-size:20px;font-weight:800;color:#111}
+.flyer-cta p{color:#333;margin-top:4px}
+.flyer-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:16px 0}
+.flyer-col h4{font-size:14px;font-weight:700;margin-bottom:6px;color:#111;text-transform:uppercase;letter-spacing:.5px}
+.flyer-col p{font-size:13px;color:#333;line-height:1.6}
+.flyer-col ul{list-style:disc;padding-left:18px;font-size:13px;color:#333}
+.flyer-col ul li{margin-bottom:4px}
+.flyer-footer{margin-top:16px;border-top:2px solid #eee;padding-top:14px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px}
+.flyer-footer .contact{font-size:12px;color:#444}
+.flyer-qr{width:100px;height:100px}
+.flyer-qr svg{width:100%;height:100%;display:block}
+
+/* ═══ Campaign Reach Calculator ═══ */
+.calc-panel{padding:24px;margin-top:20px}
+.calc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px}
+.calc-head h3{font-size:18px;font-weight:700;margin:0}
+.calc-reset{background:none;border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-family:var(--font);opacity:0;transition:opacity .3s}
+.calc-reset.show{opacity:1}
+.calc-reset:hover{color:var(--text);border-color:var(--accent)}
+.calc-sliders{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:20px}
+@media(max-width:600px){.calc-sliders{grid-template-columns:1fr}}
+.calc-slider-group label{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.calc-slider-val{float:right;color:var(--accent);font-weight:700;font-variant-numeric:tabular-nums}
+.calc-slider{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;outline:none;cursor:pointer;background:rgba(255,255,255,.08);background-image:linear-gradient(135deg,var(--accent),#ec4899);background-size:50% 100%;background-repeat:no-repeat;border:1px solid rgba(255,255,255,.08);margin-top:4px}
+.calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#d0d0e0);border:2px solid var(--accent);box-shadow:0 0 8px rgba(139,92,246,.4);cursor:pointer;margin-top:-6px}
+.calc-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#d0d0e0);border:2px solid var(--accent);box-shadow:0 0 8px rgba(139,92,246,.4);cursor:pointer}
+.calc-slider::-webkit-slider-runnable-track{height:8px;border-radius:4px;background:transparent}
+.calc-slider::-moz-range-track{height:8px;border-radius:4px;background:rgba(255,255,255,.08)}
+.calc-slider::-moz-range-progress{height:8px;border-radius:4px 0 0 4px;background:linear-gradient(135deg,var(--accent),#ec4899)}
+.calc-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:600px){.calc-metrics{grid-template-columns:repeat(2,1fr)}}
+.calc-metric{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:16px 12px;text-align:center;transition:border-color .3s}
+.calc-metric.modified{border-color:rgba(139,92,246,.35);box-shadow:0 0 10px rgba(139,92,246,.08)}
+.calc-metric-label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.calc-metric-value{font-size:1.5rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;
+  transition:color .3s ease}
+.calc-metric-value.cpa-good{color:#4ade80}
+.calc-metric-value.cpa-warn{color:#f59e0b}
+.calc-metric-value.cpa-high{color:#ef4444}
+.calc-metric-sub{font-size:10px;color:var(--muted);margin-top:4px}
+/* Delta indicators: % change from baseline */
+.calc-metric-delta{font-size:11px;font-weight:600;height:16px;margin-top:2px;
+  font-variant-numeric:tabular-nums;transition:opacity .2s}
+.calc-metric-delta.delta-up{color:#4ade80}
+.calc-metric-delta.delta-down{color:#f87171}
+.calc-metric-delta.delta-neutral{color:var(--muted)}
+/* Note explaining digital amplification */
+.calc-note{font-size:11px;color:var(--muted);margin:-8px 0 10px;padding:0 4px}
+/* Hint text: fades after first interaction */
+.calc-hint{text-align:center;font-size:12px;color:var(--accent);margin:8px 0;opacity:0.8;
+  transition:opacity .5s ease}
+.calc-hint.hidden{opacity:0;pointer-events:none}
+/* Methodology disclosure */
+.calc-methodology{margin-top:12px;font-size:12px;border-top:1px solid var(--border);padding-top:10px}
+.calc-methodology summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:12px}
+.calc-methodology summary:hover{text-decoration:underline}
+.calc-methodology-body{margin-top:8px;color:var(--text-sec);line-height:1.6}
+.calc-methodology-body p{margin:4px 0}
+.calc-methodology-body strong{color:var(--text)}
+
+/* ═══ Inline Cross-Track CTA ═══ */
+.inline-cta{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border:1px solid var(--accent);border-radius:8px;color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;transition:all .2s;margin-top:12px}
+.inline-cta:hover{background:var(--accent);color:#000;text-decoration:none;transform:translateY(-1px)}
+
+/* Print button */
+/* Tear-off strip — removed from stylesheet entirely; markup is dead in the DOM but hidden by default */
+
+
+/* ═══ Partner Pitch ═══ */
+.pitch{padding:24px}
+.pitch-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+.pitch h3{font-size:18px;font-weight:700;margin-bottom:12px}
+.pitch-narrative p{color:var(--text-sec);font-size:14px;margin-bottom:12px;line-height:1.6}
+.pitch-benefits{list-style:none;padding:0}
+.pitch-benefits li{padding:8px 0 8px 24px;position:relative;font-size:14px;color:var(--text-sec);border-bottom:1px solid var(--border)}
+.pitch-benefits li::before{content:'✦';position:absolute;left:0;color:var(--accent)}
+.pitch-stats{display:grid;gap:12px}
+.pitch-stat{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center}
+.pitch-stat .num{font-size:24px;font-weight:800;color:var(--accent)}
+.pitch-stat .label{font-size:12px;color:var(--muted);margin-top:4px}
+.pitch-cta{margin-top:20px;text-align:center}
+.pitch-cta a{display:inline-block;background:var(--accent);color:#000;padding:12px 32px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none}
+.pitch-cta a:hover{opacity:.9;text-decoration:none}
+
+/* ═══ KPI Cards ═══ */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.kpi-card{padding:20px;text-align:center}
+.kpi-card .emoji{font-size:1.8rem;margin-bottom:6px}
+.kpi-card .target{font-size:28px;font-weight:800;color:var(--accent)}
+.kpi-card .metric{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi-card .timeframe{font-size:11px;color:var(--text-sec);margin-top:2px}
+
+/* ═══ Cross-Track Links ═══ */
+.cross-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:24px 0}
+.cross-link{padding:20px;display:flex;align-items:center;gap:14px;transition:transform .2s}
+.cross-link:hover{transform:translateY(-2px)}
+.cross-link .icon{font-size:2rem}
+.cross-link h4{font-size:14px;font-weight:700}
+.cross-link p{font-size:12px;color:var(--text-sec);margin-top:2px}
+
+/* ═══ Footer ═══ */
+footer{text-align:center;padding:32px 0;color:var(--muted);font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+.qr-wrap{display:block;width:140px;height:140px;border-radius:10px;overflow:hidden;background:#fff;padding:6px;margin:12px auto 0}
+.qr-wrap svg{width:100%;height:100%;display:block}
+
+/* ═══ Details/Accordion ═══ */
+details{margin-top:16px}
+details summary{cursor:pointer;font-weight:700;font-size:14px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius)}
+details .inn{padding:16px;font-size:13px;color:var(--text-sec);line-height:1.7}
+
+/* ═══ Chatbot (Atlas AI — matches Oracle/Architect) ═══ */
+.chatbot{position:fixed;bottom:16px;right:24px;z-index:100;width:360px;max-height:480px;display:flex;flex-direction:column;
+  background:var(--bg-alt);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.chatbot .chat-head{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);cursor:pointer}
+.chatbot .chat-head h3{margin:0;font-size:14px;font-weight:700}
+.chatbot .chat-body{flex:1;overflow-y:auto;padding:12px;font-size:13px;min-height:200px}
+.chatbot .chat-msg{margin-bottom:10px;padding:8px 12px;border-radius:10px;line-height:1.5;max-width:90%}
+.chatbot .chat-msg.user{background:rgba(139,92,246,.15);margin-left:auto;border:1px solid rgba(139,92,246,.2)}
+.chatbot .chat-msg.ai{background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.chatbot .chat-input{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--border)}
+.chatbot .chat-input input{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-size:13px;outline:none}
+.chatbot .chat-input button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer}
+.chat-toggle{position:fixed;bottom:24px;right:24px;z-index:99;width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;
+  border:2px solid rgba(255,255,255,.15);font-size:22px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px rgba(139,92,246,.5);transition:all .2s;
+  animation:chatPulse 2.5s ease-in-out infinite}
+.chat-toggle:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(139,92,246,.7)}
+@keyframes chatPulse{0%{box-shadow:0 4px 20px rgba(139,92,246,.4)}50%{box-shadow:0 4px 24px rgba(236,72,153,.55)}100%{box-shadow:0 4px 20px rgba(139,92,246,.4)}}
+.chat-tip{position:fixed;bottom:36px;right:90px;z-index:99;background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:8px 14px;font-size:12px;color:var(--text);white-space:nowrap;opacity:1;transition:opacity .5s;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.chat-tip.hide{opacity:0}
+
+/* ═══ Animations ═══ */
+@keyframes fadeSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:600px){.flyer-cols{grid-template-columns:1fr}.pitch-grid{grid-template-columns:1fr}.chatbot{width:calc(100vw - 32px);right:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <div class="inner">
+      <h1>{{ program_name_html | built }}</h1>
+      <div>
+        <span class="badge">🎨 Muse Track</span>
+        <span class="badge" style="margin-left:6px"{% if domain_label_title is defined and domain_label_title %} title="{{ domain_label_title | model }}"{% endif %}>{{ domain_label | model }}</span>
+      </div>
+    </div>
+    <div style="color:var(--text-sec);font-size:13px;margin-top:6px">{{ tagline | model }}</div>
+  </header>
+
+  <!-- ═══ CAMPAIGN HERO ═══ -->
+  <section class="hero glass" id="sec-hero" data-sec="hero"{{ CA.get('hero', '') | built }} style="animation:fadeSlide .5s ease both">
+    <div class="sec-label" data-cov-skip>Community Outreach Campaign</div>
+    <h2>{{ hero_title | model_html }}</h2>
+    <p class="lead">{{ hero_lead | model_html }}</p>
+    <div class="stats">
+      {% for s in hero_stats %}
+      <div class="stat"><div class="n">{{ s.value | model_html }}</div><div class="l">{{ s.label | model_html }}</div></div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if cb %}
+  <!-- ═══ WHAT CHANGED AT THE CURVEBALL (P0.7, D7): outside every data-sec, skipped by the coverage parser ═══ -->
+  <style>.cb-sec{padding:18px 22px;margin:0 0 18px;font-size:14px}.cb-sec ul{margin:6px 0 6px 18px;color:var(--text-sec);line-height:1.55}.cb-sec p{margin:6px 0;line-height:1.55}.cb-sec .src{font-size:12px;color:var(--muted);font-style:italic}.cb-sec .note{color:var(--warn)}.cb-sec{overflow-wrap:anywhere}</style>
+  <section class="glass cb-sec" id="sec-curveball" data-cov-skip aria-label="What changed at the curveball">
+    <div class="sec-label">What changed at the curveball</div>
+    <p><strong>{{ cb.first_h | built }}</strong></p>
+    <p class="{% if cb.failed %}note{% else %}src{% endif %}">{{ cb.mode | py }}</p>
+    {% if cb.parts %}<p>The campaign's parts at the curveball:</p><ul>{% for x in cb.parts %}<li>{{ x | py }}</li>{% endfor %}</ul>{% endif %}
+    {% if cb.stale %}<p>Kept from Block 1, but naming a persona, channel or phase the update renamed or removed:</p><ul>{% for s in cb.stale %}<li>{{ s.where | py }} — stale: names {{ s.names | model }}, revised at the curveball</li>{% endfor %}</ul>{% endif %}
+    {% if cb.endpoints %}<ul>{% for ln in cb.endpoints %}<li>{{ ln | py }}</li>{% endfor %}</ul>{% elif not cb.compared and cb.snapshot %}<p>No Block 1 snapshot was found, so the data could not be compared: the announcement is the only change known.</p>{% elif not cb.compared %}<p>No change list of this run was found, so the data could not be compared: the announcement is the only change known.</p>{% endif %}
+    {% if cb.alerts %}<p>Alerts at the curveball:</p><ul>{% for a in cb.alerts %}<li>{{ a | org }}</li>{% endfor %}</ul>{% endif %}
+    {% if cb.what_changed %}<p>What changed for the campaign:</p><ul>{% for w in cb.what_changed %}<li><strong>{{ w.ref | model }}</strong>: {{ w.impact | model }}</li>{% endfor %}</ul>{% endif %}
+    {% if cb.amended %}<p>What the update changed in Block 1's campaign: {% for a in cb.amended %}{{ a.name | model }} (because {{ a.because | model }}){% if not loop.last %}; {% endif %}{% endfor %}.</p>{% endif %}
+    {% if cb.what_changed or cb.amended %}<details class="src" data-zone="provenance" data-zone-name="sources"><summary>Sources</summary><ul>{% for w in cb.what_changed %}<li>{{ w.ref | model }}</li>{% endfor %}{% for a in cb.amended %}<li>{{ a.name | model }}: {{ a.because | model }}</li>{% endfor %}</ul></details>{% endif %}
+    {% if cb.crisis_posts %}<p>{{ cb.crisis_posts | py }} crisis-response post(s) added — the first in the social posts below.</p>{% endif %}
+    {% if cb.not_applied %}<div class="cb-na" id="cb-not-applied"><p><strong>Not applied</strong></p><p class="note">{{ cb.not_applied_sentence | py }}</p><ul>{% for x in cb.not_applied %}<li>{{ x | py }}</li>{% endfor %}</ul></div>{% endif %}
+    {% if cb.compared %}<p class="src">Computed by Python from the API data: every endpoint compared record by record with Block 1's snapshot.</p>{% endif %}
+  </section>
+  {% endif %}
+
+  {% if C.get('panel') %}
+  <!-- ═══ HOW THIS ANSWERS THE BRIEF (P0.3) ═══ -->
+  <style>/* BRIEF PANEL (P0.3): one row per block on a phone-width screen */@media (max-width:600px){ #brief table,#brief thead,#brief tbody,#brief tr,#brief td{display:block;width:auto!important;min-width:0!important}#brief thead{display:none}#brief tr{padding:10px 0;border-bottom:1px solid rgba(127,127,127,.25)}#brief td{padding:3px 0!important;border:0!important}}</style>
+  <section id="brief" class="glass" data-brief-panel style="padding:20px">
+    <div class="sec-label">How this answers the brief</div>
+    <div style="font-weight:800;font-size:20px;margin-bottom:6px" data-verbatim="the brief's own words">{{ C.panel.track_title | org }}</div>
+    <p style="color:var(--text-sec);font-size:13px;margin-bottom:12px" data-verbatim="the brief's own words">{{ C.panel.mission | org }}</p>
+    <div style="overflow-x:auto">
+      <table class="matrix-table">
+        <thead><tr><th scope="col">The brief asks</th><th scope="col">Our answer</th><th scope="col">Where on this page</th></tr></thead>
+        <tbody>
+        {% for r in C.panel.rows %}
+        <tr data-brief-row="{{ r.id | org }}" data-brief-answer="{{ r.answer_src | py }}">
+          <td data-brief-cell="q" data-verbatim="the brief's own words" style="vertical-align:top;font-weight:700;min-width:9rem">{{ r.text | org }}</td>
+          <td data-brief-cell="a" style="vertical-align:top">{{ r.answer | model }}</td>
+          <td data-brief-cell="l" data-num-exempt="the page's section numbers" style="vertical-align:top;min-width:8rem">{% for l in r.links %}<a href="#{{ l.anchor | py }}" data-brief-link="{{ l.name | py }}">{{ l.label | py }}</a>{% if not loop.last %}<br>{% endif %}{% endfor %}{% if not r.links %}—{% endif %}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <script>
+  /* === BRIEF PANEL (P0.3): a panel link opens a closed <details> around its target, then scrolls to it === */
+  (function(){
+    var panel=document.getElementById("brief");if(!panel)return;
+    panel.addEventListener("click",function(ev){
+      var a=ev.target.closest?ev.target.closest("a[data-brief-link]"):null;if(!a)return;
+      var t=document.getElementById((a.getAttribute("href")||"").slice(1));if(!t)return;
+      ev.preventDefault();ev.stopPropagation();
+      for(var n=t;n&&n!==document.body;n=n.parentElement){if(n.tagName==="DETAILS"&&!n.open)n.open=true;}
+      setTimeout(function(){t.scrollIntoView({behavior:"smooth",block:"start"});},50);
+    });
+  })();
+  </script>
+  {% endif %}
+
+  <!-- ═══ AUDIENCE PERSONAS ═══ -->
+  <section id="sec-audiences" data-sec="audiences"{{ CA.get('audiences', '') | built }}>
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">01</span> &middot; Target Audiences</div>
+    <div class="sec-title" data-cov-skip>Who We're Reaching</div>
+    <div class="personas">
+      {% for p in personas %}
+      <div class="persona glass" style="animation:fadeSlide .4s ease both;animation-delay:{{ (loop.index0 * 100) | py }}ms">
+        <div class="icon">{{ p.emoji | model_html }}</div>
+        <h3>{{ p.name | model_html }}, {% if p.age_html %}{{ p.age_html | org_html }}{% else %}{{ p.age | model_html }}{% endif %}</h3>
+        <div class="subtitle">{{ p.occupation | model_html }}{% if p.occupation and p.location %} · {% endif %}{{ p.location | model_html }}</div>
+        {% if p.cb_mark %}<div class="cb-mark" data-cb-status="{{ (p.cb_mark.status or 'kept') | py }}" style="display:block;font-size:.72rem;font-style:italic;font-weight:400;color:var(--muted);margin-top:4px">{{ p.cb_mark.words | py }}{% if p.cb_mark.stale %}{% if p.cb_mark.words %}; {% endif %}stale: names {{ p.cb_mark.stale | model }}, revised at the curveball{% endif %}</div>{% endif %}
+        <div class="pills">
+          {% for b in p.barriers %}<span class="pill barrier">{{ b | model_html }}</span>{% if not loop.last %} {% endif %}{% endfor %}
+        </div>
+        <div class="pills">
+          {% for c in p.channels %}<span class="pill channel">{{ c | model_html }}</span>{% if not loop.last %} {% endif %}{% endfor %}
+        </div>
+        {% if p.quote %}<blockquote>"{{ p.quote | model_html }}"</blockquote>{% endif %}
+        {% if p.data_evidence %}
+        <div class="persona-evidence">
+          <div class="ev-title" data-cov-skip>📊 Figures Claude cited</div>
+          {% for ev in p.data_evidence %}
+          <div class="ev-row"><span class="ev-label">{{ ev.label | model_html }}</span> <span class="ev-stat">{{ ev.stat | model_html }}</span></div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ═══ CHANNEL STRATEGY MATRIX ═══ -->
+  <section id="sec-channels" data-sec="channels"{{ CA.get('channels', '') | built }}>
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">02</span> &middot; Channel Strategy</div>
+    <div class="sec-title" data-cov-skip>How We Reach Them</div>
+    <div class="glass" style="padding:20px;overflow-x:auto">
+      <table class="matrix-table">
+        <thead><tr>
+          <th scope="col">Channel</th>
+          <th scope="col">Audience</th>
+          <th scope="col">Content Type</th>
+          <th scope="col">Frequency</th>
+          <th scope="col">KPI</th>
+          <th scope="col">Est. Reach</th>
+        </tr></thead>
+        <tbody>
+        {% for ch in channel_plan %}
+        <tr>
+          <td style="font-weight:700">{{ ch.channel | model_html }}{% if ch.cb_mark %}<span class="cb-mark" data-cb-status="{{ (ch.cb_mark.status or 'kept') | py }}" style="display:block;font-size:.72rem;font-style:italic;font-weight:400;color:var(--muted);margin-top:4px">{{ ch.cb_mark.words | py }}{% if ch.cb_mark.stale %}{% if ch.cb_mark.words %}; {% endif %}stale: names {{ ch.cb_mark.stale | model }}, revised at the curveball{% endif %}</span>{% endif %}</td>
+          <td>{{ ch.audience | model_html }}</td>
+          <td>{{ ch.content_type | model_html }}</td>
+          <td>{{ ch.frequency | model_html }}</td>
+          <td>{{ ch.kpi | model_html }}</td>
+          <td style="color:var(--accent);font-weight:700">{{ ch.reach | model_html }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <a class="inline-cta" data-cov-skip href="{{ architect_url | py }}" target="_blank" style="margin-top:16px">🔍 Explore the Interactive Resource Finder →</a>
+  </section>
+  <section id="sec-calendar" data-sec="calendar"{{ CA.get('calendar', '') | built }}>
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">03</span> &middot; Launch Timeline</div>
+    <div class="sec-title" data-cov-skip>{{ calendar_heading | default("Campaign Calendar", true) | py }}</div>
+    <div class="timeline" aria-label="Campaign rollout phases">
+      {% for ph in calendar %}
+      <div class="phase{% if loop.first %} is-open{% endif %}" style="animation:fadeSlide .4s ease both;animation-delay:{{ (loop.index0 * 120) | py }}ms">
+        <h3 class="phase-heading">
+          <button
+            id="phase-trigger-{{ loop.index | py }}"
+            class="phase-trigger"
+            type="button"
+            aria-expanded="{{ ('true' if loop.first else 'false') | py }}"
+            aria-controls="phase-panel-{{ loop.index | py }}">
+            <span class="phase-badge" data-num-exempt="the list's own numbering (a position)">{{ loop.index | py }}</span>
+            <span class="phase-copy">
+              <span class="phase-title">{{ ph.phase_name | model_html }}</span>
+              <span class="phase-month">{{ ph.month_label | model_html }}</span>
+              {% if ph.cb_mark %}<span class="cb-mark" data-cb-status="{{ (ph.cb_mark.status or 'kept') | py }}" style="display:block;font-size:.72rem;font-style:italic;font-weight:400;color:var(--muted);margin-top:4px">{{ ph.cb_mark.words | py }}{% if ph.cb_mark.stale %}{% if ph.cb_mark.words %}; {% endif %}stale: names {{ ph.cb_mark.stale | model }}, revised at the curveball{% endif %}</span>{% endif %}
+            </span>
+            <span class="phase-count">{{ ph.milestones|length | py }} milestones</span>
+            <span class="phase-chevron" aria-hidden="true"></span>
+          </button>
+        </h3>
+        <div id="phase-panel-{{ loop.index | py }}" class="phase-panel" role="region" aria-labelledby="phase-trigger-{{ loop.index | py }}">
+          <div class="phase-panel-inner">
+            <div class="phase-milestones">
+              <ul>
+                {% for m in ph.milestones %}<li>{{ m | model_html }}</li>{% endfor %}
+              </ul>
+              {% if ph.deliverables %}
+              <ul class="deliverables">
+                {% for d in ph.deliverables %}<li>{{ d | model_html }}</li>{% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ═══ PRODUCED CREATIVE ASSETS ═══ -->
+  <section id="sec-creative" data-sec="creative"{{ CA.get('creative', '') | built }}>
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">04</span> &middot; Creative Assets</div>
+    <div class="sec-title" data-cov-skip>Produced Marketing Materials</div>
+
+    <!-- Social Media Post Mockups -->
+    <h3 style="font-size:16px;font-weight:700;margin:20px 0 12px">Social Media Posts <span style="font-weight:400;font-size:12px;color:var(--muted)">— mockups; the engagement numbers are illustrative</span></h3>
+    <div class="social-grid">
+      {% for post in social_posts %}
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <div class="phone-screen-inner">
+            <div class="sc-label">{{ post.platform | model_html }}{% if crisis_posts is defined and loop.index0 < crisis_posts %} · <span style="color:var(--warn)">Curveball response</span>{% endif %}</div>
+            {% if post.cb_mark %}<div class="cb-mark" data-cb-status="{{ (post.cb_mark.status or 'kept') | py }}" style="display:block;font-size:.72rem;font-style:italic;font-weight:400;color:var(--muted);margin-top:4px">{{ post.cb_mark.words | py }}{% if post.cb_mark.stale %}{% if post.cb_mark.words %}; {% endif %}stale: names {{ post.cb_mark.stale | model }}, revised at the curveball{% endif %}</div>{% endif %}
+            <div class="social-card {{ post.card_class | model }}">
+              <div class="sc-head">
+                <div class="sc-avatar"></div>
+                <div>
+                  <div class="sc-name">{{ brand_handle | model_html }}</div>
+                  <div class="sc-meta">{{ post.location | model_html }} · {{ post.language | model_html }}</div>
+                </div>
+                <div class="sc-dots">⋯</div>
+              </div>
+              {# Platform-specific media cards (deterministic by card_class) #}
+              {# Instagram/photo: gradient hero card with campaign headline #}
+              {% if post.card_class == 'photo' and post.image_headline %}
+              <div class="sc-media media--hero">
+                <div class="sc-media-text"{% if post.lang == "es" %} lang="es"{% endif %}>
+                  <strong>{{ post.image_headline | model_html }}</strong>
+                  {% if post.image_desc %}<span>{{ post.image_desc | model_html }}</span>{% endif %}
+                </div>
+              </div>
+              {# Facebook/feed: stat data card using first hero stat #}
+              {% elif post.card_class == 'feed' and hero_stats %}
+              <div class="sc-media media--stat">
+                <div class="sc-media-stat-value">{{ hero_stats[0].value | model_html }}</div>
+                <div class="sc-media-stat-label">{{ hero_stats[0].label | model_html }}</div>
+              </div>
+              {% endif %}
+              {# Twitter/micro: no media area — text-first is most authentic #}
+              <div class="sc-body"{% if post.lang == "es" %} lang="es"{% endif %}>
+                {{ post.text | model_html }}
+                <div class="sc-tags">{{ post.hashtags|join(' ') | model_html }}</div>
+              </div>
+              <div class="sc-actions" data-cov-skip>
+                <span>♡</span><span>💬</span><span>🔄</span><span>⌁</span>
+              </div>
+              {% if post.likes or post.comments or post.shares %}<div class="sc-metrics">
+                <span>♡ {{ post.likes|default('0') | model }}</span>
+                <span>💬 {{ post.comments|default('0') | model }}</span>
+                <span>🔄 {{ post.shares|default('0') | model }}</span>
+              </div>{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Bilingual Community Flyer -->
+  <section id="print-flyer" data-sec="flyer"{{ CA.get('flyer', '') | built }}>
+    <h3 style="font-size:16px;font-weight:700;margin:0 0 12px">📋 Bilingual Community Flyer</h3>
+    <div class="flyer-section">
+      <div class="flyer-header">
+        <div class="flyer-brand">{{ program_name | model }}</div>
+        <div class="flyer-tagline">{{ tagline | model }}</div>
+      </div>
+      <div class="flyer-cta">
+        <h3>{{ flyer.headline_en | model_html }}</h3>
+        <p>{{ flyer.subheadline_en | model_html }}</p>
+        {% if flyer.headline_es %}<h3 style="margin-top:10px;color:#555" lang="es">{{ flyer.headline_es | model_html }}</h3>{% endif %}
+        <p style="color:#666" lang="es">{{ flyer.subheadline_es | model_html }}</p>
+      </div>
+      <div class="flyer-cols">
+        <div class="flyer-col" lang="en">
+          <h4>English</h4>
+          <p>{{ flyer.body_en | model_html }}</p>
+          {% if flyer.bullets_en %}
+          <ul>{% for b in flyer.bullets_en %}<li>{{ b | model_html }}</li>{% endfor %}</ul>
+          {% endif %}
+        </div>
+        <div class="flyer-col" lang="es">
+          <h4>Español</h4>
+          <p>{{ flyer.body_es | model_html }}</p>
+          {% if flyer.bullets_es %}
+          <ul>{% for b in flyer.bullets_es %}<li>{{ b | model_html }}</li>{% endfor %}</ul>
+          {% endif %}
+        </div>
+      </div>
+      <div class="flyer-footer">
+        <div class="contact">
+          {% if flyer.cta_en %}<strong>{{ flyer.cta_en | model_html }}</strong><br/>{% endif %}
+          {% if flyer.cta_es %}<strong lang="es">{{ flyer.cta_es | model_html }}</strong><br/>{% endif %}
+          {{ flyer.contact_info | model_html }}
+        </div>
+        {% if qr_svg %}
+        <div class="flyer-qr">{{ qr_svg | built }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Partner Pitch One-Pager -->
+  <section id="sec-pitch" data-sec="pitch"{{ CA.get('pitch', '') | built }}>
+    <h3 style="font-size:16px;font-weight:700;margin:0 0 12px">🤝 Partner Recruitment Pitch</h3>
+    <div class="pitch glass">
+      <div class="pitch-grid">
+        <div class="pitch-narrative">
+          <h3>{{ partner_pitch.headline | model_html }}</h3>
+          <p>{{ partner_pitch.problem | model_html }}</p>
+          <p>{{ partner_pitch.solution | model_html }}</p>
+          <h4 style="font-size:14px;margin:12px 0 8px">Partnership Benefits</h4>
+          <ul class="pitch-benefits">
+            {% for b in partner_pitch.benefits %}<li>{{ b | model_html }}</li>{% endfor %}
+          </ul>
+          <div class="pitch-cta" data-cov-skip>
+            <a href="{{ architect_url | py }}" target="_blank">🔍 Explore the Interactive Tool →</a>
+          </div>
+          <div class="pitch-cta" data-cov-skip style="margin-top:8px">
+            <a href="{{ oracle_url | py }}#financials" target="_blank">📊 See the Full Business Case →</a>
+          </div>
+        </div>
+        <div class="pitch-stats">
+          {% for d in partner_pitch.data_points %}
+          <div class="pitch-stat">
+            <div class="num">{{ d.stat | model_html }}</div>
+            <div class="label">{{ d.label | model_html }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CAMPAIGN KPIs ═══ -->
+  <section id="sec-kpis" data-sec="kpis"{{ CA.get('kpis', '') | built }}>
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">05</span> &middot; Success Metrics</div>
+    <div class="sec-title" data-cov-skip>Campaign KPI Targets (Year 1)</div>
+    <div class="kpis">
+      {% for k in kpis %}
+      <div class="kpi-card glass" style="animation:fadeSlide .3s ease both;animation-delay:{{ (loop.index0 * 80) | py }}ms">
+        <div class="emoji">{{ k.emoji | model_html }}</div>
+        <div class="target">{{ k.target | model_html }}</div>
+        <div class="metric">{{ k.metric | model_html }}</div>
+        <div class="timeframe">{{ k.timeframe | model_html }}</div>
+        {% if k.cb_mark %}<div class="cb-mark" data-cb-status="{{ (k.cb_mark.status or 'kept') | py }}" style="display:block;font-size:.72rem;font-style:italic;font-weight:400;color:var(--muted);margin-top:4px">{{ k.cb_mark.words | py }}{% if k.cb_mark.stale %}{% if k.cb_mark.words %}; {% endif %}stale: names {{ k.cb_mark.stale | model }}, revised at the curveball{% endif %}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- ═══ CAMPAIGN REACH CALCULATOR ═══ -->
+  <section id="sec-calculator" data-sec="calculator" data-sec-items="{{ (4 if (calc_model | default({})).get('digital_base') else 0) | py }}"{{ CA.get('calculator', '') | built }}>
+    <div class="sec-label" data-cov-skip><span data-num-exempt="a section number">06</span> &middot; What-If Scenarios</div>
+    <div class="sec-title" data-cov-skip>Campaign Reach Calculator</div>
+    <div class="calc-panel glass">
+      <div class="calc-head">
+        <h3>📈 Explore Investment Scenarios</h3>
+        <button class="calc-reset" id="calcReset">↺ Reset</button>
+      </div>
+      <p class="calc-note">Budget drives paid digital amplification of community channels</p>
+      <div class="calc-sliders">
+        <div class="calc-slider-group">
+          <label for="calcBudget">Monthly Budget <span class="calc-slider-val" id="calcBudgetVal">$1,000</span></label>
+          <input type="range" id="calcBudget" class="calc-slider" min="500" max="5000" step="100" value="1000"
+                 aria-label="Monthly campaign budget" aria-valuemin="500" aria-valuemax="5000">
+        </div>
+        <div class="calc-slider-group">
+          <label for="calcPartners">Community Partners <span class="calc-slider-val" id="calcPartnerVal">5</span></label>
+          <input type="range" id="calcPartners" class="calc-slider" min="2" max="15" step="1" value="5"
+                 aria-label="Number of community partners" aria-valuemin="2" aria-valuemax="15">
+        </div>
+      </div>
+      <div class="calc-hint" id="calcHint">📊 Drag the sliders to explore scenarios</div>
+      <div class="calc-metrics" aria-live="polite">
+        <div class="calc-metric" id="calcImpCard">
+          <div class="calc-metric-label">Monthly Impressions</div>
+          <div class="calc-metric-value" id="calcImpVal">0</div>
+          <div class="calc-metric-delta" id="calcImpDelta"></div>
+          <div class="calc-metric-sub">across all channels</div>
+        </div>
+        <div class="calc-metric" id="calcQRCard">
+          <div class="calc-metric-label">QR Code Scans</div>
+          <div class="calc-metric-value" id="calcQRVal">0</div>
+          <div class="calc-metric-delta" id="calcQRDelta"></div>
+          <div class="calc-metric-sub">from printed materials</div>
+        </div>
+        <div class="calc-metric" id="calcEnrollCard">
+          <div class="calc-metric-label">New Enrollments</div>
+          <div class="calc-metric-value" id="calcEnrollVal">0</div>
+          <div class="calc-metric-delta" id="calcEnrollDelta"></div>
+          <div class="calc-metric-sub">per month</div>
+        </div>
+        <div class="calc-metric" id="calcCPACard">
+          <div class="calc-metric-label">Cost per Enrollment</div>
+          <div class="calc-metric-value" id="calcCPAVal">$0</div>
+          <div class="calc-metric-delta" id="calcCPADelta"></div>
+          <div class="calc-metric-sub" id="calcCPANote">acquisition cost</div>
+        </div>
+      </div>
+      <details class="calc-methodology">
+        <summary>📊 Model Methodology &amp; Formulas</summary>
+        <div class="calc-methodology-body">
+          <p>A scenario tool: its settings are assumptions you can move, not measured figures. Channel weights from the campaign's plan (the model's); every output is arithmetic in your browser on these settings — no model call.</p>
+          <p><strong>Digital Reach</strong> = base × (budget / $1,000)<sup>0.6</sup> — diminishing returns on ad spend</p>
+          <p><strong>Community Reach</strong> = base × (partners / 5) — linear partner scaling</p>
+          <p><strong>QR Scans</strong> = community × 3% × awareness — the 3% a setting of this tool</p>
+          <p><strong>Enrollments</strong> = digital × 0.03% + community × 0.10% + partners × 1 — split rates reflect higher trust in community channels</p>
+          <p><strong>CPA</strong> = budget / enrollments — not bounded: a result far from the base case shows, labelled</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ═══ CROSS-TRACK LINKS ═══ -->
+  <section id="sec-synergy" data-sec="synergy"{{ CA.get('synergy', '') | built }}>
+    <div class="sec-label" data-cov-skip>Full Stack Synergy</div>
+    <div class="sec-title" data-cov-skip>One Venture, Three Artifacts</div>
+    <div class="cross-links">
+      <a class="cross-link glass" href="{{ oracle_url | py }}" target="_blank">
+        <div class="icon">📊</div>
+        <div><h4>Business Case (Oracle)</h4><p>{% if oracle_business_line %}{{ oracle_business_line | built }}{% else %}Budget, SROI and a 3-year financial model{% endif %}</p></div>
+      </a>
+      <a class="cross-link glass" href="{{ architect_url | py }}" target="_blank">
+        <div class="icon">🔍</div>
+        <div><h4>Resident Tool (Architect)</h4><p>Interactive resource finder built from the same challenge data</p></div>
+      </a>
+      <a class="cross-link glass" href="#" style="border:2px solid var(--accent)">
+        <div class="icon">🎨</div>
+        <div><h4>Launch Campaign (Muse)</h4><p>You are here — outreach strategy + creative assets</p></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══ AI PROCESS ═══ -->
+  <details open id="sec-how-built" data-sec="how-built"{{ CA.get('how-built', '') | built }}>
+    <summary>🤖 How This Campaign Was Built — AI Process</summary>
+    <div class="inn">
+      <p id="sec-who-serves" data-sec="who-serves"{{ CA.get('who-serves', '') | built }}><strong data-cov-skip>Who this serves:</strong> {{ persona_text | model_html }}</p>
+      <p>Built by a Python harness that fetches the challenge data and {{ calls_sentence | default('makes two structured calls to <strong>Claude</strong> (Anthropic API)') | built }}; Python checks each answer against a schema, builds this page and computes the reach calculator.</p>
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">1.</span> Data Ingestion</strong> — {% if endpoints_fetched is defined and endpoints_fetched is not none %}{{ endpoints_fetched | py }} challenge API endpoint(s){% else %}The challenge API endpoints{% endif %} fetched at run time; a summary goes to the model, trimmed to a fixed length: each endpoint's record count and first three records by one rule for every shape (a list under “data”, “alerts” or another record key, a bare list, an object as one record), with the envelope's own fields such as an alert feed's status.</p>
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">2.</span> Audience Research</strong> — The first call (strategy) drafts the personas, each with the figures it cites, plus the channel plan, the calendar and the KPIs.</p>
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">3.</span> Creative Generation</strong> — The second call writes the bilingual copy (English + Spanish), the social posts and the partner pitch as structured output.</p>
+      <p><strong><span data-num-exempt="the list's own numbering (a position)">4.</span> Channel Strategy</strong> — The prompt asks the model to match each channel to the personas' barriers (for example, digital and community partners rather than print where people lack a car).</p>
+      {% if curveball_used is defined and curveball_used %}<p><strong><span data-num-exempt="the list's own numbering (a position)">5.</span> Curveball Adaptation</strong> — {{ howbuilt_curveball | py }}</p>{% endif %}
+      {% if chatbot_enabled %}<p><strong><span data-num-exempt="the list's own numbering (a position)">{{ (6 if (curveball_used is defined and curveball_used) else 5) | py }}.</span> Ask Atlas AI</strong> — Claude answers questions about this campaign from a context file built from it, through a server-side proxy; no key is on the page.</p>{% endif %}
+    </div>
+  </details>
+
+  <!-- ═══ ABOUT ═══ -->
+  <details>
+    <summary>ℹ️ About This Playbook</summary>
+    <div class="inn">
+      <p>{{ data_inventory | py }}</p>
+      <p><strong>{{ team_name | py }}</strong> · {{ competition_label | default("NAIPC", true) | py }}</p>
+    </div>
+  </details>
+
+  <!--naipc:sd-notes-->
+  <style>.sd-ref{font-size:inherit;vertical-align:baseline;line-height:inherit;white-space:nowrap;color:inherit;text-decoration:underline dotted}.sd-notes{margin:28px 0 12px;font-size:.92em;line-height:1.55}.sd-notes h2{font-size:1.05em;margin:0 0 8px}.sd-notes ol{margin:0 0 0 1.4em;padding:0}.sd-notes li{margin:4px 0}.sd-notes .sd-back{margin-left:6px;white-space:nowrap;color:inherit}</style>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="integrity-line" data-integrity-line data-num-exempt="the integrity line's own counts"><!--naipc:integrity-line--></div>
+    <div>{{ team_name | py }} · Muse Track · {{ competition_label | default("NAIPC", true) | py }}</div>
+    {% if qr_svg %}
+    <div class="qr-wrap">{{ qr_svg | built }}</div>
+    <div style="font-size:11px;margin-top:4px;color:var(--muted)">Scan to open on mobile</div>
+    {% endif %}
+  </footer>
+
+</div>
+
+{% if chatbot_enabled %}
+<!-- Atlas AI Chatbot -->
+<button class="chat-toggle" id="chat-toggle" title="Ask Atlas AI about marketing strategy">💬</button>
+<div class="chat-tip" id="chat-tip">Ask about the campaign, personas, or channels</div>
+<div class="chatbot" id="chatbot" style="display:none">
+  <div class="chat-head" id="chat-head">
+    <h3>💬 Atlas AI</h3>
+    <span style="color:var(--muted);font-size:12px">Powered by Claude · Marketing strategy assistant</span>
+  </div>
+  <div class="chat-body" id="chat-body">
+    <div class="chat-msg ai">I can answer questions about this campaign's strategy, personas, channels, and creative assets. Try: "Which channels reach each persona?" or "Draft a social post for the launch."</div>
+  </div>
+  <div class="chat-msg error" id="chatUnavailable" hidden>Chat is unavailable right now. The quick answers below cover the common questions.</div>
+  <details class="chat-faq" id="chatFaq" style="padding:6px 12px;font-size:12px"><summary style="cursor:pointer;font-weight:600">Quick answers (no AI)</summary>{% for item in chat_faq %}<p style="margin:6px 0"><strong>{{ item.q | py }}</strong><br>{% if item.a_html %}{{ item.a_html | model_html }}{% else %}{{ item.a | model }}{% endif %}</p>{% endfor %}</details>
+  <div class="chat-input">
+    <input id="chat-q" placeholder="Ask about the campaign…" autocomplete="off"/>
+    <button id="chat-send">Send</button>
+  </div>
+</div>
+<script>window.CHAT={"proxy":{{ chat_proxy_url | tojson | built }},"track":{{ chat_track | tojson | built }},"context_id":{{ chat_context_id | tojson | built }},"tags":{{ chat_tags | tojson | built }}};</script>
+{% endif %}
+
+<script>
+/* ═══ Print: auto-scale flyer to fit exactly one letter page ═══ */
+
+</script>
+
+<script>
+/* ═══ Campaign Reach Calculator — slider-driven reach model ═══ */
+var CALC_MODEL = {{ calc_model | default({}) | tojson | built }};
+if(CALC_MODEL && CALC_MODEL.digital_base){(function(){
+  var M=CALC_MODEL;
+  var sBudget=document.getElementById("calcBudget");
+  var sPartner=document.getElementById("calcPartners");
+  if(!sBudget||!sPartner)return;
+
+  /* Configure sliders from Python-injected ranges */
+  sBudget.min=M.ranges.budget_min;sBudget.max=M.ranges.budget_max;
+  sBudget.step=M.ranges.budget_step;sBudget.value=M.defaults.budget;
+  sPartner.min=M.ranges.partner_min;sPartner.max=M.ranges.partner_max;
+  sPartner.step=M.ranges.partner_step;sPartner.value=M.defaults.partners;
+
+  /* AnimNum — animated number with shared rAF loop + interrupt support
+     (Adapted from Oracle template's proven AnimatedNumber pattern) */
+  var animSet=new Set(),animRaf=null;
+  function animTick(ts){animSet.forEach(function(a){a._frame(ts)});
+    animRaf=animSet.size>0?requestAnimationFrame(animTick):null}
+  function AnimNum(el,opts){
+    opts=opts||{};this.el=el;this.dur=opts.duration||280;
+    this.prefix=opts.prefix||"";this.suffix=opts.suffix||"";
+    this.dec=opts.decimals||0;this.cur=opts.initial||0;
+    this.start=this.cur;this.end=this.cur;this.t0=null;this.active=false;
+    this._render(this.cur)
+  }
+  AnimNum.prototype.set=function(v){
+    if(v===this.end&&!this.active)return;
+    this.start=this.cur;this.end=v;this.t0=null;
+    if(!this.active){this.active=true;animSet.add(this);
+      if(!animRaf)animRaf=requestAnimationFrame(animTick)}
+  };
+  AnimNum.prototype._frame=function(ts){
+    if(!this.t0)this.t0=ts;
+    var p=Math.min((ts-this.t0)/this.dur,1);
+    var e=1-Math.pow(1-p,3); /* ease-out-cubic */
+    this.cur=this.start+(this.end-this.start)*e;
+    this._render(this.cur);
+    if(p>=1){this.cur=this.end;this._render(this.end);
+      this.active=false;animSet.delete(this)}
+  };
+  AnimNum.prototype._render=function(v){
+    var a=Math.abs(v).toFixed(this.dec);
+    var parts=a.split(".");
+    parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g,",");
+    this.el.textContent=this.prefix+(v<0?"-":"")+parts.join(".")+this.suffix
+  };
+
+  /* computeReach — additive power-law model; every coefficient a setting of this tool (BUILD IC-4, D6: no outside source):
+     digital scales with budget^0.6 (diminishing returns)
+     community scales linearly with partner count
+     QR = community × 3% × awareness (floored at 1.0; digital only ADDS, never penalizes)
+     enrollments: split rates — digital 0.03% + community 0.10% + 1 referral/partner
+     CPA = budget/enrollments (not bounded; far from the base case it is labelled) */
+  function computeReach(budget,partners){
+    var dReach=M.digital_base*Math.pow(budget/M.base_budget,M.budget_exp);
+    var cReach=M.community_base*(partners/M.base_partners);
+    var imp=Math.round(dReach+cReach);
+    /* Awareness: digital ads amplify offline actions (a setting of this tool).
+       Floor at 1.0: below-baseline spend removes boost, doesn't penalize organic reach. */
+    var awareness=Math.max(1.0,1+0.3*(budget/M.base_budget-1));
+    var qr=Math.round(cReach*M.qr_rate*awareness);
+    /* Split conversion: community impressions convert 3.3× better than digital (trusted context) */
+    var enroll=Math.round(dReach*M.digital_enroll_rate+cReach*M.community_enroll_rate+partners*M.referrals_per_partner);
+    enroll=Math.max(enroll,1);
+    var cpa=budget/enroll;
+    return {imp:imp,qr:qr,enroll:enroll,cpa:Math.round(cpa)}
+  }
+
+  /* Initialize animated numbers with base-case values */
+  var initR=computeReach(M.defaults.budget,M.defaults.partners);
+  var baseR=initR; /* Store baseline for delta calculations */
+  var animImp=new AnimNum(document.getElementById("calcImpVal"),{initial:initR.imp});
+  var animQR=new AnimNum(document.getElementById("calcQRVal"),{initial:initR.qr});
+  var animEnroll=new AnimNum(document.getElementById("calcEnrollVal"),{initial:initR.enroll});
+  var animCPA=new AnimNum(document.getElementById("calcCPAVal"),{prefix:"$",initial:initR.cpa});
+  var calcHint=document.getElementById("calcHint");
+
+  /* Delta display helper: shows "▲ +34% vs base" or "▼ -18% vs base" */
+  function showDelta(elId,current,baseline,invert){
+    var el=document.getElementById(elId);
+    if(!el||current===baseline){el.textContent="";el.className="calc-metric-delta";return}
+    var pct=Math.round((current-baseline)/Math.max(baseline,1)*100);
+    var arrow=pct>0?"▲":"▼";var sign=pct>0?"+":"";
+    /* For CPA, lower is better: invert the color logic */
+    var cls=invert?(pct<0?"delta-up":"delta-down"):(pct>0?"delta-up":"delta-down");
+    if(pct===0)cls="delta-neutral";
+    el.textContent=arrow+" "+sign+pct+"% vs base";
+    el.className="calc-metric-delta "+cls
+  }
+
+  /* Slider fill gradient — accent color fills from left to thumb position */
+  function updateFill(slider){
+    var pct=((slider.value-slider.min)/(slider.max-slider.min))*100;
+    slider.style.backgroundSize=pct+"% 100%"
+  }
+  updateFill(sBudget);updateFill(sPartner);
+
+  /* Format helpers for slider value labels */
+  function fmtBudget(v){return "$"+Number(v).toLocaleString("en-US")}
+  function fmtPartner(v){return v}
+
+  /* Display initial value labels */
+  document.getElementById("calcBudgetVal").textContent=fmtBudget(M.defaults.budget);
+  document.getElementById("calcPartnerVal").textContent=fmtPartner(M.defaults.partners);
+
+  /* Unified input handler — called on every slider tick */
+  function onInput(){
+    var budget=parseInt(sBudget.value);
+    var partners=parseInt(sPartner.value);
+    updateFill(sBudget);updateFill(sPartner);
+    document.getElementById("calcBudgetVal").textContent=fmtBudget(budget);
+    document.getElementById("calcPartnerVal").textContent=fmtPartner(partners);
+
+    var r=computeReach(budget,partners);
+    animImp.set(r.imp);animQR.set(r.qr);animEnroll.set(r.enroll);animCPA.set(r.cpa);
+    /* BUILD IC-4 (D6): no clamp — a cost per enrollment far from the base case's (over 5x, under a fifth) shows, labelled */
+    var cpaNote=document.getElementById("calcCPANote");
+    if(cpaNote){var far=baseR.cpa>0&&(r.cpa>5*baseR.cpa||r.cpa<baseR.cpa/5);
+      cpaNote.textContent=far?"far from the base case — a result of these settings, not a measured cost":"acquisition cost"}
+
+    /* Delta indicators: % change from baseline (research: all 4 sources recommend) */
+    var modified=budget!==M.defaults.budget||partners!==M.defaults.partners;
+    if(modified){
+      showDelta("calcImpDelta",r.imp,baseR.imp,false);
+      showDelta("calcQRDelta",r.qr,baseR.qr,false);
+      showDelta("calcEnrollDelta",r.enroll,baseR.enroll,false);
+      showDelta("calcCPADelta",r.cpa,baseR.cpa,true); /* CPA inverted: lower=better=green */
+    } else {
+      ["calcImpDelta","calcQRDelta","calcEnrollDelta","calcCPADelta"].forEach(function(id){
+        var el=document.getElementById(id);if(el){el.textContent="";el.className="calc-metric-delta"}});
+    }
+
+    /* Hide hint text after first interaction */
+    if(calcHint&&modified)calcHint.classList.add("hidden");
+
+    var cpaEl=document.getElementById("calcCPAVal");
+    cpaEl.classList.remove("cpa-good","cpa-warn","cpa-high");     /* no colour band: a fixed cut-off of no source would judge the result */
+
+    /* ARIA: update valuetext so screen readers announce meaningful labels */
+    sBudget.setAttribute("aria-valuetext",fmtBudget(budget)+" monthly budget");
+    sPartner.setAttribute("aria-valuetext",partners+" community partners");
+
+    /* Modified border glow when sliders differ from defaults */
+    document.querySelectorAll(".calc-metric").forEach(function(c){
+      c.classList.toggle("modified",modified)});
+    document.getElementById("calcReset").classList.toggle("show",modified);
+  }
+  sBudget.addEventListener("input",onInput);
+  sPartner.addEventListener("input",onInput);
+
+  /* Reset button */
+  document.getElementById("calcReset").addEventListener("click",function(){
+    sBudget.value=M.defaults.budget;sPartner.value=M.defaults.partners;
+    onInput();
+  });
+})()}
+</script>
+
+<script>
+/* ═══ Accordion Timeline — true accordion, always-one-open ═══ */
+(function(){
+  var tl=document.querySelector('.timeline');
+  if(!tl)return;
+  function getTriggers(){return[].slice.call(tl.querySelectorAll('.phase-trigger'))}
+  function togglePhase(trigger){
+    if(trigger.getAttribute('aria-expanded')==='true')return;
+    getTriggers().forEach(function(t){
+      var phase=t.closest('.phase');
+      var isTarget=t===trigger;
+      phase.classList.toggle('is-open',isTarget);
+      t.setAttribute('aria-expanded',String(isTarget));
+    });
+  }
+  tl.addEventListener('click',function(e){
+    var trigger=e.target.closest('.phase-trigger');
+    if(trigger&&tl.contains(trigger))togglePhase(trigger);
+  });
+  tl.addEventListener('keydown',function(e){
+    var trigger=e.target.closest('.phase-trigger');
+    if(!trigger||!tl.contains(trigger))return;
+    var list=getTriggers();var idx=list.indexOf(trigger);
+    switch(e.key){
+      case'ArrowDown':e.preventDefault();list[(idx+1)%list.length].focus();break;
+      case'ArrowUp':e.preventDefault();list[(idx-1+list.length)%list.length].focus();break;
+      case'Home':e.preventDefault();list[0].focus();break;
+      case'End':e.preventDefault();list[list.length-1].focus();break;
+    }
+  });
+})();
+</script>
+{% if chatbot_enabled %}
+<script>{% raw %}
+/* === CHAT READER (P0.11b) — byte-identical in the Oracle, Architect and Muse pages === */
+(function () {
+  var C = window.CHAT;
+  if (!C || !C.proxy || !C.context_id) return;
+  function $(id) { return document.getElementById(id); }
+  var box = $("chatMessages") || $("chat-body"), input = $("chatInput") || $("chat-q"), send = $("chatSend") || $("chat-send");
+  var fab = $("chatFab"), panel = $("chatPanel") || $("chatbot"), closeBtn = $("chatClose"), toggle = $("chat-toggle"), head = $("chat-head"), tip = $("chat-tip");
+  var note = $("chatUnavailable"), faq = $("chatFaq");
+  if (!box || !input || !send || !panel) return;
+  var RELOAD = "That message couldn't be sent. Please reload the page and try again.";
+  var CUT = "The answer was interrupted. Please try again.";
+  var DATA = "This page's chat data didn't load. Please reload the page.";
+  var NOTHERE = "Chat isn't available on this copy of the page.";
+  var MSG = {
+    chat_disabled: "Chat is switched off right now. The quick answers below cover the common questions.",
+    chat_budget_unavailable: "Chat has reached its usage limit for now. The quick answers below cover the common questions.",
+    chat_configuration_error: "Chat isn't available right now. The quick answers below cover the common questions.",
+    chat_busy: "Chat is busy right now.",
+    chat_upstream_unavailable: "The AI service is temporarily unavailable.",
+    chat_timeout: "The answer took too long. Please try again.",
+    client_identity_unavailable: "Chat isn't available right now.",
+    origin_not_allowed: NOTHERE, preflight_denied: NOTHERE, method_not_allowed: NOTHERE, not_found: NOTHERE,
+    context_unavailable: DATA, context_invalid: DATA, context_too_large: DATA,
+    empty_message: "Type a question first.",
+    message_too_long: "That question is too long (2,000 characters at most).",
+    conversation_too_long: "This conversation is too long. Reload the page to start a new one.",
+    body_too_large: "This conversation is too long. Reload the page to start a new one.",
+    invalid_json: RELOAD, empty_body: RELOAD, json_required: RELOAD, invalid_request: RELOAD, invalid_context_id: RELOAD,
+    invalid_message_count: RELOAD, invalid_message: RELOAD, invalid_turn_order: RELOAD,
+    incomplete_stream: CUT, interrupted_stream: CUT, upstream_stream_error: CUT, invalid_upstream_stream: CUT,
+    _http: "Chat isn't available right now.",
+    _unreachable: "Chat is busy or unreachable. Please try again in a moment.",
+    _cut: "The answer was cut off. Try asking a narrower question.",
+    _refusal: "I can't help with that one. Try a question about the data on this page.",
+    _empty: "No answer came back. Please try again."
+  };
+  var OFF = { chat_disabled: 1, chat_budget_unavailable: 1, chat_configuration_error: 1 };
+  var history = [], busy = false;
+  function openPanel() {
+    if (fab) panel.classList.add("open"); else { panel.style.display = "flex"; if (toggle) toggle.style.display = "none"; }
+    if (tip && tip.parentNode) tip.parentNode.removeChild(tip);
+    input.focus();
+  }
+  function closePanel() {
+    if (fab) panel.classList.remove("open"); else { panel.style.display = "none"; if (toggle) toggle.style.display = "flex"; }
+  }
+  if (fab) fab.addEventListener("click", openPanel);
+  if (closeBtn) closeBtn.addEventListener("click", closePanel);
+  if (toggle) toggle.addEventListener("click", openPanel);
+  if (head && !fab) head.addEventListener("click", closePanel);
+  if (tip) setTimeout(function () { tip.classList.add("hide"); setTimeout(function () { if (tip.parentNode) tip.parentNode.removeChild(tip); }, 600); }, 6000);
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  /* BUILD IC-5 (D11): a tag form the pages' rule reads becomes the page's words (the table: window.CHAT.tags, from the registry) —
+     on the answer's own text, before md() escapes it (D11b: the pages' order, REG.out_text's; md stays esc(t)'s markup) */
+  var TT = C.tags || null, TAG = null, TAGP = null, TAGO = null, CONF = null;
+  try {
+    if (TT && TT.any) {
+      TAG = new RegExp(TT.any, "gi"); TAGP = new RegExp("\\(\\s*(?:" + TT.any + ")\\s*\\)", "gi");
+      TAGO = new RegExp("\\(\\s*(?:" + TT.any + ")", "gi"); CONF = new RegExp(TT.confidence, "i");
+    }
+  } catch (e) { TAG = null; }
+  function tagWords(g) {
+    var w = g.w || g.wb, c = String((g.w ? g.c : g.cb) || "").trim().replace(/^[:\uff1a,\-\u2013\u2014]+/, "").trim();
+    var k = String(w || "").toLowerCase().replace(/[\s_-]+/g, ""); k = (TT.kinds && TT.kinds[k]) || k;
+    if (k === "data") {
+      var n = c.split(/[,;]/).map(function (x) { return x.trim(); }).filter(function (x) { return x; });
+      return n.length ? "data: " + n.join(", ") : "data";
+    }
+    if (k === "estimate") {
+      var m = CONF ? c.match(CONF) : null;
+      return m ? "estimate, " + m[1].toLowerCase() + (m[2] ? "\u2013" + m[2].toLowerCase() : "") + " confidence" : "estimate";
+    }
+    return c ? k + ": " + c : k;
+  }
+  function untag(s) {
+    if (!TAG) return s;
+    function one(open, close) { return function () { var a = arguments, g = a[a.length - 1]; return open + tagWords(g) + close; }; }
+    return s.replace(TAGP, one("(", ")")).replace(TAGO, one("(", "")).replace(TAG, one("(", ")"));
+  }
+  /* while streaming, the words after an unclosed bracket wait for its close, or for TT.hold characters (no tag is shown half-written) */
+  var HOLD = new RegExp("[\\[\u3010\uff3b][^\\]\u3011\uff3d]{0," + ((TT && TT.hold ? TT.hold : 60) - 1) + "}$");
+  function held(t) { var m = HOLD.exec(t); return m ? t.slice(0, m.index) : t; }
+  function md(t) {
+    return esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>")
+      .replace(/^- (.+)$/gm, "\u2022 $1").replace(/\n/g, "<br>");
+  }
+  /* BUILD IC-5 (D2 g): a bubble's first words are set as text — the user's question, or the reply's "" or "\u2026" — never as markup */
+  function add(role, text) {
+    var d = document.createElement("div");
+    d.className = "chat-msg " + role;
+    d.textContent = text;
+    box.appendChild(d); box.scrollTop = box.scrollHeight;
+    return d;
+  }
+  function showError(bubble, text, partial) {
+    bubble.className = "chat-msg error";
+    bubble.innerHTML = (partial ? md(untag(partial)) + "<br>" : "") + esc(text);
+  }
+  /* The proxy accepts 1, 3 or 5 messages that start and end with a user turn: trim whole pairs from the front. */
+  function trimHistory() { while (history.length > 5) history.splice(0, 2); }
+  function ask(q) {
+    q = String(q == null ? "" : q).trim();
+    if (!q || busy) return Promise.resolve(false);
+    if (q.length > 2000) { showError(add("ai", ""), MSG.message_too_long); return Promise.resolve(false); }
+    busy = true; send.disabled = true;
+    add("user", q); input.value = "";
+    history.push({ role: "user", content: q }); trimHistory();
+    var bubble = add("ai", "\u2026"), text = "", stop = null, state = "open", code = "";
+    function end(ok) {
+      if (!ok && history.length && history[history.length - 1].role === "user") history.pop();   /* never leave an unanswered turn */
+      busy = false; send.disabled = false;
+      return ok;
+    }
+    return fetch(String(C.proxy).replace(/\/+$/, "") + "/chat", {
+      method: "POST", credentials: "omit", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ context_id: C.context_id, messages: history })
+    }).then(function (r) {
+      if (!r.ok) {
+        var ra = r.headers.get("Retry-After");
+        return r.json().catch(function () { return null; }).then(function (j) {
+          var c = j && j.error && j.error.code ? String(j.error.code) : "";
+          if (OFF[c]) { if (note) note.hidden = false; if (faq) faq.open = true; }
+          showError(bubble, (MSG[c] || MSG._http) + (ra && /^\d+$/.test(ra) ? " Try again in " + ra + " s." : ""));
+          return end(false);
+        });
+      }
+      var rd = r.body.getReader(), dec = new TextDecoder("utf-8"), buf = "";
+      function frame(f) {
+        var ev = "", data = [], lines = f.split("\n");
+        for (var i = 0; i < lines.length; i++) {
+          if (lines[i].indexOf("event:") === 0) ev = lines[i].slice(6).trim();
+          else if (lines[i].indexOf("data:") === 0) data.push(lines[i].slice(5).replace(/^ /, ""));
+        }
+        if (!data.length) return;
+        var o;
+        try { o = JSON.parse(data.join("\n")); } catch (e) { return; }
+        var t = o && o.type;
+        if (ev === "error" || t === "error") { state = "error"; code = o && o.error && o.error.code ? String(o.error.code) : ""; return; }
+        if (t === "content_block_delta" && o.delta && o.delta.type === "text_delta" && typeof o.delta.text === "string") {
+          text += o.delta.text; bubble.innerHTML = md(untag(held(text))); box.scrollTop = box.scrollHeight;
+        } else if (t === "message_delta" && o.delta && o.delta.stop_reason) {
+          stop = o.delta.stop_reason;
+        } else if (t === "message_stop") {
+          state = "stopped";
+        }
+      }
+      /* Frames end at a blank line; lines end with LF, CRLF or CR. A trailing lone CR waits for the next chunk. */
+      function drain(final) {
+        var keep = !final && buf.charAt(buf.length - 1) === "\r";
+        var s = (keep ? buf.slice(0, -1) : buf).replace(/\r\n?/g, "\n");
+        var parts = s.split("\n\n"), rest = parts.pop();
+        buf = rest + (keep ? "\r" : "");
+        for (var i = 0; i < parts.length && state === "open"; i++) frame(parts[i]);
+        if (final && state === "open" && rest.trim()) frame(rest);
+      }
+      function finish() {
+        if (state === "stopped" && stop === "end_turn") {
+          if (!text.trim()) { showError(bubble, MSG._empty); return end(false); }
+          bubble.innerHTML = md(untag(text));             /* BUILD IC-5 (D11): the whole answer, a held tail included */
+          history.push({ role: "assistant", content: text }); trimHistory();
+          busy = false; send.disabled = false;
+          return true;
+        }
+        if (state === "stopped" && stop === "max_tokens") { showError(bubble, MSG._cut, text); return end(false); }
+        if (state === "stopped" && stop === "refusal") {
+          bubble.className = "chat-msg ai"; bubble.innerHTML = esc(MSG._refusal);
+          history = []; busy = false; send.disabled = false;
+          return false;
+        }
+        showError(bubble, MSG[code] || CUT, text);
+        return end(false);
+      }
+      function pump() {
+        return rd.read().then(function (res) {
+          if (res.done) { buf += dec.decode(); drain(true); return finish(); }
+          buf += dec.decode(res.value, { stream: true }); drain(false);
+          if (state !== "open") { rd.cancel().catch(function () {}); return finish(); }
+          return pump();
+        });
+      }
+      return pump();
+    }).catch(function () { showError(bubble, MSG._unreachable, text); return end(false); });
+  }
+  send.addEventListener("click", function () { ask(input.value); });
+  input.addEventListener("keydown", function (e) { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); ask(input.value); } });
+  var chips = document.querySelectorAll(".chat-chip[data-q]");
+  for (var i = 0; i < chips.length; i++) chips[i].addEventListener("click", function () {
+    var q = this.getAttribute("data-q");
+    if (q) { ask(q); if (this.parentElement) this.parentElement.style.display = "none"; }
+  });
+  window.openChatbot = function (q) { openPanel(); return ask(q); };
+  var asks = document.querySelectorAll(".ask-ai-btn[data-ask]");
+  for (var k = 0; k < asks.length; k++) asks[k].addEventListener("click", function () {
+    var t = this.getAttribute("data-ask");
+    if (t) window.openChatbot("What evidence supports the finding: " + t + "? Cite the specific data sources and explain.");
+  });
+  window.ChatReader = { ask: ask, history: function () { return history.slice(); }, codes: function () { return Object.keys(MSG); } };
+})();
+/* === END CHAT READER === */
+{% endraw %}</script>
+{% endif %}
+</body>
+</html>

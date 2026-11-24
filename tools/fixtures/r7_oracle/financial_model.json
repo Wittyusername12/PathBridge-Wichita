@@ -1,0 +1,1516 @@
+{
+  "stage": "financial_model",
+  "ts": "2026-11-16T23:57:42.299473+00:00",
+  "data": {
+    "materiality": [
+      {
+        "i": 0,
+        "outcome": "Emergency department visits avoided by keeping KanCare coverage through moves",
+        "core": null,
+        "why": "",
+        "status": "valued",
+        "by": "py",
+        "sroi_n": 1,
+        "unit_ref": "ext.er_visit_cost"
+      },
+      {
+        "i": 1,
+        "outcome": "Food assistance secured through expedited SNAP for homeless applicants",
+        "core": null,
+        "why": "",
+        "status": "valued",
+        "by": "py",
+        "sroi_n": 2,
+        "unit_ref": null
+      },
+      {
+        "i": 2,
+        "outcome": "Education funding unlocked through ETV for enrolled former foster youth",
+        "core": null,
+        "why": "",
+        "status": "valued",
+        "by": "py",
+        "sroi_n": 3,
+        "unit_ref": null
+      },
+      {
+        "i": 3,
+        "outcome": "Stable housing placement through NEXTenant, rapid rehousing or Housing First",
+        "core": null,
+        "why": "The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.",
+        "status": "material, not valued",
+        "by": "model"
+      },
+      {
+        "i": 4,
+        "outcome": "CrossRoads youth exits with a confirmed next placement",
+        "core": null,
+        "why": "This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.",
+        "status": "material, not valued",
+        "by": "model"
+      },
+      {
+        "i": 5,
+        "outcome": "Identity documents obtained",
+        "core": null,
+        "why": "Documents are an input to the benefits, housing and work outcomes already listed. Counting them separately would overstate value by counting the same benefit again.",
+        "status": "not material",
+        "by": "model"
+      }
+    ],
+    "sroi_partial": true,
+    "coi": {
+      "coi_y1": 126180,
+      "coi_y2": 151416,
+      "coi_y3": 174023,
+      "total": 451619,
+      "deadweight": 0.25,
+      "outcomes": 3
+    },
+    "registry_items": [
+      {
+        "id": "target_beneficiaries_y1",
+        "value": 240,
+        "kind": "MODELED",
+        "fmt": "count",
+        "label": "the Year-1 target of people served",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "growth_rate_y2",
+        "value": 0.2,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "growth in people served, Year 2",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "growth_rate_y3",
+        "value": 0.15,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "growth in people served, Year 3",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "ops_cost_y1",
+        "value": 60000,
+        "kind": "MODELED",
+        "fmt": "money",
+        "label": "Year-1 operations cost",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "tech_cost_y1",
+        "value": 30000,
+        "kind": "MODELED",
+        "fmt": "money",
+        "label": "Year-1 technology cost",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "outreach_cost_y1",
+        "value": 100000,
+        "kind": "MEASURED",
+        "fmt": "money",
+        "unit": "USD",
+        "label": "Year-1 outreach cost (the brief's marketing reserve)",
+        "source": "the brief: “$100,000 is reserved for marketing, trust-building, and adoption.”"
+      },
+      {
+        "id": "supplemental_grants_y2",
+        "value": 40000,
+        "kind": "MODELED",
+        "fmt": "money",
+        "label": "supplemental grants, Year 2",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "supplemental_grants_y3",
+        "value": 60000,
+        "kind": "MODELED",
+        "fmt": "money",
+        "label": "supplemental grants, Year 3",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "earned_revenue_y3",
+        "value": 0,
+        "kind": "MODELED",
+        "fmt": "money",
+        "label": "earned revenue, Year 3",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "indirect_rate",
+        "value": 0.15,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "the indirect cost rate",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "deadweight",
+        "value": 0.25,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "SROI deadweight: what would have happened anyway",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "attribution",
+        "value": 0.3,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "SROI attribution: the share others caused",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "displacement",
+        "value": 0.05,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "SROI displacement: outcomes moved, not created",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "drop_off_rate",
+        "value": 0.2,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "SROI drop-off: how much an outcome fades each year",
+        "source": "the model's proposal (master analysis)"
+      },
+      {
+        "id": "discount_rate",
+        "value": 0.035,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "the discount rate",
+        "source": "the SROI Guide's rate, HM Treasury's Green Book public-sector rate",
+        "assumption": "a method constant of this model (a social return on investment, by the SROI Guide's (2012) method); the model's value is not used"
+      },
+      {
+        "id": "const.personnel_growth_y2",
+        "value": 1.18,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "Year-2 personnel cost, a multiple of Year 1",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "personnel cost in Year 2 = Year 1 × 1.18 (raises and added staff as the program grows) — a Python constant, not from the data"
+      },
+      {
+        "id": "const.personnel_growth_y3",
+        "value": 1.33,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "Year-3 personnel cost, a multiple of Year 1",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "personnel cost in Year 3 = Year 1 × 1.33 — the same basis"
+      },
+      {
+        "id": "const.ops_growth_y2",
+        "value": 1.12,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "Year-2 operations cost, a multiple of Year 1",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "operations cost in Year 2 = Year 1 × 1.12 (more people served) — a Python constant"
+      },
+      {
+        "id": "const.ops_growth_y3",
+        "value": 1.25,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "Year-3 operations cost, a multiple of Year 1",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "operations cost in Year 3 = Year 1 × 1.25 — the same basis"
+      },
+      {
+        "id": "const.tech_share_y2",
+        "value": 0.67,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "Year-2 technology cost, a multiple of Year 1",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "technology cost in Year 2 = Year 1 × 0.67 (the build falls to upkeep) — a Python constant"
+      },
+      {
+        "id": "const.tech_share_y3",
+        "value": 0.56,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "Year-3 technology cost, a multiple of Year 1",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "technology cost in Year 3 = Year 1 × 0.56 — the same basis"
+      },
+      {
+        "id": "const.outreach_share_y2",
+        "value": 0.75,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "Year-2 outreach cost, a multiple of Year 1",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "outreach in Year 2 = Year 1 × 0.75 (the launch campaign tapers) — a Python constant"
+      },
+      {
+        "id": "const.outreach_share_y3",
+        "value": 0.6,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "Year-3 outreach cost, a multiple of Year 1",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "outreach in Year 3 = Year 1 × 0.60 — the same basis"
+      },
+      {
+        "id": "const.personnel_cap",
+        "value": 0.48,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "the personnel cap, a share of the budget less the marketing reserve",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "personnel may take at most 48% of the budget less the marketing reserve, so the base case keeps a surplus — a Python guardrail"
+      },
+      {
+        "id": "const.bull_revenue_y1",
+        "value": 1.3,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the optimistic case's Year-1 revenue, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the optimistic case's Year-1 revenue = base × 1.30 (supplemental grants, partnerships) — a Python scenario setting"
+      },
+      {
+        "id": "const.bull_revenue_y2",
+        "value": 1.3,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the optimistic case's Year-2 revenue, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the optimistic case's Year-2 revenue = base × 1.30 — the same basis"
+      },
+      {
+        "id": "const.bull_revenue_y3",
+        "value": 1.26,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the optimistic case's Year-3 revenue, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the optimistic case's Year-3 revenue = base × 1.26 — the same basis"
+      },
+      {
+        "id": "const.bull_expense_later",
+        "value": 0.95,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the optimistic case's Years 2–3 expenses, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the optimistic case's Years 2–3 expenses = base × 0.95 (efficiency); Year 1 unchanged — a Python scenario setting"
+      },
+      {
+        "id": "const.bull_reach",
+        "value": 1.3,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the optimistic case's people served, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the optimistic case's people served = base × 1.3 — a Python scenario setting"
+      },
+      {
+        "id": "const.bear_revenue_y3",
+        "value": 0.95,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the conservative case's Year-3 revenue, a multiple of the contract",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the conservative case's Year-3 revenue = the contract × 0.95 (funding uncertainty); Years 1–2 the contract alone"
+      },
+      {
+        "id": "const.bear_expense_y2",
+        "value": 0.92,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the conservative case's Year-2 expenses, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the conservative case's Year-2 expenses = base × 0.92 (a smaller scope) — a Python scenario setting"
+      },
+      {
+        "id": "const.bear_expense_y3",
+        "value": 0.86,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the conservative case's Year-3 expenses, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the conservative case's Year-3 expenses = base × 0.86 — the same basis"
+      },
+      {
+        "id": "const.bear_reach",
+        "value": 0.66,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the conservative case's people served, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the conservative case's people served = base × 0.66 — a Python scenario setting"
+      },
+      {
+        "id": "const.stress_reach",
+        "value": 0.8,
+        "kind": "MODELED",
+        "fmt": "num",
+        "label": "the stress case's Year-1 people served, a multiple of the base",
+        "source": "a setting of this model, not a measured figure",
+        "assumption": "the stress case: Year-1 people served × 0.8 (20% fewer reached), the same Year-1 expenses — a Python setting"
+      },
+      {
+        "id": "staff.1.salary",
+        "value": 51000,
+        "kind": "MODELED",
+        "label": "Lead Transition Navigator: salary",
+        "label_model": "Lead Transition Navigator",
+        "fmt": "money",
+        "source": "the model's staffing plan, citing community health workers' median pay, May 2025"
+      },
+      {
+        "id": "staff.1.count",
+        "value": 1,
+        "kind": "MODELED",
+        "label": "Lead Transition Navigator: count",
+        "label_model": "Lead Transition Navigator",
+        "fmt": "count",
+        "source": "the model's staffing plan"
+      },
+      {
+        "id": "staff.1.benefits_pct",
+        "value": 0.25,
+        "kind": "MODELED",
+        "label": "Lead Transition Navigator: benefits pct",
+        "label_model": "Lead Transition Navigator",
+        "fmt": "pct",
+        "source": "the model's staffing plan"
+      },
+      {
+        "id": "staff.2.salary",
+        "value": 50000,
+        "kind": "MODELED",
+        "label": "Transition Navigator: salary",
+        "label_model": "Transition Navigator",
+        "fmt": "money",
+        "source": "the model's staffing plan, citing community health workers' median pay, May 2025"
+      },
+      {
+        "id": "staff.2.count",
+        "value": 2,
+        "kind": "MODELED",
+        "label": "Transition Navigator: count",
+        "label_model": "Transition Navigator",
+        "fmt": "count",
+        "source": "the model's staffing plan"
+      },
+      {
+        "id": "staff.2.benefits_pct",
+        "value": 0.25,
+        "kind": "MODELED",
+        "label": "Transition Navigator: benefits pct",
+        "label_model": "Transition Navigator",
+        "fmt": "pct",
+        "source": "the model's staffing plan"
+      },
+      {
+        "id": "staff_count",
+        "value": 3,
+        "kind": "MODELED",
+        "fmt": "num",
+        "unit": "staff",
+        "label": "staff in the plan",
+        "source": "the model's staffing plan"
+      },
+      {
+        "id": "beneficiaries_y1",
+        "value": 240,
+        "kind": "MODELED",
+        "fmt": "count",
+        "unit": "people",
+        "label": "people served in Year 1",
+        "formula": "the Year-1 target, grown by the Year-2 and Year-3 growth rates",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "beneficiaries_y2",
+        "value": 288,
+        "kind": "MODELED",
+        "fmt": "count",
+        "unit": "people",
+        "label": "people served in Year 2",
+        "formula": "the Year-1 target, grown by the Year-2 and Year-3 growth rates",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "beneficiaries_y3",
+        "value": 331,
+        "kind": "MODELED",
+        "fmt": "count",
+        "unit": "people",
+        "label": "people served in Year 3",
+        "formula": "the Year-1 target, grown by the Year-2 and Year-3 growth rates",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "cpb_y1",
+        "value": 1815,
+        "kind": "MODELED",
+        "fmt": "money",
+        "unit": "USD per person",
+        "label": "cost per person, Year 1",
+        "formula": "total expenses ÷ people served",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "cpb_y2",
+        "value": 1537,
+        "kind": "MODELED",
+        "fmt": "money",
+        "unit": "USD per person",
+        "label": "cost per person, Year 2",
+        "formula": "total expenses ÷ people served",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "cpb_y3",
+        "value": 1400,
+        "kind": "MODELED",
+        "fmt": "money",
+        "unit": "USD per person",
+        "label": "cost per person, Year 3",
+        "formula": "total expenses ÷ people served",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "total_exp_y1",
+        "value": 435562,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "total expenses, Year 1",
+        "formula": "personnel + operations + technology + outreach + indirect",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "total_exp_y2",
+        "value": 442779,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "total expenses, Year 2",
+        "formula": "personnel + operations + technology + outreach + indirect",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "total_exp_y3",
+        "value": 463264,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "total expenses, Year 3",
+        "formula": "personnel + operations + technology + outreach + indirect",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "total_rev_y1",
+        "value": 500000,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "total revenue, Year 1",
+        "formula": "the budget + grants + earned revenue",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "total_rev_y2",
+        "value": 540000,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "total revenue, Year 2",
+        "formula": "the budget + grants + earned revenue",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "total_rev_y3",
+        "value": 560000,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "total revenue, Year 3",
+        "formula": "the budget + grants + earned revenue",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "surplus_y1",
+        "value": 64438,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "surplus, Year 1",
+        "formula": "revenue − expenses",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "surplus_y2",
+        "value": 97221,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "surplus, Year 2",
+        "formula": "revenue − expenses",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "surplus_y3",
+        "value": 96736,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "surplus, Year 3",
+        "formula": "revenue − expenses",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "personnel_y1",
+        "value": 188750,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "personnel, Year 1",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "ops_y1",
+        "value": 60000,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "operations, Year 1",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "tech_y1",
+        "value": 30000,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "technology, Year 1",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "outreach_y1",
+        "value": 100000,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "outreach, Year 1",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "indirect_y1",
+        "value": 56812,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "indirect costs, Year 1",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "contingency_y1",
+        "value": 64438,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "the budget less Year-1 expenses",
+        "source": "Python's financial model"
+      },
+      {
+        "id": "stress_beneficiaries_y1",
+        "value": 192,
+        "kind": "MODELED",
+        "fmt": "count",
+        "unit": "people",
+        "label": "Year-1 people served if 20% fewer are reached",
+        "formula": "Year-1 people served × 80% (the stress case's reach)",
+        "source": "Python's stress case"
+      },
+      {
+        "id": "stress_cpb_y1",
+        "value": 2269,
+        "kind": "MODELED",
+        "fmt": "money",
+        "unit": "USD per person",
+        "label": "Year-1 cost per person if 20% fewer are reached",
+        "formula": "Year-1 total expenses ÷ Year-1 people served in the stress case",
+        "source": "Python's stress case"
+      },
+      {
+        "id": "sroi.1.unit_value",
+        "value": 750.0,
+        "kind": "EXTERNAL",
+        "fmt": "money",
+        "unit": "USD per outcome",
+        "label": "Emergency department visits avoided by keeping KanCare coverage through moves: value of one outcome",
+        "label_model": "Emergency department visits avoided by keeping KanCare coverage through moves",
+        "source": "AHRQ HCUP Statistical Brief #311 (Sept 2024) (an average cost: the SROI Guide (p. 51) — “When you use unit costs be careful not to overstate the savings.”)",
+        "verified": {
+          "verified": "yes",
+          "url": "https://hcup-us.ahrq.gov/reports/statbriefs/sb311-ED-visit-costs-2021.pdf",
+          "quote": "with an average cost per visit of $750",
+          "checked": "2026-11-09"
+        }
+      },
+      {
+        "id": "sroi.1.rate",
+        "value": 0.3,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "Emergency department visits avoided by keeping KanCare coverage through moves: outcomes per person served",
+        "label_model": "Emergency department visits avoided by keeping KanCare coverage through moves",
+        "source": "a rate per person served (the model's)"
+      },
+      {
+        "id": "sroi.1.duration",
+        "value": 1,
+        "kind": "MODELED",
+        "fmt": "count",
+        "unit": "years",
+        "label": "Emergency department visits avoided by keeping KanCare coverage through moves: years the outcome lasts",
+        "label_model": "Emergency department visits avoided by keeping KanCare coverage through moves",
+        "source": "the model's"
+      },
+      {
+        "id": "sroi.2.unit_value",
+        "value": 1404.0,
+        "kind": "MODELED",
+        "fmt": "money",
+        "unit": "USD per outcome",
+        "label": "Food assistance secured through expedited SNAP for homeless applicants: value of one outcome",
+        "label_model": "Food assistance secured through expedited SNAP for homeless applicants",
+        "source": "the model's proxy value, citing: stabilization-docs doc-006: single-adult benefit of [[q.e0e70]], held until recertification, which falls [[q.96a46]] months (estimate)",
+        "verified": null
+      },
+      {
+        "id": "sroi.2.rate",
+        "value": 0.25,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "Food assistance secured through expedited SNAP for homeless applicants: outcomes per person served",
+        "label_model": "Food assistance secured through expedited SNAP for homeless applicants",
+        "source": "a rate per person served (the model's)"
+      },
+      {
+        "id": "sroi.2.duration",
+        "value": 1,
+        "kind": "MODELED",
+        "fmt": "count",
+        "unit": "years",
+        "label": "Food assistance secured through expedited SNAP for homeless applicants: years the outcome lasts",
+        "label_model": "Food assistance secured through expedited SNAP for homeless applicants",
+        "source": "the model's"
+      },
+      {
+        "id": "sroi.3.unit_value",
+        "value": 2500.0,
+        "kind": "MODELED",
+        "fmt": "money",
+        "unit": "USD per outcome",
+        "label": "Education funding unlocked through ETV for enrolled former foster youth: value of one outcome",
+        "label_model": "Education funding unlocked through ETV for enrolled former foster youth",
+        "source": "the model's proxy value, citing: transition-programs prog-002: ETV funds [[q.ee29d]]; valued at [[model:50%|share of the ETV cap used as the proxy]] of that cap (estimate)",
+        "verified": null
+      },
+      {
+        "id": "sroi.3.rate",
+        "value": 0.05,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "Education funding unlocked through ETV for enrolled former foster youth: outcomes per person served",
+        "label_model": "Education funding unlocked through ETV for enrolled former foster youth",
+        "source": "a rate per person served (the model's)"
+      },
+      {
+        "id": "sroi.3.duration",
+        "value": 1,
+        "kind": "MODELED",
+        "fmt": "count",
+        "unit": "years",
+        "label": "Education funding unlocked through ETV for enrolled former foster youth: years the outcome lasts",
+        "label_model": "Education funding unlocked through ETV for enrolled former foster youth",
+        "source": "the model's"
+      },
+      {
+        "id": "sroi",
+        "value": 0.2231985155765583,
+        "kind": "MODELED",
+        "fmt": "ratio",
+        "label": "social return on investment: PV of social value ÷ PV of cost",
+        "formula": "$279,447 ÷ $1,252,009",
+        "source": "Python's SROI model on the model's outcomes",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      },
+      {
+        "id": "discount_rate_low",
+        "value": 0.03,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "a discount rate of the sensitivity pair",
+        "source": "the pair OMB Circular A-4 (2003) asks US federal regulatory analysis to report; not binding on a city program"
+      },
+      {
+        "id": "discount_rate_high",
+        "value": 0.07,
+        "kind": "MODELED",
+        "fmt": "pct",
+        "label": "a discount rate of the sensitivity pair",
+        "source": "the pair OMB Circular A-4 (2003) asks US federal regulatory analysis to report; not binding on a city program"
+      },
+      {
+        "id": "sroi_at_3pct",
+        "value": 0.22329122897893044,
+        "kind": "MODELED",
+        "fmt": "ratio",
+        "label": "the SROI ratio at the sensitivity pair's 3% rate",
+        "formula": "$282,282 ÷ $1,264,190",
+        "inputs": [
+          "discount_rate_low"
+        ],
+        "source": "Python's SROI model on the model's outcomes, the same costs",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      },
+      {
+        "id": "sroi_at_7pct",
+        "value": 0.2225610904945882,
+        "kind": "MODELED",
+        "fmt": "ratio",
+        "label": "the SROI ratio at the sensitivity pair's 7% rate",
+        "formula": "$260,835 ÷ $1,171,969",
+        "inputs": [
+          "discount_rate_high"
+        ],
+        "source": "Python's SROI model on the model's outcomes, the same costs",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      },
+      {
+        "id": "sroi_per_dollar",
+        "value": 0.2231985155765583,
+        "kind": "MODELED",
+        "fmt": "per_dollar",
+        "unit": "USD of social value per USD 1",
+        "label": "social value per $1 invested",
+        "formula": "the SROI ratio",
+        "source": "Python's SROI model",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      },
+      {
+        "id": "sroi_pv_benefits",
+        "value": 279446.63292499003,
+        "kind": "MODELED",
+        "fmt": "money",
+        "unit": "USD",
+        "label": "present value of the counted social value",
+        "source": "Python's SROI model",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      },
+      {
+        "id": "sroi_pv_cost",
+        "value": 1252009.3702376722,
+        "kind": "MODELED",
+        "fmt": "money",
+        "unit": "USD",
+        "label": "present value of the three years' cost",
+        "source": "Python's SROI model"
+      },
+      {
+        "id": "sroi_horizon_years",
+        "value": 3,
+        "kind": "MODELED",
+        "fmt": "count",
+        "unit": "years",
+        "label": "the years over which outcomes are counted",
+        "source": "Python's SROI model: the longest outcome's last year"
+      },
+      {
+        "id": "coi_y1",
+        "value": 126180,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "cost of inaction, Year 1",
+        "formula": "Σ over the valued outcomes: rate × Year-1 people served × unit value × (1 − deadweight)",
+        "inputs": [
+          "beneficiaries_y1",
+          "deadweight",
+          "sroi.1.rate",
+          "sroi.1.unit_value",
+          "sroi.2.rate",
+          "sroi.2.unit_value",
+          "sroi.3.rate",
+          "sroi.3.unit_value"
+        ],
+        "source": "Python's cost of inaction, from the valued outcomes",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      },
+      {
+        "id": "coi_y2",
+        "value": 151416,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "cost of inaction, Year 2",
+        "formula": "Σ over the valued outcomes: rate × Year-2 people served × unit value × (1 − deadweight)",
+        "inputs": [
+          "beneficiaries_y2",
+          "deadweight",
+          "sroi.1.rate",
+          "sroi.1.unit_value",
+          "sroi.2.rate",
+          "sroi.2.unit_value",
+          "sroi.3.rate",
+          "sroi.3.unit_value"
+        ],
+        "source": "Python's cost of inaction, from the valued outcomes",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      },
+      {
+        "id": "coi_y3",
+        "value": 174023,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "cost of inaction, Year 3",
+        "formula": "Σ over the valued outcomes: rate × Year-3 people served × unit value × (1 − deadweight)",
+        "inputs": [
+          "beneficiaries_y3",
+          "deadweight",
+          "sroi.1.rate",
+          "sroi.1.unit_value",
+          "sroi.2.rate",
+          "sroi.2.unit_value",
+          "sroi.3.rate",
+          "sroi.3.unit_value"
+        ],
+        "source": "Python's cost of inaction, from the valued outcomes",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      },
+      {
+        "id": "coi_3yr",
+        "value": 451619,
+        "kind": "MODELED",
+        "fmt": "money_short",
+        "unit": "USD",
+        "label": "cost of inaction over three years",
+        "formula": "the cost of inaction in Years 1, 2 and 3, summed",
+        "source": "Python's cost of inaction, from the valued outcomes",
+        "partial": "partial — counted on the valued outcomes only; material, not valued: Stable housing placement through NEXTenant, rapid rehousing or Housing First (The data holds no local cost of a shelter night or of a return to homelessness, so no defensible proxy exists. Placements are reported as a count, not a dollar value.); CrossRoads youth exits with a confirmed next placement (This is an intermediate step toward housing. Valuing it as well as the housing outcome would count the same benefit again.)"
+      }
+    ],
+    "sroi_notes": [],
+    "sroi_ratio": 0.2231985155765583,
+    "sroi_rows": [
+      {
+        "n": 1,
+        "i": 0,
+        "category": "Emergency department visits avoided by keeping KanCare coverage through moves",
+        "unit_value": 750.0,
+        "unit_kind": "EXTERNAL",
+        "unit_ref": "ext.er_visit_cost",
+        "rate": 0.3,
+        "rate_how": "a rate per person served (the model's)",
+        "duration": 1,
+        "outcomes": [
+          72.0,
+          86.39999999999999,
+          99.3
+        ],
+        "annual_y1": 54000.0,
+        "source": "AHRQ HCUP Statistical Brief #311: average treat-and-release ED visit cost"
+      },
+      {
+        "n": 2,
+        "i": 1,
+        "category": "Food assistance secured through expedited SNAP for homeless applicants",
+        "unit_value": 1404.0,
+        "unit_kind": "MODELED",
+        "unit_ref": null,
+        "rate": 0.25,
+        "rate_how": "a rate per person served (the model's)",
+        "duration": 1,
+        "outcomes": [
+          60.0,
+          72.0,
+          82.75
+        ],
+        "annual_y1": 84240.0,
+        "source": "stabilization-docs doc-006: single-adult benefit of [[q.e0e70]], held until recertification, which falls [[q.96a46]] months [ESTIMATE]"
+      },
+      {
+        "n": 3,
+        "i": 2,
+        "category": "Education funding unlocked through ETV for enrolled former foster youth",
+        "unit_value": 2500.0,
+        "unit_kind": "MODELED",
+        "unit_ref": null,
+        "rate": 0.05,
+        "rate_how": "a rate per person served (the model's)",
+        "duration": 1,
+        "outcomes": [
+          12.0,
+          14.4,
+          16.55
+        ],
+        "annual_y1": 30000.0,
+        "source": "transition-programs prog-002: ETV funds [[q.ee29d]]; valued at [[model:50%|share of the ETV cap used as the proxy]] of that cap [ESTIMATE]"
+      }
+    ],
+    "sroi_sens": [
+      {
+        "rate_id": "discount_rate_low",
+        "id": "sroi_at_3pct"
+      },
+      {
+        "rate_id": "discount_rate_high",
+        "id": "sroi_at_7pct"
+      }
+    ],
+    "sroi_adjustments": {
+      "deadweight": 25,
+      "attribution": 30,
+      "displacement": 5,
+      "drop_off": 20,
+      "discount_rate": 3.5,
+      "years": 3,
+      "horizon": 3
+    },
+    "sroi_capped": false,
+    "sroi_pv_total": "$279,447",
+    "sroi_pv_cost": "$1,252,009",
+    "sroi_display": "0.22 : 1",
+    "cpb_y1": 1815,
+    "beneficiaries": [
+      240,
+      288,
+      331
+    ],
+    "surplus": [
+      64438,
+      97221,
+      96736
+    ],
+    "chart_data": {
+      "base": {
+        "labels": [
+          "Year 1",
+          "Year 2",
+          "Year 3"
+        ],
+        "stacked": true,
+        "datasets": [
+          {
+            "label": "Personnel",
+            "data": [
+              189,
+              223,
+              251
+            ],
+            "stack": "cost",
+            "borderRadius": 6,
+            "backgroundColor": "rgba(124,58,237,.6)"
+          },
+          {
+            "label": "Ops & Transport",
+            "data": [
+              60,
+              67,
+              75
+            ],
+            "stack": "cost",
+            "borderRadius": 6,
+            "backgroundColor": "rgba(34,211,238,.5)"
+          },
+          {
+            "label": "Technology",
+            "data": [
+              30,
+              20,
+              17
+            ],
+            "stack": "cost",
+            "borderRadius": 6,
+            "backgroundColor": "rgba(255,255,255,.15)"
+          },
+          {
+            "label": "Outreach",
+            "data": [
+              100,
+              75,
+              60
+            ],
+            "stack": "cost",
+            "borderRadius": 6,
+            "backgroundColor": "rgba(52,211,153,.4)"
+          },
+          {
+            "label": "Indirect (15%)",
+            "data": [
+              57,
+              58,
+              60
+            ],
+            "stack": "cost",
+            "borderRadius": 6,
+            "backgroundColor": "rgba(251,191,36,.35)"
+          },
+          {
+            "label": "Total Revenue",
+            "data": [
+              500,
+              540,
+              560
+            ],
+            "type": "line",
+            "borderColor": "#34D399",
+            "backgroundColor": "transparent",
+            "borderWidth": 2.5,
+            "pointRadius": 5,
+            "pointBackgroundColor": "#34D399",
+            "tension": 0.3,
+            "order": -1
+          }
+        ]
+      },
+      "bull": {
+        "labels": [
+          "Year 1",
+          "Year 2",
+          "Year 3"
+        ],
+        "stacked": false,
+        "datasets": [
+          {
+            "label": "Total Expenses",
+            "data": [
+              436,
+              421,
+              440
+            ],
+            "borderRadius": 6,
+            "backgroundColor": "rgba(124,58,237,.5)"
+          },
+          {
+            "label": "Total Revenue",
+            "data": [
+              650,
+              702,
+              706
+            ],
+            "type": "line",
+            "borderColor": "#34D399",
+            "backgroundColor": "transparent",
+            "borderWidth": 2.5,
+            "pointRadius": 5,
+            "pointBackgroundColor": "#34D399",
+            "tension": 0.3
+          }
+        ]
+      },
+      "bear": {
+        "labels": [
+          "Year 1",
+          "Year 2",
+          "Year 3"
+        ],
+        "stacked": false,
+        "datasets": [
+          {
+            "label": "Total Expenses",
+            "data": [
+              436,
+              407,
+              398
+            ],
+            "borderRadius": 6,
+            "backgroundColor": "rgba(251,191,36,.45)"
+          },
+          {
+            "label": "Total Revenue",
+            "data": [
+              500,
+              500,
+              475
+            ],
+            "type": "line",
+            "borderColor": "#f43f5e",
+            "backgroundColor": "transparent",
+            "borderWidth": 2.5,
+            "pointRadius": 5,
+            "pointBackgroundColor": "#f43f5e",
+            "tension": 0.3,
+            "borderDash": [
+              6,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    "scenarios": {
+      "base": {
+        "tab_label": "Base Case",
+        "chart_title": "3-Year Revenue and Cost Trajectory",
+        "table_title": "Base Case P&L",
+        "pl_rows": [
+          {
+            "label": "Contract (the brief)",
+            "cells": [
+              "$500K",
+              "$500K",
+              "$500K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Supplemental Grants",
+            "cells": [
+              "—",
+              "$40K",
+              "$60K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Earned Revenue",
+            "cells": [
+              "—",
+              "—",
+              "—"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Total Revenue",
+            "cells": [
+              "$500K",
+              "$540K",
+              "$560K"
+            ],
+            "css_class": "total",
+            "colors": null
+          },
+          {
+            "label": "Personnel",
+            "cells": [
+              "$188.75K",
+              "$222.72K",
+              "$251.04K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Ops & Transport",
+            "cells": [
+              "$60K",
+              "$67.2K",
+              "$75K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Technology",
+            "cells": [
+              "$30K",
+              "$20.1K",
+              "$16.8K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Outreach (the brief's marketing reserve)",
+            "cells": [
+              "$100K",
+              "$75K",
+              "$60K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Indirect (15%)",
+            "cells": [
+              "$56.81K",
+              "$57.75K",
+              "$60.43K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Surplus",
+            "cells": [
+              "$64.44K",
+              "$97.22K",
+              "$96.74K"
+            ],
+            "css_class": "total",
+            "colors": [
+              "good",
+              "good",
+              "good"
+            ]
+          },
+          {
+            "label": "Cost per person",
+            "cells": [
+              "$1,815",
+              "$1,537",
+              "$1,400"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "People served",
+            "cells": [
+              "240",
+              "288",
+              "331"
+            ],
+            "css_class": "",
+            "colors": null
+          }
+        ],
+        "footnote": "Indirect: 15% de minimis per 2 CFR 200.414. Personnel based on BLS median wages."
+      },
+      "bull": {
+        "tab_label": "Optimistic",
+        "chart_title": "Optimistic Scenario",
+        "table_title": "Optimistic P&L",
+        "pl_rows": [
+          {
+            "label": "Total Revenue",
+            "cells": [
+              "$650K",
+              "$702K",
+              "$705.6K"
+            ],
+            "css_class": "total",
+            "colors": null
+          },
+          {
+            "label": "Total Expenses",
+            "cells": [
+              "$435.56K",
+              "$420.64K",
+              "$440.1K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Surplus",
+            "cells": [
+              "$214.44K",
+              "$281.36K",
+              "$265.5K"
+            ],
+            "css_class": "total",
+            "colors": [
+              "good",
+              "good",
+              "good"
+            ]
+          },
+          {
+            "label": "People served",
+            "cells": [
+              "312",
+              "374",
+              "430"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Cost per person",
+            "cells": [
+              "$1,396",
+              "$1,125",
+              "$1,023"
+            ],
+            "css_class": "",
+            "colors": null
+          }
+        ],
+        "footnote": null
+      },
+      "bear": {
+        "tab_label": "Conservative",
+        "chart_title": "Conservative Scenario",
+        "table_title": "Conservative P&L",
+        "pl_rows": [
+          {
+            "label": "Total Revenue",
+            "cells": [
+              "$500K",
+              "$500K",
+              "$475K"
+            ],
+            "css_class": "total",
+            "colors": null
+          },
+          {
+            "label": "Total Expenses",
+            "cells": [
+              "$435.56K",
+              "$407.36K",
+              "$398.41K"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Surplus",
+            "cells": [
+              "$64.44K",
+              "$92.64K",
+              "$76.59K"
+            ],
+            "css_class": "total",
+            "colors": [
+              "good",
+              "good",
+              "good"
+            ]
+          },
+          {
+            "label": "People served",
+            "cells": [
+              "158",
+              "190",
+              "218"
+            ],
+            "css_class": "",
+            "colors": null
+          },
+          {
+            "label": "Cost per person",
+            "cells": [
+              "$2,757",
+              "$2,144",
+              "$1,828"
+            ],
+            "css_class": "",
+            "colors": null
+          }
+        ],
+        "footnote": null
+      }
+    },
+    "kpis": {
+      "beneficiaries_y1": 240,
+      "cpb_y1": 1815,
+      "sroi": 0.2231985155765583,
+      "total_exp_y1": 435562,
+      "contract": 500000,
+      "contract_source": "brief",
+      "contract_label": "Contract (the brief)",
+      "marketing_reserve": 100000,
+      "unit_plural": "people",
+      "unit_singular": "person"
+    },
+    "simulator": {
+      "fixed_costs": 218750,
+      "variable_cost_per_ben": 666.6666666667,
+      "indirect_rate": 0.15,
+      "social_value_per_ben": 405.0699660065,
+      "has_sroi": true,
+      "defaults": {
+        "beneficiaries": 240,
+        "contract": 500000
+      },
+      "ranges": {
+        "ben_min": 100,
+        "ben_max": 400,
+        "ben_step": 20,
+        "cv_min": 300000,
+        "cv_max": 750000,
+        "cv_step": 25000
+      },
+      "y_max": 750000,
+      "cost_labels": [
+        "Personnel",
+        "Operations",
+        "Technology",
+        "Indirect"
+      ],
+      "cost_colors": [
+        "rgba(124,58,237,.7)",
+        "rgba(34,211,238,.6)",
+        "rgba(255,255,255,.2)",
+        "rgba(251,191,36,.45)"
+      ],
+      "y1_costs": {
+        "personnel": 188750,
+        "operations": 60000,
+        "technology": 30000,
+        "indirect": 56812
+      }
+    },
+    "use_of_funds": {
+      "contract": 500000,
+      "contract_source": "brief",
+      "reserve": 100000,
+      "rate_pct": 15,
+      "scale": 1.0,
+      "total_exp": 435562,
+      "roles": [
+        {
+          "role": "Lead Transition Navigator",
+          "count": 1,
+          "amount": 63750
+        },
+        {
+          "role": "Transition Navigator",
+          "count": 2,
+          "amount": 125000
+        }
+      ],
+      "lines": [
+        {
+          "key": "personnel",
+          "amount": 188750
+        },
+        {
+          "key": "operations",
+          "amount": 60000
+        },
+        {
+          "key": "technology",
+          "amount": 30000
+        },
+        {
+          "key": "outreach",
+          "amount": 100000
+        },
+        {
+          "key": "indirect",
+          "amount": 56812
+        },
+        {
+          "key": "contingency",
+          "amount": 64438
+        }
+      ]
+    }
+  }
+}

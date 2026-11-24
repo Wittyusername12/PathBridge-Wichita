@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "kind": "VERBATIM",
+  "source": "curveball.png (the brief) — tracker G.1.c",
+  "announced_at": "13:00",
+  "text": "At 1:00 PM, Teams Learn Three Things. 1. An overnight severe-weather cell triggered a Red Cross activation. Roughly 60 displaced residents are being absorbed into the regular shelter network. 211 Kansas is overloaded, and the existing intake queue backs up behind the emergency caseload. 2. Open Door is offline for emergency roof repair. The highest-volume daytime walk-in hub is closed 48-72 hours. Center of Hope is absorbing overflow at reduced hours, exactly during the surge. 3. CrossRoads is at 1 of 12 beds, with foster-placement disruptions incoming. DCF has flagged 4 transition-age youth whose placements were disrupted by the same weather event and who are expected to present for shelter within 72 hours. BRIDGES has no vacancy. The system-status API has flipped to emergency mode. Adapt your solution accordingly.",
+  "tests": [
+    "Can your solution adapt when the main walk-in hub is offline, 211 is flooded, and the youth pipeline is full at the same time?",
+    "Can it reroute around a damaged site without collapsing the rest of the system?",
+    "Can it prioritize foster youth without becoming a youth-only workflow?"
+  ],
+  "api_changed": [
+    "system-status",
+    "shelter-inventory"
+  ],
+  "_note": "api_changed is what the recorded diff found (§7.4): five endpoints stayed byte-identical; P0.7 fills this field from its own diff at the event"
+}

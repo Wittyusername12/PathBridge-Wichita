@@ -1,0 +1,117 @@
+{
+ "schema_version": 1,
+ "_note": "Chicago coverage map (P0.3 build, 2026-10-29): read the same way as KC, by each item's meaning; the template has no capacity-model section, so the capacity items point at the evidence and the model's own answer carries them. BUILD B1 (11/03): oracle-m1 → evidence, operations, prioritization, oracle-m2 → evidence, financials, use-of-funds. BUILD B3 (11/09, D13): the deliverables' own sections — oracle-q3 → summary, evidence, bottlenecks; oracle-m1 → evidence, operations, prioritization, bottlenecks.",
+ "challenge": "chicago-2026-04-04",
+ "tracks": {
+  "oracle": {
+   "oracle-q1": {
+    "sections": [
+     "evidence",
+     "summary"
+    ],
+    "note": null
+   },
+   "oracle-q2": {
+    "sections": [
+     "evidence",
+     "data-sources",
+     "methodology"
+    ],
+    "note": null
+   },
+   "oracle-q3": {
+    "sections": [
+     "summary",
+     "evidence",
+     "bottlenecks"
+    ],
+    "note": null
+   },
+   "oracle-q4": {
+    "sections": [
+     "ai-process"
+    ],
+    "note": null
+   },
+   "oracle-m1": {
+    "sections": [
+     "evidence",
+     "operations",
+     "prioritization",
+     "bottlenecks"
+    ],
+    "note": null
+   },
+   "oracle-m2": {
+    "sections": [
+     "evidence",
+     "financials",
+     "use-of-funds"
+    ],
+    "note": null
+   }
+  },
+  "architect": {
+   "architect-q1": {
+    "sections": [
+     "finder"
+    ],
+    "note": "Yes: in Find Resources, search the clinics and hospitals loaded from the challenge API by ZIP or keyword, filter them by type, language spoken, insurance accepted or status, sort them, and click a card for its details; the Dashboard and Data Explorer tabs draw the same data in the browser when the page opens."
+   },
+   "architect-q2": {
+    "sections": [
+     "who-serves",
+     "intake",
+     "plan",
+     "finder"
+    ],
+    "note": "It opens on Get Help: a patient answers three questions (coverage, language, the care needed) or picks an illustrative person, and the plan names the clinic open now that takes that coverage, with its points, hours and address; Find Resources still searches every site by ZIP or need, in one column on a phone."
+   },
+   "architect-q3": {
+    "sections": [
+     "intake",
+     "plan",
+     "dashboard",
+     "data"
+    ],
+    "note": "Partly: the plan's gates are the barriers the data records (open at this hour, takes this coverage, sees patients each day) and its points weigh the wait, the languages spoken and the services offered; the Dashboard ranks each area by the data's own need metric and lists the closures and ER overcrowding; travel time is not modelled."
+   },
+   "architect-q4": {
+    "sections": [
+     "how-built"
+    ],
+    "note": "Its Python harness turns the challenge API's data into this page with fixed rules, and the Get Help tab ranks in the browser with the engine's published table; at build time one Claude call writes the \"Why this order\" notes from the engine's trace, each sentence checked in Python against that trace before it is shown (none when the call is not made). Claude wrote and tested the harness and template with us, and the page's chat answers questions about this data through a server-side proxy to Claude."
+   }
+  },
+  "muse": {
+   "muse-q1": {
+    "sections": [
+     "audiences"
+    ],
+    "note": null
+   },
+   "muse-q2": {
+    "sections": [
+     "channels"
+    ],
+    "note": null
+   },
+   "muse-q3": {
+    "sections": [
+     "creative",
+     "flyer",
+     "pitch"
+    ],
+    "note": null
+   },
+   "muse-q4": {
+    "sections": [
+     "how-built"
+    ],
+    "note": null
+   }
+  }
+ },
+ "users": {},
+ "winning": {}
+}

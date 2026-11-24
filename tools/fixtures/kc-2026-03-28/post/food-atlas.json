@@ -1,0 +1,150 @@
+{
+  "source": "food-atlas",
+  "count": 12,
+  "data": [
+    {
+      "censusTract": "29095001300",
+      "zip": "64130",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 38.2,
+      "medianIncome": 24100,
+      "vehicleAccess": 62,
+      "population": 3412,
+      "snapHouseholds": 48
+    },
+    {
+      "censusTract": "29095002700",
+      "zip": "64128",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 35.7,
+      "medianIncome": 26800,
+      "vehicleAccess": 58,
+      "population": 2876,
+      "snapHouseholds": 44
+    },
+    {
+      "censusTract": "29095004100",
+      "zip": "64127",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 41.3,
+      "medianIncome": 22400,
+      "vehicleAccess": 55,
+      "population": 4102,
+      "snapHouseholds": 52
+    },
+    {
+      "censusTract": "29095005500",
+      "zip": "64110",
+      "foodDesert": false,
+      "lowAccess1mi": false,
+      "lowAccess10mi": false,
+      "povertyRate": 22.1,
+      "medianIncome": 38200,
+      "vehicleAccess": 78,
+      "population": 5234,
+      "snapHouseholds": 28
+    },
+    {
+      "censusTract": "29095006200",
+      "zip": "64109",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 29.8,
+      "medianIncome": 31500,
+      "vehicleAccess": 68,
+      "population": 3678,
+      "snapHouseholds": 36
+    },
+    {
+      "censusTract": "29095007800",
+      "zip": "64134",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 26.4,
+      "medianIncome": 33800,
+      "vehicleAccess": 72,
+      "population": 4856,
+      "snapHouseholds": 31
+    },
+    {
+      "censusTract": "29095008300",
+      "zip": "64132",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 33.1,
+      "medianIncome": 27600,
+      "vehicleAccess": 61,
+      "population": 3921,
+      "snapHouseholds": 42
+    },
+    {
+      "censusTract": "20209050100",
+      "zip": "66101",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 44.6,
+      "medianIncome": 21200,
+      "vehicleAccess": 52,
+      "population": 5678,
+      "snapHouseholds": 56
+    },
+    {
+      "censusTract": "20209050400",
+      "zip": "66105",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 39.8,
+      "medianIncome": 23100,
+      "vehicleAccess": 49,
+      "population": 4234,
+      "snapHouseholds": 51
+    },
+    {
+      "censusTract": "29095009100",
+      "zip": "64106",
+      "foodDesert": false,
+      "lowAccess1mi": false,
+      "lowAccess10mi": false,
+      "povertyRate": 18.9,
+      "medianIncome": 42500,
+      "vehicleAccess": 82,
+      "population": 6123,
+      "snapHouseholds": 19
+    },
+    {
+      "censusTract": "29095003200",
+      "zip": "64108",
+      "foodDesert": true,
+      "lowAccess1mi": true,
+      "lowAccess10mi": false,
+      "povertyRate": 31.6,
+      "medianIncome": 25800,
+      "vehicleAccess": 65,
+      "population": 3012,
+      "snapHouseholds": 39
+    },
+    {
+      "censusTract": "29095001100",
+      "zip": "64111",
+      "foodDesert": false,
+      "lowAccess1mi": false,
+      "lowAccess10mi": false,
+      "povertyRate": 15.2,
+      "medianIncome": 48600,
+      "vehicleAccess": 86,
+      "population": 3712,
+      "snapHouseholds": 12
+    }
+  ]
+}
