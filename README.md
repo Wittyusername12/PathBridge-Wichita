@@ -1,4 +1,4 @@
-# Ctrl Alt Defeat: a provenance-first LLM pipeline for timed civic-data challenges
+# PathBridge Wichita: a provenance-first LLM pipeline for timed civic-data challenges
 
 This pipeline turns a competition brief and a live JSON API into four published web pages, inside a timed competition block. The pages are a dashboard and business case, a working prototype, an outreach campaign and a hub. When the organizers change the data mid-day (the "curveball"), it compares the new data with the morning's snapshot. It then updates every page from that one list of changes.
 
