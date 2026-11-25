@@ -22,7 +22,7 @@ Language models write fluent analysis, and they also invent, round and misquote 
 | --- | --- |
 | `landing-harness/pipeline.py` | Runs the four tracks in order (Oracle, Architect, Muse, hub) and computes the Block 2 change list |
 | `landing-harness/requirements/` | Challenge contracts: the brief as JSON (`<challenge>.json`), the curveball's announcement word for word (`.curveball.json`), the ranking engine's table (`.engine.json`) and the coverage map (`.map.json`) |
-| `oracle-harness/` | The Oracle track: data loading, master analysis, financial model, diagrams, prioritization, deliverables, page assembly |
+| `oracle-harness/` | The Oracle track, in the order its stages run: data loading, master analysis, prioritization, financial model, deliverables, diagrams, page assembly |
 | `architect-harness/` | The Architect track: an intake flow, a personal plan, a documents checklist, a youth navigator and a housing readiness tracker. The ranking engine runs in the browser (`naipc_engine.js`) |
 | `Muse-harness/` | The Muse track: audiences, channel plan, calendar, creative pieces and a bilingual flyer |
 | `landing-harness/landing_harness.py` | The hub page; no model call |
